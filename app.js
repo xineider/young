@@ -11,6 +11,7 @@ const fileUpload = require('express-fileupload');
 
 var index = require('./app/controller/index');
 var areasdeatuacao = require('./app/controller/areasdeatuacao');
+var contato = require('./app/controller/contato');
 
 var app = express();
 var control = new Control;
@@ -25,47 +26,62 @@ app.use(session({
 }));
  
 // Verifica usuario se esta logado ou não
-app.use(function (req, res, next) {
-  var pathname = parseurl(req).pathname;
-  // if (pathname.indexOf("assets") == -1) {
-  //   console.log('V------------------------------------------V');
-  //   console.log(pathname);
-  //   console.log(req.session.usuario);
-  //   console.log((pathname != '/' && pathname != '') && 
-  //     (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
-  //       req.isAjaxRequest() == true);
-  //   console.log('/\\------------------------------------------/\\');
-  // }
-  if ((pathname != '/' && pathname != '') && 
-      (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
-        req.isAjaxRequest() == true){
-    var id = req.headers['authority-optima-id'];
-    var hash = req.headers['authority-optima-hash'];
-    var nivel = req.headers['authority-optima-nivel'];
-    verificacao.VerificarUsuario(id, hash, nivel).then(data => {
-      if (data.length > 0) {
-        req.session.usuario = {};
-        req.session.usuario.id = id;
-        req.session.usuario.hash_login = hash;
-        req.session.usuario.nivel = nivel;
-        verificacao.GetConfig(id).then(data => {
-          req.session.usuario.config = data[0];
-          next();
-        });
-      } else {
-        req.session.destroy(function(err) {
-          res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
-        });
-      }
-    });
-  } else if (control.Isset(req.session.usuario, false)
-    && (pathname != '/' && pathname != '')
-      && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
-    res.redirect('/');
-  } else {
-    next();
-  }
-});
+// app.use(function (req, res, next) {
+//   var pathname = parseurl(req).pathname;
+//   // if (pathname.indexOf("assets") == -1) {
+//   //   console.log('V------------------------------------------V');
+//   //   console.log(pathname);
+//   //   console.log(req.session.usuario);
+//   //   console.log((pathname != '/' && pathname != '') && 
+//   //     (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
+//   //       req.isAjaxRequest() == true);
+//   //   console.log('/\\------------------------------------------/\\');
+//   // }
+//   if ((pathname != '/' && pathname != '') && 
+//       (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
+//         req.isAjaxRequest() == true){
+//     console.log('********************* 1 -  pathname*******************');
+//     console.log(pathname);
+//     console.log('********************* 1 -  pathname*******************');
+//     var id = req.headers['authority-optima-id'];
+//     var hash = req.headers['authority-optima-hash'];
+//     var nivel = req.headers['authority-optima-nivel'];
+//     verificacao.VerificarUsuario(id, hash, nivel).then(data => {
+//       if (data.length > 0) {
+//         console.log('********************* 2 - if pathname*******************');
+//         console.log(pathname);
+//         console.log('********************* 2 - if pathname*******************');
+//         req.session.usuario = {};
+//         req.session.usuario.id = id;
+//         req.session.usuario.hash_login = hash;
+//         req.session.usuario.nivel = nivel;
+//         verificacao.GetConfig(id).then(data => {
+//           req.session.usuario.config = data[0];
+//           next();
+//         });
+//       } else {
+//         console.log('********************* 2 - else pathname *******************');
+//         console.log(pathname);
+//         console.log('********************* 2 - else pathname *******************');
+//         req.session.destroy(function(err) {
+//           res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
+//         });
+//       }
+//     });
+//   } else if (control.Isset(req.session.usuario, false)
+//     && (pathname != '/' && pathname != '')
+//       && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
+//         console.log('********************* penultimo else if pathname *******************');
+//         console.log(pathname);
+//         console.log('********************* penultimo else if pathname *******************');
+//     res.redirect('/');
+//   } else {
+//         console.log('********************* deu bom pathname *******************');
+//         console.log(pathname);
+//         console.log('********************* deu bom pathname *******************');
+//     next();
+//   }
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -83,7 +99,8 @@ app.use("/assets", express.static(__dirname + '/assets'));
 app.use(fileUpload());
 
 app.use('/', index);
-app.use('/', areasdeatuacao);
+app.use('/areasdeatuacao', areasdeatuacao);
+app.use('/contato', contato);
 
 // app.use(function (req, res, next) {
 //   var pathname = parseurl(req).pathname;
