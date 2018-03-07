@@ -1,0 +1,387 @@
+html,body,main{min-height: 100%;}
+body > div.row .col {
+  padding: 0;
+}
+/*.select-field{
+  position: relative;
+  margin-top: 0rem;
+}
+.collapsible-header .fixed-action-btn {
+  position: relative;
+    right: 0;
+    bottom: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    z-index: 997;
+    height: 8px;
+    width: 8px;
+    display: inline;
+}
+  .collapsible-header .fixed-action-btn ul {
+    margin: 0 -15px;
+  }
+    .collapsible-header .fixed-action-btn ul li {
+      margin: 0 !important;
+      position: relative !important;
+      top: -15px !important;
+    }
+      .collapsible-header .fixed-action-btn ul li i {
+        margin: auto;
+      }
+.ar {position: absolute;right: 0;}
+.al {position: absolute;left: 0;}
+.txshadow{text-shadow: 0px 1px 0px rgb(8, 8, 8);}
+.text-send {position: absolute;bottom: 1%;width: 100%;}
+.image-perfil{
+  width: 64px;
+  height: 64px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-top: 5px;
+  box-shadow: inset 0px 0px 10px 0px black;
+}
+.image-perfil.db {
+  width: 128px;
+  height: 128px;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.collection .collection-item.avatar {min-height: auto;}
+.relative{position: relative;}
+.word-wrap {word-wrap: break-word;}
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+}
+  .close-button:hover i,
+  .close-button:hover {
+    color: #000 !important;
+    background-color: #fff !important;
+  }
+#sidenav-overlay{z-index: 2}
+.grafico {max-width: 100%;}
+.nav-wrapper #big-nav > a,
+.nav-wrapper #big-nav > ul > li {
+  width: 100% !important;
+  display: block !important;
+  position: relative !important;
+  border-bottom: 0px solid;
+}
+.nav-wrapper #big-nav > ul > li a {
+  transition: 0.5s;
+  background-size: 201% 100%;
+  background-image: linear-gradient(to right, #ad1457 50%, #f8bbd0 50%);
+}
+  .nav-wrapper #big-nav > ul > li:hover a {
+    background-position: -99% 0;
+    color: #000;
+  }
+.nav-wrapper .edit-button {
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+  .nav-wrapper .edit-button:hover {
+    font-size: 2em;
+  }
+.nav-wrapper #small-nav > ul > li > a {
+  font-size: 2em;
+}
+.nav-wrapper #small-nav > a,
+.nav-wrapper #small-nav > ul > li {
+  width: 100% !important;
+  position: relative !important;
+  text-align: center;
+}
+nav {
+  box-shadow: 0 0 black;
+  height: 100%;
+  background-color: transparent;
+}
+header {
+  box-shadow: -2px 1px 5px 2px black;
+  z-index: 2;
+  height: 100%;
+  min-height: 100%;
+  position: fixed;
+}
+.none {display: none;}
+
+.center-all th,
+.center-all td {
+  text-align: center;
+}
+ul > li > ul.sub-menu {
+  border-radius: 4px;
+  transition: 0.5s;
+  position: absolute;
+  left: -100%;
+  padding: 0 15px;
+  top: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  white-space: nowrap;
+}
+ul > li > ul.sub-menu:before {
+  opacity: 0;
+  transition: 0.5s;
+  content: "";
+  position: absolute;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  border-top: 31px solid transparent;
+  border-bottom: 31px solid transparent;
+  border-right: 31px solid #4051bd;
+  left: -30px;
+  margin-top: 1px;
+}
+  ul > li:hover > ul.sub-menu {
+    z-index: 3;
+    opacity: 1;
+    display: block;
+    background-color: rgb(64, 81, 189);
+    left: 170px;
+    width: 170px;
+    height: auto;
+    padding: 0 5px;
+    text-align: left;
+  }
+  #small-nav ul > li:hover > ul.sub-menu {
+    left: 105px;
+  }
+  ul > li:hover > ul.sub-menu:before {
+    z-index: 3;
+    opacity: 1;
+    content: "";
+    position: absolute;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    border-top: 31px solid transparent;
+    border-bottom: 31px solid transparent;
+    border-right: 31px solid #4051bd;
+    left: -30px;
+  }
+    ul > li:hover > ul.sub-menu > li > a {
+      transition: 0.2s;
+      padding: 0;
+    }
+      ul > li:hover > ul.sub-menu > li > a:hover {
+        background-color: #4051bd;
+        text-shadow: 1px 1px black;
+      }
+.modal-mount {
+  cursor: pointer;
+}
+.dropdown-content {
+  overflow: hidden;
+  min-width: 195px;
+  left: 70% !important;
+}
+#modaldeletar {
+  z-index: 1007 !important;
+}
+.error {
+  position: absolute;
+  bottom: -20px;
+  right: 0px;
+  background-color: #f44336;
+  color: white;
+  padding: 0 10px;
+  max-width: 100px;
+  border-radius: 0 15px;
+  box-shadow: 0px 3px 2px -3px black;
+}*/
+/* Estilos do site */
+
+/*MADE BY ME*/
+.no-margin {
+  margin: 0 !important;
+}
+.container-full {
+  width: 100%;
+}
+nav.new-nav {
+  padding: 10px 0;
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  line-height: 80px;
+  height: 100px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+.trans-bg {
+  background-color: transparent !important;
+}
+.fit-trans-bg {
+  background-color: transparent !important;
+
+}
+.img-logo {
+  padding-left: 10px !important;
+  width: 30% !important;
+  display: inline-block !important;
+}
+/*.bg-img {
+  background-image: url("/assets/imgs/lawyer-bg.png");
+  background-position: top;
+  background-repeat:  no-repeat;
+  background-size: contain;
+  background-color: #000;
+}*/
+@media only screen and (max-width: 1160px) {
+  ul.large-info li a, ul.large-info li a i {
+    font-size: 0.4em;
+  }
+}
+ul.large-info li a, ul.large-info li a i {
+  font-size: 2em;
+}
+ul.right li a {
+  float: right !important;
+  font-family: "Bebas Neue", sans-serif;
+}
+.bg-img-n {
+  background: url("/assets/imgs/lawyer-bg.png");
+/*  background-position: top;*/
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  margin: 0px auto;
+  height: 0;
+  padding-top: 66.64%; /* (img-height / img-width * width) */
+                /* (853 / 1280 * 100) */
+}
+.bg-image {
+  background: url("/assets/imgs/lawyer-bg.png");
+/*  background-position: top;*/
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+/*.bg-img-n span { 
+  background-color: black;
+  color: #fff;
+  display: inline;
+  padding: 0.5rem;
+  
+   Needs prefixing
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}*/
+#fale-conosco {
+  float: right;
+  border: 2px dashed #fbd257;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  height: 1.6em;
+}
+@media only screen and (max-width: 1390px) {
+  .title-std {
+    font-size: 
+  }
+}
+.section.no-pad-bot {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.container.semi-full {
+  width: 90%;
+}
+.page-footer.transparent {
+  background-color: transparent;
+} 
+.grad-line {
+  background: rgba(251,210,87,0);
+  background: -moz-linear-gradient(left, rgba(251,210,87,0) 0%, rgba(251,210,87,1) 50%, rgba(251,210,87,0) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(251,210,87,0)), color-stop(50%, rgba(251,210,87,1)), color-stop(100%, rgba(251,210,87,0)));
+  background: -webkit-linear-gradient(left, rgba(251,210,87,0) 0%, rgba(251,210,87,1) 50%, rgba(251,210,87,0) 100%);
+  background: -o-linear-gradient(left, rgba(251,210,87,0) 0%, rgba(251,210,87,1) 50%, rgba(251,210,87,0) 100%);
+  background: -ms-linear-gradient(left, rgba(251,210,87,0) 0%, rgba(251,210,87,1) 50%, rgba(251,210,87,0) 100%);
+  background: linear-gradient(to right, rgba(251,210,87,0) 0%, rgba(251,210,87,1) 50%, rgba(251,210,87,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#fbd257', GradientType=1 );
+  height: 3px;
+  width: 110%;
+  left: -5%;
+  position: relative;
+}
+nav.main-nav {
+  height: 3em;
+  line-height: 3em;
+}
+.justified {
+  text-align: justify;
+}
+.video-container.smaller {
+  padding-bottom: 35%;
+}
+.container.not-nov, .container.depo-ebook {
+  width: 90%;
+}
+.parallax-container {
+  height: auto !important;
+}
+.parallax-container .parallax img#middle-parall {
+  width: 65% !important;
+  height: 65% !important;
+  min-width: 65% !important;
+  min-height: 65% !important;
+  opacity: 0.2 !important;
+  bottom: -100px !important;
+}
+.parallax-container .parallax img#low-parall {
+  opacity: 0.3;
+}
+nav.nav-center ul {
+    text-align: center !important;
+}
+nav.nav-center ul li {
+    display: inline !important;
+    float: none !important;
+}
+nav.nav-center ul li a {
+    display: inline-block !important;
+}
+.container {
+  max-width: 1800px !important;
+}
+.PARALLAX-PRA-ARRUMAR-E-TALS {
+  position: absolute;
+  width: 100%;
+  min-width: 500px;
+}
+#ebook {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffd65e+0,ffe8aa+51,ffd65e+100 */
+background: rgb(255,214,94); /* Old browsers */
+background: -moz-linear-gradient(45deg, rgba(255,214,94,1) 0%, rgba(255,232,170,1) 51%, rgba(255,214,94,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#ffd65e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.dottedline {
+  /*height is just to be sure ^^ */
+  height: 100% !important;
+  border-bottom: 3px dashed #fff !important;
+  border-left: 3px dashed #fff !important;
+  width: 50% !important;
+  margin-left: 50% !important;
+  padding-bottom: 50% !important;
+}
+/*@media only screen and (max-width: 1400px) {
+  nav.nav-center ul li a h5 {
+    font-size: 0.8em;
+  }
+}*/
+/*with rgba = background behind image
+with linear-background = overlay on image, then the rest*/
+/*  background: rgba(255, 42, 83, 0.25), url("/assets/imgs/lawyer-bg.png");*/
+/*  background: linear-gradient(rgba(255, 42, 83, 0.25), rgba(255, 42, 83, 0.25)), url("/assets/imgs/lawyer-bg.png");*/
