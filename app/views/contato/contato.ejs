@@ -1,6 +1,6 @@
-<section style="position: relative; top: 100px; padding: 20px">
+<section class="container" style="position: relative; top: 100px; padding: 20px">
   <div class="row">
-    <form class="col s12">
+    <form class="contato col s12">
       <div class="row white-text">
         <div class="input-field col s6">
           <input id="last_name" type="text" class="validate">
@@ -10,23 +10,33 @@
           <input id="email" type="email" class="validate">
           <label for="email">Email</label>
         </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Cidade</label>
+        <div class="col s12 m6">
+          <label>Estado</label>
+          <select class="browser-default">
+            <option value="" disabled selected>Escolha seu Estado</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+        </div>
+        <div class="col s12 m6">
+          <label>Cidade</label>
+          <select class="browser-default validate">
+            <option value="" disabled selected>Escolha sua Cidade</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
         </div>
         <div class="input-field col s6">
           <input id="last_name" type="text" class="validate">
-          <label for="last_name">Estado</label>
+          <label for="last_name">Celular</label>
         </div>
         <div class="input-field col s6">
           <input id="last_name" type="text" class="validate">
           <label for="last_name">Telefone</label>
         </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Telefone</label>
-        </div>
-        <div class="input-field col s6">
+        <div class="input-field col s12">
           <input id="last_name" type="text" class="validate">
           <label for="last_name">Mensagem</label>
         </div>
@@ -34,53 +44,3 @@
     </form>
   </div>
 </section>
-
-<style type="text/css">
-   /* label color */
-  .input-field label {
-    color: #f0f0f0;
-  }
-  /* label focus color */
-  .input-field input[type=text]:focus + label {
-    color: #ffd65e;
-  }
-  input[type=text]:not(.browser-default):focus:not([readonly]) {
-    -webkit-box-shadow: 0 1px 0 0 #ffd65e !important;
-    box-shadow: 0 1px 0 0 #ffd65e !important;
-    border-bottom: 1px solid #ffd65e !important;
-  }
-  input[type=text]:not(.browser-default):focus:not([readonly])+label {
-    color: #ffd65e;
-  }
-  input[type=email]:not(.browser-default):focus:not([readonly]) {
-    -webkit-box-shadow: 0 1px 0 0 #ffd65e !important;
-    box-shadow: 0 1px 0 0 #ffd65e !important;
-    border-bottom: 1px solid #ffd65e !important;
-  }
-  input[type=email]:not(.browser-default):focus:not([readonly])+label {
-    color: #ffd65e;
-  }
-  input[type=email].valid:not(.browser-default) {
-    border-bottom: 1px solid #bf9004;
-    box-shadow: 0 1px 0 0 #bf9004;
-  }
-  /* label underline focus color */
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #ffd65e;
-    box-shadow: 0 1px 0 0 #ffd65e;
-  }
-  /* valid color */
-  .input-field input[type=text].valid {
-    border-bottom: 1px solid #bf9004;
-    box-shadow: 0 1px 0 0 #bf9004;
-  }
-  /* invalid color */
-  .input-field input[type=text].invalid {
-    border-bottom: 1px solid #ffd65e;
-    box-shadow: 0 1px 0 0 #ffd65e;
-  }
-  /* icon prefix focus color */
-  .input-field .prefix.active {
-   color: #ffd65e;
-  }
-</style>

@@ -2,6 +2,7 @@
 $(document).on('ready', function () {
 	// NovidadesChat();
 	$('.modal').modal();
+	criarDepoimentos();
 	// InitBar();
 	$('#calendar').fullCalendar({
         // put your options and callbacks here
@@ -23,9 +24,16 @@ $(document).on('ready', function () {
 	$(window).on('resize', function(e) {
 		$('nav').height($('.bg-img-n').height());
 	});
-  $(document).ready(function(){
+  // $(document).ready(function(){
     $('.parallax').parallax();
-  });
+  // });
+  // $(document).ready(function(){
+    $('.slider').slider();
+  // });
+  $(document).ready(function(){
+	  $('.carousel').carousel();
+	  $('.carousel.carousel-slider').carousel({fullWidth: true});
+	});
 
 	$(document).ajaxComplete(function () {
 		$('#calendar').fullCalendar({
@@ -403,6 +411,36 @@ function FormatInputs(focus) {
     ampmclickable: true, // make AM PM clickable
   });
   ActiveMaterializeInput(focus);
+}
+function slidesDepoimento(nomeAutor,imagemAutor,nomeEmpresa,depoimento){
+	slideDepoimento = {
+		author: {
+			name: nomeAutor,
+			url: '',
+			avatar: imagemAutor
+		},
+		company: {
+			name: nomeEmpresa,
+			url: ''
+		},
+		quote: depoimento
+	}
+	return slideDepoimento;
+}
+function criarDepoimentos(){
+	var testimonial;
+	var optionsTesti = {
+		width: 650,
+		timeout: 6000,
+		autostart: true,
+		slideCount: 3
+	};
+	if($('#testimonial-slider').length>0){
+		testimonial = new Testimonial('#testimonial-slider', optionsTesti);
+		testimonial.add(slidesDepoimento('Jhon Doe','/assets/imgs/scale-bg.png','','A Incise é a contadoria mais rápida e confiável da região de Porto Alegre.<br>'));
+		testimonial.add(slidesDepoimento('Fulano de Tals','/assets/imgs/scale-bg.png','','Meus problemas foram resolvidos pela Incise! Nota 10!<br>'));
+		testimonial.add(slidesDepoimento('Meruem','/assets/imgs/scale-bg.png','','Equipe ágil e competente. Adorei!<br>'));
+	}
 }
 function GetEndereco(cep, pai) {
 	var link = 'https://viacep.com.br/ws/'+cep+'/json/ ';
