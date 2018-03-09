@@ -469,27 +469,65 @@ TestimonialSlide.prototype = {
     var str = '<div class="quotation_mark right"></div></div><div class="signature"><div class="author">';
     str += '&#x2015;&nbsp;<a target="_blank" href="';
 
-    this.template = [
-      '<div class="content"><div class="text" style="width: ',
-      'px;"><div class="quote"><div class="quotation_mark left"></div>',
-      str,
-      '">',
-      '</a></div><div class="company"><a target="_blank" href="',
-      '">',
-      '</a></div></div></div><div class="avatar"><div class="block"><div class="author"><img src="',
-      '"></div><div class="helper"></div></div></div></div>'
-    ];
+    if ($(window).width() < 992) {
+      console.log('---------------------------------------------------------');
+      console.log($(window).width());
+      console.log('---------------------------------------------------------');
+      this.template = [
+        '<div class="content"><div class="text" style="width: ',
+        'px;"><div class="quote"><div class="quotation_mark left"></div>',
+        str,
+        '">',
+        '</a></div><div class="company"><a target="_blank" href="',
+        '">',
+        '</a></div></div></div><div class="avatar"><div class="block"><div class="author"><img src="',
+        '"></div><div class="helper"></div></div></div></div>'
+      ];
+    } else {
+      console.log('--------------------------else----------------------------');
+      this.template = [
+        '<div class="content"><div class="text" style="width: ',
+        'px;"><div class="quote"><div class="quotation_mark left"></div>',
+        str,
+        '">',
+        '</a></div><div class="company"><a target="_blank" href="',
+        '">',
+        '</a></div></div></div><div class="avatar"><div class="block"><div class="author"><img src="',
+        '"></div><div class="helper"></div></div></div></div>'
+      ];
+    }
+
+    // this.template = [
+    //   '<div class="content"><div class="text" style="width: ',
+    //   'px;"><div class="quote"><div class="quotation_mark left"></div>',
+    //   str,
+    //   '">',
+    //   '</a></div><div class="company"><a target="_blank" href="',
+    //   '">',
+    //   '</a></div></div></div><div class="avatar"><div class="block"><div class="author"><img src="',
+    //   '"></div><div class="helper"></div></div></div></div>'
+    // ];
   },
 
   renderTemplate: function() {
     var data = this.getDataForTemplate();
-    this.template.splice(1, 0, data.main.width);
-    this.template.splice(3, 0, data.slide.quote);
-    this.template.splice(5, 0, data.slide.author.url);
-    this.template.splice(7, 0, data.slide.author.name);
-    this.template.splice(9, 0, data.slide.company.url);
-    this.template.splice(11, 0, data.slide.company.name);
-    this.template.splice(13, 0, data.slide.author.avatar);
+    if ($(window).width() < 992) {
+      this.template.splice(1, 0, data.main.width);
+      this.template.splice(3, 0, data.slide.quote);
+      this.template.splice(5, 0, data.slide.author.url);
+      this.template.splice(7, 0, data.slide.author.name);
+      this.template.splice(9, 0, data.slide.company.url);
+      this.template.splice(11, 0, data.slide.company.name);
+      this.template.splice(13, 0, data.slide.author.avatar);
+    } else {
+      this.template.splice(1, 0, data.main.width);
+      this.template.splice(3, 0, data.slide.quote);
+      this.template.splice(5, 0, data.slide.author.url);
+      this.template.splice(7, 0, data.slide.author.name);
+      this.template.splice(9, 0, data.slide.company.url);
+      this.template.splice(11, 0, data.slide.company.name);
+      this.template.splice(13, 0, data.slide.author.avatar);
+    }
     var html = this.template.join('');
 
     var node = document.createElement('div');

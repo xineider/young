@@ -449,22 +449,48 @@ with linear-background = overlay on image, then the rest*/
   margin-top: 0 !important;
   padding: 2em 0 2em 0 !important;
 }*/
-#testimonial-slider, #testimonial-slider .main_container, #testimonial-slider .main_container .testimonial_slide {
+#testimonial-slider .main_container, #testimonial-slider .main_container .testimonial_slide, #testimonial-slider .main_container .testimonial_slide .content .text .quote {
   width: 100% !important;
+}
+#testimonial-slider .main_container .testimonial_slide .content .text .signature .author a {
+  color: #fff !important;
+  text-shadow: 1px 1px 3px #bf9004 !important;
+}
+#testimonial-slider .main_container .testimonial_slide .content .text .signature {
+  color: #bf9004 !important;
+}
+#testimonial-slider, #testimonial-slider .main_container .testimonial_slide {
+  min-width: auto !important;
+}
+.testimonial_slider .main_container {
+  margin: 0 !important;
+}
+#testimonial-slider .next_slide {
+  opacity: 0.5 !important;
+  background-size: 20px 50px !important;
+  width: 20px !important;
+  min-width: 20px !important;
+}
+@media only screen and (min-width: 993px) {
+  #testimonial-slider {
+    width: 692px !important;
+    margin: 5em auto 0 !important;
+  }
+  #testimonial-slider .main-container {
+    width: 100% !important;
+  }
 }
 @media only screen and (max-width: 992px) {
   #testimonial-slider .main_container .testimonial_slide .content .text {
     width: 100% !important;
     margin: 0 auto 10px !important;
   }
-  #testimonial-slider .main_container .testimonial_slide .content .text .quote {
-    width: 100% !important;
-  }
   #testimonial-slider .main_container .testimonial_slide .content .avatar {
     width: 100% !important;
     margin: 0 auto !important;
   }
   #testimonial-slider {
+    width: 100% !important;
     margin-bottom: 30px !important;
   }
 }
