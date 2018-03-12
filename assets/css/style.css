@@ -223,7 +223,9 @@ nav.new-nav {
 }
 .fit-trans-bg {
   background-color: transparent !important;
-
+}
+#index-banner {
+  overflow: hidden !important;
 }
 .img-logo {
   padding-left: 10px !important;
@@ -250,6 +252,9 @@ nav.new-nav {
 }
 ul.large-info li a, ul.large-info li a i {
   font-size: 2em;
+}
+ul.large-info li a:hover {
+  color: #ffd65e !important;
 }
 ul.right li a {
   float: right !important;
@@ -287,6 +292,12 @@ ul.right li a {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }*/
+.facebot {
+  overflow: hidden !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
 #fale-conosco {
   float: right;
   border: 2px dashed #fbd257;
@@ -295,6 +306,7 @@ ul.right li a {
   font-size: 1.5em;
   line-height: 1.5em;
   height: 1.6em;
+  right: -1.1em;
 }
 @media only screen and (max-width: 1390px) {
   .title-std {
@@ -335,11 +347,15 @@ ul.right li a {
 /*  width: 110%;
   left: -5%;
   position: relative;*/
-  margin-top: 1em !important;
+  /*margin-top: 1em !important;*/
 }
 nav.main-nav {
   height: 3em;
   line-height: 3em;
+  /*adicionado depois*/
+  position: relative !important;
+  width: 134% !important;
+  left: -17% !important;
 }
 .justified {
   text-align: justify;
@@ -514,7 +530,7 @@ with linear-background = overlay on image, then the rest*/
   }
 }
 h5.def-h5 {
-  font-size: 1.2em
+/*  font-size: 1.2em;*/
 }
 
 /*---------------Dados do Contato---------------*/

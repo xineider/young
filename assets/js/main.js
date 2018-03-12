@@ -438,7 +438,7 @@ function criarDepoimentos(){
 	if($('#testimonial-slider').length>0){
 		testimonial = new Testimonial('#testimonial-slider', optionsTesti);
 		testimonial.add(slidesDepoimento('Jhon Doe','/assets/imgs/scale-bg.png','','A Incise é a contadoria mais rápida e confiável da região de Porto Alegre.<br>'));
-		testimonial.add(slidesDepoimento('Fulano de Tals','/assets/imgs/scale-bg.png','','Meus problemas foram resolvidos pela Incise! Nota 10!<br>'));
+		testimonial.add(slidesDepoimento('Feitan','/assets/imgs/scale-bg.png','','Meus problemas foram resolvidos pela Incise! Nota 10!<br>'));
 		testimonial.add(slidesDepoimento('Meruem','/assets/imgs/scale-bg.png','','Equipe ágil e competente. Adorei!<br>'));
 	}
 }
