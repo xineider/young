@@ -202,21 +202,26 @@ ul > li > ul.sub-menu:before {
 /* Estilos do site */
 
 /*MADE BY ME*/
+.brown-bg {
+  background-color: #1d1917 !important;
+}
 .no-margin {
   margin: 0 !important;
 }
 .container-full {
   width: 100%;
 }
+nav {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
 nav.new-nav {
-  padding: 10px 0;
-  z-index: 9999;
-  position: absolute;
-  top: 0;
-  line-height: 80px;
-  height: 100px;
-  box-shadow: none;
-  -webkit-box-shadow: none;
+  padding: 10px 0 !important;
+  z-index: 9999 !important;
+  position: absolute !important;
+  top: 0 !important;
+  line-height: 80px !important;
+  height: 100px !important;
 }
 .trans-bg {
   background-color: transparent !important;
@@ -241,7 +246,7 @@ nav.new-nav {
 }*/
 @media only screen and (max-width: 1160px) {
   .container-full.bg-image {
-    align-self: center;
+    align-self: center !important;
     background-size: 170% !important;
   }
 }
@@ -299,14 +304,115 @@ ul.right li a {
   width: 100% !important;
 }
 #fale-conosco {
-  float: right;
-  border: 2px dashed #fbd257;
-  border-radius: 10px;
+  float: right !important;
+  border: 2px dashed #fbd257 !important;
+  border-radius: 10px !important;
   background-color: rgba(0, 0, 0, 0.3) !important;
-  font-size: 1.5em;
-  line-height: 1.5em;
-  height: 1.6em;
-  right: -1.1em;
+  font-size: 1.5em !important;
+  line-height: 1.5em !important;
+  height: 1.6em !important;
+  right: -0.4em !important;
+}
+.maybe:before {
+  width: 0 !important;
+  height: 0 !important;
+  content: '' !important;
+  border-width: 100px !important;
+  border-style: solid !important;
+  border-color: #000 transparent transparent #000 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  position: absolute !important;
+}
+.areas-atuacao .area {
+  margin: 2px 0 !important;
+  background-color: #000 !important; /*------------TEST-----------*/
+  background-clip: content-box !important; /*------------TEST-----------*/
+  border-radius: 2px 2px 2px 2px; /*------------TEST-----------*/
+  padding-top: 5px; /*------------TEST-----------*/
+/*  height: 200px !important;*/
+}
+.areas-atuacao .areas-img {
+  height: auto !important;
+  max-width: 100% !important;
+  line-height: 0.1 !important; /*------------TEST-----------*/
+}
+.areas-atuacao .areas-img img {
+  margin: -1% 0 !important;
+}
+.areas-atuacao .areas-texto {
+  text-align: justify !important;
+  margin: 0 !important;
+  padding: 10px !important;
+/*  background-color: #000 !important;*/
+  position: relative !important;
+  max-height: 100% !important;
+}
+/* styles for '...' */ 
+.areas-atuacao p {
+  /* hide text if it more than N lines  */
+  overflow: hidden;
+  /* for set '...' in absolute position */
+  position: relative; 
+  /* use this value to count block height */
+  line-height: 1.2em;
+  /* max-height = line-height (1.2) * lines max number (3) */
+  max-height: 3.6em; 
+  /* fix problem when last visible word doesn't adjoin right side  */
+  text-align: justify;  
+  /* place for '...' */
+  margin-right: -1em;
+  padding-right: 1em;
+  right: 1em;
+  padding-left: 1em;
+}
+/* create the ... */
+.areas-atuacao p:before {
+  /* points in the end */
+  content: '...';
+  /* absolute position */
+  position: absolute;
+  /* set position to right bottom corner of block */
+  right: 0;
+  bottom: 0;
+}
+/* hide ... if we have text, which is less than or equal to max lines */
+.areas-atuacao p:after {
+  /* points in the end */
+  content: '';
+  /* absolute position */
+  position: absolute;
+  /* set position to right bottom corner of text */
+  right: 1em;
+  /* set width and height */
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  /* bg color = bg color under block */
+  background: #000;
+}
+@media only screen and (max-width: 992px) {
+  .main-nav ul li a {
+    padding: 0 5px !important;
+  }
+  .areas-atuacao h5 {
+    font-size: 1.4rem !important;
+  }
+@media only screen and (min-width: 993px) {
+  .main-nav ul li a {
+    padding: 0 10px !important;
+  }
+  .areas-atuacao h5 {
+    font-size: 1.6rem !important;
+  }
+}
+.areas-atuacao .areas-texto-left {
+  text-align: justify !important;
+  text-align-last: left !important;
+}
+.areas-atuacao .areas-texto-right {
+  text-align: justify !important;
+  text-align-last: right !important;
 }
 @media only screen and (max-width: 1390px) {
   .title-std {
@@ -314,14 +420,14 @@ ul.right li a {
   }
 }
 .section.no-pad-bot {
-  padding-bottom: 0;
-  padding-top: 0;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
 }
 .container.semi-full {
-  width: 90%;
+  width: 90% !important;
 }
 .page-footer.transparent {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 @media only screen and (max-width: 600px) {
   footer.page-footer {
@@ -531,6 +637,7 @@ with linear-background = overlay on image, then the rest*/
 }
 h5.def-h5 {
 /*  font-size: 1.2em;*/
+  font-family: "Bebas Neue", sans-serif !important;
 }
 
 /*---------------Dados do Contato---------------*/

@@ -11,7 +11,7 @@ app.use(require('express-is-ajax-request'));
 
 /* GET pagina de login. */
 router.get('/', function(req, res, next) {
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'areasdeatuacao/index', data: data, usuario: req.session.usuario});
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'areasdeatuacao/areasdeatuacao', data: data, usuario: req.session.usuario});
 });
 // router.get('/', function(req, res, next) {
 // 	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'areas_de_atuacao/index', data: data, usuario: req.session.usuario});

@@ -24,6 +24,54 @@ $(document).on('ready', function () {
 	$(window).on('resize', function(e) {
 		$('nav').height($('.bg-img-n').height());
 	});
+
+  var scroll_options = [
+    {selector: '#staggered-test', offset: 50, callback: function(el) {
+      Materialize.toast("This is our ScrollFire Demo!", 1500 );
+    } },
+    {selector: '#staggered-test', offset: 205, callback: function(el) {
+      Materialize.toast("Please continue scrolling!", 1500 );
+    } },
+    {selector: '#staggered-test', offset: 400, callback: function(el) {
+      Materialize.showStaggeredList($(el));
+    } },
+    {selector: '#image-test', offset: 500, callback: function(el) {
+      Materialize.fadeInImage($(el));
+    } }
+  ];
+  Materialize.scrollFire(scroll_options);
+
+ //  $(document).on('hover', '.areas-img', function() {
+	//   $("#" + "toggle").effect({effect: "scale", percent: 110});
+	// });
+	// $( document ).click(function() {
+	//   $("#toresize").toggle( "bounce", "slow" );
+	// });
+
+	$.getJSON('/assets/json/estados_cidades.json', function (data) {
+		var items = [];
+		var options = '<option value="">escolha um estado</option>';	
+		$.each(data, function (key, val) {
+			options += '<option value="' + val.nome + '">' + val.nome + '</option>';
+		});					
+		$("#estados").html(options);
+		$("#estados").change(function () {
+			var options_cidades = '';
+			var str = "";
+			$("#estados option:selected").each(function () {
+				str += $(this).text();
+			});
+			$.each(data, function (key, val) {
+				if(val.nome == str) {							
+					$.each(val.cidades, function (key_city, val_city) {
+						options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
+					});							
+				}
+			});
+			$("#cidades").html(options_cidades);
+		}).change();
+	});
+
   // $(document).ready(function(){
     $('.parallax').parallax();
   // });
