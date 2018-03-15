@@ -248,10 +248,18 @@ nav.new-nav {
   background-size: contain;
   background-color: #000;
 }*/
-@media only screen and (max-width: 1160px) {
+@media only screen and (min-width: 921px) and (max-width: 1160px) {
   .container-full.bg-image {
     align-self: center !important;
-    background-size: 170% !important;
+    background-size: 120% !important;
+    right: 10%;
+  }
+}
+@media only screen and (max-width: 920px) {
+  .container-full.bg-image {
+    align-self: center !important;
+    background-size: 150% !important;
+    right: 100%;
   }
 }
 @media only screen and (max-width: 1160px) {

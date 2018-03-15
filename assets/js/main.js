@@ -50,7 +50,7 @@ $(document).on('ready', function () {
 
 	$.getJSON('/assets/json/estados_cidades.json', function (data) {
 		var items = [];
-		var options = '<option value="">escolha um estado</option>';	
+		var options = '<option value="">Escolha seu estado</option>';	
 		$.each(data, function (key, val) {
 			options += '<option value="' + val.nome + '">' + val.nome + '</option>';
 		});					
