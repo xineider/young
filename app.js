@@ -12,6 +12,7 @@ const fileUpload = require('express-fileupload');
 var index = require('./app/controller/index');
 var areasdeatuacao = require('./app/controller/areasdeatuacao');
 var contato = require('./app/controller/contato');
+var equipe = require('./app/controller/equipe');
 
 var app = express();
 var control = new Control;
@@ -101,6 +102,7 @@ app.use(fileUpload());
 app.use('/', index);
 app.use('/areasdeatuacao', areasdeatuacao);
 app.use('/contato', contato);
+app.use('/equipe', equipe);
 
 // app.use(function (req, res, next) {
 //   var pathname = parseurl(req).pathname;

@@ -2,6 +2,9 @@ html,body,main{min-height: 100%;}
 body > div.row .col {
   padding: 0;
 }
+body {
+  position: relative !important;
+}
 /*.select-field{
   position: relative;
   margin-top: 0rem;
@@ -222,6 +225,7 @@ nav.new-nav {
   top: 0 !important;
   line-height: 80px !important;
   height: 100px !important;
+  overflow: hidden !important;
 }
 .trans-bg {
   background-color: transparent !important;
@@ -297,6 +301,9 @@ ul.right li a {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }*/
+#equipe-sec .card-content {
+  padding: 15px !important;
+}
 .facebot {
   overflow: hidden !important;
   margin-left: auto !important;
@@ -307,7 +314,7 @@ ul.right li a {
   float: right !important;
   border: 2px dashed #fbd257 !important;
   border-radius: 10px !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
   font-size: 1.5em !important;
   line-height: 1.5em !important;
   height: 1.6em !important;
@@ -465,12 +472,12 @@ ul.right li a {
   /*margin-top: 1em !important;*/
 }
 nav.main-nav {
-  height: 3em;
-  line-height: 3em;
+  height: 3em !important;
+  line-height: 3em !important;
   /*adicionado depois*/
   position: relative !important;
-  width: 134% !important;
-  left: -17% !important;
+/*  width: 134% !important;
+  left: -17% !important;*/
 }
 .justified {
   text-align: justify;
@@ -482,7 +489,7 @@ nav.main-nav {
 }
 @media only screen and (max-width: 600px) {
   .video-container.smaller {
-    padding-bottom: 45%;
+    padding-bottom: 45% !important;
   }
 }
 @media only screen and (min-width: 601px) {
@@ -493,8 +500,11 @@ nav.main-nav {
 .container.not-nov, .container.depo-ebook {
   width: 90%;
 }
+.card {
+  background-color: #000 !important;
+}
 .parallax-container {
-  height: auto !important;
+  /*height: auto !important;*/
 }
 .parallax-container .parallax img#middle-parall {
   width: 65% !important;
@@ -504,18 +514,29 @@ nav.main-nav {
   opacity: 0.2 !important;
   bottom: -100px !important;
 }
-.parallax-container .parallax img#low-parall {
-  opacity: 0.3;
+#low-parall.parallax-container .parallax img {
+  opacity: 0.3 !important;
+}
+#low-parall.parallax-container {
+  bottom: 0 !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  /* min-height: 300px !important; */
+  /* height: 100% !important; */
+  width: 100% !important;
+  height: -moz-available !important;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available !important;  /* Mozilla-based browsers will ignore this. */
+  height: fill-available !important;
 }
 nav.nav-center ul {
-    text-align: center !important;
+  text-align: center !important;
 }
 nav.nav-center ul li {
-    display: inline !important;
-    float: none !important;
+  display: inline !important;
+  float: none !important;
 }
 nav.nav-center ul li a {
-    display: inline-block !important;
+  display: inline-block !important;
 }
 .container {
   max-width: 1800px !important;
@@ -525,13 +546,32 @@ nav.nav-center ul li a {
   width: 100%;
   min-width: 500px;
 }
-#ebook {
+#btn-contato {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffd65e+0,ffe8aa+51,ffd65e+100 */
-background: rgb(255,214,94); /* Old browsers */
-background: -moz-linear-gradient(45deg, rgba(255,214,94,1) 0%, rgba(255,232,170,1) 51%, rgba(255,214,94,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#ffd65e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: rgb(255,214,94); /* Old browsers */
+  background: -moz-linear-gradient(45deg, rgba(255,214,94,1) 0%, rgba(255,232,170,1) 51%, rgba(255,214,94,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#ffd65e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  color: #000 !important;
+  font-size: 1.4em !important;
+  font-family: "Bebas Neue", sans-serif !important;
+}
+@media only screen and (min-width: 993px) {
+  .areas-atuacao #areas-full-img {
+    display: none !important;
+  }
+  .areas-atuacao .areas-img {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .areas-atuacao #areas-full-img {
+    display: block !important;
+  }
+  .areas-atuacao .areas-img {
+    display: none !important;
+  }
 }
 @media only screen and (max-width: 600px) {
   .dash-col {
@@ -658,7 +698,8 @@ h5.def-h5 {
 .input-field input[type=text]:focus + label {
   color: #ffd65e !important;
 }
-input[type=text]:not(.browser-default):focus:not([readonly]) {
+input[type=text]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
   -webkit-box-shadow: 0 1px 0 0 #ffd65e !important;
   box-shadow: 0 1px 0 0 #ffd65e !important;
   border-bottom: 1px solid #ffd65e !important;
@@ -709,3 +750,8 @@ select {
   border: 1px solid #bf9004 !important;
 }
 /*---------------Fim Dados do Contato---------------*/
+.card .card-title {
+  position: relative !important;
+  top: 15px !important;
+  left: 15px !important;
+}

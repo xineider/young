@@ -1,42 +1,52 @@
-<section class="container" style="position: relative; top: 100px; padding: 20px">
-  <div class="row">
-    <form class="contato col s12">
-      <div class="row white-text">
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Nome</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-        <div class="col s12 m6">
-          <label>Estado</label>
-          <select id="estados" class="browser-default">
-            <option value="" disabled selected>Escolha seu Estado</option>
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="col s12 m6">
-          <label>Cidade</label>
-          <select id="cidades" class="browser-default validate">
-            <option value="" disabled selected>Escolha sua Cidade</option>
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Celular</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Telefone</label>
-        </div>
-        <div class="input-field col s12">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Mensagem</label>
-        </div>
+<section class="container" style="position: relative;/* top: 100px;*/ padding: 30px">
+  <div class="card">
+    <div class="card-title"><h5 class="def-h5">DEIXE SEU CONTATO</h5></div>
+    <div class="card-content">
+      <div class="row">
+        <form class="contato col s12">
+          <div class="row white-text">
+            <div class="input-field col s12 m6">
+              <input id="last_name" type="text" class="validate">
+              <label for="last_name">Nome</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <input id="email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+            <div class="col s12 m6">
+              <label>Estado</label>
+              <select id="estados" class="browser-default">
+                <option value="" disabled selected>Escolha seu Estado</option>
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="col s12 m6">
+              <label>Cidade</label>
+              <select id="cidades" class="browser-default validate">
+                <option value="" disabled selected>Escolha sua Cidade</option>
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="input-field col s6">
+              <input id="f_celular" type="text" class="validate">
+              <label for="last_name">Celular</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="f_telefone" type="text" class="validate">
+              <label for="last_name">Telefone</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea id="f_mensagem" class="materialize-textarea"></textarea>
+              <label for="textarea">Mensagem</label>
+            </div>
+          </div>
+          <div class="center">
+            <button id="btn-contato" data-href="/site/contato/" data-action="/sistema/maodeobra/" class="btn waves-effect waves-light darken-1 ajax-submit">
+              Enviar <i class="fa fa-send" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </section>
