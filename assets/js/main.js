@@ -6,7 +6,7 @@ $(document).on('ready', function () {
 	// InitBar();
 	$('#calendar').fullCalendar({
         // put your options and callbacks here
-    })
+    });
 	// LoadInfosUsuario();
 	// adicionarLoader();
 	// FormatInputs();
@@ -24,6 +24,50 @@ $(document).on('ready', function () {
 	$(window).on('resize', function(e) {
 		$('nav').height($('.bg-img-n').height());
 	});
+	
+	$(".button-collapse").sideNav();
+
+	$(document).on('click', '#fale-conosco', function(event) { 
+    event.preventDefault(); 
+    $(".fb-messenger-widget-simple").click();
+	});
+
+	AlignAreasText();
+
+	function AlignAreasText() {
+		if ($(window).width() > 600) {
+			$('#areas-de-atuacao .row .container.semi-full').addClass('valign-wrapper');
+		} else {
+			$('#areas-de-atuacao .row .container.semi-full').removeClass('valign-wrapper');
+		}
+		$(window).on('resize', function(e) {
+			e.preventDefault();
+			if ($(window).width() > 600) {
+				$('#areas-de-atuacao .row .container.semi-full').addClass('valign-wrapper');
+			} else {
+				$('#areas-de-atuacao .row .container.semi-full').removeClass('valign-wrapper');
+			}
+		});
+	};
+
+
+
+	rightOnTheFace();
+
+
+	function rightOnTheFace() {
+		var window_width = $(window).width();
+		var right_space = ((window_width - 1920) / 2) - 10;
+		if($(window).width() > 1920) {
+			var window_width = $(window).width();
+			var right_space = (window_width / 2) - 10;
+			$('#fb-messenger-widget-7606').css('right', right_space, 'important');
+			console.log(window_width);
+			console.log(right_space);
+			console.log($('#fb-messenger-widget-7606').css('right'));
+		} else {
+		}
+	};
 
   var scroll_options = [
     {selector: '#staggered-test', offset: 50, callback: function(el) {
@@ -218,7 +262,6 @@ $(document).on('ready', function () {
 		GetEndereco($(this).val(), $(this).closest('.row'));
 	});
 
-	$(".button-collapse").sideNav();
 
 	window.onpopstate = function() {
 	  GoTo(location.pathname, false);
