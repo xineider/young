@@ -33,24 +33,7 @@ $(document).on('ready', function () {
 	});
 
 	AlignAreasText();
-
-	function AlignAreasText() {
-		if ($(window).width() > 600) {
-			$('#areas-de-atuacao .row .container.semi-full').addClass('valign-wrapper');
-		} else {
-			$('#areas-de-atuacao .row .container.semi-full').removeClass('valign-wrapper');
-		}
-		$(window).on('resize', function(e) {
-			e.preventDefault();
-			if ($(window).width() > 600) {
-				$('#areas-de-atuacao .row .container.semi-full').addClass('valign-wrapper');
-			} else {
-				$('#areas-de-atuacao .row .container.semi-full').removeClass('valign-wrapper');
-			}
-		});
-	};
-
-
+	AlignFooterOnLarge();
 
 	rightOnTheFace();
 
@@ -731,6 +714,40 @@ function msToTime(duration) {
 
   return hours + ":" + minutes + ":" + seconds;
 }
+function AlignAreasText() { //pra alinhar texto e imagem sem atrapalhar o mobile
+	if ($(window).width() > 600) {
+		$('#areas-de-atuacao .row .container').addClass('valign-wrapper');
+			$('#areas-de-atuacao .row .container').removeClass('semi-full');
+	} else {
+		$('#areas-de-atuacao .row .container').removeClass('valign-wrapper');
+		$('#areas-de-atuacao .row .container').addClass('semi-full');
+	}
+	$(window).on('resize', function(e) {
+		e.preventDefault();
+		if ($(window).width() > 600) {
+			$('#areas-de-atuacao .row .container').addClass('valign-wrapper');
+			$('#areas-de-atuacao .row .container').removeClass('semi-full');
+		} else {
+			$('#areas-de-atuacao .row .container').removeClass('valign-wrapper');
+		$('#areas-de-atuacao .row .container').addClass('semi-full');
+		}
+	});
+};
+function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mobile
+	if ($(window).width() > 992) {
+		$('footer.page-footer .container .row').addClass('valign-wrapper');
+	} else {
+		$('footer.page-footer .container .row').removeClass('valign-wrapper');
+	}
+	$(window).on('resize', function(e) {
+		e.preventDefault();
+		if ($(window).width() > 992) {
+			$('footer.page-footer .container .row').addClass('valign-wrapper');
+		} else {
+			$('footer.page-footer .container .row').removeClass('valign-wrapper');
+		}
+	});
+};
 
 // ESPECIFICO
 // function LoadInfosUsuario() {
