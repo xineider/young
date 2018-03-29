@@ -26,6 +26,23 @@ $(document).on('ready', function () {
 	});
 	
 	$(".button-collapse").sideNav();
+	function FixedSidebar {
+	  $('.blog-sidebar').pushpin({
+	    top: 0,
+	    bottom: 1000,
+	    offset: 0
+	  });
+		if ($(window).scrollTop() > 100)
+	    $cache.css({
+	      'position': 'fixed',
+	      'top': '10px'
+	    });
+	  else
+	    $cache.css({
+	      'position': 'relative',
+	      'top': 'auto'
+	    });
+	}
 
 	$(document).on('click', '#fale-conosco', function(event) { 
     event.preventDefault(); 
@@ -34,6 +51,8 @@ $(document).on('ready', function () {
 
 	AlignAreasText();
 	AlignFooterOnLarge();
+	AlignPostsBlog();
+	Estados_Cidades();
 
 	rightOnTheFace();
 
@@ -68,36 +87,14 @@ $(document).on('ready', function () {
   ];
   Materialize.scrollFire(scroll_options);
 
- //  $(document).on('hover', '.areas-img', function() {
+ 	// $(document).on('hover', '.areas-img', function() {
 	//   $("#" + "toggle").effect({effect: "scale", percent: 110});
 	// });
 	// $( document ).click(function() {
 	//   $("#toresize").toggle( "bounce", "slow" );
 	// });
 
-	$.getJSON('/assets/json/estados_cidades.json', function (data) {
-		var items = [];
-		var options = '<option value="">Escolha seu estado</option>';	
-		$.each(data, function (key, val) {
-			options += '<option value="' + val.nome + '">' + val.nome + '</option>';
-		});					
-		$("#estados").html(options);
-		$("#estados").change(function () {
-			var options_cidades = '';
-			var str = "";
-			$("#estados option:selected").each(function () {
-				str += $(this).text();
-			});
-			$.each(data, function (key, val) {
-				if(val.nome == str) {							
-					$.each(val.cidades, function (key_city, val_city) {
-						options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
-					});							
-				}
-			});
-			$("#cidades").html(options_cidades);
-		}).change();
-	});
+
 
   // $(document).ready(function(){
     $('.parallax').parallax();
@@ -114,8 +111,17 @@ $(document).on('ready', function () {
 		$('#calendar').fullCalendar({
         // put your options and callbacks here
     })
+    criarDepoimentos();
+    $('.parallax').parallax();
 		Materialize.updateTextFields();
   	$('.collapsible').collapsible();
+		if($('#editor').length>0){
+
+			$( '#editor' ).ckeditor();
+		}
+  	AlignAreasText();
+		AlignFooterOnLarge();
+		AlignPostsBlog();
 	});
 	$(document).ajaxError(function () {
 		AddErrorAjax();
@@ -733,6 +739,21 @@ function AlignAreasText() { //pra alinhar texto e imagem sem atrapalhar o mobile
 		}
 	});
 };
+function AlignPostsBlog() {
+	if ($(window).width() > 600) {
+		$('#blog-section .posts .card.post > .col').addClass('valign-wrapper');
+	} else {
+		$('#blog-section .posts .card.post > .col').removeClass('valign-wrapper');
+	}
+	$(window).on('resize', function(e) {
+		e.preventDefault();
+		if ($(window).width() > 600) {
+			$('#blog-section .posts .card.post > .col').addClass('valign-wrapper');
+		} else {
+			$('#blog-section .posts .card.post > .col').removeClass('valign-wrapper');
+		}
+	});
+}
 function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mobile
 	if ($(window).width() > 992) {
 		$('footer.page-footer .container .row').addClass('valign-wrapper');
@@ -748,6 +769,32 @@ function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mo
 		}
 	});
 };
+function Estados_Cidades() {
+	$.getJSON('/assets/json/estados_cidades.json', function (data) {
+		var items = [];
+		var options = '<option value="">Escolha seu estado</option>';	
+		$.each(data, function (key, val) {
+			options += '<option value="' + val.nome + '">' + val.nome + '</option>';
+		});					
+		$("#estados").html(options);
+		$("#estados").change(function () {
+			var options_cidades = '';
+			var str = "";
+			$("#estados option:selected").each(function () {
+				str += $(this).text();
+			});
+			$.each(data, function (key, val) {
+				if(val.nome == str) {							
+					$.each(val.cidades, function (key_city, val_city) {
+						options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
+					});							
+				}
+			});
+			$("#cidades").html(options_cidades);
+		}).change();
+	});
+	// body...
+}
 
 // ESPECIFICO
 // function LoadInfosUsuario() {
@@ -865,45 +912,45 @@ function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mo
 // 		}
 // 	});
 // }
-// function UploadFile(isso) {
-// 	var link = isso.data('href');
-// 	var formData = new FormData();
-// 	formData.append('arquivo', isso[0].files[0]);
+function UploadFile(isso) {
+	var link = isso.data('href');
+	var formData = new FormData();
+	formData.append('arquivo', isso[0].files[0]);
 
-// 	$.ajax({
-//     url: link,
-//     type: 'POST',
-//     data: formData,
-//     dataType: 'json',
-//     processData: false,
-//     contentType: false,
-//     beforeSend: function(request) {
-// 			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
-// 			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
-// 			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
-// 			adicionarLoader();
-//     },
-//     success: function (data) {
-//     	$('.file-path').val('');
-//     	isso.closest('.row').append('\
-// 												    			<div class="col s12 m6 center-align relative pai">\
-// 																	  <div class="card-panel grey lighten-4">\
-// 																	  	<input type="hidden" name="tarefa_arquivo[arquivo][]" value="'+data+'">\
-// 																	  	<button class="btn-floating btn waves-effect waves-light red close-button remove"><i class="fa fa-times" aria-hidden="true"></i></button>\
-// 																	  	<b>Arquivo: '+data+' <br>\
-// 																	  </div>\
-// 																  </div>\
-// 												    			');
-//       console.debug(data);
-//     },
-//     error: function (xhr, e, t) {
-//         console.debug((xhr.responseText));
-//     },
-//     complete: function() {
-// 			removerLoader();
-//     }
-// 	});
-// }
+	$.ajax({
+    url: link,
+    type: 'POST',
+    data: formData,
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+    beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+    },
+    success: function (data) {
+    	$('.file-path').val('');
+    	isso.closest('.row').append('\
+												    			<div class="col s12 m6 center-align relative pai">\
+																	  <div class="card-panel grey lighten-4">\
+																	  	<input type="hidden" name="tarefa_arquivo[arquivo][]" value="'+data+'">\
+																	  	<button class="btn-floating btn waves-effect waves-light red close-button remove"><i class="fa fa-times" aria-hidden="true"></i></button>\
+																	  	<b>Arquivo: '+data+' <br>\
+																	  </div>\
+																  </div>\
+												    			');
+      console.debug(data);
+    },
+    error: function (xhr, e, t) {
+        console.debug((xhr.responseText));
+    },
+    complete: function() {
+			removerLoader();
+    }
+	});
+}
 // function InitChat() {
 // 	$.ajax({
 // 		method: "GET",

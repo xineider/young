@@ -1,0 +1,68 @@
+<div style="background-color: transparent !important;">
+  <div class="right-align" style="position: absolute;">
+    <a href="/post/" class="btn waves-effect waves-light blue darken-1 left ajax-load" style="background-color: transparent !important;">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </a>
+<!--       <button data-href="/post/cadastrar/" data-action="/post/" class="btn-floating btn-large waves-effect waves-light green darken-1 ajax-submit">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    </button> -->
+  </div>
+  <div class="row">
+  <div class="col s12 m8 offset-m2 l8 offset-l2">
+  <div class="card" style="border: 2px solid #daa520;">
+    <span class="card-title">
+      <h5 class="def-h5">Criar Post</h5>
+    </span>
+    <div class="card-content">
+<!--   <h4 style="margin-top: 60px;">Criar Post</h4> -->
+      <form method="POST" action="" enctype="multipart/form-data">
+        <div class="row">
+          <h5 class="center def-h5">Título</h5>
+          <div class="input-field col s12" style="margin-top: 0;">
+            <input required="true" class="validate" type="text" name="titulo">
+            <label for="titulo"></label>
+          </div>
+          <div class="input-field col s12">
+            <textarea name="conteudo" id="editor"></textarea> 
+          </div>
+          <div class="col s12 m7 valign-wrapper">
+            <h5 class="center def-h5" style="white-space: nowrap;">Data da Postagem: </h5>
+            <label style="display: none;">Data da Postagem</label>
+            <input required="true" type="text" class="datepicker" name="data_post">
+          </div>
+<!--           <div class="file-field col s12 input-field">
+            <div class="btn waves-effect anexo-container">
+              <span>Imagem</span>
+              <i class="fa fa-picture-o" aria-hidden="true"></i>
+              <input type="file" class="anexo-input not_me" name="arquivo" data-href="/uploadarimagem/" accept="image/*,.doc,.docx,.pdf">
+            </div>
+          </div> -->
+    <!--       <div class="col s12">
+            <input type="checkbox" class="filled-in">
+            <label for="status">Rascunho</label>
+          </div>  -->
+          <div class="right-align">
+          </div>
+        </div>
+        <!--<h5 class="center def-h5">Adicionar Imagem</h5>-->
+        <div class="row">
+          <div class="file-field input-field col s12">
+            <div class="btn">
+              <span>Arquivo</span>
+              <input type="file" title="Sem Imagens" multiple>
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Envie sua imagem ou arquivo">
+            </div>
+          </div>
+          <button data-href="/post/cadastrar/" data-action="/post/" class="btn btn-large right waves-effect waves-light green darken-1 ajax-submit">
+          Salvar
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>

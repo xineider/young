@@ -10,6 +10,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
 		<script src="/assets/js/testimonial.js"></script>
 		<script type="text/javascript" src="https://embed.modernapp.co/chat?code=0c1cc0f7577081d7468e0c2c43bb52f1"></script>
+		<script src="//cdn.ckeditor.com/4.9.0/standard/ckeditor.js"></script> <!-- blog -->
+		<script src="/assets/js/adapters/jquery.js"></script> <!-- pra converter em jquery -->
 		<script src="/assets/js/main.js"></script>
     <link rel='stylesheet' href='/assets/css/font-awesome.min.css' />
     <link rel='stylesheet' href='/assets/css/materialize.min.css' />
@@ -46,23 +48,24 @@
 	  </nav>
 
     <ul id="slide-header" class="side-nav">
-	    <li id="side-nav-nome"><div class="user-view">
-	      <div class="background">
-	        <img src="/assets/imgs/scale-bg.png">
-	      </div>
-	      <a href="/#" class="ajax-load"><img class="ajax-load" src="/assets/imgs/parallax-logo.png" style="max-width: 50%; margin: 0 25%;"></a>
-	      <a href="/contato"><span class="white-text center name ajax-load">Young, Dias, Lauxen & Lima</span></a>
-	      <a href=""><span class="white-text center email ajax-load">duvidas@young</span></a>
-	      <a href=""><span class="white-text center email ajax-load">(51) 3590.2079</span></a>
-	      <a href=""><span class="white-text center email ajax-load">(51) 3589.5507</span></a>
-	    </div></li>
+	    <li id="side-nav-nome">
+	    	<div class="user-view">
+		      <div class="background">
+		        <img src="/assets/imgs/scale-bg.png">
+		      </div>
+		      <a href="/#" class="ajax-load"><img class="ajax-load" src="/assets/imgs/parallax-logo.png" style="max-width: 50%; margin: 0 25%;"></a>
+		      <a href="/contato"><span class="white-text center name ajax-load">Young, Dias, Lauxen & Lima</span></a>
+		      <a href=""><span class="white-text center email ajax-load">duvidas@young</span></a>
+		      <a href=""><span class="white-text center email ajax-load">(51) 3590.2079</span></a>
+		      <a href=""><span class="white-text center email ajax-load">(51) 3589.5507</span></a>
+		    </div>
+		  </li>
 	    <li><div class="divider"></div></li>
 	    <li><a href="/#" class="waves-effect ajax-load"></i>Home</a></li>
-	    <li><a href="#!" class="waves-effect ajax-load">Quem Somos</a></li>
 	    <li><a href="/areasdeatuacao" class="waves-effect ajax-load">Areas de Atuação</a></li>
 	    <li><a href="#!" class="waves-effect ajax-load">Escritório</a></li>
 	    <li><a href="/equipe" class="waves-effect ajax-load">Equipe</a></li>
-	    <li><a href="#!" class="waves-effect ajax-load">Blog</a></li>
+	    <li><a href="/post" class="waves-effect ajax-load">Blog</a></li>
 	    <li><a href="/contato" class="waves-effect ajax-load">Contato</a></li>
 	  </ul>
 	  <a href="#" data-activates="slide-header" class="button-collapse hide-on-large-only" style="font-size: 2.5em !important; right: 25px !important; top: 60px !important; color: #fff !important; position: absolute !important;"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -84,11 +87,10 @@
 		    <div class="nav-wrapper">
 		      <ul id="nav-mobile">
 		        <li><a href="/#" class="ajax-load"><h5 class="def-h5">HOME</h5></a></li>
-		        <li><a href="#!" class="ajax-load"><h5 class="def-h5">QUEM SOMOS</h5></a></li>
 		        <li><a href="/areasdeatuacao" class="ajax-load"><h5 class="def-h5">ÁREAS DE ATUAÇÃO</h5></a></li>
 		        <li><a href="#!" class="ajax-load"><h5 class="def-h5">ESCRITÓRIO</h5></a></li>
 		        <li><a href="/equipe" class="ajax-load"><h5 class="def-h5">EQUIPE</h5></a></li>
-		        <li><a href="#!" class="ajax-load"><h5 class="def-h5">BLOG</h5></a></li>
+		        <li><a href="/post" class="ajax-load"><h5 class="def-h5">BLOG</h5></a></li>
 		        <li><a href="/contato" class="ajax-load"><h5 class="def-h5">CONTATO</h5></a></li>
 		      </ul>
 		    </div>

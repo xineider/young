@@ -13,6 +13,8 @@ var index = require('./app/controller/index');
 var areasdeatuacao = require('./app/controller/areasdeatuacao');
 var contato = require('./app/controller/contato');
 var equipe = require('./app/controller/equipe');
+var categoria = require ('./app/controller/categoria');
+var post = require('./app/controller/post');
 
 var app = express();
 var control = new Control;
@@ -103,6 +105,8 @@ app.use('/', index);
 app.use('/areasdeatuacao', areasdeatuacao);
 app.use('/contato', contato);
 app.use('/equipe', equipe);
+app.use('/categoria',categoria);
+app.use('/post',post);
 
 // app.use(function (req, res, next) {
 //   var pathname = parseurl(req).pathname;

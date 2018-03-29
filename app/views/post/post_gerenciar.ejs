@@ -1,0 +1,102 @@
+
+<div class="card-panel" style="background-color: transparent !important;">
+  <h4>Post</h4>
+  <a href="/post/cadastrar" class="btn-floating btn-large waves-effect waves-light blue darken-3 right ajax-load tooltipped"
+    data-position="left" data-delay="50" data-tooltip="Adicionar post">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    </a>
+  <table class="center-all">
+    <thead>
+      <tr>
+        <th>
+          Titulo
+        </th>
+        <!-- <th>
+          Conteúdo
+        </th> -->
+        <th>
+          Escritor
+        </th>
+        <th>
+          Data do Post
+        </th>
+  
+        <th>
+          Data post alteração
+        </th>
+        <th>
+          Link
+        </th>
+        <th>
+        Categorias
+        </th>
+        <th>
+          Status
+        </th>
+       <th>
+          Ação
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+      if (typeof data != 'undefined' && data.post.length > 0) {
+        for (var i = data.post.length - 1; i >= 0; i--) {
+      %>
+      <tr>
+        <td>  
+          <%= data.post[i].titulo %>
+        </td>
+        <td>
+          <%= data.post[i].escritor %>
+        </td>
+        <td>
+          <%= data.post[i].data_post %>
+        </td>
+        <td>
+          <%= data.post[i].data_post_alteracao %>
+        </td>
+        <td>
+          <%= data.post[i].link %>
+        </td>
+        <td>
+          <% if (typeof data.categoria != 'undefined' && data.categoria.length > 0) {
+           for (var j = data.categoria.length - 1; j >= 0; j--) {
+            if (data.categoria[j].id_post == data.post[i].id) {
+          %> 
+          <%= data.categoria[j].categoria_nome %> 
+          <% } } } %>
+        </td>
+        <td>
+          <% if (data.post[i].status == 0){ %>
+          Publicado
+          <% } else { %>
+          Rascunho 
+          <% } %>
+        </td>
+        <td>
+          <a class="btn-floating btn waves-effect waves-light green ajax-load" href="/post/editar/<%= data.post[i].id %>">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </a>
+          <a class="btn-floating btn waves-effect waves-light red modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.post[i].id %>"
+          data-texto="Você tem certeza que quer deletar '<%= data.post[i].nome_fantasia %>'? " data-to="/sistema/post/desativar"
+          data-back="/sistema/post">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+      <%
+        }
+      } else {
+      %>
+      <tr>
+        <td colspan="5" class="center-align">
+          Não existe post.
+        </td>
+      </tr>
+      <%
+        }
+      %>
+    </tbody>
+  </table>
+</div>
