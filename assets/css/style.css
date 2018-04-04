@@ -621,6 +621,91 @@ nav.nav-center ul li a {
 /*  padding-bottom: 50% !important;*/
   padding-bottom: 5.5rem !important;
 }
+
+/*---------------------- BLOG ---------------------*/
+#blog-section .card .card-content {
+  padding: 15px;
+}
+#blog-section .posts {
+  margin-top: 40px;
+}
+#blog-section .posts .post > .col {
+  padding: 20px !important;
+}
+#blog-section .posts .post .post-imagem img {
+  border-radius: 4px;
+}
+#blog-section .posts .post .post-conteudo .post-titulo a,
+#blog-post #post-head h5.post-titulo {
+  color: #d6b24c !important;
+}
+#blog-section .posts .post .post-conteudo .post-texto p,
+#blog-post #post-head .post .post-conteudo .post-texto p {
+  text-align: justify;
+}
+#blog-section .posts .post .post-conteudo .post-texto p {
+  max-height: 4.5em;
+  overflow: hidden;
+}
+#blog-section .posts .post .post-conteudo .post-texto a.leia-mais {
+  color: #f4d59a;
+}
+#blog-section .posts .post .post-conteudo .post-autor-data a,
+#blog-post #post-head .post-autor-data a {
+  color: #fff !important;
+}
+#blog-section .posts .post .post-conteudo .post-autor-data a .post-autor,
+#blog-post #post-head .post-autor-data a .post-autor {
+  color: #d6b24c !important;
+}
+#blog-section .ultimos-posts, #blog-section .categorias-posts {
+  margin: 30px 0;
+}
+#blog-section .ultimos-posts ul li, #blog-section .categorias-posts ul li {
+  margin: 10px 0 10px 20px;
+}
+#blog-section .ultimos-posts li a, #blog-section .categorias-posts li a {
+  color: #d2a72e;
+}
+#blog-section .ultimos-posts li, #blog-section .categorias-posts li {
+  margin-left: 20px;
+}
+#blog-section #blog-sidebar {
+  padding-left: 40px;
+}
+#blog-section .pagination li.active {
+  background: rgba(251,210,87,1) !important;
+background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+}
+#blog-section .pagination li.active a {
+  color: #000;
+}
+#blog-section .pagination li.disabled a {
+  color: #797979;
+}
+#blog-section .pagination li a {
+  color: #d6d6d6;
+}
+/*-----estilo blog-----*/
+.blog-pesquisa {
+  margin-top: 50px;
+}
+.chip {
+  border-radius: 5px;
+  background-color: #fbd256;
+}
+.chip > i {
+  margin-left: 5px;
+  font-size: 13px;
+}
+/*---------------------- BLOG ---------------------*/
+
 /*@media only screen and (max-width: 1400px) {
   nav.nav-center ul li a h5 {
     font-size: 0.8em;
@@ -740,6 +825,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
 input[type=text]:not(.browser-default):focus:not([readonly])+label {
   color: #ffd65e;
 }
+input[type=password]:not(.browser-default):focus:not([readonly]) ,
+input[type=password].valid:not(.browser-default),
+input[type=password].valid:not(.browser-default):focus,
+input[type=password].valid:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]) {
   -webkit-box-shadow: 0 1px 0 0 #ffd65e !important;
   box-shadow: 0 1px 0 0 #ffd65e !important;
@@ -837,6 +926,13 @@ table.highlight>tbody>tr {
   background: -webkit-linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%);
   background: linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%);
   color: #000 !important;
+}
+#btn-gerenciar {
+    background: rgb(255,214,94);
+    background: -moz-linear-gradient(45deg, rgba(255,214,94,1) 0%, rgba(255,232,170,1) 51%, rgba(255,214,94,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%);
+    background: linear-gradient(45deg, rgba(255,214,94,1) 0%,rgba(255,232,170,1) 51%,rgba(255,214,94,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#ffd65e',GradientType=1 );
 }
 /*--------------mudanças blog fim--------------*/
 

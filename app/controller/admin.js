@@ -3,8 +3,8 @@ var express = require('express');
 var router = express.Router();
 var Control = require('./control.js');
 var control = new Control;
-var PostModel = require('../model/postModel.js');
-var model = new PostModel;
+var AdminModel = require('../model/adminModel.js');
+var model = new AdminModel;
 var data = {};
 var app = express();
 //var Boleto = require('node-boleto').Boleto;
@@ -19,13 +19,9 @@ router.get('/', function (req, res, next) {
 		model.GetCategorias().then(data_categoria => {
 			data['categoria'] = data_categoria;
 			console.log(data);
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/index', data: data });
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'admin/admin', data: data });
 		})
 	});
-});
-
-router.get('/gerenciar', function (req, res, next) {
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/post_gerenciar', data: data });
 });
 
 router.get('/cadastrar', function (req, res, next) {
@@ -34,7 +30,6 @@ router.get('/cadastrar', function (req, res, next) {
 
 /* GET pagina de editar. */
 router.get('/editar/:id', function (req, res, next) {
-	id = req.params.id;
 	model.Ver_Post(req.params.id).then(data_post => {
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/post_editar', data: data_post });
 	});
@@ -42,13 +37,8 @@ router.get('/editar/:id', function (req, res, next) {
 
 /* GET pagina de vizualizacao. */
 router.get('/ver/:id', function (req, res, next) {
-	id = req.params.id;
 	model.Ver_Post(req.params.id).then(data_post => {
-		data ['post'] = data_post;
-		model.GetCategorias().then(data_categorias => {
-			data ['categorias'] = data_categorias;
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/post_ver', data: data });
-		});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/post_ver', data: data_post });
 	});
 });
 

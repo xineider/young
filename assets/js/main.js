@@ -26,27 +26,32 @@ $(document).on('ready', function () {
 	});
 	
 	$(".button-collapse").sideNav();
-	function FixedSidebar {
-	  $('.blog-sidebar').pushpin({
-	    top: 0,
-	    bottom: 1000,
-	    offset: 0
-	  });
-		if ($(window).scrollTop() > 100)
-	    $cache.css({
-	      'position': 'fixed',
-	      'top': '10px'
-	    });
-	  else
-	    $cache.css({
-	      'position': 'relative',
-	      'top': 'auto'
-	    });
-	}
+	// function FixedSidebar {
+	//   $('.blog-sidebar').pushpin({
+	//     top: 0,
+	//     bottom: 1000,
+	//     offset: 0
+	//   });
+	// 	if ($(window).scrollTop() > 100)
+	//     $cache.css({
+	//       'position': 'fixed',
+	//       'top': '10px'
+	//     });
+	//   else
+	//     $cache.css({
+	//       'position': 'relative',
+	//       'top': 'auto'
+	//     });
+	// }
 
 	$(document).on('click', '#fale-conosco', function(event) { 
     event.preventDefault(); 
     $(".fb-messenger-widget-simple").click();
+	});
+
+	$(document).on('click', '#slide-header li a.ajax-load', function(event) { 
+    event.preventDefault(); 
+    $(".drag-target").click();
 	});
 
 	AlignAreasText();
@@ -122,6 +127,7 @@ $(document).on('ready', function () {
   	AlignAreasText();
 		AlignFooterOnLarge();
 		AlignPostsBlog();
+		// Estados_Cidades();
 	});
 	$(document).ajaxError(function () {
 		AddErrorAjax();
@@ -769,6 +775,16 @@ function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mo
 		}
 	});
 };
+function FixedSideBar() {
+	var sideBar = $('#' + 'fixedsidebar');
+	$(sideBar).on('scroll', function(e) {
+		if (this.scrollTop > $('.nav-bar').height()) {
+			sideBar.addClass("fixed");
+		} else {
+			sideBar.removeClass("fixed");
+		}
+	});
+}
 function Estados_Cidades() {
 	$.getJSON('/assets/json/estados_cidades.json', function (data) {
 		var items = [];
