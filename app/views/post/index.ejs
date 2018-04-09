@@ -126,6 +126,73 @@
 							</div>
 						</div>
 					</div>
+					<%
+					console.log('------------------- data post ---------------------');
+					console.log(data.post);
+					if (typeof data.post != 'undefined' && data.post.length > 0) {
+						for (var i = data.post.length - 1; i >= 0; i--) {
+					%>
+					<div class="card post">
+						<div class="row">
+							<div class="col s12">
+								<div class="col s12 m5 post-imagem">
+									<div class="card-image">
+										<a href="/post/ver/<%= data.post[i].id %>" class="ajax-load">
+											<img src="/assets/imgs/blog/<%= data.post[i].arquivo %>">
+											<div class=overlay></div>
+										</a>
+									</div>
+								</div>
+								<div class="col s12 m7 post-conteudo">
+									<div class="card-content">
+										<div class="post-categorias">
+											<%
+											console.log('------------------- data categorias ---------------------');
+											console.log(data.categorias);
+											if (typeof data.categoria != 'undefined' && data.categoria.length > 0) {
+												for (var j = data.categoria.length - 1; j >= 0; j--) {
+													if(data.categoria[j].id_post == data.post[i].id) {
+											%>
+											<div class="chip">
+												<%= data.categoria[j].categoria_nome %>
+											</div>
+											<%
+										} else {}
+												}
+											} else {
+											%>
+											<%
+											}
+											%>
+										</div>
+										<h5 class="def-h5 post-titulo">
+											<a href="/post/ver/1" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula." class="ajax-load"><%= data.post[i].titulo %></a>
+										</h5>
+										<div class="post-texto">
+											<p>
+												<%= data.post[i].conteudo %>
+												
+											</p>
+												<a href="/post/ver/<%= data.post[i].id %>" class="leia-mais ajax-load">Leia Mais...</a>
+										</div>
+										<div class="post-rodape">
+											<br>
+											<p>
+												Por <a href="" class="ajax-load"><strong class="post-autor"><%= data.post[i].escritor %></strong></a>, dia <a href="" class="ajax-load"><time><%= data.post[i].data_post_alteracao %></time></a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<%
+						}
+					} else {
+					%>
+					<%
+					}
+					%>
 				</div>
 			</div>
 			<div id="blog-sidebar" class="col s10 offset-s1 l4">
@@ -144,7 +211,16 @@
 		      <div class="col s12 ultimos-posts">
 		      	<h5 class="def-h5">Últimos Posts</h5>
 		      	<ul>
-		      		<li class="truncate">
+							<%
+							if (typeof data.post != 'undefined' && data.post.length > 0) {
+								for (var i = data.post.length - 1; i >= 0; i--) {
+							%>
+							<li class="truncate">
+		      			<a href="/post/ver/<%= data.post[i].id %>" class="ajax-load">
+		      				<%= data.post[i].titulo %>
+		      			</a>
+		      		</li>
+<!-- 		      		<li class="truncate">
 		      			<a href="" class="ajax-load">
 		      				Lorem ipsum dolor sit amet, consectetur adipiscing elit et massa a nisi ullamcorper vehicula.
 		      			</a>
@@ -173,15 +249,36 @@
 		      			<a href="" class="ajax-load">
 		      				Lorem ipsum dolor sit amet, consectetur adipiscing elit et massa a nisi ullamcorper vehicula.
 		      			</a>
-		      		</li>
+		      		</li> -->
+							<%
+								}
+							} else {
+							%>
+							<%
+							}
+							%>
 		      	</ul>
 		      </div>
 		      <div class="col s12 categorias-posts">
 		      	<h5 class="def-h5">Categorias</h5>
 		      	<ul>
-		      		<li><a href="">Notícias</a></li>
+							<%
+							console.log('------------------- data categorias ---------------------');
+							console.log(data.categorias);
+							if (typeof data.categorias != 'undefined' && data.categorias.length > 0) {
+								for (var m = data.categorias.length - 1; m >= 0; m--) {
+							%>
+							<li><a href=""><%= data.categorias[m].nome %></a></li>
+							<%
+								}
+							} else {
+							%>
+							<%
+							}
+							%>
+<!-- 		      		<li><a href="">Notícias</a></li>
 		      		<li><a href="">Dicas</a></li>
-		      		<li><a href="">Informativo</a></li>
+		      		<li><a href="">Informativo</a></li> -->
 		      	</ul>
 		      </div>
 				</div>

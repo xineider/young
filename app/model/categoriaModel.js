@@ -21,6 +21,15 @@ class CategoriaModel {
 			});
 		});
 	}
+	// Ver_Categoria(id) {
+	// 	return new Promise(function (resolve, reject) {
+	// 		helper.Query('SELECT a.*\
+	// 			(SELECT b.nome FROM node_categoria as b WHERE b.id = a.id_categoria) as categoria_nome,\
+	// 			FROM node_post_categoria as a WHERE deletado = ? AND id = ?', [0, id]).then(data => {
+	// 			resolve(data);
+	// 		});
+	// 	});
+	// }
 
 	
 

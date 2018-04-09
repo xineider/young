@@ -227,7 +227,7 @@ nav.new-nav {
   top: 0 !important;
   line-height: 80px !important;
   height: 100px !important;
-  overflow: hidden !important;
+/*  overflow: hidden !important;*/
 }
 .trans-bg {
   background-color: transparent !important;
@@ -325,6 +325,40 @@ ul#slide-header:not(.browser-default)>li {
 }
 #slide-header.side-nav > li a {
   color: #fff;
+}
+#nav-mobile li > a > h5 {
+  margin: .60rem 0 0 0;
+  font-size: 72px;
+}
+#blog-post .post-texto a {
+  color: #fbd256;
+}
+#blog-post blockquote {
+  border-left: 5px solid #d6b24c;
+}
+#blog-section .post-rodape a {
+  color: #d6b24c;
+}
+#nav-mobile li > a:hover > h5 {
+/*  background: linear-gradient(rgba(251,210,87,1), #eee);
+  background: -webkit-linear-gradient(rgba(251,210,87,1), #eee);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;*/
+  opacity: 0.9 !important;
+  background: rgba(251,210,87,1) !important;
+  background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+  background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  transition: 0.5s ease;
 }
 .facebot {
   overflow: hidden !important;
@@ -432,41 +466,62 @@ ul#slide-header:not(.browser-default)>li {
   position: relative;
   padding: 5px;
 }
-.areas-de-atuacao-home > .areas-grupo > a {
+.areas-de-atuacao-home/* > .areas-grupo >*/ .area-img > a,
+.areas-de-atuacao-home/* > .areas-grupo >*/ .area-img > i {
   color: #fff;
 }
-.areas-de-atuacao-home > .areas-grupo > a > .area-img > .faixa-nome {
+.areas-de-atuacao-home/* > .areas-grupo >*/ .area-img > a > .faixa-nome {
   position: absolute;
   text-align: center;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+/*  background-color: rgba(0, 0, 0, 0.6);*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
-.areas-de-atuacao-home > .areas-grupo > a:hover > .area-img > .faixa-nome {
+.areas-de-atuacao-home/* > .areas-grupo >*/ .area-img > a:hover > .faixa-nome {
   background-color: transparent;
   transition: .5s ease;
+  color: #000;
 }
-.areas-de-atuacao-home > .areas-grupo > a:hover > .area-img > .overlay-preto {
+.areas-de-atuacao-home/* > .areas-grupo >*/ .area-img > a:hover > .overlay-preto {
   position: absolute;
   left: -5px;
   top: -5px;
   bottom: -5px;
   right: -5px;
-  background-color: #00000099 !important;
+  /*background-color: #00000099 !important;*/
   transition: .5s ease;
 }
-.areas-de-atuacao-home > .areas-grupo > a > .area-img > img {
-  -webkit-transition: -webkit-transform 0.15s ease 0s;
-  -moz-transition: -moz-transform 0.15s ease 0s;
-  -o-transition: -o-transform 0.15s ease 0s;
-  transition: transform 0.15s ease 0s;
+.areas-de-atuacao-home .area-img > a > img.logo-img:after {
+  content:url("/assets/imgs/logo_areas1.png");
+}
+.areas-de-atuacao-home .area-img > a > img.logo-img:before {
+  content: '';
+  background-image: url("/assets/imgs/logo_areas1.png");
+}
+.areas-de-atuacao-home .area-img > a > img.logo-img {
+  content:url("/assets/imgs/logo_areas1.png");
+  -webkit-transition: -webkit-transform 0.25s ease 0s;
+  -moz-transition: -moz-transform 0.25s ease 0s;
+  -o-transition: -o-transform 0.25s ease 0s;
+  transition: transform 0.25s ease 0s;
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
 }
-.areas-de-atuacao-home > .areas-grupo > a:hover > .area-img > img {
-  -webkit-transition: -webkit-transform 0.15s ease 0s;
-  -moz-transition: -moz-transform 0.15s ease 0s;
-  -o-transition: -o-transform 0.15s ease 0s;
-  transition: transform 0.15s ease 0s;
+.areas-de-atuacao-home .area-img > a:hover > img.logo-img:after {
+  content:url("/assets/imgs/logo_areas4.png");
+}
+.areas-de-atuacao-home .area-img > a:hover > img.logo-img {
+  content:url("/assets/imgs/logo_areas4.png");
+  -webkit-transition: -webkit-transform 0.25s ease 0s;
+  -moz-transition: -moz-transform 0.25s ease 0s;
+  -o-transition: -o-transform 0.25s ease 0s;
+  transition: transform 0.25s ease 0s;
   -webkit-transform: scale3d(1.08, 1.08, 1.08);
   transform: scale3d(1.08, 1.08, 1.08);
 }
@@ -634,6 +689,30 @@ nav.nav-center ul li a {
 }
 #blog-section .posts .post .post-imagem img {
   border-radius: 4px;
+  transition: .25s ease;
+}
+#blog-section .posts .post .post-imagem .card-image a div.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(251,210,87,1) !important;
+  background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+  background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+  /*background: #000000 !important;*/
+  opacity: 0;
+  transition: 0.25s ease;
+}
+#blog-section .posts .post a:hover div.overlay {
+  opacity: 0.1 !important;
 }
 #blog-section .posts .post .post-conteudo .post-titulo a,
 #blog-post #post-head h5.post-titulo {

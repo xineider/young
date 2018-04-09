@@ -18,9 +18,13 @@ router.get('/', function (req, res, next) {
 		data['post'] = data_post;
 		model.GetCategorias().then(data_categoria => {
 			data['categoria'] = data_categoria;
+			model.GetTodasCategorias().then(data_todas_categorias => {
+				data['categorias'] = data_todas_categorias;
+			console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& data post controler &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
 			console.log(data);
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/index', data: data });
-		})
+			});
+		});
 	});
 });
 
@@ -80,8 +84,8 @@ router.post('/atualizar/:id', function (req, res, next) {
 
 router.post('/site/uploadarquivo', function(req, res, next) {
   var sampleFile = req.files.arquivo;
-  var nome = 'curriculo_'+ control.DateTimeForFile()+'_'+sampleFile.name;
-  sampleFile.mv('./assets/files/documentos/' + nome,function(err){
+  var nome = 'blog_capa'+ control.DateTimeForFile()+'_'+sampleFile.name;
+  sampleFile.mv('./assets/imgs/blog/' + nome,function(err){
   	if(err)
     	return res.status(500).send(err);
    	res.json(nome);

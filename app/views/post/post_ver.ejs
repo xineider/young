@@ -1,17 +1,18 @@
 <div id="blog-post">
 	<%
-	console.log('------------------- data post ---------------------');
-	console.log(data.post);
 	if (typeof data.post != 'undefined' && data.post.length > 0) {
 		for (var i = data.post.length - 1; i >= 0; i--) {
 	%>
-	<div id="post-head">
-		<h5 class="def-h5 post-titulo" style="position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%); margin: 0; text-align: center; text-transform: uppercase; font-size: 2em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula.</h5>
-		<div class="post-autor-data" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-			<br>
-			<p>
-				Por <a href="" class="ajax-load"><strong class="post-autor">Amadeus</strong></a>, <a href="" class="ajax-load"><time>2 meses</time></a> atrás
-			</p>
+	<div id="post-head" style="position: relative; width: 100%; height: 300px; background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].arquivo %>) no-repeat center !important;">
+		<div class="post-head-center" style="position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%); margin: 0; text-align: center;">
+			<h5 class="def-h5 post-titulo" style="text-transform: uppercase; font-size: 2em;"><%= data.post[i].titulo %></h5>
+<!-- 			<h5 class="def-h5 post-titulo" style="text-transform: uppercase; font-size: 2em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula.</h5> -->
+			<div class="post-autor-data">
+				<br>
+				<p>
+					Por <a href="" class="ajax-load"><strong class="post-autor">Amadeus</strong></a>, <a href="" class="ajax-load"><time>2 meses</time></a> atrás
+				</p>
+			</div>
 		</div>
 		<!-- <img src="/assets/imgs/scale-bg.png" width="100%" height="auto"> -->
 	</div>
@@ -29,19 +30,43 @@
 						</div> -->
 						<div class="card-content">
 							<div class="post-texto" style="margin-bottom: 60px; margin-top: 40px;">
-								<%= data.post[i].conteudo %>
+								<%- data.post[i].conteudo %>
 								<!-- <p>
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula. Sed id leo ut nulla hendrerit imperdiet. Aenean tincidunt posuere posuere. Aenean in ullamcorper velit, ut elementum dui. Etiam felis augue, venenatis id tincidunt dignissim, maximus non sem. Sed tincidunt enim vel est dictum consectetur. Nunc at urna vitae dolor placerat fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula. Sed id leo ut nulla hendrerit imperdiet. Aenean tincidunt posuere posuere. Aenean in ullamcorper velit, ut elementum dui. Etiam felis augue, venenatis id tincidunt dignissim, maximus non sem. Sed tincidunt enim vel est dictum consectetur. Nunc at urna vitae dolor placerat fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula. Sed id leo ut nulla hendrerit imperdiet. Aenean tincidunt posuere posuere. Aenean in ullamcorper velit, ut elementum dui. Etiam felis augue, venenatis id tincidunt dignissim, maximus non sem. Sed tincidunt enim vel est dictum consectetur. Nunc at urna vitae dolor placerat fringilla.
 								</p> -->
 							</div>
 							<div class="post-categorias">
 								<p style="line-height: 32px; float: left; padding-right: 10px;">Categorias:</p>
-								<div class="chip">
-									Informativo<i class="fa fa-times"></i>
-								</div>
-								<div class="chip">
-									Dicas<i class="fa fa-times"></i>
-								</div>
+								<!-- <div class="post-categorias">
+									<p style="line-height: 32px; float: left; padding-right: 10px;">Categorias:</p>
+									<div class="chip">
+										Informativo<i class="fa fa-times"></i>
+									</div>
+									<div class="chip">
+										Dicas<i class="fa fa-times"></i>
+									</div>
+								</div> -->
+								<%
+								console.log('------------------- data categorias ---------------------');
+								console.log(data.categorias);
+								if (typeof data.categorias != 'undefined' && data.categorias.length > 0) {
+									for (var j = data.categorias.length - 1; j >= 0; j--) {
+								%>
+									<div class="chip">
+										<%= data.categorias[j].categoria_nome %>
+									</div>
+								<%
+									} 
+								} else {
+								%>
+								<style type="text/css">
+									.post-categorias {
+										display: none;
+									}
+								</style>
+								<%
+									}
+								%>
 							</div>
 						</div>
 					</div>
@@ -58,7 +83,7 @@
 	%>
 </div>
 
-<style type="text/css">
+<!-- <style type="text/css">
 /*	#index-banner {
 		display: none;
 	}*/
@@ -68,4 +93,4 @@
 		height: 300px;
 		background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/scale-bg.png) no-repeat center !important;
 	}
-</style>
+</style> -->
