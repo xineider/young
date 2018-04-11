@@ -722,7 +722,10 @@ nav.nav-center ul li a {
 #blog-post #post-head .post .post-conteudo .post-texto p {
   text-align: justify;
 }
-#blog-section .posts .post .post-conteudo .post-texto p {
+#blog-post #post-head .post .post-conteudo .post-texto * {
+  font-size: 1em !important;
+}
+#blog-section .posts .post .post-conteudo .post-texto {
   max-height: 4.5em;
   overflow: hidden;
 }

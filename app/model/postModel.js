@@ -12,7 +12,7 @@ class PostModel {
 				a.escritor,\
 				DATE_FORMAT(a.data_post, "%d/%m/%Y") as data_post,\
 				a.link,\
-				a.texto,\
+				a.conteudo,\
 				a.arquivo,\
 				DATE_FORMAT(a.data_post_alteracao, "%d/%m/%Y") as data_post_alteracao,\
 				a.status\

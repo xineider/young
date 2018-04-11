@@ -53,6 +53,7 @@ $(document).on('ready', function () {
     event.preventDefault(); 
     $(".drag-target").click();
 	});
+	  $('#testimonials').alpha({layout: 'alt', bubbleColor: 'rgba(0, 0, 0, 0)'});
 
 	AlignAreasText();
 	AlignFooterOnLarge();
@@ -75,6 +76,8 @@ $(document).on('ready', function () {
 		} else {
 		}
 	};
+
+	$('.' + 'plain-text').text();
 
   var scroll_options = [
     {selector: '#staggered-test', offset: 50, callback: function(el) {
@@ -117,11 +120,11 @@ $(document).on('ready', function () {
         // put your options and callbacks here
     })
     criarDepoimentos();
+	  $('#testimonials').alpha();
     $('.parallax').parallax();
 		Materialize.updateTextFields();
   	$('.collapsible').collapsible();
 		if($('#editor').length>0){
-
 			$( '#editor' ).ckeditor();
 		}
   	AlignAreasText();

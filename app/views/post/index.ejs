@@ -135,6 +135,9 @@
 					<div class="card post">
 						<div class="row">
 							<div class="col s12">
+								<%
+									if(data.post[i].arquivo != undefined && data.post[i].arquivo != '') {
+								%>
 								<div class="col s12 m5 post-imagem">
 									<div class="card-image">
 										<a href="/post/ver/<%= data.post[i].id %>" class="ajax-load">
@@ -144,6 +147,13 @@
 									</div>
 								</div>
 								<div class="col s12 m7 post-conteudo">
+									<%
+										} else {
+									%>
+								<div class="col s12 post-conteudo">
+									<%
+										}
+									%>
 									<div class="card-content">
 										<div class="post-categorias">
 											<%
@@ -169,16 +179,15 @@
 											<a href="/post/ver/1" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula." class="ajax-load"><%= data.post[i].titulo %></a>
 										</h5>
 										<div class="post-texto">
-											<p>
-												<%= data.post[i].conteudo %>
-												
-											</p>
+												<p>
+													<%- data.post[i].conteudo %>
+												</p>
 												<a href="/post/ver/<%= data.post[i].id %>" class="leia-mais ajax-load">Leia Mais...</a>
 										</div>
 										<div class="post-rodape">
 											<br>
 											<p>
-												Por <a href="" class="ajax-load"><strong class="post-autor"><%= data.post[i].escritor %></strong></a>, dia <a href="" class="ajax-load"><time><%= data.post[i].data_post_alteracao %></time></a>
+												Por <a href="" class="ajax-load"><strong class="post-autor"><%= data.post[i].escritor %></strong></a>, dia <a href="" class="ajax-load"><time><%= data.post[i].data_post_alteracao %></time></a>.
 											</p>
 										</div>
 									</div>
@@ -297,6 +306,13 @@
 		</div>
 	</div>
 </section>
+
+<style type="text/css">
+	.post-conteudo .post-texto article {
+		font-size: 15px;
+		line-height: 1.5em !important;
+	}
+</style>
 
 <!-- <style type="text/css">
 	#blog-section .card .card-content {
