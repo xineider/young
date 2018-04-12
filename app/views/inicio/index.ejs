@@ -138,39 +138,90 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 	<!-- ****************************** fim novo menu *************************** -->
 
 <div id="areas-home black" class="container-full">
-    <div class="menu-bg container semi-full center">
-    	<div class="row center">
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-        <div class="col l1 menu-img"></div>
-    	</div>
-    </div>
+  <div class="menu-bg container semi-full center">
+  	<div class="menu-wrapper row center"">
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  		<div class="menu-wrapper-img">
+    		<h5 class="def-h5 menu-title">Direito Civil</h5>
+        <div class="menu-img"></div>
+      </div>
+  	</div>
+  </div>
 </div>
 
 <style type="text/css">
 #areas-home {
 	padding: 50px 0;
 }
-.menu-bg {
-  background: url("/assets/imgs/scale-bg.png") center;
-}
-.menu-img {
-	background-color: rgba(23, 45, 120, 0.3);
+.menu-wrapper-img {
   height: 400px;
-  margin: 0 3px;
+  margin: 0;
   display: inline-block;
-  border: 1px solid #000000;
+  width: 10%;
+	position: relative;
   transform: rotate(15deg);
 }
-
-.container {
+.menu-bg {
+  background: url("/assets/imgs/hammer-bg.png") no-repeat center;
 }
+.menu-title {
+	text-align: left !important;
+	margin: auto;
+	text-align: center;
+	font-style: italic;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(-15deg);
+}
+.menu-img {
+	background-color: rgba(0, 0, 0, 0.5);
+  height: 400px;
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  border: 2px solid #000000;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.menu-img:hover {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+
 .center {
   margin: auto;
 }
@@ -178,7 +229,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 <!-- ############################################################################ -->
 <!-- 	<div class="contaier">
 		<div id="areas-home" class="row">
-		  		<h5 class="def-h5 center" style="margin: 0 !important;">ÁREAS DE ATUAÇÃO</h5>
+		  <h5 class="def-h5 center" style="margin: 0 !important;">ÁREAS DE ATUAÇÃO</h5>
 			<div class="menu-wrapper">
 				<div class="col menu-img-wrapper">
 					<h5 class="def-h5 menu-title center">DIREITO CIVIL</h5>
@@ -320,11 +371,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 <!--   </div> -->
   <div class="container depo-ebook">
 	  <div class="row" style="margin-top: 60px;">
-	  	<div class="col s12 m7 l8 no-pad-depo">
-			  <div class="center" style="width: 100%;position: relative;top: -20px;">
+	  	<div class="col s12 m6 no-pad-depo">
+			  <div class="center" style="width: 100%;position: relative;/*top: -20px;*/">
 			  	<h5 class="def-h5">DEPOIMENTOS</h5>
 			  </div>
-			  <!-- <div id="testimonial-slider" class="testimonial_slider"></div> -->
+			  <!-- <div id="testimonial-slider" class="testimonial_slider"></div> --> <!-- antigo testimonial -->
 			   <section id="testimonials">
 
             <div class="testim-ovl"></div>
@@ -336,14 +387,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                <li class="customer">
 
                    <div class="testimonial-bubble">
-                       <p>Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc,</p>
+                       <p> Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas.</p>
                    </div>
 
                    <div class="cus-profile">
                       <span class="cus-image"><img src="/assets/imgs/scale-bg.png"></span>
                      <span class="cus-name">
-                         Customer
-                         <span class="cus-title">His title</span>
+                         Renato
+                         <span class="cus-title">CEO da Sarashana Indústrias Ltda</span>
                       </span>  
                    </div>
                  
@@ -352,14 +403,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                <li class="customer">
 
                    <div class="testimonial-bubble">
-                       <p> -- Testimonial here -- </p>
+                       <p> Melhor indicação que poderia fazer. Comprometimento e confiança sem igual e profissionais excelentes. Recomendo totalmente. </p>
                    </div>
 
                    <div class="cus-profile">
                       <span class="cus-image"><img src="/assets/imgs/lawyer-bg.png"></span>
                       <span class="cus-name">
-                         -- client name --
-                         <span class="cus-title">--His title--</span>
+                         Marcos
+                         <span class="cus-title">CEO e Assador Chefe na Churrascarias Schneider</span>
                       </span>   
                    </div>
                  
@@ -375,8 +426,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
           
       </section><!-- .testimonials --> 
 	  	</div>
-	  	<div class="col s12 m5 l4 center">
-	  		<div class="container-full" style="padding-bottom: 50px !important">
+	  	<div class="col s12 m5 l6 center">
+	  		<div class="container-full" style="padding-bottom: 60px !important">
 	  			<h5 class="def-h5 center" style="padding-bottom: 20px;">BAIXE UM GUIA PRÁTICO SOBRE SEUS DIREITOS</h5>
 	  			<a target="_blank" href="http://www.editoraage.com.br/produto/1865/casa-das-mil-janelas,-a-(prevenda)">
   					<img src="/assets/imgs/pseudo-book.jpg" style="width: auto !important; height: auto !important; max-height: 200px !important;">

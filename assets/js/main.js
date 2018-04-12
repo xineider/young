@@ -53,7 +53,7 @@ $(document).on('ready', function () {
     event.preventDefault(); 
     $(".drag-target").click();
 	});
-	  $('#testimonials').alpha({layout: 'alt', bubbleColor: 'rgba(0, 0, 0, 0)'});
+	// $('#testimonials').alpha({layout : 'alt', delay : 5000, bubbleColor : 'rgba(0, 0, 0, 0)'});
 
 	AlignAreasText();
 	AlignFooterOnLarge();
@@ -127,6 +127,7 @@ $(document).on('ready', function () {
 		if($('#editor').length>0){
 			$( '#editor' ).ckeditor();
 		}
+		// $('#testimonials').alpha({layout : 'alt', delay : 5000, bubbleColor : 'rgba(0, 0, 0, 0)'});
   	AlignAreasText();
 		AlignFooterOnLarge();
 		AlignPostsBlog();
