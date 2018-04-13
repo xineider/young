@@ -694,6 +694,7 @@ nav.nav-center ul li a {
 #blog-section .posts .post .post-imagem img {
   border-radius: 4px;
   transition: .25s ease;
+  padding: 5px 5px 5px 0;
 }
 #blog-section .posts .post .post-imagem .card-image a div.overlay {
   position: absolute;
@@ -732,6 +733,10 @@ nav.nav-center ul li a {
 #blog-section .posts .post .post-conteudo .post-texto {
   max-height: 4.5em;
   overflow: hidden;
+}
+#blog-post #post-head .post .post-conteudo .post-texto a,
+#blog-post #post-head .post .post-conteudo .post-texto a font {
+  color: #ffedbd !important;
 }
 #blog-section .posts .post .post-conteudo .post-texto a.leia-mais {
   color: #f4d59a;
