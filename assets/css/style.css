@@ -256,7 +256,7 @@ ul.large-info.right li a {
   font-family: "Bebas Neue", sans-serif;
 }
 .bg-img-n {
-  background: url("/assets/imgs/lawyer-bg.png");
+  background: url("/assets/imgs/office-bg.jpg");
 /*  background-position: top;*/
   background-size: 100%;
   background-repeat: no-repeat;
@@ -272,9 +272,13 @@ ul.large-info.right li a {
   background-repeat: no-repeat;
 }
 .bg-image {
-  background: url("/assets/imgs/lawyer-bg.png");
+  background: rgba(0, 0, 0, 0.5) url("/assets/imgs/office-bg.jpg");
 /*  background-position: top;*/
-  background-size: 100%;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
   background-repeat: no-repeat;
 }
 /*.bg-img-n span { 
@@ -328,7 +332,7 @@ ul#slide-header:not(.browser-default)>li {
 }
 #nav-mobile li > a > h5 {
   margin: .60rem 0 0 0;
-  font-size: 72px;
+  font-size: 1.64em;
 }
 #blog-post .post-texto a {
   color: #fbd256;
@@ -533,7 +537,7 @@ ul#slide-header:not(.browser-default)>li {
     display: none !important;
   }
 }*/
-#equipe-section .card {
+#equipe-section .card, #escritorio-section .card {
   -webkit-transition: -webkit-transform 0.15s ease 0s;
   -moz-transition: -moz-transform 0.15s ease 0s;
   -o-transition: -o-transform 0.15s ease 0s;
@@ -541,7 +545,7 @@ ul#slide-header:not(.browser-default)>li {
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
 }
-#equipe-section .card:hover {
+#equipe-section .card:hover, #escritorio-section .card:hover {
   -webkit-transition: -webkit-transform 0.15s ease 0s;
   -moz-transition: -moz-transform 0.15s ease 0s;
   -o-transition: -o-transform 0.15s ease 0s;
