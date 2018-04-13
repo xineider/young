@@ -730,12 +730,14 @@ nav.nav-center ul li a {
 #blog-post #post-head .post .post-conteudo .post-texto * {
   font-size: 1em !important;
 }
+#blog-post #post-head .post .post-conteudo .post-texto a * {
+  color: #fff !important;
+}
 #blog-section .posts .post .post-conteudo .post-texto {
   max-height: 4.5em;
   overflow: hidden;
 }
-#blog-post #post-head .post .post-conteudo .post-texto a,
-#blog-post #post-head .post .post-conteudo .post-texto a font {
+#blog-post #post-head .post .post-conteudo .post-texto a {
   color: #ffedbd !important;
 }
 #blog-section .posts .post .post-conteudo .post-texto a.leia-mais {
@@ -744,6 +746,9 @@ nav.nav-center ul li a {
 #blog-section .posts .post .post-conteudo .post-autor-data a,
 #blog-post #post-head .post-autor-data a {
   color: #fff !important;
+}
+#blog-section a {
+  color: #d2a72e;
 }
 #blog-section .posts .post .post-conteudo .post-autor-data a .post-autor,
 #blog-post #post-head .post-autor-data a .post-autor {
@@ -754,9 +759,6 @@ nav.nav-center ul li a {
 }
 #blog-section .ultimos-posts ul li, #blog-section .categorias-posts ul li {
   margin: 10px 0 10px 20px;
-}
-#blog-section .ultimos-posts li a, #blog-section .categorias-posts li a {
-  color: #d2a72e;
 }
 #blog-section .ultimos-posts li, #blog-section .categorias-posts li {
   margin-left: 20px;
