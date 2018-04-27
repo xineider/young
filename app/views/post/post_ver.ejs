@@ -1,5 +1,7 @@
 <div id="blog-post">
 	<%
+								console.log('------------------- data post ---------------------');
+								console.log(data.post);
 	if (typeof data.post != 'undefined' && data.post.length > 0) {
 		for (var i = data.post.length - 1; i >= 0; i--) {
 	%>
@@ -47,16 +49,16 @@
 									</div>
 								</div> -->
 								<%
-								console.log('------------------- data categorias ---------------------');
-								console.log(data.categorias);
-								if (typeof data.categorias != 'undefined' && data.categorias.length > 0) {
-									for (var j = data.categorias.length - 1; j >= 0; j--) {
+								if (typeof data.categoria != 'undefined' && data.categoria.length > 0) {
+									for (var j = data.categoria.length - 1; j >= 0; j--) {
+										if (data.categoria[j].id_post === data.post[i].id) {
 								%>
 									<div class="chip">
-										<%= data.categorias[j].categoria_nome %>
+										<%= data.categoria[j].categoria_nome %>
 									</div>
 								<%
-									} 
+										} else {}
+									}
 								} else {
 								%>
 								<style type="text/css">

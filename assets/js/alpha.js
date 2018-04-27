@@ -15,7 +15,7 @@
             autoplay : 'on',
             delay : 4000,
             layout : 'alt',
-            bubbleColor: 'rgba(0, 0, 0, 0)',
+            bubbleColor: 'none',
             bubbleText : 'black',
             quoteColor: 'white',
             active : 0

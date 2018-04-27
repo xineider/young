@@ -49,8 +49,8 @@ router.get('/ver/:id', function (req, res, next) {
 	id = req.params.id;
 	model.Ver_Post(req.params.id).then(data_post => {
 		data ['post'] = data_post;
-		model.GetCategorias().then(data_categorias => {
-			data ['categorias'] = data_categorias;
+		model.GetCategorias().then(data_categoria => {
+			data ['categoria'] = data_categoria;
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/post_ver', data: data });
 		});
 	});

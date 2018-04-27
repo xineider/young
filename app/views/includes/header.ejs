@@ -8,7 +8,6 @@
 		<script src="/assets/js/jquery.mask.js"></script>
 		<script src="/assets/js/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
-		<script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script><!-- testimonial novo -->
 		<script type="text/javascript" src="/assets/js/alpha.js"></script><!-- testimonial novo -->
 		<!-- <script src="/assets/js/testimonial.js"></script> -->
 		<script type="text/javascript" src="https://embed.modernapp.co/chat?code=0c1cc0f7577081d7468e0c2c43bb52f1"></script>
@@ -31,13 +30,125 @@
   <body class="brown-bg">
   	<header>
 <!--   	 style="position: absolute !important; padding-bottom: 23rem !important; min-height: 100% !important" -->
-			<div id="top-mob" class="container-full" style="background-color: #2d2d2d !important;">
-				<div class="row">
-					<div class="col s6 m4 offset-m2 center top-num"><a class="valign-wrapper" href="tel:+5551999254616"><i class="fa fa-phone-square left"></i>[51] 3590.2079</a></div>
-					<div class="col s6 m4 center top-num"><a class="valign-wrapper" href="tel:+5551982032398"><i class="fa fa-phone-square left"></i>[51] 3589.5507</a></div>
+			<div id="top-mob" class="container-full" style="background-color: #13100f !important;">
+<!-- 				<div class="row">
+					<div class="col s10 offset-s1 m4 offset-m4">
+						<img src="/assets/imgs/logo.png">
+					</div>
+				</div> -->
+				<div class="row info" style="position: relative;">
+					<div class="menu-bars col s2">
+						<a href="#" data-activates="slide-header" class="button-collapse hide-on-large-only white-text"><i class="fa fa-bars" aria-hidden="true"></i></a>
+					</div>
+					<div class="col s12 l4 logo center">
+						<a href="/#"><img src="/assets/imgs/logo.png" style="margin: 5px 0 5px 20px; max-height: 80px;"></a>
+					</div>
+					<!-- <div class="col s12 m6">
+						<div class="col s6 center top-num">
+							<div class="col s12">
+								<h5 class="def-h5 white-text">Porto Alegre</h5>
+							</div>
+							<div class="col s12">
+							<a class="valign-wrapper" href="tel:+5551999254616"><i class="fa fa-phone-square left"></i>[51] 3590.2079</a>
+							</div>
+						</div>
+						<div class="col s6 center top-num">
+							<div class="col s12">
+								<h5 class="def-h5 white-text">São Leopoldo</h5>
+							</div>
+							<div class="col s12">
+								<a class="valign-wrapper" href="tel:+5551982032398"><i class="fa fa-phone-square left"></i>[51] 3589.5507</a>
+							</div>
+						</div>
+						<div class="col s12">
+							<a href="mailto:"><i class="fa fa-mail left"></i></a>
+						</div>
+					</div> -->
+					<div class="col s12 l8 hide-on-med-and-down">
+						<div class="col s6 l6 offset-l2 center top-num hide-on-med-and-down">
+							<div class="col s12">
+								<h5 class="def-h5 white-text">Porto Alegre: <a href="tel:+555135902079"> [51] 3590.2079</a></h5>
+							</div>
+							<div class="col s12">
+								<h5 class="def-h5 white-text">São Leopoldo: <a href="tel:+555135895507">[51] 3589.5507</a></h5>
+							</div>
+						</div>
+						<div class="col s6 l6 l8 center top-num-mob hide-on-large-only">
+							<div class="col s12">
+								<h5 title="Porto Alegre" class="def-h5 white-text"><i class="fa fa-phone-square"></i><a href="tel:+555135902079">[51] 3590.2079</a></h5>
+							</div>
+							<div class="col s12 hide-on-large-only">
+								<h5 title="São Leopoldo" class="def-h5 white-text"><i class="fa fa-phone-square"></i><a href="tel:+555135895507">[51] 3589.5507</a></h5>
+							</div>
+						</div>
+						<div class="col s6 l4 center top-num">
+							<!-- <div class="col s12">
+								<h5 class="def-h5 white-text"><a href="mailto:duvidas@young.adv.br">duvidas@young.adv.br</a></h5>
+							</div> -->
+							<div class="col s12 icones-sociais">
+								<a title="facebook.com/young" href="https://www.facebook.com/Young-Dias-Lauxen-Lima-Advogados-109269385838608/">
+									<i class="fa fa-facebook-square"></i>
+								</a>
+								<a title="twitter.com/young" href="http://twitter.com/youngadvogados">
+									<i class="fa fa-twitter-square"></i>
+								</a>
+								<a title="duvidas@young.adv.br" href="mailto:i2juqbspdhuwaic2@ethereal.email">
+									<i class="fa fa-envelope"></i>
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<nav class="fit-trans-bg new-nav">
+			<style type="text/css">
+				#top-mob .top-num h5,
+				#top-mob .top-num-mob {
+					line-height: 45px;
+					font-size: 20px;
+					margin: 0;
+				}
+				#top-mob .top-num i {
+					line-height: 45px;
+					font-size: 20px;
+				}
+				#top-mob .top-num .mob {
+					position: absolute;
+				}
+				#top-mob .icones-sociais a i {
+					/*line-height: 45px;
+					font-size: 35px;
+					margin:-5px 5px 0 5px;*/
+					color: #ffffff;
+					line-height: 90px;
+					font-size: 40px;
+					margin: 0 5px;
+				}
+				#top-mob .icones-sociais a:hover i,
+				#top-mob .top-num h5 a:hover {
+				  opacity: 0.9 !important;
+				  background: rgba(251,210,87,1) !important;
+				  background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+				  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+				  background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+				  background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+				  background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+				  background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+				  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+				  -webkit-background-clip: text !important;
+				  background-clip: text !important;
+				  color: transparent !important;
+				  transition-duration: .5s;
+				  -webkit-transition-duration: .5s;
+				}
+				#top-mob .menu-bars {
+				  position: absolute;
+				  top: 0;
+				  left: 20px;
+				  line-height: 90px;
+				  font-size: 50px;
+				}
+			</style>
+			<!-- <nav class="fit-trans-bg new-nav">
 	  		<div class="container" style="max-width: 1920px !important; width: 100% !important;">
 			    <div class="nav-wrapper">
 			      <div class="row">
@@ -49,7 +160,7 @@
 			      </div>
 			    </div>
 		  	</div>
-		  </nav>
+		  </nav> -->
 
 	    <ul id="slide-header" class="side-nav">
 		    <li id="side-nav-nome">
@@ -59,9 +170,9 @@
 			      </div>
 			      <a href="/#" class="ajax-load"><img class="ajax-load" src="/assets/imgs/parallax-logo.png" style="max-width: 50%; margin: 0 25%;"></a>
 			      <a href="/contato"><span class="white-text center name ajax-load">Young, Dias, Lauxen & Lima</span></a>
-			      <a href=""><span class="white-text center email ajax-load">duvidas@young</span></a>
-			      <a href=""><span class="white-text center email ajax-load">(51) 3590.2079</span></a>
-			      <a href=""><span class="white-text center email ajax-load">(51) 3589.5507</span></a>
+			      <a href=""><span class="white-text center email ajax-load"><i class="fa fa-envelope"></i> duvidas@young</span></a>
+			      <a href=""><span class="white-text center email ajax-load"><i class="fa fa-phone"></i> (51) 3590.2079</span></a>
+			      <a href=""><span class="white-text center email ajax-load"><i class="fa fa-phone"></i> (51) 3589.5507</span></a>
 			    </div>
 			  </li>
 		    <li><div class="divider"></div></li>
@@ -72,20 +183,155 @@
 		    <li><a href="/post" class="waves-effect ajax-load">Blog</a></li>
 		    <li><a href="/contato" class="waves-effect ajax-load">Contato</a></li>
 		  </ul>
-		  <a href="#" data-activates="slide-header" class="button-collapse hide-on-large-only" style="font-size: 2.5em !important; right: 25px !important; top: 60px !important; color: #fff !important; position: absolute !important;"><i class="fa fa-bars" aria-hidden="true"></i></a>
-
-			<div class="section no-pad-bot no-margin" id="index-banner">
+		  <!-- <a href="#" data-activates="slide-header" class="button-collapse hide-on-large-only" style="font-size: 2.5em !important; right: 25px !important; top: 60px !important; color: #fff !important; position: absolute !important;"><i class="fa fa-bars" aria-hidden="true"></i></a>
+ -->
+			<div class="section no-pad-bot" id="index-banner">
 		    <div class="container container-full bg-image">
-		      <br><br><br><br>
+		    	<!-- <a id="btn-gerenciar" href="/login/index" class="btn hide-on-large-only right waves-effect waves-light black-text" style="position: absolute;bottom: 15px;/* margin-left: -25%; *//* transform: translate(-50%); */right: 15px;height: auto;line-height: 40px;font-size: 20px !important;font-family: &quot;Bebas Neue&quot;, sans-serif !important;">
+		    		<i class="fa fa-download left" style="border-right: 1px solid #000000; padding-right: 15px;"></i>
+						Baixe Agora
+					</a> -->
+					<div class="hide-on-large-only" style="position: absolute; bottom: 10px; right: 0; background: #000; height: 50px; display: flex; border-radius: 5px 0 0 5px;">
+						<h5 class="def-h5 white-text" style="line-height: 50px;margin: 0 5px;">Conheça o Ebook "Conheça seus Direitos"</h5>
+						<a id="btn-gerenciar" href="/login/index" class="btn right waves-effect waves-light black-text" style="height: auto;line-height: 40px;font-size: 20px !important;font-family: &quot;Bebas Neue&quot;, sans-serif !important;margin: 5px;">
+		    			<i class="fa fa-download left" style="border-right: 1px solid #000000; padding-right: 15px;"></i>
+							Baixe Agora
+				    </a>
+				  </div>
+		    	<!-- <a id="btn-gerenciar" href="/login/index" class="btn hide-on-large-only right waves-effect waves-light black-text" style="position: absolute;top: 30px;left: 50%;/* margin-left: -25%; */transform: translate(-50%);">Baixe o ebook "Conheça Seus Direitos"</a> -->
+<!-- 		      <br><br><br><br>
 		      <div class="row">
 		      	<h1 id="text-lutamos" class="header right white-text" style="font-size: 4.5rem; padding-right: 0.5em; text-align: right;">NÓS LUTAMOS<br>POR VOCÊ.</h1>
-		      </div>
-		      <div class="row center facebot">
-		        <a href="#!" id="fale-conosco" class="btn-large waves-effect waves-light black">FALE CONOSCO ONLINE</a>
+		      </div> -->
+		      <div class="row center fale-conosco-wrapper hide-on-large-only" style="position: absolute; bottom: 50px;">
+		        <a href="/contato/#contato-section" id="fale-conosco" class="btn-large waves-effect waves-light black">FALE CONOSCO ONLINE</a>
 		      </div>
 		      <br><br>
 		    </div>
+		    <div id="ebook-index" class="hide-on-med-and-down">
+		    	<h5 class="def-h5 center" style="position: absolute; top: 30px; color: #fff; width: 100%; padding: 0 10px;">Baixe um guia prático sobre seus direitos</h5>
+		    	<img src="/assets/imgs/pseudo-book.jpg" style="width: 150px; position: absolute; bottom: 190px; left: 50%; /* margin-left: -25%; */ transform: translate(-50%);">
+		    	<a id="btn-gerenciar" href="/login/index" class="btn right waves-effect waves-light black-text" style="position: absolute; bottom: 125px; left: 50%; /* margin-left: -25%; */ transform: translate(-50%);">
+			    	Download
+			    </a>
+			    <div class="row center fale-conosco-wrapper" style="position: absolute; bottom: 20px;">
+		        <a href="/contato/#contato-section" id="fale-conosco" class="btn-large waves-effect waves-light black"><h5 class="def-h5" style="margin: 0; line-height: 1.5em;">FALE CONOSCO ONLINE</h5></a>
+		      </div>
+		    </div>
 		  </div>
+      <style type="text/css">
+	      #ebook-index {
+	  	    box-shadow: inset 0px 0px 20px 2px #000000;
+	  	    -webkit-box-shadow: inset 0px 0px 20px 2px #000000;
+	  	    -moz-box-shadow: inset 0px 0px 20px 2px #000000;
+	  	    -ms-box-shadow: inset 0px 0px 20px 2px #000000;
+	  	    -o-box-shadow: inset 0px 0px 20px 2px #000000;
+	  	    background-color: #1d1917;
+	  	    width: 25%;
+	  	    height: 500px;
+	  	    float: right;
+	  	    position: relative;
+	      }
+				#ebook-index .fale-conosco-wrapper,
+				.bg-image .fale-conosco-wrapper {
+				  overflow: hidden !important;
+				  margin-left: auto !important;
+				  margin-right: auto !important;
+				  width: 100% !important;
+				}
+				#ebook-index #fale-conosco {
+				  float: right !important;
+				  border: 2px dashed #fbd257 !important;
+				  /*border-radius: 10px !important;*/
+				  background-color: rgba(0, 0, 0, 0.5) !important;
+				  font-size: 1.5em !important;
+				  line-height: 1.5em !important;
+				  height: 1.6em !important;
+				  /*right: -0.4em !important;*/
+				  border-left: 0 !important;
+				  border-right: none !important;
+				  width: 100%;
+				}
+				#index-banner .bg-image #fale-conosco {
+					float: right !important;
+				  border: 2px dashed #fbd257 !important;
+				  border-radius: 10px !important;
+				  background-color: rgba(0, 0, 0, 0.5) !important;
+				  font-size: 1.5em !important;
+				  line-height: 1.5em !important;
+				  height: 1.6em !important;
+				  right: -0.4em !important;
+				}
+				#ebook-index #fale-conosco:hover,
+				#index-banner .bg-image #fale-conosco:hover {
+				  background-color: rgba(0, 0, 0, 0.9) !important;
+				}
+				#index-banner > .bg-image {
+					width: 75%;
+					float: left;
+				}
+      </style>
+
+      <div id="social-sidebar">
+			  <a href="https://www.facebook.com/Young-Dias-Lauxen-Lima-Advogados-109269385838608/" class="facebook"><i class="fa fa-facebook"></i><div class="preto"></div></a>
+			  <a href="http://twitter.com/youngadvogados" class="twitter"><i class="fa fa-twitter"></i><div class="preto"></div></a>
+			  <a href="mailto:i2juqbspdhuwaic2@ethereal.email" class="email"><i class="fa fa-envelope"></i><div class="preto"></div></a>
+<!-- 			  <a href="#" class="google"><i class="fa fa-google"></i><div class="preto"></div></a> 
+			  <a href="#" class="linkedin"><i class="fa fa-linkedin"></i><div class="preto"></div></a>
+			  <a href="#" class="youtube"><i class="fa fa-youtube"></i><div class="preto"></div></a> -->
+			</div>
+			<style type="text/css">
+				#social-sidebar {
+				  position: fixed;
+				  top: 50%;
+				  left: 0;
+				  -webkit-transform: translateY(-50%);
+				  -ms-transform: translateY(-50%);
+				  transform: translateY(-50%);
+				  z-index: 11000;
+				}
+				#social-sidebar a {
+					position: relative;
+				  display: block;
+				  text-align: center;
+				  padding: 8px;
+				  transition: all 0.5s ease;
+					color: #fff;
+				  font-size: 20px;
+				  width: 40px;
+				}
+				#social-sidebar a:hover {
+				  width: 50px;
+				}
+				#social-sidebar a .preto {
+					background-color: transparent;
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+				}
+				#social-sidebar a:hover .preto {
+				  background-color: rgba(255,255,255,0.1);
+				}
+				#social-sidebar .facebook {
+				  background: #3B5998;
+				}
+				#social-sidebar .twitter {
+				  background: #55ACEE;
+				}
+				#social-sidebar .google,
+				#social-sidebar .email {
+				  background: #dd4b39;
+				}
+				#social-sidebar .linkedin {
+				  background: #007bb5;
+				}
+				#social-sidebar .youtube {
+				  background: #bb0000;
+				}
+			</style>
+
 		  <div class="container menus hide-on-small-only">
 			  <nav class="trans-bg main-nav nav-center" role="navigation">
 			    <div class="nav-wrapper">
