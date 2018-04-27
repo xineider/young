@@ -894,7 +894,7 @@ with linear-background = overlay on image, then the rest*/
 h5.def-h5,
 #menu-tiras h5.def-h5 {
 /*  font-size: 1.2em;*/
-  font-family: "Bebas Neue", sans-serif !important;
+  font-family: "bebasneue", sans-serif !important;
 }
 
 /*---------------Dados do Contato---------------*/
@@ -1050,20 +1050,21 @@ table.highlight>tbody>tr {
 }
 /*--------------mudanças blog fim--------------*/
 
-@font-face{
+/*@font-face{
   font-family:"Bebasneue";
-  src:url('/assets/fonts/bebas_neue/BebasNeue-Regular.otf'); 
+  src:url('/assets/fonts/bebas_neue/BebasNeue-Regular.otf'), url('/assets/fonts/bebas_neue/BebasNeue-Regular.otf'); 
 }
 @font-face{
-  font-family:"Bebasneue";
+  font-family:"Bebasneue-bold";
   src:url('/assets/fonts/bebas_neue/BebasNeue-Bold.otf');
   font-weight: bold;
-}
+}*/
 @font-face {
-  font-family: 'bebas_neueregular';
+  font-family: 'bebasneue';
   src: url('/assets/fonts/bebasneue-regular-webfont.woff2') format('woff2'),
        url('/assets/fonts/bebasneue-regular-webfont.woff') format('woff'),
-       url('/assets/fonts/bebasneue-regular-webfont.ttf') format('truetype');
+       url('/assets/fonts/bebasneue-regular-webfont.ttf') format('truetype'),
+       url('/assets/fonts/bebas_neue/BebasNeue-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
