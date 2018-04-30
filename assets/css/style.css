@@ -586,8 +586,11 @@ nav.main-nav {
   margin-left: 15% !important;
   margin-right: 15% !important;
 }
-.container.not-nov, .container.depo-ebook {
+.container.not-nov{
   width: 90%;
+}
+.container.depo-ebook {
+  width: 100%;
 }
 .not-nov a {
   color: rgb(255, 228, 145) !important;
@@ -638,9 +641,9 @@ nav.nav-center ul li {
 nav.nav-center ul li a {
   display: inline-block !important;
 }
-.container {
+/*.container {
   max-width: 1900px !important;
-}
+}*/
 .PARALLAX-PRA-ARRUMAR-E-TALS {
   position: absolute;
   width: 100%;
@@ -987,8 +990,7 @@ table.highlight>tbody>tr {
   -o-box-shadow: 0px 3px 5px #000;
 }
 #top-mob .info h5.def-h5 {
-  font-size: 1.3em;
-  font-family: sans-serif !important;
+  font-size: 1.6em;
 }
 #top-mob .top-num a {
   color: #f0f0f0 !important;
@@ -1088,6 +1090,11 @@ table.highlight>tbody>tr {
     max-height: 60px !important;
     margin: 5px 0 5px 20px !important;
   }
+  #top-mob .menu-bars {
+    left: 15px;
+    line-height: 70px;
+    font-size: 40px;
+  }
   @media only screen and (max-width: 600px) {
     #top-mob .menu-bars {
       position: absolute;
@@ -1154,7 +1161,8 @@ table.highlight>tbody>tr {
   nav.new-nav {
     margin-top: 50px !important;
   }
-  #index-banner > .container-full.bg-image {
+  #index-banner > .container-full.bg-image,
+  #index-banner > .bg-carousel {
     width: 100% !important;
     height: 400px;
   }

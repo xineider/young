@@ -11,6 +11,28 @@
 		  	</div>
 		  </div>
 	  </div>
+	  <div id="whatsapp-btn" class="row center hide-on-med-and-up">
+		  <div class="col s12">
+		  	<a class="mjs-button-align " rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=555199254616&amp;text=Olá" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=555199254616&amp;text=Olá">
+		  		<p>Toque aqui e fale conosco pelo Whatsapp agora mesmo.</p>
+		  	</a>
+			</div>
+		</div>
+		<style type="text/css">
+			#whatsapp-btn {
+				background-color: #311b00;
+				box-shadow: 0px 0px 5px;
+				font-size: 1.3em;
+			}
+			#whatsapp-btn a {
+				color: #fff7e2;
+				height: 100%;
+			}
+			#whatsapp-btn a p {
+				margin: 0;
+				padding: 1em;
+			}
+		</style>
 	  <!-- <div style="background: rgba(92,75,0,1);
 background: -moz-linear-gradient(top, rgba(92,75,0,1) 0%, rgba(92,75,0,1) 8%, rgba(133,108,0,1) 28%, rgba(133,108,0,1) 79%, rgba(92,75,0,1) 92%, rgba(92,75,0,1) 100%);
 background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(92,75,0,1)), color-stop(8%, rgba(92,75,0,1)), color-stop(28%, rgba(133,108,0,1)), color-stop(79%, rgba(133,108,0,1)), color-stop(92%, rgba(92,75,0,1)), color-stop(100%, rgba(92,75,0,1)));
@@ -361,7 +383,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 		top: 50%;
 		left: 0;
 		right: 0;
-		transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
 	}
 	#areashome .area-texto .area-nome {
 	}
@@ -658,9 +684,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 	  	</div>
 	  </div>
 	  <div class="container not-nov">
-	  	<div class="row" style="margin-bottom: 0; margin-top: 100px">
-	  	</div>
-	  	<div class="row">
+	  	<div id="noticias" class="row" style="margin-top: 100px;">
 	  		<!-- <div class="col s12 m6" style="padding: 10px 1em !important;">
 		  		<h5 class="def-h5 center" style="padding-bottom: 0; margin-top: 0;">NOTÍCIAS</h5>
 		  		<div class="grad-line"></div>
@@ -710,29 +734,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 	  	</div>
 	  </div>
 <!--   </div> -->
-  <div class="container depo-ebook">
-	  <div class="row" style="margin-top: 60px;">
+<div class="container depo-ebook">
+	<!-- <div class="parallax-container"> -->
+      <div class="row" style="margin-top: 60px;">
 	  	<div class="col s12 no-pad-depo">
 			  <div class="center" style="width: 100%;position: relative;/*top: -20px;*/">
 			  	<h5 class="def-h5">DEPOIMENTOS</h5>
 			  </div>
 			  <!-- <div id="testimonial-slider" class="testimonial_slider"></div> --> <!-- antigo testimonial -->
-			   <section id="testimonials" class="responsive" style="touch-action: pan-x pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+			   <section id="testimonials" class="responsive" style="touch-action: pan-x pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%;">
 
             <div class="testim-ovl"></div>
-            <div class="testimonials-wrapper" style="padding-top: 255px;">
+            <div class="testimonials-wrapper" style="padding-top: 303px;">
 
-             <ul class="testimonials-line" style="height: 95px;">
+             <ul class="testimonials-line" style="height: 93px;">
 
-               <li class="customer active fadeInRight">
+               <li class="customer fadeOutLeft">
 
-                   <div class="testimonial-bubble" style="top: -50px;">
+                   <div class="testimonial-bubble fadeInRight" style="top: -50px;">
                        <p>Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc,</p>
                    </div>
 
                    <div class="cus-profile">
                       <span class="cus-image"><img src="/assets/imgs/Tiago.jpg"></span>
-                     <span class="cus-name">
+                     <span class="cus-name" style="bottom: 75px;">
                          Tiago
                          <span class="cus-title">CEO da Pepsi</span>
                       </span>
@@ -740,7 +765,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                  
                </li>
 
-               <li class="customer">
+               <li class="customer fadeOutLeft">
 
                    <div class="testimonial-bubble" style="top: -50px;">
                        <p> Lor separat existentie es un myth. Por scientie, musica, sport etc,</p>
@@ -756,7 +781,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                  
                </li>
 
-               <li class="customer">
+               <li class="customer active fadeInRight">
 
                    <div class="testimonial-bubble" style="top: -50px;">
                        <p>Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas.</p>
@@ -772,7 +797,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                  
                </li>
 
-               <li class="customer">
+               <li class="customer fadeOutLeft">
 
                    <div class="testimonial-bubble" style="top: -50px;">
                        <p>Melhor indicação que poderia fazer. Comprometimento e confiança sem igual e profissionais excelentes. Recomendo totalmente.</p>
@@ -807,6 +832,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 	  		<!-- <a id="ebook" class="waves-effect waves-light yellow darken-1 black-text btn-large" style="width: 50%"><i class="fa fa-book"></i></a> -->
 <!-- 		  		<img src="/assets/imgs/scale-bg.png" class="circle responsive-img" style="max-width: 100%; max-height: 150px;"> -->
 	  </div>
+	  <!-- <div class="parallax"><img src="/assets/imgs/scale-bg.png" style="display: block;opacity: 0.2;top: 50%;left: 50%;transform: translate3d(-50%, -50%, 0px) !important;">
+	  </div>
+  </div> -->
+	  
   </div>
   <div id="low-parall" class="parallax-container">
     <div class="parallax"><img src="/assets/imgs/scale-bg.png"></div>
