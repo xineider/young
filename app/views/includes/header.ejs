@@ -192,6 +192,7 @@
 				    </a>
 				  </div>
 		    </div> -->
+		    <input type="hidden" id="ajax-carousel" value="0">
 	      <div class="carousel carousel-slider center bg-carousel" data-indicators="true">
 			    <div class="carousel-item img1"></div>
 			    <div class="carousel-item img2"></div>
@@ -297,12 +298,14 @@
       </style>
 
       <div id="social-sidebar">
-			  <a href="https://www.facebook.com/Young-Dias-Lauxen-Lima-Advogados-109269385838608/" class="facebook"><i class="fa fa-facebook"></i><div class="preto"></div></a>
-			  <a href="http://twitter.com/youngadvogados" class="twitter"><i class="fa fa-twitter"></i><div class="preto"></div></a>
-			  <a href="mailto:i2juqbspdhuwaic2@ethereal.email" class="email"><i class="fa fa-envelope"></i><div class="preto"></div></a>
-<!-- 			  <a href="#" class="google"><i class="fa fa-google"></i><div class="preto"></div></a> 
-			  <a href="#" class="linkedin"><i class="fa fa-linkedin"></i><div class="preto"></div></a>
-			  <a href="#" class="youtube"><i class="fa fa-youtube"></i><div class="preto"></div></a> -->
+			  <a href="https://www.facebook.com/Young-Dias-Lauxen-Lima-Advogados-109269385838608/" class="facebook"><i class="fa fa-facebook"></i><div class="branco"></div></a>
+			  <a href="http://twitter.com/youngadvogados" class="twitter"><i class="fa fa-twitter"></i><div class="branco"></div></a>
+			  <a href="http://twitter.com/youngadvogados" class="whatsapp"><i class="fa fa-whatsapp"></i><div class="branco"></div></a>
+			  <a href="mailto:i2juqbspdhuwaic2@ethereal.email" class="email"><i class="fa fa-envelope"></i><div class="branco"></div></a>
+			  <a href="#!" class="seta"><i class="fa fa-arrow-left"><div class="circle-bg"></div></i></a>
+<!-- 			  <a href="#" class="google"><i class="fa fa-google"></i><div class="branco"></div></a> 
+			  <a href="#" class="linkedin"><i class="fa fa-linkedin"></i><div class="branco"></div></a>
+			  <a href="#" class="youtube"><i class="fa fa-youtube"></i><div class="branco"></div></a> -->
 			</div>
 			<style type="text/css">
 				#social-sidebar {
@@ -313,13 +316,13 @@
 				  -ms-transform: translateY(-50%);
 				  transform: translateY(-50%);
 				  z-index: 11000;
+				  transition: all 0.5s ease;
 				}
 				#social-sidebar a {
 					position: relative;
 				  display: block;
 				  text-align: center;
 				  padding: 8px;
-				  transition: all 0.5s ease;
 					color: #fff;
 				  font-size: 20px;
 				  width: 40px;
@@ -327,7 +330,7 @@
 				#social-sidebar a:hover {
 				  width: 50px;
 				}
-				#social-sidebar a .preto {
+				#social-sidebar a .branco {
 					background-color: transparent;
 					position: absolute;
 					top: 0;
@@ -335,14 +338,31 @@
 					left: 0;
 					right: 0;
 				}
-				#social-sidebar a:hover .preto {
+				#social-sidebar a:hover .branco {
 				  background-color: rgba(255,255,255,0.1);
+				}
+				#social-sidebar .circle-bg {
+					background: rgba(0,0,0,0.6);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-17px, -17px);
+					width: 34px;
+					height: 34px;
+					border-radius: 50%;
+					z-index: -1;
+				}
+				#social-sidebar .seta {
+				  background: transparent;
 				}
 				#social-sidebar .facebook {
 				  background: #3B5998;
 				}
 				#social-sidebar .twitter {
 				  background: #55ACEE;
+				}
+				#social-sidebar .whatsapp {
+				  background: #5ace61;
 				}
 				#social-sidebar .google,
 				#social-sidebar .email {

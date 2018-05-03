@@ -59,6 +59,7 @@ $(document).on('ready', function () {
 	AlignFooterOnLarge();
 	AlignPostsBlog();
 	Estados_Cidades();
+		activeCarousel();
 
 	rightOnTheFace();
 
@@ -104,27 +105,23 @@ $(document).on('ready', function () {
 
 
 
-  // $(document).ready(function(){
     $('.parallax').parallax();
-  // });
-  // $(document).ready(function(){
     $('.slider').slider();
-  // });
-  $(document).ready(function(){
-	  $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, duration: 200});
-	});
-
+$('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, duration: 300});
 	$(document).ajaxComplete(function () {
 		$('#calendar').fullCalendar({
         // put your options and callbacks here
     })
     criarDepoimentos();
-	  $('#testimonials').alpha();
-    $('.parallax').parallax();
 		Materialize.updateTextFields();
   	$('.collapsible').collapsible();
 		if($('#editor').length>0){
 			$( '#editor' ).ckeditor();
+		}
+		if($('#ajax-carousel').val()==0){
+			$('#ajax-carousel').val(1);
+		}else{
+			$('#ajax-carousel').val(0)
 		}
 		// $('#testimonials').alpha({layout : 'alt', delay : 5000, bubbleColor : 'rgba(0, 0, 0, 0)'});
   	AlignAreasText();
@@ -462,6 +459,7 @@ function FormatInputs(focus) {
       }
     }
   });
+  $('.parallax').parallax();
   $('.money').mask('000000000000000,00', {reverse: true});
   $('.time').mask('00:M0', {
   	translation: {
@@ -817,6 +815,14 @@ function Estados_Cidades() {
 		}).change();
 	});
 	// body...
+}
+function activeCarousel(){
+	setTimeout(function() {
+		if(typeof $('#ajax-carousel').val() != 'undefined'){
+			$('.carousel').carousel('next');
+		}
+		activeCarousel();
+	},10000);
 }
 function UploadFile(isso) {
 	var link = isso.data('href');

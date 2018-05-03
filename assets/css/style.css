@@ -798,6 +798,222 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
 }
 /*---------------------- BLOG ---------------------*/
 
+/*------------------------ AREAS DE TRABALHO - HOME END ------------------------*/
+  #areashome {
+    display: flex;
+    margin: 0 auto;
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+  }
+  #areashome .area-link {
+    background-color: #000;
+  }
+  #areashome .area-wrapper {
+    position: relative;
+    width: 11.11%;
+    height: 400px;
+    overflow: hidden;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    border: inset 1px #1d1917;
+  }
+  #areashome .area-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  #areashome a .area-image.img1 {
+    background: url(/assets/imgs/areas-home/hammer-1.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img1 {
+    background: url(/assets/imgs/areas-home/hammer-menu-1.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img2 {
+    background: url(/assets/imgs/areas-home/hammer-2.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img2 {
+    background: url(/assets/imgs/areas-home/hammer-menu-2.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img3 {
+    background: url(/assets/imgs/areas-home/hammer-3.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img3 {
+    background: url(/assets/imgs/areas-home/hammer-menu-3.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img4 {
+    background: url(/assets/imgs/areas-home/hammer-4.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img4 {
+    background: url(/assets/imgs/areas-home/hammer-menu-4.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img5 {
+    background: url(/assets/imgs/areas-home/hammer-5.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img5 {
+    background: url(/assets/imgs/areas-home/hammer-menu-5.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img6 {
+    background: url(/assets/imgs/areas-home/hammer-6.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img6 {
+    background: url(/assets/imgs/areas-home/hammer-menu-6.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img7 {
+    background: url(/assets/imgs/areas-home/hammer-7.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img7 {
+    background: url(/assets/imgs/areas-home/hammer-menu-7.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img8 {
+    background: url(/assets/imgs/areas-home/hammer-8.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img8 {
+    background: url(/assets/imgs/areas-home/hammer-menu-8.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a .area-image.img9 {
+    background: url(/assets/imgs/areas-home/hammer-9.jpg) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome a:hover .area-image.img9 {
+    background: url(/assets/imgs/areas-home/hammer-menu-9.png) center;
+    background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -ms-background-size: cover; -o-background-size: cover;
+  }
+  #areashome img.area-imagem {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    background-color: #000;
+    transform: translate(0, -50%);
+    /*-webkit-transition: .5 ease;
+    -moz-transition: .5 ease;
+    -ms-transition: .5 ease;
+    -o-transition: .5 ease;
+    transition: .5 ease;*/
+  }
+  #areashome img.area-imagem:hover {
+    background-color: transparent;
+  }
+  #areashome .area-texto .area-nome,
+  #areashome .area-texto .area-icone {
+    text-shadow: 2px 2px 3px #000;
+  }
+  #areashome .area-texto {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+  }
+  #areashome .area-texto .area-nome {
+  }
+  #areashome .area-texto .area-icone {
+    font-size: 2.5em;
+    color: #fff;
+  }
+/*  #areashome .area-wrapper a:hover .area-texto .area-icone {
+    opacity: 1 !important;
+    background: rgba(251,210,87,1) !important;
+    background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+    background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+    background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+    background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+    background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    transition: 0.5s ease;
+    text-shadow: 2px 2px 4px #fff;
+  }*/
+/*  #areashome .area-wrapper .area-preto {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,0);
+    transition: .5s ease;
+  }
+  #areashome .area-wrapper:hover .area-preto {
+    background-color: rgba(0,0,0,0.8);
+    transition: .5s ease;
+  }*/
+  #areashome .area-wrapper a .area-preto {
+    background: rgba(0, 0, 0, 0.3) !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+  #areashome .area-wrapper a:hover .area-preto {
+    background: rgba(0, 0, 0, 0) !important;
+    /*background: rgb(72, 54, 32) !important;*/
+  }
+/*------------------------ AREAS DE TRABALHO - HOME END ------------------------*/
+
+/* ----------------------- menu round mobile ------------------------------- */
+#round-menu .circ-wrapper {
+  background-color: transparent;
+}
+#round-menu.container {
+  width: 80%;
+}
+#round-menu .round {
+  border-radius:50%;
+  background: #271d17;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  border: 1px solid rgba(255,200,25, 0.6);
+}
+#round-menu a i {
+  font-size: 2em;
+}
+.text-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#round-menu .row .col {
+  padding: 5px;
+}
+/* ----------------------- menu round mobile end ------------------------------- */
+
 /*@media only screen and (max-width: 1400px) {
   nav.nav-center ul li a h5 {
     font-size: 0.8em;

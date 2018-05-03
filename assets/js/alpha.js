@@ -13,7 +13,7 @@
 
     var settings = $.extend({
             autoplay : 'on',
-            delay : 4000,
+            delay : 15000,
             layout : 'alt',
             bubbleColor: 'none',
             bubbleText : 'black',
