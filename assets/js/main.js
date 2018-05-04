@@ -103,7 +103,20 @@ $(document).on('ready', function () {
 	//   $("#toresize").toggle( "bounce", "slow" );
 	// });
 
-
+$(document).on('click', '#seta', function (e) {
+		e.preventDefault();
+		if ($('#social-sidebar').hasClass('show')) {
+			$('#social-sidebar').removeClass('show');
+			$('#social-sidebar').addClass('hidden');
+			$('#seta i').removeClass('fa-arrow-left');
+			$('#seta i').addClass('fa-arrow-right');
+		} else {
+			$('#social-sidebar').removeClass('hidden');
+			$('#social-sidebar').addClass('show');
+			$('#seta i').removeClass('fa-arrow-right');
+			$('#seta i').addClass('fa-arrow-left');
+		}
+	})
 
     $('.parallax').parallax();
     $('.slider').slider();
@@ -129,6 +142,30 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		AlignPostsBlog();
 		// Estados_Cidades();
 	});
+
+	$(function(){
+		$('#testimonials').alpha({
+			layout: 'alt',
+		    delay : 5300
+		});
+	});
+
+$('#typewriter').typewriter({
+  text : ["String 1", "String 2", "String 3"],
+});
+$('#typewriter').typewriter({
+  typeDelay: 200,
+  waitingTime: 1000,
+});
+$('#typewriter').typewriter({
+  prefix: "$ "
+});
+$('#typewriter').typewriter({
+  blinkSpeed: 1000
+});
+
+
+
 	$(document).ajaxError(function () {
 		AddErrorAjax();
 	});
@@ -161,8 +198,8 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		var link = $(this).attr('href');
 		console.log(link);
 		GoTo(link, true);
+		Estados_Cidades();
 	});
-
 	$(document).on('click', '.ajax-load-to', function(e) {
 		e.preventDefault();
 		var link = $(this).data('href');

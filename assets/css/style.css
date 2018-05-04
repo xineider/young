@@ -311,7 +311,7 @@ ul.large-info.right li a {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#fbd257', GradientType=1 );
 }
 #slide-header {
-  z-index: 10002;
+  z-index: 12002;
 }
 ul#slide-header > li#side-nav-nome {
   border-bottom: none !important;
@@ -1205,6 +1205,52 @@ table.highlight>tbody>tr {
   -ms-box-shadow: 0px 3px 5px #000;
   -o-box-shadow: 0px 3px 5px #000;
 }
+        #top-mob .top-num h5,
+        #top-mob .top-num-mob {
+          line-height: 45px;
+          font-size: 20px;
+          margin: 0;
+        }
+        #top-mob .top-num i {
+          line-height: 45px;
+          font-size: 20px;
+        }
+        #top-mob .top-num .mob {
+          position: absolute;
+        }
+        #top-mob .icones-sociais a i {
+          /*line-height: 45px;
+          font-size: 35px;
+          margin:-5px 5px 0 5px;*/
+          color: #ffffff;
+          line-height: 90px;
+          font-size: 40px;
+          margin: 0 5px;
+        }
+        #top-mob .icones-sociais a:hover i,
+        #top-mob .top-num h5 a:hover {
+          opacity: 0.9 !important;
+          background: rgba(251,210,87,1) !important;
+          background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+          background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+          background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+          background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+          background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+          background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          color: transparent !important;
+          transition-duration: .5s;
+          -webkit-transition-duration: .5s;
+        }
+        #top-mob .menu-bars {
+          position: absolute;
+          top: 0;
+          left: 20px;
+          line-height: 90px;
+          font-size: 50px;
+        }
 #top-mob .info h5.def-h5 {
   font-size: 1.6em;
 }
