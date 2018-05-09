@@ -2,18 +2,18 @@
 var crypto = require('crypto');
 
 // FAZER LEITURA DAS CONFIGURAÇÕES
-var config = {
-						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
-						    "user"     : "b95fc3530ebace",
-						    "password" : "372884c6",
-						    "database" : "heroku_941b27a7b2edaff"
-					  	};
 // var config = {
-// 						    "host"     : "localhost",
-// 						    "user"     : "root",
-// 						    "password" : "root",
-// 						    "database" : "young"
+// 						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
+// 						    "user"     : "b95fc3530ebace",
+// 						    "password" : "372884c6",
+// 						    "database" : "heroku_941b27a7b2edaff"
 // 					  	};
+var config = {
+						    "host"     : "localhost",
+						    "user"     : "root",
+						    "password" : "root",
+						    "database" : "young"
+					  	};
 
 // // CONEXÃO MYSQL
 var mysql      = require('mysql');

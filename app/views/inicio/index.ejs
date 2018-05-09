@@ -617,6 +617,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 		  		<div class="post-conteudo-index">
 			  		<p class="justified"><%- data.post[i].conteudo %></p>
 		  		</div>
+		  		<a href="/post/ver/<%= data.post[i].id_post %>" class="leia-mais ajax-load" style="color: #f4d59a">Leia Mais...</a>
 	  		</div>
 	  		<%
 	  					i = -1;
@@ -635,6 +636,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 		  		<div class="post-conteudo-index">
 			  		<p class="justified"><%- data.post[j].conteudo %></p>
 		  		</div>
+		  		<a href="/post/ver/<%= data.post[j].id_post %>" class="leia-mais ajax-load" style="color: #f4d59a">Leia Mais...</a>
 	  		</div>
 	  		<%
 	  					j = -1;
@@ -647,8 +649,125 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 <!--   </div> -->
 
 	  <div class="parallax-container">
+	  	<!-- <h5 class="def-h5 center" style="margin-top: 40px; margin-bottom: -5px;">DEPOIMENTOS</h5> -->
+	  	<div id="depoimentos-wrapper" class="carousel carousel-slider center">
+		    <div class="carousel-item white-text" href="#one!">
+		      <p class="depo-content">"Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas."</p>
+		      <div class="img-wrapper">
+		      	<img src="/assets/imgs/Marta.jpg">
+		      </div>
+		      <div class="person">
+			      <p class="nome white-text">Marta Koperech</p>
+			      <p class="posicao white-text">Servidora Pública</p>
+		      </div>
+		    </div>
+		    <div class="carousel-item white-text" href="#two!">
+		      <p class="depo-content">"Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas."</p>
+		      <div class="img-wrapper">
+		      	<img src="/assets/imgs/Tiago.jpg">
+		      </div>
+		      <div class="person">
+			      <p class="nome white-text">Bartolomeu Gomes</p>
+			      <p class="posicao white-text">Corretor Imobiliário</p>
+		      </div>
+		    </div>
+		    <div class="carousel-item white-text" href="#three!">
+		      <p class="depo-content">"Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas."</p>
+		      <div class="img-wrapper">
+		      	<img src="/assets/imgs/Marta.jpg">
+		      </div>
+		      <div class="person">
+			      <p class="nome white-text">Joaquim Carneiro</p>
+			      <p class="posicao white-text">Professor Estadual</p>
+		      </div>
+		    </div>
+		    <div class="carousel-item white-text" href="#four!">
+		      <p class="depo-content">"Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas."</p>
+		      <div class="img-wrapper">
+		      	<img src="/assets/imgs/Marta.jpg">
+		      </div>
+		      <div class="person">
+			      <p class="nome white-text">Manoel Valente</p>
+			      <p class="posicao white-text">Instrutor de Natação</p>
+		      </div>
+		    </div>
+		  </div>
+      <div class="parallax" style="opacity: 0.2"><img src="/assets/imgs/scale-bg.png"></div>
+    </div>
+    <style type="text/css">
+    	.parallax-container #depoimentos-wrapper {
+    		height: inherit !important;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item .img-wrapper {
+    		width: 100px;
+    		height: 100px;
+    		margin: 0 auto;
+    		margin-top: 40px;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item img {
+    		max-width: 100%;
+    		max-height: 100%;
+    		border-radius: 50%;
+    		border: 2px solid #fff;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item {
+    		padding: 50px 10% 0 10%;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item p.depo-content {
+    		font-size: 1.5em;
+    		line-height: 1.5;
+    		margin-top: 50px;
+    		display: block;
+    		position: relative;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item p.depo-content:before {
+    		content: "\201C";
+		    position: absolute;
+		    z-index: 1;
+		    top: -26px;
+		    left: -19px;
+		    font: 80px/1 Georgia, serif;
+		    color: #fff;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item p.depo-content:after {
+    		content: "\201D";
+		    position: absolute;
+		    z-index: 1;
+		    bottom: -50px;
+		    right: 0px;
+		    font: 80px/0.25 Georgia, serif;
+		    color: #fff;
+		  }
+    	.parallax-container #depoimentos-wrapper .indicators {
+    		display: none;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item .person {
+    		width: 50%;
+    		margin: auto;
+    		/*background-color: rgba(0,0,0,0.4);*/
+    		margin-bottom: 20px;
+    		margin-top: 10px;
+    	}
+    	.parallax-container #depoimentos-wrapper .carousel-item .person p {
+    		margin: 0;
+    		line-height: 2;
+    	}
+    	@media only screen and (max-width: 600px) {
+	    	.parallax-container #depoimentos-wrapper .carousel-item p.depo-content {
+    		font-size: 1.2em;
+    		line-height: 1.2;
+	    	}
+	    	.parallax-container #depoimentos-wrapper .carousel-item .person {
+	    		width: 80%;
+	    	}
+	    	.parallax-container #depoimentos-wrapper .carousel-item .person p {
+	    		line-height: 1.5;
+	    	}
+    	}
+    </style>
+<!-- 	  <div class="parallax-container">
 	  	<h5 class="def-h5 center" style="margin-top: 40px; margin-bottom: -5px;">DEPOIMENTOS</h5>
-	  	<section id="testimonials" class="responsive" style="touch-action: pan-x pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%;">
+	  	<section id="testimonials" style="touch-action: pan-x pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%;">
 
             <div class="testim-ovl"></div>
             <div class="testimonials-wrapper" style="padding-top: 303px; margin-top: -35px">
@@ -658,7 +777,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
                <li class="customer">
 
                    <div class="testimonial-bubble" style="top: -50px;">
-                       <p>Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc,</p>
+                       <p>Dedicação, humanismo e competência unidos de uma forma única. Muito bom ver que existem profissionais com esse nível de credibilidade. Indico sem dúvidas.</p>
                    </div>
 
                    <div class="cus-profile">
@@ -723,8 +842,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c4b00', end
 
              </ul>
 
-             </div><!-- .testimonials-wrapper -->
+             </div>
           
-      </section><!-- .testimonials --> 
+      </section>
       <div class="parallax" style="opacity: 0.2"><img src="/assets/imgs/scale-bg.png"></div>
-    </div>
+    </div> -->

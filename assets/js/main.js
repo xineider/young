@@ -126,6 +126,9 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
         // put your options and callbacks here
     })
     criarDepoimentos();
+    $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, duration: 300});
+
+		// $('#testimonials').alpha();
 		Materialize.updateTextFields();
   	$('.collapsible').collapsible();
 		if($('#editor').length>0){
@@ -143,26 +146,7 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		// Estados_Cidades();
 	});
 
-	$(function(){
-		$('#testimonials').alpha({
-			layout: 'alt',
-		    delay : 5300
-		});
-	});
 
-$('#typewriter').typewriter({
-  text : ["String 1", "String 2", "String 3"],
-});
-$('#typewriter').typewriter({
-  typeDelay: 200,
-  waitingTime: 1000,
-});
-$('#typewriter').typewriter({
-  prefix: "$ "
-});
-$('#typewriter').typewriter({
-  blinkSpeed: 1000
-});
 
 
 
@@ -800,19 +784,19 @@ function AlignPostsBlog() {
 }
 function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mobile
 	if ($(window).width() > 992) {
-		$('footer.page-footer .container .row').addClass('valign-wrapper');
+		$('footer.page-footer .container .row.to-align').addClass('valign-wrapper');
 		$('.not-nov #noticias').addClass('valign-wrapper');
 	} else {
-		$('footer.page-footer .container .row').removeClass('valign-wrapper');
+		$('footer.page-footer .container .row.to-align').removeClass('valign-wrapper');
 		$('.not-nov #noticias').removeClass('valign-wrapper');
 	}
 	$(window).on('resize', function(e) {
 		e.preventDefault();
 		if ($(window).width() > 992) {
-			$('footer.page-footer .container .row').addClass('valign-wrapper');
+			$('footer.page-footer .container .row.to-align').addClass('valign-wrapper');
 			$('.not-nov #noticias').addClass('valign-wrapper');
 		} else {
-			$('footer.page-footer .container .row').removeClass('valign-wrapper');
+			$('footer.page-footer .container .row.to-align').removeClass('valign-wrapper');
 			$('.not-nov #noticias').removeClass('valign-wrapper');
 		}
 	});

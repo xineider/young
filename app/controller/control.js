@@ -74,6 +74,14 @@ class Control {
 					// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
 					// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 			});
+			// verify connection configuration
+			transporter.verify(function(error, success) {
+			   if (error) {
+			        console.log(error);
+			   } else {
+			        console.log('Server is ready to take our messages');
+			   }
+			});
 		});
 	}
 	DateTime() {

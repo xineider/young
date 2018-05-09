@@ -12,14 +12,13 @@
   $.fn.alpha = function(options) {
 
     var settings = $.extend({
-            autoplay : 'on',
-            delay : 15000,
-            layout : 'alt',
-            bubbleColor: 'none',
-            bubbleText : 'black',
-            quoteColor: 'white',
-            active : 0
-
+      autoplay : 'on',
+      delay : 15000,
+      layout : 'alt',
+      bubbleColor: 'none',
+      bubbleText : 'black',
+      quoteColor: 'white',
+      active : 0
     }, options);
 
      //match the height of the section to the height of the biggest testimonial

@@ -602,6 +602,9 @@ nav.main-nav {
   max-height: 5.7em !important;
   overflow: hidden;
 }
+.not-nov .post-conteudo-index * {
+  font-size: 1rem !important;
+}
 .card {
   background-color: #000 !important;
 }
@@ -1279,7 +1282,96 @@ table.highlight>tbody>tr {
   max-height: 80px;
   margin: 5px 0 5px 20px;
 }
+
+footer.page-footer .footer-copyright {
+  background-color: #131313;
+  min-height: 200px;
+}
+footer.page-footer .footer-copyright .row {
+  width: 100%;
+  margin-bottom: 0;
+}
+footer.page-footer .footer-copyright .row .logo-low {
+  height: 200px;
+  padding: 50px 0;
+}
+/*----------------mapa do site----------------*/
+footer.page-footer .container.mapas {
+  background: #191304;
+  padding: 0 5% 20px;
+  width: 100%;
+  max-width: none;
+}
+footer.page-footer .mapas .row {
+  margin-bottom: 0;
+}
+#mapa-do-site {
+  width: 100%;
+  padding: 0 15%;
+  max-width: none;
+  /*background-color: #191304;*/
+}
+#mapa-do-site .mapa-wrapper {
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+#mapa-do-site .mapa-wrapper .mapa-title {
+  margin-top: 0;
+  padding-top: .82rem;
+  font-size: 1.3em;
+  color: #5a5a5a;
+}
+#mapa-do-site .mapa-wrapper .grad-line {
+  height: 1px;
+}
+#mapa-do-site .mapa-wrapper .mapa-areas-wrapper {
+  line-height: 1.2;
+}
+#mapa-do-site .mapa-menu {
+  background: rgba(251,210,87,1) !important;
+  background: -moz-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(251,210,87,1)), color-stop(30%, rgba(255,239,189,1)), color-stop(100%, rgba(235,217,14,1))) !important;
+  background: -webkit-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -o-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: -ms-linear-gradient(-45deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  background: linear-gradient(135deg, rgba(251,210,87,1) 0%, rgba(255,239,189,1) 30%, rgba(235,217,14,1) 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', endColorstr='#ebd90e', GradientType=1 ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+/*----------------mapa do site fim----------------*/
+
 /*----------------mudanças facebook----------------*/
+  #fb-messenger-widget-7606 .fb-messenger-widget-simple {
+    position: relative;
+    overflow: initial;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    background-color: #f1df57;
+    border-radius: 50%;
+    -webkit-transition: .3s;
+    transition: 0.3s;
+  }
+  #fb-messenger-widget-7606 .fb-messenger-widget-simple:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: inherit;
+    border-radius: inherit;
+    -webkit-transition: opacity .8s, -webkit-transform .8s;
+    transition: opacity .8s, -webkit-transform .8s;
+    transition: opacity .8s, transform .8s;
+    transition: opacity .8s, transform .8s, -webkit-transform .8s;
+    -webkit-animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    animation: pulse-animation 2.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    z-index: -1;
+  }
 /*#fb-messenger-widget-7606 {
   position: absolute !important;
 }*/
@@ -1481,6 +1573,17 @@ table.highlight>tbody>tr {
   footer.page-footer {
     margin-top: 50px !important;
     padding-top: 0 !important;
+  }
+}
+@media only screen and (max-width: 992px) {
+  footer.page-footer .footer-copyright .contato-footer {
+    float: right;
+  }
+  footer.page-footer .footer-copyright .copyright {
+    height: 60px !important;
+  }
+  footer.page-footer .footer-copyright .logo-low img {
+    width: 75%;
   }
 }
 @media only screen and (min-width: 601px) {
