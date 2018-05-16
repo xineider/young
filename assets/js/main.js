@@ -595,52 +595,13 @@ function SubmitAjax(post, link, back, method) {
     },
     success: function(data) {
     	console.log(data);
-    	console.log(data.length);
-    	console.log(typeof data);
-    	console.log(post);
-
-    	if(data == 0) {
-    		console.log('ta no primeiro if sabosta');
-    	}
-    	if(data < 0) {
-    		console.log('ta no segundo if sabosta');
-    	}
-    	if(typeof data == undefined) {
-    		console.log('sabosta é indefinida');
-    	}
-    	if(typeof data == 'undefined') {
-    		console.log('sabosta é indefinida EM STRING, carai');
-    	}
-    	if(data == '') {
-    		console.log('ta vazia sabosta');
-    	}
-    	if(typeof post != undefined) {
-    		console.log('post definido');
-    	}
-    	if(typeof post == undefined) {
-    		console.log('post indefinido');
-    	}
-    	if(typeof post == 'undefined') {
-    		console.log('post indefinido 2');
-    	}
-    	if(post > 0) {
-    		console.log('post maior que zero');
-    	}
-    	if(post < 0) {
-    		console.log('post menor que zero');
-    	}
-    	if(post == 0) {
-    		console.log('post igual a zero');
-    	}
 
     	if (data == "RELOAD") {
     		window.location.replace('/sistema/configuracoes');
     	}
-    	if (typeof post != undefined && post > 0) {
-    		console.log('------------------------------- estou aqui dentro ---------------------------')
+    	if (typeof data != undefined || data > 0) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
-    	Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	console.log(back);
     	if (typeof back != 'undefined' && back != 'add_name') {
 				GoTo(back, true);
@@ -898,15 +859,14 @@ function VerificarForm() {
 			error = true;
 			return false;
 		} 
-		// if($("input[type=email]").val().length>0){
-		// 	var email = $("input[type=email]").val();
-		// 	if(validarEmail(email, textoErro) == false){
-		// 		console.log('++++++++++++++++++++++++++++++++++ erro +++++++++++++++++++++++++++');
-		// 		AddError($('input[type=email]'), 'Por favor, insira um e-mail válido.');
-		// 		error = true;
-		// 		return false;
-		// 	}
-		// }
+		if($("input[type=email]").val().length>0){
+			var email = $("input[type=email]").val();
+			if(validarEmail(email, textoErro) == false){
+				AddError($('input[type=email]'), 'Por favor, insira um e-mail válido.');
+				error = true;
+				return false;
+			}
+		}
 
 	// 	if($('#alterar_senha').val() != $('#confirmar_alterar_senha').val())
 	// 	{
@@ -946,7 +906,7 @@ function AddError(isso,texto) {
 function AddErrorAjax() {
 	$('.error_ajax').fadeIn();
 }
-// function validarEmail(email, texto) {
-// 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//   return re.test(String(email).toLowerCase());
-// }
+function validarEmail(email, texto) {
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}

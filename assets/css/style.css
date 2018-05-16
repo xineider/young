@@ -1617,3 +1617,8 @@ footer.page-footer .mapas .row {
     font-size: 2em !important;
   }
 }
+
+ #toast-container .toast.rounded {
+    background-color: #388e3c;
+    font-weight: bold;
+  }

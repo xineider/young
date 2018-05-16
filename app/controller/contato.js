@@ -18,8 +18,9 @@ router.post('/enviarcontato', function(req, res, next) {
 		// Recebendo o valor do post
 	POST = req.body;
 
-	control.SendMail('noreply@quorp.com.br','Contato - young.adv.br','Recebimento de contato do site Site Young.',
-		'Recebimento de contato do site Young Site.							 <br><b>Nome</b>:' + POST.nome + 
+	control.SendMail('marcos.schneider13@hotmail.com','Contato - young.adv.br','Recebimento de contato do site Site Young.',
+		'Recebimento de contato do site Young Site.\
+							 <br><b>Nome</b>:' + POST.nome + 
 							'<br><b>Email</b>:' + POST.email +
 							'<br><b>Estado</b>:' + POST.estado +
 							'<br><b>Cidade</b>:' + POST.cidade +
@@ -27,7 +28,7 @@ router.post('/enviarcontato', function(req, res, next) {
 							'<br><b>Telefone</b>:' + POST.telefone2 +
 							'<br><b>Mensagem</b>:<br>'+ POST.mensagem +
 							'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
-		res.json(data);
+	
 		console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');
 		console.log(POST);
 		console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');
@@ -35,5 +36,6 @@ router.post('/enviarcontato', function(req, res, next) {
 		console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');
 		console.log(req.body);
 		console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');
+		res.json(POST);
 });
 module.exports = router;
