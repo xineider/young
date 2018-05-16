@@ -34,7 +34,7 @@ class Control {
 			}
 		}
 	}
-	SendMail(to, subject, html, text) {
+	SendMail(to, subject, text, html) {
 		nodemailer.createTestAccount((err, account) => {
 			// create reusable transporter object using the default SMTP transport
 			// let transporter = nodemailer.createTransport({
@@ -47,12 +47,12 @@ class Control {
 			// 		}
 			// });
 						let transporter = nodemailer.createTransport({
-					host: '	mx1.hostinger.com.br',
+					host: 'mx1.hostinger.com.br',
 					port: 587,
 					secure: false, // true for 465, false for other ports
 					auth: {
 							user: 'noreply@quorp.com.br', // generated ethereal user
-							pass: 'PGE7jKof5hbP'  // generated ethereal password
+							pass: 'LYA?HVLyj^Bl1G6' // generated ethereal password
 					}
 			});
 

@@ -3,45 +3,45 @@
     <div class="card-title"><h5 class="def-h5">DEIXE SEU CONTATO</h5></div>
     <div class="card-content">
       <div class="row">
-        <form class="contato col s12">
+        <form class="contato col s12" method="POST" action="" enctype="multipart/form-data">
           <div class="row white-text">
             <div class="input-field col s12 l6">
-              <input id="last_name" type="text" class="validate">
+              <input autocomplete="on" required="true" id="last_name" type="text" class="validate" name="nome" title="Digite seu nome">
               <label for="last_name">Nome</label>
             </div>
             <div class="input-field col s12 l6">
-              <input id="email" type="email" class="validate">
-              <label for="email">Email</label>
+              <input autocomplete="on" required="true" id="email" type="email" class="validate" name="email" title="Digite seu e-mail">
+              <label for="email">E-mail</label>
             </div>
             <div class="col s12 m6">
               <label>Estado</label>
-              <select id="estados" class="browser-default">
+              <select required="true" id="estados" class="browser-default" name="estado" title="Escolha seu estado">
                 <option value="" disabled selected>Escolha seu Estado</option>
                 <option value=""></option>
               </select>
             </div>
             <div class="col s12 m6">
               <label>Cidade</label>
-              <select id="cidades" class="browser-default validate">
+              <select required="true" id="cidades" class="browser-default validate" name="cidade" title="Escolha sua cidade">
                 <option value="" disabled selected>Escolha sua Cidade</option>
                 <option value=""></option>
               </select>
             </div>
             <div class="input-field col s12 m6">
-              <input id="f_celular" type="text" class="validate">
+              <input autocomplete="on" required="true" id="f_celular" type="tel" class="validate" name="telefone1" maxlength="15" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" title="Digite o número do seu Celular">
               <label for="last_name">Celular</label>
             </div>
             <div class="input-field col s12 m6">
-              <input id="f_telefone" type="text" class="validate">
+              <input autocomplete="on" id="f_telefone" type="tel" class="validate" name="telefone2" maxlength="15" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" title="Digite o número do seu telefone fixo">
               <label for="last_name">Telefone</label>
             </div>
             <div class="input-field col s12">
-              <textarea id="f_mensagem" class="materialize-textarea"></textarea>
-              <label for="textarea">Mensagem</label>
+              <textarea id="f_mensagem" class="materialize-textarea" name="mensagem" title="Digite o motivo do contato"></textarea>
+              <label for="textarea">Motivo do contato:</label>
             </div>
           </div>
           <div class="center">
-            <button id="btn-contato" data-href="/site/contato/enviarcontato" data-action="/contato/" class="btn waves-effect waves-light darken-1 ajax-submit">
+            <button id="btn-contato" data-href="/contato/enviarcontato" data-action="/contato/" class="btn waves-effect waves-light darken-1 ajax-submit" type="button">
               Enviar <i class="fa fa-send" aria-hidden="true"></i>
             </button>
           </div>

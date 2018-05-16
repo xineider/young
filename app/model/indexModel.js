@@ -18,6 +18,7 @@ class IndexModel {
 			 (SELECT c.nome FROM node_categoria as c WHERE c.id=a.id_categoria) as categoria_nome,\
 			 (SELECT b.titulo FROM node_post as b WHERE b.id=a.id_post) as titulo_post,\
 			 (SELECT b.conteudo FROM node_post as b WHERE b.id=a.id_post) as conteudo,\
+			 (SELECT b.arquivo FROM node_post as b WHERE b.id=a.id_post) as imagem,\
 			 (SELECT DATE_FORMAT(b.data_post, "%d/%m/%Y") FROM node_post as b WHERE b.id=a.id_post) as data_post,\
 			 (SELECT b.data_post_alteracao FROM node_post as b WHERE b.id=a.id_post) as data_post_alteracao_post\
                FROM node_post_categoria as a WHERE a.deletado = ? ORDER by data_post DESC', [0]).then(data => {

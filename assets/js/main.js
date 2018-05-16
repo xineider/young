@@ -4,9 +4,9 @@ $(document).on('ready', function () {
 	$('.modal').modal();
 	criarDepoimentos();
 	// InitBar();
-	$('#calendar').fullCalendar({
-        // put your options and callbacks here
-    });
+	// $('#calendar').fullCalendar({
+ //        // put your options and callbacks here
+ //    });
 	// LoadInfosUsuario();
 	// adicionarLoader();
 	// FormatInputs();
@@ -122,9 +122,9 @@ $(document).on('click', '#seta', function (e) {
     $('.slider').slider();
 $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, duration: 300});
 	$(document).ajaxComplete(function () {
-		$('#calendar').fullCalendar({
-        // put your options and callbacks here
-    })
+		// $('#calendar').fullCalendar({
+  //       // put your options and callbacks here
+  //   })
     criarDepoimentos();
     $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, duration: 300});
 
@@ -588,19 +588,59 @@ function SubmitAjax(post, link, back, method) {
 	  data: post,
 	  url: link,
     beforeSend: function(request) {
-			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
-			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
-			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			// request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			// request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			// request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
 			adicionarLoader();
     },
     success: function(data) {
     	console.log(data);
+    	console.log(data.length);
+    	console.log(typeof data);
+    	console.log(post);
+
+    	if(data == 0) {
+    		console.log('ta no primeiro if sabosta');
+    	}
+    	if(data < 0) {
+    		console.log('ta no segundo if sabosta');
+    	}
+    	if(typeof data == undefined) {
+    		console.log('sabosta é indefinida');
+    	}
+    	if(typeof data == 'undefined') {
+    		console.log('sabosta é indefinida EM STRING, carai');
+    	}
+    	if(data == '') {
+    		console.log('ta vazia sabosta');
+    	}
+    	if(typeof post != undefined) {
+    		console.log('post definido');
+    	}
+    	if(typeof post == undefined) {
+    		console.log('post indefinido');
+    	}
+    	if(typeof post == 'undefined') {
+    		console.log('post indefinido 2');
+    	}
+    	if(post > 0) {
+    		console.log('post maior que zero');
+    	}
+    	if(post < 0) {
+    		console.log('post menor que zero');
+    	}
+    	if(post == 0) {
+    		console.log('post igual a zero');
+    	}
+
     	if (data == "RELOAD") {
     		window.location.replace('/sistema/configuracoes');
     	}
-    	if (typeof data != undefined && data > 0) {
+    	if (typeof post != undefined && post > 0) {
+    		console.log('------------------------------- estou aqui dentro ---------------------------')
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
+    	Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	console.log(back);
     	if (typeof back != 'undefined' && back != 'add_name') {
 				GoTo(back, true);
@@ -617,6 +657,7 @@ function SubmitAjax(post, link, back, method) {
     }
 	});
 }
+
 function SubmitComentario(post, link, back, method) {
 	$.ajax({
 	  method: 'POST',
@@ -698,44 +739,6 @@ function MountModal(modal, link) {
     }
 	});
 }
-function VerificarForm(form) {
-	var error = false;
-	$('.error').remove();
-	form.find('input:enabled:not([type="hidden"])[required="true"]').each(function(){
-		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
-		};
-	});
-	form.find('textarea:enabled[required="true"]').each(function(){
-		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
-		};
-	});
-	form.find('select:enabled[required="true"]').each(function(){
-		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
-		};
-	});
-	if (error == false) {
-			return true;
-	}
-}
-function VerificaItem(isso) {
-	if (isso.val() == '') {
-		AddError(isso);
-		return true;
-	}
-}
-function AddError(isso) {
-	console.log(isso);
-	isso.focus().addClass('observe-post').parent().append('<div class="error">Complete corretamente</div>');
-}
-function AddErrorAjax() {
-	$('.error_ajax').fadeIn();
-}
 function msToTime(duration) {
   var milliseconds = parseInt((duration%1000)/100)
       , seconds = parseInt((duration/1000)%60)
@@ -785,19 +788,19 @@ function AlignPostsBlog() {
 function AlignFooterOnLarge() { //pra alinhar texto e imagem sem atrapalhar o mobile
 	if ($(window).width() > 992) {
 		$('footer.page-footer .container .row.to-align').addClass('valign-wrapper');
-		$('.not-nov #noticias').addClass('valign-wrapper');
+		// $('.not-nov #noticias').addClass('valign-wrapper');
 	} else {
 		$('footer.page-footer .container .row.to-align').removeClass('valign-wrapper');
-		$('.not-nov #noticias').removeClass('valign-wrapper');
+		// $('.not-nov #noticias').removeClass('valign-wrapper');
 	}
 	$(window).on('resize', function(e) {
 		e.preventDefault();
 		if ($(window).width() > 992) {
 			$('footer.page-footer .container .row.to-align').addClass('valign-wrapper');
-			$('.not-nov #noticias').addClass('valign-wrapper');
+			// $('.not-nov #noticias').addClass('valign-wrapper');
 		} else {
 			$('footer.page-footer .container .row.to-align').removeClass('valign-wrapper');
-			$('.not-nov #noticias').removeClass('valign-wrapper');
+			// $('.not-nov #noticias').removeClass('valign-wrapper');
 		}
 	});
 };
@@ -884,3 +887,66 @@ function UploadFile(isso) {
     }
 	});
 }
+
+function VerificarForm() {
+	var error = false;
+	var textoErro = 'Por favor, complete corretamente.'
+
+	$('.error').remove();
+	$('input:enabled:not([type="hidden"])[required="true"]').each(function(){
+		if(VerificaItem($(this),textoErro) == true) {
+			error = true;
+			return false;
+		} 
+		// if($("input[type=email]").val().length>0){
+		// 	var email = $("input[type=email]").val();
+		// 	if(validarEmail(email, textoErro) == false){
+		// 		console.log('++++++++++++++++++++++++++++++++++ erro +++++++++++++++++++++++++++');
+		// 		AddError($('input[type=email]'), 'Por favor, insira um e-mail válido.');
+		// 		error = true;
+		// 		return false;
+		// 	}
+		// }
+
+	// 	if($('#alterar_senha').val() != $('#confirmar_alterar_senha').val())
+	// 	{
+	// 		AddError($('#confirmar_alterar_senha'),'Senhas são diferentes');
+	// 		error = true;
+	// 		return false;
+	// 	}
+
+	});
+
+
+	$('textarea:enabled[required="true"]').each(function(){
+		if(VerificaItem($(this),textoErro) == true) {
+			error = true;
+			return false;
+		};
+	});
+	$('select:enabled[required="true"]').each(function(){
+		if(VerificaItem($(this),textoErro) == true) {
+			error = true;
+			return false;
+		};
+	});
+	if (error == false) {
+		return true;
+	}
+}
+function VerificaItem(isso,texto) {
+	if (isso.val() == '') {
+		AddError(isso,texto);
+		return true;
+	}
+}
+function AddError(isso,texto) {
+	isso.focus().addClass('observe-post').parent().append('<div class="error">'+texto+'</div>');
+}
+function AddErrorAjax() {
+	$('.error_ajax').fadeIn();
+}
+// function validarEmail(email, texto) {
+// 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//   return re.test(String(email).toLowerCase());
+// }
