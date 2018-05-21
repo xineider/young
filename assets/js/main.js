@@ -187,6 +187,9 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		GoTo(link, true);
 		Estados_Cidades();
 	});
+	$(document).on('click','.ajax-load.topo',function(e){
+		$('html').scrollTop(0);
+	});
 	$(document).on('click', '.ajax-load-to', function(e) {
 		e.preventDefault();
 		var link = $(this).data('href');
