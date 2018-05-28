@@ -2,12 +2,21 @@
 var crypto = require('crypto');
 
 // FAZER LEITURA DAS CONFIGURAÇÕES
+
 var config = {
-						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
-						    "user"     : "b95fc3530ebace",
-						    "password" : "372884c6",
-						    "database" : "heroku_941b27a7b2edaff"
-					  	};
+					    "host"     : "mysql986.umbler.com",
+					    "user"     : "admin-young",
+					    "password" : "6O(ayS4?{q{Ci",
+					    "database" : "young"
+				  	};
+
+
+// var config = {
+// 						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
+// 						    "user"     : "b95fc3530ebace",
+// 						    "password" : "372884c6",
+// 						    "database" : "heroku_941b27a7b2edaff"
+// 					  	};
 // var config = {
 // 						    "host"     : "localhost",
 // 						    "user"     : "root",
