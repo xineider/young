@@ -48,9 +48,12 @@ $(document).on('ready', function () {
  //    event.preventDefault(); 
  //    $(".fb-messenger-widget-simple").click();
 	// });
-	setTimeout(function(){
-	 $(".fb-messenger-widget-simple").click(); 
-	}, 2000);
+	if($(window).width()>990){
+		setTimeout(function(){
+	 		$(".fb-messenger-widget-simple").click(); 
+		}, 2000);	
+	}
+	
 
 	$(document).on('click', '#slide-header li a.ajax-load', function(event) { 
     event.preventDefault(); 
