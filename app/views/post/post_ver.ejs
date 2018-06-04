@@ -5,7 +5,7 @@
 	if (typeof data.post != 'undefined' && data.post.length > 0) {
 		for (var i = data.post.length - 1; i >= 0; i--) {
 	%>
-	<div id="post-head" style="position: relative; width: 100%; height: 300px; background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].arquivo %>) no-repeat center !important;">
+	<div id="post-head" style="display:none;position: relative; width: 100%; height: 300px; background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].arquivo %>) no-repeat center !important;">
 		<div class="post-head-center" style="position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%); margin: 0; text-align: center;">
 			<h5 class="def-h5 post-titulo" style="text-transform: uppercase; font-size: 2em;"><%= data.post[i].titulo %></h5>
 <!-- 			<h5 class="def-h5 post-titulo" style="text-transform: uppercase; font-size: 2em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et massa a nisi ullamcorper vehicula.</h5> -->
