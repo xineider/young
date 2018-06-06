@@ -812,7 +812,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
 }
 
 #blog-post .input-field label{
-  color:#e8b61d;
+  color:#e8b61d!important;
 }
 /*-----estilo blog-----*/
 .blog-pesquisa {
