@@ -792,6 +792,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
 #blog-section .pagination li a {
   color: #d6d6d6;
 }
+#blog-post{
+  /*Quando chamado por um a ele vai tirar a parte to header fixo de 90px*/
+  padding-top:90px;
+  margin-top: -90px;
+}
+
 #blog-post .post-texto a {
   color: #fbd256;
 }

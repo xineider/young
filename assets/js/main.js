@@ -222,6 +222,17 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		var to = $(this).data('to');
 		LoadTo(link, to);
 	});
+
+	$(document).on('click', '.ajax-load-aviso', function(e) {
+		e.preventDefault();
+		var link = $(this).attr('href');
+		console.log(link);
+		GoToAviso(link, true);
+		Estados_Cidades();
+	});
+
+
+
 	$(document).on('click', '.ajax-add-to', function(e) {
 		e.preventDefault();
 		var link = $(this).data('href');
@@ -450,6 +461,40 @@ function GoTo(link, state) {
 		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
 	}
 }
+
+function GoToAviso(link, state) {
+	$.ajax({
+	  method: "GET",
+	  async: true,
+	  url: link,
+    beforeSend: function(request) {
+			console.log('setando');
+    	request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+    	request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+    },
+    success: function(data) {
+  		$('main').html(data);
+    },
+    error: function(xhr) { // if error occured
+    },
+    complete: function() {
+			removerLoader();
+			$('.material-tooltip').remove();
+		  $('.tooltipped').tooltip({delay: 50});
+		  $('.modal').modal('close');
+			FormatInputs();
+			Materialize.toast('<div class="center-align" style="width:100%;">O seu ebook está no final do texto!</div>', 20000, 'rounded');
+    }
+	});
+	if (state == true) {
+		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
+	}
+}
+
+
+
 function LoadTo(link, to) {
 	$.ajax({
 	  method: "GET",
