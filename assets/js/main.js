@@ -184,7 +184,7 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 	});
 
 	$(document).on('click','.abrir-formulario-ebook',function(e){
-		if($('.identificador').length > 0){
+		if($('.identificador').length == 0){
 			$(this).closest('div').append('\
 				<div class="row identificador" style="margin-top: 10px;">\
 					<p>Para poder baixar o e-book por-favor informe seu Nome e Email no formulário abaixo:</p>\
