@@ -617,7 +617,7 @@ nav.main-nav {
   font-size: 1rem !important;
 }
 .card {
-  background-color: #000 !important;
+  background-color: #f3f3f3 !important;
 }
 .parallax-container {
   /*height: auto !important;*/
@@ -796,6 +796,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
   /*Quando chamado por um a ele vai tirar a parte to header fixo de 90px*/
   padding-top:90px;
   margin-top: -90px;
+}
+
+
+#blog-post .card-content{
+  font-size:14pt;
 }
 
 #blog-post .post-texto a {
