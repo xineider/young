@@ -224,9 +224,12 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 	});
 
 	$(document).on('click', '.baixar-ebook-inicio', function(e) {
-		setTimeout(function() {
-		Materialize.toast('<div class="center-align" style="width:100%;">O seu ebook está no final do texto!</div>', 20000, 'rounded');
-		},5000)
+		e.preventDefault();
+		var link = $(this).attr('href');
+		GoToAnchor(link,true);
+		// setTimeout(function() {
+		// Materialize.toast('<div class="center-align" style="width:100%;">O seu ebook está no final do texto!</div>', 20000, 'rounded');
+		// },5000)
 	});
 
 
@@ -459,6 +462,49 @@ function GoTo(link, state) {
 		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
 	}
 }
+
+function GoToAnchor(link, state) {
+	$.ajax({
+	  method: "GET",
+	  async: true,
+	  url: link,
+    beforeSend: function(request) {
+			console.log('setando');
+    	request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+    	request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+    },
+    success: function(data) {
+  		$('main').html(data);
+  		console.log(link);  		
+    },
+    error: function(xhr) { // if error occured
+    },
+    complete: function() {
+			removerLoader();
+			$('html,body').animate({
+  			scrollTop: $(window.location.hash).offset().top
+  		});
+			$('.material-tooltip').remove();
+		  $('.tooltipped').tooltip({delay: 50});
+		  $('.modal').modal('close');
+			FormatInputs();
+			Materialize.toast('<div class="center-align" style="width:100%;">O seu ebook está no final do texto!</div>', 20000, 'rounded');
+    }
+	});
+	if (state == true) {
+		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
+	}
+}
+
+
+
+
+
+
+
+
 
 function LoadTo(link, to) {
 	$.ajax({
