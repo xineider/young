@@ -224,7 +224,9 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 	});
 
 	$(document).on('click', '.baixar-ebook-inicio', function(e) {
+		setTimeout(function() {
 		Materialize.toast('<div class="center-align" style="width:100%;">O seu ebook está no final do texto!</div>', 20000, 'rounded');
+		},5000)
 	});
 
 
