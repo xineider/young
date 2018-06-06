@@ -645,10 +645,13 @@ function SubmitAjax(post, link, back, method) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
     	if(data == 'ebook'){
-    		$('.agradecimento-ebook').append('<p>Formulário preenchido com sucesso!</p>\
+    		$('.agradecimento-ebook').append('<div class="caixa-sucesso-preencher-formulario">\
+    			<p>Formulário preenchido com <span class="green-text">sucesso!</span></p>\
     			<p>Em instantes você receberá seu e-book pelo e-mail cadastrado.</p>\
     			<p>Se quiser receber informações sobre os seus direitos pelo whatsapp, \
-    			<a rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" class="whatsapp">clique aqui</a>')
+    			<a rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" class="whatsapp">clique aqui</a>\
+    			<a rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" class="whatsapp"><i class="fa fa-whatsapp" style="color: #5ace61;margin-left: 10px;"></i></a>\
+    			</div>')
     	}
     	console.log(back);
     	if (typeof back != 'undefined' && back != 'add_name' && back != 'naovoltar') {

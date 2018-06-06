@@ -814,6 +814,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
 #blog-post .input-field label{
   color:#e8b61d!important;
 }
+
+#blog-post .caixa-sucesso-preencher-formulario{
+  border: 2px solid #532501;
+  margin-top: 15px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 4px 2px 17px #b3b3b3;
+}
 /*-----estilo blog-----*/
 .blog-pesquisa {
   margin-top: 50px;
