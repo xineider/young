@@ -20,9 +20,9 @@ router.get('/', function (req, res, next) {
 			data['categoria'] = data_categoria;
 			model.GetTodasCategorias().then(data_todas_categorias => {
 				data['categorias'] = data_todas_categorias;
-			console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& data post controler &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-			console.log(data);
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/index', data: data });
+				console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& data post controler &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+				console.log(data);
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'post/index', data: data });
 			});
 		});
 	});
@@ -57,6 +57,20 @@ router.get('/ver/:id', function (req, res, next) {
 });
 
 
+
+router.post('/pedirebook', function(req, res, next) {
+	POST = req.body;
+	model.InsertContato('contatos_young',POST).then(data => {
+		control.SendMailAttachment(POST.email,'Ebook Ação Contra Plano de Saúde Documentos Necessários','Obrigado por se cadastrar no site da Young, Dias Lauxen & Lima aqui está o seu ebook',
+			'Obrigado por se cadastrar no site da Young, Dias Lauxen & Lima aqui está o seu ebook'/
+			'<br><br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.',
+			'ebook_Acao_Contra_Plano_de_Saude_Documentos_Necessarios.pdf','./assets/ebook/ebook_Acao_Contra_Plano_de_Saude_Documentos_Necessarios.pdf');
+		var ebook = 'ebook';
+		res.json(ebook);
+	});
+});
+
+
 router.post('/cadastrar', function (req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
@@ -83,13 +97,13 @@ router.post('/atualizar/:id', function (req, res, next) {
 });
 
 router.post('/site/uploadarquivo', function(req, res, next) {
-  var sampleFile = req.files.arquivo;
-  var nome = 'blog_capa'+ control.DateTimeForFile()+'_'+sampleFile.name;
-  sampleFile.mv('./assets/imgs/blog/' + nome,function(err){
-  	if(err)
-    	return res.status(500).send(err);
-   	res.json(nome);
-  })
+	var sampleFile = req.files.arquivo;
+	var nome = 'blog_capa'+ control.DateTimeForFile()+'_'+sampleFile.name;
+	sampleFile.mv('./assets/imgs/blog/' + nome,function(err){
+		if(err)
+			return res.status(500).send(err);
+		res.json(nome);
+	})
 });
 
 module.exports = router;

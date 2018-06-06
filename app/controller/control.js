@@ -51,8 +51,9 @@ class Control {
 				port: 587,
 					secure: false, // true for 465, false for other ports
 					auth: {
-						user:'noreply@pazze.ind.br', // generated ethereal user
-						pass:'yEGhMAo10Edm'
+						user:'noreply@quorp.com.br',
+						pass: 'LYA?HVLyj^Bl1G6'
+						//pass:'yEGhMAo10Edm' // senha do noreply@pazze.ind.br
 							// pass: 'LYA?HVLyj^Bl1G6' //senha do noreply@quorp.com.br // generated ethereal password
 						},
 						tls: {
@@ -62,7 +63,7 @@ class Control {
 
 			// setup email data with unicode symbols
 			let mailOptions = {
-					from: 'noreply@pazze.ind.br', // sender address
+					from: 'noreply@quorp.com.br', // sender address
 					to: to, // list of receivers
 					subject: subject, // Subject line
 					html: html, // html body
@@ -75,8 +76,6 @@ class Control {
 					return console.log(error);
 				}
 				console.log('Message sent: %s', info.messageId);
-					// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
-					// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 				});
 			// verify connection configuration
 			transporter.verify(function(error, success) {
@@ -89,6 +88,51 @@ class Control {
 				}
 			});
 		});
+	}
+
+	SendMailAttachment(para, assunto,text, html,nomeAnexo,caminhoAnexo) {
+			nodemailer.createTestAccount((err, account) => {
+
+					// create reusable transporter object using the default SMTP transport
+					let transporter = nodemailer.createTransport({
+							host: 'mx1.hostinger.com.br',
+							port: 587,
+							secure: false, // true for 465, false for other ports
+							auth: {
+									user: 'noreply@quorp.com.br', // generated ethereal user
+									pass: 'LYA?HVLyj^Bl1G6'  // generated ethereal password
+							},
+	    				tls: {
+	    					rejectUnauthorized: false
+	    				}
+					});
+
+					// setup email data with unicode symbols
+					let mailOptions = {
+							from: 'noreply@quorp.com.br', 
+							to: para, 
+							subject: assunto,
+							text: text, 
+							html: html,
+							attachments: [
+								{
+									filename: nomeAnexo,
+									path:caminhoAnexo
+								}				
+							] // html body
+					};
+
+
+					// send mail with defined transport object
+					transporter.sendMail(mailOptions, (error, info) => {
+							if (error) {
+									return console.log(error);
+							}
+							console.log('Message sent: %s', info.messageId);
+							// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+							// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+					});
+			});
 	}
 	DateTime() {
 

@@ -18,7 +18,7 @@ router.post('/enviarcontato', function(req, res, next) {
 		// Recebendo o valor do post
 	POST = req.body;
 
-	control.SendMail('marcos.schneider13@hotmail.com','Contato - young.adv.br','Recebimento de contato do site Site Young.',
+	control.SendMail('contatos_young@quorp.com.br','Contato - young.adv.br - '+ POST.nome,'Recebimento de contato do site Site Young.',
 		'Recebimento de contato do site Young Site.\
 							 <br><b>Nome</b>:' + POST.nome + 
 							'<br><b>Email</b>:' + POST.email +
@@ -26,7 +26,7 @@ router.post('/enviarcontato', function(req, res, next) {
 							'<br><b>Cidade</b>:' + POST.cidade +
 							'<br><b>Telefone</b>:' + POST.telefone1 +
 							'<br><b>Telefone</b>:' + POST.telefone2 +
-							'<br><b>Mensagem</b>:<br>'+ POST.mensagem +
+							'<br><b>Mensagem</b>:<br><br>'+ POST.mensagem +
 							'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
 	
 		console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU');

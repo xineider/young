@@ -183,6 +183,29 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		MountModal(modal, link);
 	});
 
+	$(document).on('click','.abrir-formulario-ebook',function(e){
+		if($(this).next().hasClass('identificador') != true){
+			$(this).closest('div').append('\
+				<div class="row identificador">\
+					<p>Para poder baixar o e-book por-favor informe seu Nome e Email no formulário abaixo:</p>\
+					<form method="POST" action="" enctype="multipart/form-data">\
+						<div class="input-field col s12 l6">\
+		      		<label for="nome">Nome</label>\
+		        	<input type="text" required="true" name="nome" class="validate">\
+		      	</div>\
+		      	<div class="input-field col s12 l6">\
+		      		<label for="email">Email</label>\
+		      		<input type="email" required="true" name="email" class="validate">\
+		      	</div>\
+		      	<div class="center-align col s12 agradecimento-ebook">\
+		      		<button data-href="/post/pedirebook" data-action="naovoltar" class="btn waves-effect waves-light green darken-1 ajax-submit">\
+		      			Enviar\
+		      		</button>\
+		      	</div>\
+		      </form></div>');
+		}
+	});
+
 	$(document).on('click', '.ajax-load', function(e) {
 		e.preventDefault();
 		var link = $(this).attr('href');
@@ -611,8 +634,15 @@ function SubmitAjax(post, link, back, method) {
     	if (typeof data != undefined || data > 0) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
+    	if(data == 'ebook'){
+    		$('.agradecimento-ebook').append('<p>Formulário preenchido com sucesso!</p>\
+    			<p>Em instantes você receberá seu e-book pelo e-mail cadastrado.</p>\
+    			<p>Se quiser receber informações sobre os seus direitos pelo whatsapp, \
+    			<a rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Quero receber informações sobre os meus direitos pelo WhatsApp" class="whatsapp">clique aqui</a>')
+    	}
     	console.log(back);
-    	if (typeof back != 'undefined' && back != 'add_name') {
+    	if (typeof back != 'undefined' && back != 'add_name' && back != 'naovoltar') {
+    		console.log('voltando');
 				GoTo(back, true);
     	} else if(back == 'add_name') {
     		$('.grupo').prepend('<option value="'+data.id+'">'+data.nome+'</option>').find('option:first-child').prop('selected', true);
@@ -687,7 +717,7 @@ function MountModal(modal, link) {
 	$.ajax({
 	  method: "GET",
 	  async: true,
-	  url: '/sistema'+link,
+	  url: link,
     beforeSend: function(request) {
 			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
 			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());

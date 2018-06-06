@@ -68,6 +68,15 @@ class PostModel {
 		});
 	}
 
+	InsertContato(table,POST){
+		POST.tipo = 2
+		return new Promise(function (resolve, reject) {
+			helper.Insert(table,POST).then(data =>{
+				resolve(data);
+			});
+		});
+	}
+
 	InsertPost(table, POST) {
 		POST = helper.PrepareDates(POST, ['data_post']);
 		var titulo = POST.titulo;
