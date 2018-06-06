@@ -810,6 +810,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbd257', end
 #blog-post blockquote {
   border-left: 5px solid #d6b24c;
 }
+
+#blog-post .input-field label{
+  color:#e8b61d;
+}
 /*-----estilo blog-----*/
 .blog-pesquisa {
   margin-top: 50px;
