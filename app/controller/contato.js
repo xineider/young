@@ -16,19 +16,20 @@ router.get('/', function(req, res, next) {
 
 router.post('/enviarcontato', function(req, res, next) {
 		// Recebendo o valor do post
-		POST = req.body;
-		console.log(POST);
-		
+	POST = req.body;
+	console.log(POST);
+	model.InsertContato('contatos_young',POST).then(data => {
 		control.SendMail('contatos_young@quorp.com.br','Contato - young.adv.br - '+ POST.nome,'Recebimento de contato pelo site da young.adv.br.',
 			'Recebimento de contato pelo site da young.adv.br.\
-			<br><b>Nome</b>:' + POST.nome + 
-			'<br><b>Email</b>:' + POST.email +
-			'<br><b>Estado</b>:' + POST.estado +
-			'<br><b>Cidade</b>:' + POST.cidade +
-			'<br><b>Telefone</b>:' + POST.telefone1 +
-			'<br><b>Telefone</b>:' + POST.telefone2 +
-			'<br><b>Mensagem</b>:<br><br>'+ POST.mensagem +
-			'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
+							 <br><b>Nome</b>:' + POST.nome + 
+							'<br><b>Email</b>:' + POST.email +
+							'<br><b>Estado</b>:' + POST.estado +
+							'<br><b>Cidade</b>:' + POST.cidade +
+							'<br><b>Telefone</b>:' + POST.telefone1 +
+							'<br><b>Telefone</b>:' + POST.telefone2 +
+							'<br><b>Mensagem</b>:<br><br>'+ POST.mensagem +
+							'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
 		res.json(data);
 	});
+});
 module.exports = router;

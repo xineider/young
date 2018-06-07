@@ -7,9 +7,11 @@ var helper = new Helper;
 class ContatoModel {
 
 	InsertContato(table,POST){
-		console.log('DADOS DO POST NO CONTATO');
-		console.log(POST);
-		console.log('------------------------');
+		delete POST.estado;
+		delete POST.cidade;
+		delete POST.telefone1;
+		delete POST.telefone2;
+		delete POST.mensagem;
 		POST.tipo = 1;
 		return new Promise(function (resolve, reject) {
 			helper.Insert(table,POST).then(data =>{
