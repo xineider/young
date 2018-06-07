@@ -1156,14 +1156,21 @@ h5.def-h5,
 }
 
 /*---------------Dados do Contato---------------*/
+.contato label{
+  color: #e8b61d;
+}
+
  /* label color */
 .input-field label {
-  color: #f0f0f0 !important;
+  color: #e8b61d !important;
 }
 /* label focus color */
 .input-field input[type=text]:focus + label {
   color: #ffd65e !important;
 }
+
+
+
 input[type=text]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
   -webkit-box-shadow: 0 1px 0 0 #ffd65e !important;
