@@ -592,6 +592,10 @@ nav.main-nav {
 .justified {
   text-align: justify;
 }
+.justified-centered {
+  text-align: justify;
+  text-align-last: center;
+}
 .video-container {
   width: 70% !important;
   margin-left: 15% !important;
