@@ -495,7 +495,9 @@
 	  				if(data.post[i].imagem != 'undefined' && data.post[i].image != '' && data.post[i].imagem != 'null') {
 	  					var image_check_i = 1;
 	  			%>
-	  			<div class="imagem-post" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].imagem %>) no-repeat center !important; height: 250px;position: relative;"></div>
+	  			<a href="/post/ver/<%= data.post[i].id_post %>" class="ajax-load">
+	  				<div class="imagem-post" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].imagem %>) no-repeat center !important; height: 250px;position: relative;"></div>
+	  			</a>
 	  			<%
 	  				} else {
 	  					var image_check_i = 0;
@@ -508,7 +510,9 @@
 		  		<!-- <h5 class="def-h5 center truncate" style="padding-bottom: 0;"><%= data.post[i].titulo_post %></h5>
 		  		<div class="grad-line"></div> -->
 		  		<div class="post-conteudo-index">
-			  		<p class="justified"><%- data.post[i].conteudo %></p>
+			  		<a href="/post/ver/<%= data.post[i].id_post %>" class="ajax-load">
+			  			<p class="justified"><%- data.post[i].conteudo %></p>
+			  		</a>
 		  		</div>
 		  		<a href="/post/ver/<%= data.post[i].id_post %>" class="leia-mais ajax-load" style="color: #f4d59a">Leia Mais...</a>
 	  		</div>
