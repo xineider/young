@@ -67,7 +67,12 @@ router.post('/pedirebook', function(req, res, next) {
 			'<br><br>Parabéns por baixar o guia com informações importantes sobre os documentos iniciais necessários.'+
 			'<br>Ao se ver na necessidade de entrar com alguma ação contra o seu plano de saúde, reúna seus documentos e procure um advogado de sua confiança.'+
 			'<br>Veja também em nosso <a href="http://www.young.adv.br/areasdeatuacao" target="_blank">site</a> as áreas jurídicas onde podemos te ajudar.'+
-			'<br><br>Atenciosamente, Young, Dias, Lauxen & Lima.'+
+			'<br><br>Atenciosamente,'+
+			'<br><div style="float:left;text-align:left;border-right:2px solid #666;padding:0 10px;margin:0"><img height="83" src="http://www.young.adv.br/assets/imgs/logo_assinatura.png" style="border:0px;max-width:100%;width:250px;margin:0px;margin:0;padding:0;height:auto" alt="Young Assinatura" width="450" height="150"></div>'
+			'<div style="width:50%;float:left;text-align:left;padding:9px 0 10px 9px;color:#000">Young, Dias, Lauxen &amp; Lima.<br>'+
+			'Fone: (51) 3589-5507<br>'+
+			'E-mail:&nbsp;<a href="mailto:young@young.adv.br" target="_blank">young@young.adv.br</a><br>'+
+			'Facebook:&nbsp;<a href="http://facebook.com/YDLLAdvogados" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=pt-BR&amp;q=http://facebook.com/YDLLAdvogados&amp;source=gmail&amp;ust=1528901133435000&amp;usg=AFQjCNGgMUNgi0MdKn4BAMZW7vllhHmBIQ">facebook.com/YDLLAdv<wbr>ogados</a></div>'+
 			'<br><br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.',
 			'ebook_Acao_Contra_Plano_de_Saude_Documentos_Necessarios.pdf','./assets/ebook/ebook_Acao_Contra_Plano_de_Saude_Documentos_Necessarios.pdf');
 		var ebook = 'ebook';
