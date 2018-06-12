@@ -63,7 +63,7 @@ router.post('/pedirebook', function(req, res, next) {
 	model.InsertContato('contatos_young',POST).then(data => {
 		control.SendMailAttachment(POST.email,'Ebook Ação Contra Plano de Saúde Documentos Necessários','Obrigado por se cadastrar no site da Young, Dias Lauxen & Lima aqui está o seu ebook',
 			'Olá,'+
-			'<br><br>Prezado(a) ' + POST.nome +
+			'<br><br>Prezado(a)' + POST.nome +
 			'<br><br>Parabéns por baixar o guia com informações importantes sobre os documentos iniciais necessários.'+
 			'<br>Ao se ver na necessidade de entrar com alguma ação contra o seu plano de saúde, reúna seus documentos e procure um advogado de sua confiança.'+
 			'<br>Veja também em nosso <a href="http://www.young.adv.br/areasdeatuacao" target="_blank">site</a> as áreas jurídicas onde podemos te ajudar.'+

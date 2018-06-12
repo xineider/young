@@ -226,12 +226,18 @@
 			  </style>
 
 			  <div id="ebook-index" class="hide-on-med-and-down">
-		    	<p class="def-h5 center" style="position: absolute; top: 20px; color: #fff; width: 100%; padding: 0 10px; font-size: 18px;">Seu plano de saúde negou um procedimento?<br>
-Baixe o guia de documentos iniciais necessários para entrar com uma ação.</p>
-		    	<img src="/assets/imgs/ebook.jpg" style="width: 150px; position: absolute; bottom: 100px; left: 50%; /* margin-left: -25%; */ transform: translate(-50%);">
-		    	<a id="btn-gerenciar" href="/post/ver/1/#blog-post" class="btn right waves-effect waves-light black-text baixar-ebook-inicio" style="position: absolute; bottom: 35px; left: 50%; /* margin-left: -25%; */ transform: translate(-50%);">
-			    	Download
-			    </a>
+		    	<input type="hidden" id="ajax-carousel" value="0">
+		    	<div class="carousel carousel-slider center" data-indicators="false">
+				    <div class="carousel-fixed-item center">
+				      <a id="btn-gerenciar" href="/post/ver/1/#blog-post" class="btn right waves-effect waves-light black-text baixar-ebook-inicio">Baixar</a>
+				    </div>
+				    <div class="carousel-item">
+				    	<img src="/assets/imgs/ebook.jpg" style="width: 240px; position: absolute; bottom: 100px; left: 50%; /* margin-left: -25%; */ transform: translate(-50%);">
+				    </div>
+				    <div class="carousel-item">
+				    	<h5 class="def-h5 center" style="position: absolute; top: 40%; transform: translate(0, -50%); color: #fff; width: 100%; padding: 0 10px; font-size: 40px;">Seu plano de saúde negou um procedimento?<br>Baixe o guia de documentos iniciais necessários para entrar com uma ação.</h5>
+				    </div>
+				  </div>
 		    </div>
 
 

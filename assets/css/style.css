@@ -1223,6 +1223,22 @@ input[type=email].valid:not(.browser-default) {
 .input-field .prefix.active {
  color: #ffd65e !important;
 }
+#ebook-index .carousel-fixed-item {
+          bottom: 0;
+        }
+        #ebook-index .carousel.carousel-slider {
+          height: 500px !important;
+        }
+        #ebook-index #btn-gerenciar {
+          position: absolute;
+          bottom: 35px;
+          left: 50%;
+          /* margin-left: -25%; */
+          transform: translate(-50%);
+        }
+        #ebook-index .indicators {
+          display: none;
+        }
 /*mudar cores do select*/
 select:focus {
   outline: 1px solid #ffd65e !important;
