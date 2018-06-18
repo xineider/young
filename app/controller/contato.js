@@ -28,6 +28,7 @@ router.post('/enviarcontato', function(req, res, next) {
 							'<br><b>Telefone</b>:' + POST.telefone2 +
 							'<br><b>Mensagem</b>:<br><br>'+ POST.mensagem +
 							'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
+	/*Inserido no banco o contato*/
 	model.InsertContato('contatos_young',POST).then(data => {
 		res.json(data);
 	});
