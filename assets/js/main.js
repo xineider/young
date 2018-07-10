@@ -695,7 +695,7 @@ function SubmitAjax(post, link, back, method) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
     	if(data == 'abrirNoticia'){
-    		window.open(back);
+    		window.open(back,"_blank");
     	}
     	
     	if(data == 'ebook'){
