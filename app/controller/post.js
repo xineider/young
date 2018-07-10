@@ -87,7 +87,7 @@ router.post('/leadContato/:tipo',function(req,res,next){
 	POST.tipo = req.params.tipo;
 
 	model.InsertLeadCliente(POST).then(data => {
-		res.json('abrirNoticia');
+		res.redirect('https://stackoverflow.com/');
 	});
 });
 
