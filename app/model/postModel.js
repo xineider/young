@@ -77,6 +77,14 @@ class PostModel {
 		});
 	}
 
+	InsertLeadCliente(POST){
+		return new Promise(function (resolve, reject) {
+			helper.Insert('contatos_young',POST).then(data =>{
+				resolve(data);
+			});
+		});
+	}
+
 	InsertPost(table, POST) {
 		POST = helper.PrepareDates(POST, ['data_post']);
 		var titulo = POST.titulo;

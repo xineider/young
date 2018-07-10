@@ -82,6 +82,16 @@ router.post('/pedirebook', function(req, res, next) {
 });
 
 
+router.post('/leadContato/:tipo',function(req,res,next){
+	POST = req.body;
+	POST.tipo = req.params.tipo;
+
+	model.InsertLeadCliente(POST).then(data => {
+		res.json('abrirNoticia');
+	});
+});
+
+
 router.post('/cadastrar', function (req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;

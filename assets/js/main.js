@@ -264,6 +264,10 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		$(this).find('i:last-child').toggleClass('fa-caret-up fa-caret-down');
 	});
 
+	$(document).on('click','#btn-gerenciar',function(e){
+		openCapturaLeadsCliente(this,'identificador','40','/post/leadContato/3','https://stackoverflow.com/');
+	});
+
 	$(document).on('click', '.ajax-submit', function(e) {
 		e.preventDefault();
 		var form = $(this).parents('form');
@@ -690,6 +694,10 @@ function SubmitAjax(post, link, back, method) {
     	if (typeof data != undefined || data > 0) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
+    	if(data == 'abrirNoticia'){
+    		window.open(back);
+    	}
+    	
     	if(data == 'ebook'){
     		$('.agradecimento-ebook').append('<div class="caixa-sucesso-preencher-formulario">\
     			<p>Formulário preenchido com <span class="green-text">sucesso!</span></p>\
@@ -946,6 +954,42 @@ function UploadFile(isso) {
     }
 	});
 }
+
+
+function openCapturaLeadsCliente(isso,identificador,margintop,controllerEnviar,linkNoticia){
+
+	if(margintop == 0){
+		margintop = 40;
+	}
+
+	/*Identificador para não ficar repetindo ao apertar o botão*/
+		if($('.'+identificador).length == 0){
+			$(isso).closest('div').append('\
+				<div class="row '+identificador+' style=" margin-top: '+margintop +'px;">\
+					<p>Para poder ver a notícia por-favor informe seu Nome e Email no formulário abaixo:</p>\
+					<form method="POST" action="" enctype="multipart/form-data">\
+						<div class="input-field col s12 l6">\
+		      		<label for="nome">Nome</label>\
+		        	<input type="text" required="true" name="nome" class="validate">\
+		      	</div>\
+		      	<div class="input-field col s12 l6">\
+		      		<label for="email">Email</label>\
+		      		<input type="email" required="true" name="email" class="validate">\
+		      	</div>\
+		      	<div class="center-align col s12 agradecimento-ebook">\
+		      		<a target ="_blank" href="'+linkNoticia+'"data-href="'+controllerEnviar+'" data-action="'+linkNoticia+'" class="btn waves-effect waves-light green darken-1 ajax-submit white-text">\
+		      			Enviar\
+		      		</a>\
+		      	</div>\
+		      </form></div>');
+		}
+
+}
+
+
+
+
+
 
 function VerificarForm() {
 	var error = false;
