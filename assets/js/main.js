@@ -264,8 +264,61 @@ $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true, dura
 		$(this).find('i:last-child').toggleClass('fa-caret-up fa-caret-down');
 	});
 
-	$(document).on('click','#btn-gerenciar',function(e){
-		openCapturaLeadsCliente(this,'identificador','40','/post/leadContato/3','https://stackoverflow.com/');
+	$(document).on('click','#btn-noticia-1',function(e){
+		openCapturaLeadsCliente(this,'identificador','1','/post/leadContato/3','https://economia.estadao.com.br/noticias/geral,justica-condena-correios-a-pagar-indenizacao-de-r-10-mil-a-carteiro-assaltado,70002067811');
+	});
+
+	$(document).on('click','#btn-noticia-2',function(e){
+		openCapturaLeadsCliente(this,'identificador','1','/post/leadContato/3','https://www.gazetadopovo.com.br/curitiba/correios-terao-de-indenizar-funcionarios-assaltados-em-agencias-de-curitiba-e-rmc-6ztck7p6ykjwtof8qy1xywgsa');
+	});
+
+	$(document).on('click','#btn-noticia-3',function(e){
+		openCapturaLeadsCliente(this,'identificador','1','/post/leadContato/3','https://g1.globo.com/ro/ji-parana-regiao-central/noticia/justica-determina-que-funcionario-assaltado-nos-correios-receba-r-10-mil-de-indenizacao-em-ro.ghtml');
+	});
+
+$(document).on('click','#btn-noticia-4',function(e){
+		openCapturaLeadsCliente(this,'identificador','1','/post/leadContato/3','https://www.trt13.jus.br/informe-se/noticias/2017/04/servidora-dos-correios-vai-receber-indenizacao-por-assalto-a-agencia');
+	});
+
+$(document).on('click','#btn-noticia-5',function(e){
+		openCapturaLeadsCliente(this,'identificador','1','/post/leadContato/3','https://jurisway.jusbrasil.com.br/noticias/125336324/trt-condena-correios-a-indenizar-a-vitima-de-assalto');
+	});
+
+
+
+	$(document).on('click','.noticia-open-window',function(e){
+		var link = $(this).data('action');
+		setTimeout(function() {
+			if(inseridolead == 1 ){
+				window.open(link,"_blank");
+				inseridolead = 0;
+			}
+		},1000);
+	});
+
+	$(document).on('keyup change', '.lead-nome', function () {
+		var leadbtn = $(this).parent().parent().find('.lead-botao-container').find('.noticia-open-window');
+		var leademail = $(this).parent().next().find('.lead-email');
+		var leadnome = $(this);
+
+		if(leadnome.val() != '' && leademail.val() != ''){
+			leadbtn.removeClass('disabled');
+		}else if(leadnome.val() == '' && !(leadbtn.hasClass('disabled')) || leademail.val() == '' && !(leadbtn.hasClass('disabled'))){
+			leadbtn.addClass('disabled');
+		}
+	});
+
+	$(document).on('keyup change', '.lead-email', function () {
+		var leadbtn = $(this).parent().parent().find('.lead-botao-container').find('.noticia-open-window');
+		var leadnome = $(this).parent().prev().find('.lead-nome');
+		var leademail = $(this);
+		
+		if(leademail.val() != '' && leadnome.val() != ''){
+			leadbtn.removeClass('disabled');
+		}else if(leademail.val() == '' && !(leadbtn.hasClass('disabled')) || leadnome.val() == '' && !(leadbtn.hasClass('disabled'))){
+			leadbtn.addClass('disabled');
+		}
+		
 	});
 
 	$(document).on('click', '.ajax-submit', function(e) {
@@ -673,6 +726,9 @@ function GetEndereco(cep, pai) {
     }
 	});
 }
+
+var inseridolead = 0;
+
 function SubmitAjax(post, link, back, method) {
 	$.ajax({
 	  method: 'POST',
@@ -695,9 +751,8 @@ function SubmitAjax(post, link, back, method) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
     	if(data == 'abrirNoticia'){
-    		window.open(back,"_blank");
+    		inseridolead = 1;
     	}
-    	
     	if(data == 'ebook'){
     		$('.agradecimento-ebook').append('<div class="caixa-sucesso-preencher-formulario">\
     			<p>Formulário preenchido com <span class="green-text">sucesso!</span></p>\
@@ -965,19 +1020,19 @@ function openCapturaLeadsCliente(isso,identificador,margintop,controllerEnviar,l
 	/*Identificador para não ficar repetindo ao apertar o botão*/
 		if($('.'+identificador).length == 0){
 			$(isso).closest('div').append('\
-				<div class="row '+identificador+' style=" margin-top: '+margintop +'px;">\
+				<div class="row '+identificador+'" style="margin-top: '+margintop +'px;">\
 					<p>Para poder ver a notícia por-favor informe seu Nome e Email no formulário abaixo:</p>\
 					<form method="POST" action="" enctype="multipart/form-data">\
 						<div class="input-field col s12 l6">\
 		      		<label for="nome">Nome</label>\
-		        	<input type="text" required="true" name="nome" class="validate">\
+		        	<input type="text" required="true" name="nome" class="validate lead-nome">\
 		      	</div>\
 		      	<div class="input-field col s12 l6">\
 		      		<label for="email">Email</label>\
-		      		<input type="email" required="true" name="email" class="validate">\
+		      		<input type="email" required="true" name="email" class="validate lead-email">\
 		      	</div>\
-		      	<div class="center-align col s12 agradecimento-ebook">\
-		      		<a target ="_blank" href="'+linkNoticia+'"data-href="'+controllerEnviar+'" data-action="'+linkNoticia+'" class="btn waves-effect waves-light green darken-1 ajax-submit white-text">\
+		      	<div class="center-align col s12 lead-botao-container">\
+		      		<a target ="_blank" href="'+linkNoticia+'"data-href="'+controllerEnviar+'" data-action="'+linkNoticia+'" class="btn waves-effect waves-light green darken-1 ajax-submit white-text noticia-open-window">\
 		      			Enviar\
 		      		</a>\
 		      	</div>\
