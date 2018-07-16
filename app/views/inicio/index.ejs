@@ -487,16 +487,18 @@
 	  		<%
 				if (typeof data.post != 'undefined' && data.post.length > 0) {
 					for (var i = data.post.length - 1; i >= 0; i--) {
-						if(data.post[i].id_categoria === 2) {
+						console.log("----------------------------------------------------------");
+						console.log(data.post);
+						console.log("----------------------------------------------------------");
 				%>
 	  		<div class="col s12 m6" style="padding: 10px 1em !important;">
 
 	  			<%
-	  				if(data.post[i].imagem != 'undefined' && data.post[i].image != '' && data.post[i].imagem != 'null') {
+	  				if(data.post[i].arquivo != 'undefined' && data.post[i].image != '' && data.post[i].arquivo != 'null') {
 	  					var image_check_i = 1;
 	  			%>
-	  			<a href="/post/ver/<%= data.post[i].id_post %>" class="ajax-load">
-	  				<div class="imagem-post" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].imagem %>) no-repeat center !important; height: 250px;position: relative;"></div>
+	  			<a href="/post/ver/<%= data.post[i].id %>" class="ajax-load">
+	  				<div class="imagem-post" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[i].arquivo %>) no-repeat center; background-size: contain; height: 250px;position: relative;"></div>
 	  			</a>
 	  			<%
 	  				} else {
@@ -510,49 +512,16 @@
 		  		<!-- <h5 class="def-h5 center truncate" style="padding-bottom: 0;"><%= data.post[i].titulo_post %></h5>
 		  		<div class="grad-line"></div> -->
 		  		<div class="post-conteudo-index">
-			  		<a href="/post/ver/<%= data.post[i].id_post %>" class="ajax-load">
+			  		<a href="/post/ver/<%= data.post[i].id %>" class="ajax-load">
 			  			<p class="justified"><%- data.post[i].conteudo %></p>
 			  		</a>
 		  		</div>
-		  		<a href="/post/ver/<%= data.post[i].id_post %>" class="leia-mais ajax-load" style="color: #f4d59a">Leia Mais...</a>
-	  		</div>
-	  		<%
-	  					i = -1;
-	  				} else {}
-	  			}
-	  		} else {}
-	  		%>
-	  		<%
-				if (typeof data.post != 'undefined' && data.post.length > 0) {
-					for (var j = data.post.length - 1; j >= 0; j--) {
-						if(data.post[j].id_categoria === 3) {
-				%>
-	  		<div class="col s12 m6" style="padding: 10px 1em !important;">
-
-	  			<%
-	  				if(data.post[j].imagem != 'undefined' && data.post[j].image != '' && data.post[j].imagem != 'null') {
-	  					var image_check_j = 1;
-	  			%>
-	  			<div class="imagem-post valign-wrapper" style="background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/assets/imgs/blog/<%= data.post[j].imagem %>) no-repeat center !important; height: 250px;position: relative;"></div>
-	  			<%
-	  				} else {
-	  					var image_check_j = 0;
-	  			%>
-	  			<div class="imagem-post"></div>
-	  			<%
-	  				}
-	  			%>
-
-		  		<h5 class="def-h5 center truncate" style="padding-bottom: 0;"><%= data.post[j].titulo_post %></h5>
-		  		<div class="grad-line"></div>
-		  		<div class="post-conteudo-index">
-			  		<p class="justified"><%- data.post[j].conteudo %></p>
+		  		<div class="center" style="width: 100%">
+		  			<a href="/post/ver/<%= data.post[i].id %>" class="leia-mais ajax-load btn btn-golden" style="color: #000 !important; margin: 0;">Leia Mais...</a>
+		  			<!-- style="color: #f4d59a" -->
 		  		</div>
-		  		<a href="/post/ver/<%= data.post[j].id_post %>" class="leia-mais ajax-load" style="color: #f4d59a">Leia Mais...</a>
 	  		</div>
 	  		<%
-	  					j = -1;
-	  				} else {}
 	  			}
 	  		} else {}
 	  		%>

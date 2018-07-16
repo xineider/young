@@ -753,8 +753,12 @@ nav.nav-center ul li a {
 #blog-post #post-head .post .post-conteudo .post-texto a {
   color: #ffedbd !important;
 }
-#blog-section .posts .post .post-conteudo .post-texto a.leia-mais {
-  color: #f4d59a;
+#blog-section .posts .post .post-conteudo a.leia-mais {
+  /*color: #f4d59a;*/
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: 0;
 }
 #blog-section .posts .post .post-conteudo .post-autor-data a,
 #blog-post #post-head .post-autor-data a {

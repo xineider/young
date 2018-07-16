@@ -12,16 +12,27 @@ class IndexModel {
 			});
 		});
 	}
+	// GetPost() {
+	// 	return new Promise(function (resolve, reject) {
+	// 		helper.Query('SELECT a.*,\
+	// 		 (SELECT c.nome FROM node_categoria as c WHERE c.id=a.id_categoria) as categoria_nome,\
+	// 		 (SELECT b.titulo FROM node_post as b WHERE b.id=a.id_post) as titulo_post,\
+	// 		 (SELECT b.conteudo FROM node_post as b WHERE b.id=a.id_post) as conteudo,\
+	// 		 (SELECT b.arquivo FROM node_post as b WHERE b.id=a.id_post) as imagem,\
+	// 		 (SELECT DATE_FORMAT(b.data_post, "%d/%m/%Y") FROM node_post as b WHERE b.id=a.id_post) as data_post,\
+	// 		 (SELECT b.data_post_alteracao FROM node_post as b WHERE b.id=a.id_post) as data_post_alteracao_post\
+ //               FROM node_post_categoria as a WHERE a.deletado = ? ORDER by data_post DESC', [0]).then(data => {
+	// 				resolve(data);
+	// 				// SELECT a.*, (SELECT b.nome FROM produtos as b WHERE b.id = a.id_produto) as nome_produto FROM estoque_obra as a WHERE a.deletado = 0 AND a.id_obra=6
+	// 			});
+	// 	});
+	// }
 	GetPost() {
 		return new Promise(function (resolve, reject) {
-			helper.Query('SELECT a.*,\
-			 (SELECT c.nome FROM node_categoria as c WHERE c.id=a.id_categoria) as categoria_nome,\
-			 (SELECT b.titulo FROM node_post as b WHERE b.id=a.id_post) as titulo_post,\
-			 (SELECT b.conteudo FROM node_post as b WHERE b.id=a.id_post) as conteudo,\
-			 (SELECT b.arquivo FROM node_post as b WHERE b.id=a.id_post) as imagem,\
-			 (SELECT DATE_FORMAT(b.data_post, "%d/%m/%Y") FROM node_post as b WHERE b.id=a.id_post) as data_post,\
-			 (SELECT b.data_post_alteracao FROM node_post as b WHERE b.id=a.id_post) as data_post_alteracao_post\
-               FROM node_post_categoria as a WHERE a.deletado = ? ORDER by data_post DESC', [0]).then(data => {
+			helper.Query('SELECT  a.*, c.nome FROM node_post as a \
+			LEFT JOIN node_post_categoria as b ON b.id_post = a.id \
+			LEFT JOIN node_categoria as c ON b.id_categoria = c.id \
+			WHERE a.deletado = ? GROUP by a.titulo ORDER by a.data_post ASC', [0]).then(data => {
 					resolve(data);
 					// SELECT a.*, (SELECT b.nome FROM produtos as b WHERE b.id = a.id_produto) as nome_produto FROM estoque_obra as a WHERE a.deletado = 0 AND a.id_obra=6
 				});
