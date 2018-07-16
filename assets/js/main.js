@@ -764,7 +764,7 @@ function SubmitAjaxNoticia(post, link, back, method) {
     	if (typeof data != undefined || data > 0) {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
-    	
+
     	if(data == 'abrirNoticia'){
     		inseridolead = 1;    		
     	}
@@ -816,8 +816,6 @@ function SubmitAjax(post, link, back, method) {
     	}
     	console.log(back);
     	if (typeof back != 'undefined' && back != 'add_name' && back != 'naovoltar') {
-    		console.log('voltando');
-    		console.log('AAAAAAAAAAAAAAAAAAA');
 				GoTo(back, true);
     	} else if(back == 'add_name') {
     		$('.grupo').prepend('<option value="'+data.id+'">'+data.nome+'</option>').find('option:first-child').prop('selected', true);
