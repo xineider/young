@@ -30,7 +30,7 @@ router.post('/enviarcontato', function(req, res, next) {
 							'<br>Não é necessário responder esta mensagem, pois ela é enviada automaticamente.<br>Obrigado.');
 	/*Inserido no banco o contato*/
 	model.InsertContato('contatos_young',POST).then(data => {
-		res.json(data);
+		res.json('agradecimentoContato');
 	});
 });
 module.exports = router;

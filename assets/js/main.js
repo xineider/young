@@ -798,13 +798,17 @@ function SubmitAjax(post, link, back, method) {
     	if (data == "RELOAD") {
     		window.location.replace('/sistema/configuracoes');
     	}
-    	if (typeof data != undefined || data > 0) {
+    	if (typeof data != undefined && data != 'agradecimentoContato' || data > 0 && data != 'agradecimentoContato') {
   			Materialize.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
     	}
     	if(data == 'abrirNoticia'){
     		inseridolead = 1;
     		
     	}
+    	if(data == 'agradecimentoContato'){
+    		Materialize.toast('<div class="center-align" style="width:100%;">Sua mensagem será encaminhada ao departamento responsável o mais rápido possível, mas este prazo pode levar um tempo.<br> Caso tenha pressa ou alguma urgência, você pode ligar para <a style="text-decoration: underline;" class="white-text" sty href="tel:+555135895507">(51) 3589-5507</a> ou entrar em contato via Whatsapp neste <a class="white-text" style="text-decoration: underline;" rel="" target="_blank" data-action="getURL" href="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Olá" data-url="http://api.whatsapp.com/send?1=pt_BR&amp;phone=5551980371801&amp;text=Olá">link</a>.</div>',60000, 'rounded');
+    	}
+
     	if(data == 'ebook'){
     		$('.agradecimento-ebook').append('<div class="caixa-sucesso-preencher-formulario">\
     			<p>Formulário preenchido com <span class="green-text">sucesso!</span></p>\
