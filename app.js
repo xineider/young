@@ -20,7 +20,7 @@ var post = require('./app/controller/post');
 var admin = require('./app/controller/admin');
 
 /**/
-var loginSis = require('./juridico/app/controller/login');
+// var loginSis = require('./juridico/app/controller/login');
 
 var app = express();
 var control = new Control;
@@ -111,7 +111,7 @@ app.use(fileUpload());
 
 app.use('/', index);
 app.use('/login', index);
-app.use('/ward', loginSis);
+// app.use('/ward', loginSis);
 app.use('/areasdeatuacao', areasdeatuacao);
 app.use('/contato', contato);
 app.use('/escritorio', escritorio);
