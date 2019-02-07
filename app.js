@@ -10,7 +10,7 @@ var Control = require('./app/controller/control.js');
 const fileUpload = require('express-fileupload');
 
 var index = require('./app/controller/index');
-var login = require('./juridico/app/controller/login');
+var login = require('./app/controller/login');
 var areasdeatuacao = require('./app/controller/areasdeatuacao');
 var contato = require('./app/controller/contato');
 var escritorio = require('./app/controller/escritorio');
@@ -35,8 +35,8 @@ app.use(session({
 }));
  
 // Verifica usuario se esta logado ou não
-// app.use(function (req, res, next) {
-//   var pathname = parseurl(req).pathname;
+app.use(function (req, res, next) {
+  var pathname = parseurl(req).pathname;
   // console.log('**************** pathname *******************');
   // console.log(pathname);
   // if (pathname.indexOf("assets") == -1) {
@@ -50,46 +50,46 @@ app.use(session({
   // }
   // console.log('************** indexOf admin ************************');
   // console.log(pathname.indexOf("admin"));
-//   if ((pathname.indexOf("admin") != -1) && 
-//       (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
-//         req.isAjaxRequest() == true){
-//     console.log('********************* criando session *******************');
-//     console.log(pathname);
-//     var id = req.headers['authority-optima-id'];
-//     var hash = req.headers['authority-optima-hash'];
-//     var nivel = req.headers['authority-optima-nivel'];
-//     verificacao.VerificarUsuario(id, hash, nivel).then(data => {
-//       if (data.length > 0) {
-//         console.log('********************* segurança troca hash *******************');
-//         console.log(pathname);
-//         req.session.usuario = {};
-//         req.session.usuario.id = id;
-//         req.session.usuario.hash_login = hash;
-//         req.session.usuario.nivel = nivel;
-//         verificacao.GetConfig(id).then(data => {
-//           req.session.usuario.config = data[0];
-//           next();
-//         });
-//       } else {
-//         console.log('********************* session destroy *******************');
-//         console.log(pathname);
-//         req.session.destroy(function(err) {
-//           res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
-//         });
-//       }
-//     });
-//   } else if (control.Isset(req.session.usuario, false)
-//     && (pathname.indexOf("admin") != -1)
-//       && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
-//         console.log('********************* else if - redirect / *******************');
-//         console.log(pathname);
-//     res.redirect('/');
-//   } else {
-//         console.log('********************* else para next *******************');
-//         console.log(pathname);
-//     next();
-//   }
-// });
+  if ((pathname.indexOf("admin") != -1) && 
+      (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
+        req.isAjaxRequest() == true){
+    console.log('********************* criando session *******************');
+    console.log(pathname);
+    var id = req.headers['authority-optima-id'];
+    var hash = req.headers['authority-optima-hash'];
+    var nivel = req.headers['authority-optima-nivel'];
+    verificacao.VerificarUsuario(id, hash, nivel).then(data => {
+      if (data.length > 0) {
+        console.log('********************* segurança troca hash *******************');
+        console.log(pathname);
+        req.session.usuario = {};
+        req.session.usuario.id = id;
+        req.session.usuario.hash_login = hash;
+        req.session.usuario.nivel = nivel;
+        verificacao.GetConfig(id).then(data => {
+          req.session.usuario.config = data[0];
+          next();
+        });
+      } else {
+        console.log('********************* session destroy *******************');
+        console.log(pathname);
+        req.session.destroy(function(err) {
+          res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
+        });
+      }
+    });
+  } else if (control.Isset(req.session.usuario, false)
+    && (pathname.indexOf("admin") != -1)
+      && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
+        console.log('********************* else if - redirect / *******************');
+        console.log(pathname);
+    res.redirect('/');
+  } else {
+        console.log('********************* else para next *******************');
+        console.log(pathname);
+    next();
+  }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -107,7 +107,7 @@ app.use("/assets", express.static(__dirname + '/assets'));
 app.use(fileUpload());
 
 app.use('/', index);
-app.use('/ward', login);
+app.use('/login', index);
 app.use('/areasdeatuacao', areasdeatuacao);
 app.use('/contato', contato);
 app.use('/escritorio', escritorio);
