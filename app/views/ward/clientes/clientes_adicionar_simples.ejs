@@ -1,0 +1,18 @@
+<form method="POST" action="" enctype="multipart/form-data">
+    
+    <div class="input-field col s12">
+        <input type="text" name="descricao">
+        <label for="descricao"><% if (data.descricao == null) { data.descricao = 'Descricao' }  %><%=data.descricao%></label>
+    </div>
+    
+    
+    <button data-href="<%= data.adicionar_link %>" class="btn waves-effect waves-light brass ajax-submit">
+        Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    </button>
+        
+    <button  class="btn waves-effect waves-light grey darken-2 ajax-submit">
+        Cancelar
+    </button>   
+    
+</form>
+</div>

@@ -1,0 +1,63 @@
+			<div class="col s12">
+
+				<a class="btn waves-effect waves-light bordo tooltipped load_especifico_to_container" data-position="top" data-tooltip="Adicionar Compromisso" data-link="/sistema/processos/adicionar-compromisso/" data-container="container_adicionar_compromisso_load">
+					Adicionar Compromisso <i class="fa fa-plus" aria-hidden="true"></i>
+				</a>
+
+			</div>
+
+			<div class="container_adicionar_compromisso_load"></div>
+
+			<div class="col s12">
+				<div class="card white padding-a-15">
+					<table id="pauta_compromisso" class="centered responsive-table cell-border">
+						<thead>
+							<tr>
+								<th>Tipo</th>
+								<th>Descricao</th>
+								<th>Data e Hora de Início</th>
+								<th>Data e Hora Final</th>
+								<th>Local</th>
+								<th>Advogado Responsável</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%							
+								for (var i = data.compromissos.length - 1; i >= 0; i--) {
+									%>
+									<tr>
+										<td>
+											<%if(data.compromissos[i].tipo==0){%>
+											Acordão/Setença
+											<%}else if(data.compromissos[i].tipo==1){%>
+											Despacho/Decisões
+											<%}else if(data.compromissos[i].tipo==2){%>
+											Petições Diversas
+											<%}else if(data.compromissos[i].tipo==3){%>
+											Quesitos
+											<%}else if(data.compromissos[i].tipo==4){%>
+											Manifestação de Documentos
+											<%}else if(data.compromissos[i].tipo==5){%>
+											Prazos Processos Físicos
+											<%}else if(data.compromissos[i].tipo==6){%>
+											Perito
+											<%}else {%>
+											Não há
+											<%}%>
+										</td>
+										<td><%= data.compromissos[i].nome %></td>
+										<td><%= data.compromissos[i].data_inicial %></td>
+										<td><%= data.compromissos[i].data_final %></td>
+										<td><%= data.compromissos[i].local %></td>
+										<td><%= data.compromissos[i].advogado %></td>
+									</tr>
+
+									<%}%>
+								</tbody>
+
+
+
+							</table>
+						</div>
+					</div>
+

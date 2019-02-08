@@ -1,0 +1,52 @@
+  <table class="centered highlight tabela_loc_and_processos">
+    <thead>
+      <tr>
+        <th>
+          Data
+        </th>
+        <th>
+          Hora
+        </th>
+        <th>
+          Dia da Semana
+        </th>
+        <th>
+          Tipo
+        </th>
+        <th>
+          Advogado
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+      if (typeof data.compromissos != 'undefined' && data.compromissos.length > 0) {
+        for (var k = data.compromissos.length - 1; k >= 0; k--) {
+          %>
+          <tr class="row_processo_interno">
+            <td>
+              <%= data.compromissos[k].data_inicial %>
+            </td>
+            <td>
+              <%= data.compromissos[k].hora_inicial %>
+            </td>
+            <td></td>
+            <td>
+              <%= data.compromissos[k].nome %>
+            </td>
+            <td>
+              <%= data.compromissos[k].advogado %>
+            </td>
+
+          </tr>
+          <%
+        }
+      }else{%>
+      	<tr>
+      		<td>Não há Compromissos neste processo!</td>
+      	</tr>
+      <%
+      }
+      %>
+    </tbody>
+  </table>

@@ -1,0 +1,999 @@
+'use strict';
+var express = require('express');
+var app = express();
+var Helper = require('./model.js');
+var helper = new Helper;
+
+class ProcessosModel {
+	SelecioneProcessos() {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*, \
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y %H:%i') as data_processo,\
+				DATE_FORMAT(a.data_cadastro, '%Y%m%d %H:%i') as data_table_filtro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+				(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
+				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso,\
+				(SELECT e.cpf_cnpj FROM clientes as e WHERE e.id = a.id_cliente) as cpf_cnpj \
+				FROM processos as a ORDER BY a.data_cadastro ASC", [0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecionarCliente(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT *, DATE_FORMAT(nascimento, '%d/%m/%Y') as nascimento FROM clientes WHERE id = ? AND deletado = ?", [id, 0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecionarAdverso(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT * FROM adversos WHERE id = ? AND deletado = ?", [id, 0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	UltimoProcessoAtivo() {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT id FROM processos WHERE deletado = ? ORDER BY id DESC LIMIT 1', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecionarTempo(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT DATE_FORMAT(NOW(),"%d/%m/%Y") as hoje \
+				FROM processos as a WHERE a.deletado = ? LIMIT ?', [0,1]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneAndamentosDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario\
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data ASC', [0,id]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+
+	SelecioneApensosDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.*,\
+				(SELECT b.descricao FROM tipo_causa_apenso as b WHERE b.id = a.id_tipo_causa_apenso) as tipo_da_causa\
+				FROM apenso as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_cadastro ASC', [0,id]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneRecursosDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.*,\
+				(SELECT b.descricao FROM tipo_causa_recurso as b WHERE b.id = a.id_tipo_recurso) as tipo_da_causa\
+				FROM recurso as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_cadastro ASC', [0,id]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+
+
+	SelecionarOrigemRecurso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT CONCAT(a.id, " - Processo") as id, CONCAT(a.numero," - Processo") as numero FROM processos as a WHERE a.deletado = ? AND a.id = ? \
+				UNION \
+				SELECT CONCAT(b.id, " - Apenso") as id, CONCAT(b.numero, " - Apenso") as numero FROM apenso as b WHERE b.deletado = ? AND b.id_processo = ? ORDER BY id', [0,id,0,id]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+
+
+	SelecioneTodosCompromissosDoApensoDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado, \
+				(SELECT c.numero FROM apenso as c WHERE c.id = a.id_apenso)as numero \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data_inicial ASC", [0,id,0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneTodosCompromissosDoRecursoDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado, \
+				(SELECT c.numero FROM recurso as c WHERE c.id = a.id_recurso)as numero \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_recurso != ? ORDER BY a.data_inicial ASC", [0,id,0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneTodosAndamentosDoApensoDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario,\
+				(SELECT c.numero FROM apenso as c WHERE c.id = a.id_apenso)as numero \
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data ASC', [0,id,0]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneTodosAndamentosDoRecursoDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario,\
+				(SELECT c.numero FROM recurso as c WHERE c.id = a.id_recurso)as numero \
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data ASC', [0,id,0]).then(data => {					
+					console.log('RRRRRRRRRRRRRRR SELECIONE TODOS ANDAMENTOS DO RECURSO RRRRRRRRRRRRRRRRRR');
+					console.log(data);
+					console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
+					resolve(data);
+				});
+			});
+	}
+
+
+
+
+	SelecioneCompromissosDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecionarCompromissosDoApenso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_apenso = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecionarCompromissosDoRecurso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_recurso = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
+	SelecionarAndamentosDoApenso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario\
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_apenso = ? ORDER BY a.data ASC', [0,id]).then(data => {					
+					console.log('RRRRRRRRRRRRRRR SELECIONAR ANDAMENTOS DO APENSO RRRRRRRRRRRRRRRRRRRR');
+					console.log(data);
+					console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
+
+					resolve(data);
+				});
+			});
+	}
+
+
+	SelecionarAndamentosDoRecurso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario\
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_recurso = ? ORDER BY a.data ASC', [0,id]).then(data => {					
+					resolve(data);
+				});
+			});
+	}
+
+
+
+
+
+	CadastrarCompromisso(POST) {
+		POST = helper.PrepareDates(POST, ['data_inicial']);
+		POST = helper.PrepareDates(POST, ['data_final']);
+		POST.data_inicial = POST.data_inicial +' '+ POST.hora_inicial + ':00';
+		POST.data_final = POST.data_final +' '+ POST.hora_final + ':00';
+		delete POST.hora_inicial;
+		delete POST.hora_final;
+
+		// POST.id_processo = 1;
+		// POST.id_advogado = 1;
+
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Insert('compromissos', POST).then(data => {
+				// helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
+					console.log(data);
+					resolve(data);
+				// });
+			});
+		});
+	}
+
+
+	AtualizarApenso(POST) {
+		if (POST.id_processo == "")
+			delete POST.id_processo;
+		if (POST.id_advogado == "")
+			delete POST.id_advogado;
+		if (POST.id_tipo_causa_apenso == "")
+			delete POST.id_tipo_causa_apenso;
+		if (POST.id_posicao_apenso == "")
+			delete POST.id_posicao_apenso;
+		if (POST.id_comarca == "")
+			delete POST.id_comarca;
+		if (POST.id_vara == "")
+			delete POST.id_vara;
+		if (POST.id_foro == "")
+			delete POST.id_foro;
+		if (POST.id_situacao_apenso == "")
+			delete POST.id_situacao_apenso;
+		if(POST.distribuicao == "")
+			delete POST.distribuicao
+		if(POST.citacao == "")
+			delete POST.citacao
+		if(POST.sentenca == "")
+			delete POST.sentenca
+
+
+		POST = helper.PrepareDates(POST, ['distribuicao']);
+		POST = helper.PrepareDates(POST, ['citacao']);
+		POST = helper.PrepareDates(POST, ['sentenca']);
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Update('apenso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	AtualizarRecurso(POST) {
+		if (POST.id_processo == "")
+			delete POST.id_processo;
+		if (POST.id_advogado == "")
+			delete POST.id_advogado;
+		if (POST.id_apenso == "" || POST.id_apenso == undefined)
+			delete POST.apenso;
+		if (POST.relator == "")
+			delete POST.relator;
+		if (POST.id_tipo_recurso == "")
+			delete POST.id_tipo_recurso;
+		if (POST.id_posicao_cliente == "")
+			delete POST.id_posicao_cliente;
+		if (POST.id_tribunal == "")
+			delete POST.id_tribunal;
+		if (POST.id_turma_camara == "")
+			delete POST.id_turma_camara;
+		if(POST.interposicao == "")
+			delete POST.interposicao
+		if(POST.ajuizado == "")
+			delete POST.ajuizado
+
+
+		POST = helper.PrepareDates(POST, ['interposicao']);
+		POST = helper.PrepareDates(POST, ['ajuizado']);
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Update('recurso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
+
+
+
+
+
+
+
+	CadastrarApensoSimples(POST){
+		return new Promise(function(resolve, reject) {
+			helper.Insert('apenso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	CadastrarRecursoSimples(POST){
+		return new Promise(function(resolve, reject) {
+			helper.Insert('recurso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	SelecioneMaisDetalhesDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
+				(SELECT b.nome FROM clientes as b WHERE b.id = a.id_cliente) as cliente,\
+				(SELECT c.nome FROM adversos as c WHERE c.id = a.id_adverso) as adverso,\
+				(SELECT d.descricao FROM tipo_causa as d WHERE d.id=a.id_tipo_causa) as tipo_causa,\
+				(SELECT e.nome FROM advogados as e WHERE e.id=a.id_advogado) as advogado,\
+				(SELECT f.descricao FROM assunto_processo as f WHERE f.id=a.id_assunto) as assunto,\
+				(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
+				(SELECT h.descricao FROM tipo_acao_rito_processo as h WHERE h.id=a.id_tipo_acao_rito) as tipo_acao_rito,\
+				(SELECT i.descricao FROM vara_processo as i WHERE i.id=a.id_vara) as vara,\
+				(SELECT j.descricao FROM categoria_processo as j WHERE j.id=a.id_categoria) as categoria,\
+				(SELECT k.descricao FROM fase_processo as k WHERE k.id=a.id_fase) as fase\
+				FROM processos as a WHERE a.id = ?", [id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneCaptacaoDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.*, c.observacoes, c.id as id_captacao, \
+				DATE_FORMAT(c.data,"%d/%m/%y") as data_captacao,\
+				(SELECT d.descricao FROM captador_processo as d WHERE d.id = c.id_captador)as nome_captador,\
+				(SELECT e.descricao FROM origem_captacao_processo as e WHERE e.id = c.id_captador)as origem  \
+				FROM processos as a \
+				LEFT JOIN captacao_processo as c ON a.id = c.id_processo \
+				WHERE a.deletado = ? AND a.id = ?', [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
+	SelecioneTodosTipoCausas(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tipo_causa WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	SelecioneTodosTipoCausasApenso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tipo_causa_apenso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosPosicaoApenso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM posicao_apenso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosRelatorRecurso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM relator WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosTipoRecurso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tipo_causa_recurso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosPosicaoClienteRecurso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM posicao_recurso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosTribunalRecurso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tribunal WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosTurmaCamaraRecurso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM turma_camara WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosSituacaoApenso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM situacao_apenso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosForo(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM foro WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	SelecioneTodosAssuntos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM assunto_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosCaptadores(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM captador_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosOrigemCaptacao(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM origem_captacao_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	SelecioneTodosClientes(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM clientes WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosClientesMenosOEnvolvido(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM clientes WHERE deletado = ? AND id != ? ORDER BY descricao DESC', [0,id]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosAdversosMenosOEnvolvido(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM adversos WHERE deletado = ? AND id != ? ORDER BY descricao DESC', [0,id]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosComarcas(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM comarca WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	SelecioneTodosTipoAcaoRitos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tipo_acao_rito_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosVaras(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM vara_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosCategorias(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM categoria_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosFases(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM fase_processo WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosAdvogados(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM advogados WHERE deletado = ? ORDER BY nome DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosProcessos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, numero as descricao FROM processos WHERE deletado = ?', [0]).then(data => {
+				console.log('000000000000000000000000000 TODOS PROCESSOS COMPROMISSO 000000000000000000000000000');
+				console.log(data);
+				console.log('00000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+				resolve(data);
+			});
+		});
+	}
+
+	// ProcurarProcesso(POST) {
+	// 	return new Promise(function(resolve, reject) {
+	// 		var where = '';
+	// 		var array = [];
+
+	// 		for (var key in POST) {
+	// 			if (typeof POST[key] != 'undefined' && POST[key] != '') {
+	// 				where += 'AND a.' + key + ' LIKE ? ';
+	// 				array.push('%'+POST[key]+'%');
+	// 			}
+	// 		}
+
+	// 		// Adicione a qury com scape(?) e os respectivos valores em um array simples
+	// 		helper.Query("SELECT a.*, \
+	// 			(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+	// 			(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
+	// 			(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso\
+	// 			FROM processos as a WHERE a.deletado = ? "+where,[0,array]).then(dataProcessoPorNumero => {
+
+	// 				if(dataProcessoPorNumero == 0){
+	// 					//PROCURAR POR Cliente		
+	// 					// helper.Query("SELECT a.*,\
+	// 					// 	(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente AND c.cpf_cnpj LIKE %?% || c.nome LIKE %?%) as cliente\
+	// 					// 	FROM processos as a WHERE a.deletado = ?",[POST.id,POST.id,0]).then(dataPorCliente => {
+	// 					// 		console.log('------------- CPF DO CLIENTE --------');
+	// 					// 		console.log(dataPorCliente);
+	// 					// 		console.log('-------------------------------------');
+	// 					// 		resolve(dataPorCliente);
+	// 					// 	});
+
+	// 				}else{
+	// 					console.log(dataProcessoPorNumero == 0);
+	// 					console.log(dataProcessoPorNumero);
+	// 					resolve(dataProcessoPorNumero);
+	// 				}
+	// 			});
+	// 		});
+	// }
+
+
+	ProcurarProcesso(POST) {
+		return new Promise(function(resolve, reject) {
+			var where = '';
+			var array = [];
+			console.log('000000000000000 POST 00000000000000000000');
+			console.log(POST);
+			console.log('00000000000000000000000000000000000000000');
+			
+			for (var key in POST) {
+				if (typeof POST[key] != 'undefined' && POST[key] != '') {
+					console.log('------------------- CHAVE ---------------');
+					console.log(key);
+					console.log('-----------------------------------------');
+					console.log('PPPPPPPPPPPPPPPPPP POST[key] PPPPPPPPPPPPPPPPPPPPPPPP');
+					console.log(POST[key]);
+					console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+					if(key == 'cnpj'){
+						where += 'AND c.cpf_cnpj LIKE ?'
+						console.log('no if');
+					}else{
+						where += 'AND a.' + key + ' LIKE ? ';
+						console.log('no else');
+					}
+					array.push('%'+POST[key]+'%');
+				}
+			}
+
+			console.log('----------------- ARRAY --------------------');
+			console.log(array);
+			console.log('--------------------------------------------');
+			console.log('============== WHERE =======================');
+			console.log(where);
+			console.log('============================================');
+
+			helper.Query("SELECT a.*, \
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso,\
+				(SELECT e.nome FROM clientes as e WHERE e.id = a.id_cliente) as cliente \
+				FROM processos as a \
+				LEFT JOIN clientes as c ON a.id_cliente = c.id \
+				WHERE a.deletado = ? "+ where,[0,array]).then(dataProcessoPorNumero => {
+					console.log(dataProcessoPorNumero);
+					resolve(dataProcessoPorNumero);
+					
+				});
+			});
+	}
+	SelecioneProcessosMortos() {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*, (SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+				(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
+				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso\
+				FROM processos as a WHERE a.deletado = ?", [1]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+	SelecioneUsuarios() {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT * FROM usuarios WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+	SelecioneClientes() {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT * FROM clientes WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+	SelecioneAdversos() {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT * FROM adversos WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+	SelecionarProcesso(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
+				DATE_FORMAT(a.citacao, '%d/%m/%Y') as citacao,\
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
+				FROM processos as a WHERE a.id = ?", [id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	PesquisarNumeroProcessoAutocomplete(numero) {
+		return new Promise(function(resolve, reject) {
+
+			console.log('000000000000000 numero 00000000000000000000');
+			console.log(numero);
+			console.log('00000000000000000000000000000000000000000');			
+
+
+			helper.Query('SELECT a.id ,\
+				CONCAT (a.numero," - ", SUBSTRING_INDEX(b.nome, " ",2), "(",b.cpf_cnpj,")") as name\
+				FROM processos as a \
+				LEFT JOIN clientes as b on a.id_cliente = b.id \
+				LEFT JOIN adversos as c on a.id_adverso = c.id \
+				WHERE a.deletado = ? and b.deletado = ? and c.deletado = ? AND \
+				(a.numero LIKE CONCAT(?, "%")) OR \
+				(b.nome LIKE CONCAT(?, "%")) OR \
+				(b.cpf_cnpj LIKE CONCAT(?, "%")) OR \
+				(c.nome LIKE CONCAT(?, "%")) OR \
+				(c.cpf_cnpj LIKE CONCAT(?, "%")) LIMIT 5',[0,0,0,numero,numero,numero,numero,numero]).then(data => {
+					console.log('------------------- PESQUISA DE NÚMERO DE PROCESSO ---------------');
+					console.log(data);
+					console.log('----------------------------------------------------------');
+					resolve(data);
+				});
+			});
+	}
+
+
+
+
+	SelecionarApenso(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*,\
+				(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
+				(SELECT c.descricao FROM tipo_causa_apenso as c WHERE c.id=a.id_tipo_causa_apenso) as tipo_causa,\
+				(SELECT d.descricao FROM posicao_apenso as d WHERE d.id=a.id_posicao_apenso) as posicao,\
+				(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
+				(SELECT i.descricao FROM vara_processo as i WHERE i.id=a.id_vara) as vara,\
+				(SELECT k.descricao FROM foro as k WHERE k.id=a.id_foro) as foro,\
+				(SELECT l.descricao FROM posicao_apenso as l WHERE l.id=a.id_situacao_apenso) as situacao,\
+				DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
+				DATE_FORMAT(a.citacao, '%d/%m/%Y') as citacao,\
+				DATE_FORMAT(a.sentenca, '%d/%m/%Y') as sentenca, \
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
+				FROM apenso as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
+	SelecionarRecurso(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*,\
+				(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
+				(SELECT c.descricao FROM relator as c WHERE c.id=a.id_relator) as relator,\
+				(SELECT d.descricao FROM tipo_causa_recurso as d WHERE d.id=a.id_tipo_recurso) as tipo_recurso,\
+				(SELECT g.descricao FROM posicao_recurso as g WHERE g.id=a.id_posicao_cliente) as posicao_cliente,\
+				(SELECT i.descricao FROM tribunal as i WHERE i.id=a.id_tribunal) as tribunal,\
+				(SELECT k.descricao FROM turma_camara as k WHERE k.id=a.id_turma_camara) as turma_camara,\
+				DATE_FORMAT(a.ajuizado, '%d/%m/%Y') as ajuizado,\
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
+				FROM recurso as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
+
+
+
+
+	// SelecionarApenso(id) {
+	// 	return new Promise(function(resolve, reject) {
+	// 		// Adicione a query com scape(?) e os respectivos valores em um array simples
+
+	// 		helper.Query("SELECT a.*, \
+	// 			(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
+	// 			(SELECT c.descricao FROM tipo_causa_apenso as c WHERE c.id=a.id_tipo_causa_apenso) as tipo_causa,\
+	// 			(SELECT d.descricao FROM posicao_apenso as d WHERE d.id=a.id_posicao_apenso) as posicao,\
+	// 			(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
+	// 			(SELECT i.descricao FROM vara_processo as i WHERE i.id=a.id_vara) as vara,\
+	// 			(SELECT k.descricao FROM fase_processo as k WHERE k.id=a.id_foro) as foro,\
+	// 			(SELECT l.descricao FROM fase_processo as l WHERE l.id=a.id_situacao_apenso) as situacao,\
+	// 			DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
+	// 			DATE_FORMAT(a.citacao, '%d/%m/%Y') as citacao,\	
+	// 			DATE_FORMAT(a.sentenca, '%d/%m/%Y') as sentenca, \
+	// 			DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
+	// 			FROM apenso as a WHERE a.id = ? AND a.deletado = ? LIMIT 1", [id, 0]).then(data => {
+	// 				resolve(data);
+	// 			});
+	// 		});
+	// }
+
+	CadastrarTipoCausa(data) {
+		return new Promise(function(resolve, reject) {
+			console.log('777777777777777 CADASTRAR TIPO CAUSA MODEL 777777777777777777777777');
+			console.log(data);
+			console.log('7777777777777777777777777777777777777777777777777777777777777777777');
+			helper.Insert('tipo_causa', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
+
+
+	CadastrarAndamento(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR ANDAMENTOS DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+			POST = helper.PrepareDates(POST, ['data']);
+
+			helper.Insert('andamentos_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	CadastrarCaptacao(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR CAPTACAO DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+			POST = helper.PrepareDates(POST, ['data']);
+
+			helper.Insert('captacao_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	CadastrarOutrosEnvolvidos(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR OUTROS ENVOLVIDOS DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+
+			helper.Insert('outros_envolvidos_cliente_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	CadastrarOutrosEnvolvidosAdverso(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR OUTROS ENVOLVIDOS DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+
+			helper.Insert('outros_envolvidos_adverso_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
+
+	CadastrarProcesso(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Insert('processos', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+	AtualizarProcesso(data) {
+		return new Promise(function(resolve, reject) {
+			if (data.id_tipo_causa == "")
+				delete data.id_tipo_causa;
+			if (data.id_assunto == "")
+				delete data.id_assunto;
+			if (data.id_comarca == "")
+				delete data.id_comarca;
+			if (data.id_tipo_acao_rito == "")
+				delete data.id_tipo_acao_rito;
+			if (data.id_vara == "")
+				delete data.id_vara;
+			if (data.id_categoria == "")
+				delete data.id_categoria;
+			if (data.id_fase == "")
+				delete data.id_fase;
+			if (data.id_advogado == "")
+				delete data.id_advogado;
+			if(data.distribuicao == ""){
+				delete data.distribuicao
+			}
+			if(data.citacao == "" || data.citacao == "undefined" || data.citacao == undefined){
+				delete data.citacao
+			}
+
+			POST = helper.PrepareDates(POST, ['distribuicao']);
+			POST = helper.PrepareDates(POST, ['citacao']);
+
+			console.log('00000000000000000000000 UPDATE DE PROCESSO 0000000000000000000000000000');
+			console.log(data);
+			console.log('00000000000000000000000000000000000000000000000000000000000000000000000');
+			
+
+			helper.Update('processos', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	AtualizarOutroEnvolvido(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Update('outros_envolvidos_cliente_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
+
+	AtualizarCaptacao(data) {
+		return new Promise(function(resolve, reject) {
+
+			if(data.id_captador == ''){
+				console.log('ID CAPTADOR VAZIO jjjjjjjjjjjjjjjjjjjjjjj');
+				delete data.id_captador;
+			}
+			if(data.id_origem == '')
+				delete data.id_origem;
+
+			data = helper.PrepareDates(POST, ['data']);
+
+			console.log('QQQQQQQQQQQQQQ DATA DO ATUALIZAR QQQQQQQQQQQQQQQQQQQQ');
+			console.log(data);
+			console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ');
+
+			helper.Update('captacao_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
+
+
+
+
+	DesativarProcesso(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('processos', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+		DesativarApenso(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('apenso', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	DesativarRecurso(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('recurso', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+}
+module.exports = ProcessosModel;

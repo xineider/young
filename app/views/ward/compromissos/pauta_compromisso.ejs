@@ -1,0 +1,150 @@
+ <a href="/sistema/compromissos/controle_distribuicao" class="ajax-load">
+ 	<div class="cream darken-3 tab-archive tab-nivel-2 tab-nivel-2-l">Controle de Distribuição</div>
+ </a>
+ <div class="cream tab-archive">Pauta de Compromissos</div>
+ <a href="/sistema/compromissos/pauta_julgamento" class="ajax-load">
+ 	<div class="cream darken-3 tab-archive tab-nivel-2 tab-nivel-2-r">Pauta de Julgamentos</div>
+ </a>
+
+ <div class="card cream archive">
+
+ 	<div class="header row">
+ 		<div class="row">
+ 			<div class="col s12">
+ 				<div class="left valign-wrapper">
+ 					<a class="btn-floating btn-large waves-effect waves-light blue darken-2 gerar-relatorio" data-nome-provisorio="Pauta" data-container-relatorio="#pauta_compromisso">
+ 						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+ 					</a>
+ 					<div class="black-text margin-l-5">Gerar Relatório</div>
+
+ 				</div>
+
+
+ 				<div class="right valign-wrapper">
+ 					<div class="black-text margin-r-5">Criar Compromisso</div>
+ 					<a class="btn-floating btn-large waves-effect waves-light bordo right tooltipped abrir_compromissos_criacao" data-position="top" data-tooltip="Cadastrar Compromisso" data-link="/sistema/compromissos/criar_pauta_compromissos" data-href="#modalinfo" data-back="/sistema/compromissos/pauta_compromisso"><i class="fa fa-plus" aria-hidden="true"></i></a>
+ 				</div>
+ 			</div>
+ 		</div>
+ 		<div class="row">
+ 			<div class="compromissos_container_criacao"></div>		
+ 		</div>
+ 	</div>
+
+<!--  	<div class="filtro_pauta">
+ 		<label>
+ 			<input type='checkbox' id='filtro_audiencia' name='filtros_pauta' checked='true'>
+ 			<span for='filtro_audiencia'>Audiência</span>
+ 		</label>
+ 		<label>
+ 			<input type='checkbox' id='filtro_providencia' name='filtros_acordao' checked='true'>
+ 			<span for='filtro_providencia'>Providência</span>
+ 		</label>
+ 		<label>
+ 			
+ 			<input type='checkbox' id='filtro_reuniao' name='filtros_pauta' checked='true'>
+ 			<span for='filtro_reuniao'>Reunião</span>
+ 		</label>
+ 		<label>
+ 			<input type='checkbox' id='filtro_julgamento' name='filtros_pauta' checked='true'>
+ 			<span for='filtro_julgamento'>Julgamento</span>
+ 		</label>
+ 		<label>
+ 			<input type='checkbox' id='filtro_pericia' name='filtros_pauta' checked='true'>
+ 			<span for='filtro_pericia'>Perícia</span>
+ 		</label> 		
+ 	</div> -->
+
+ 	<div id="pauta_compromisso_pdf_g">
+ 		<table id="pauta_compromisso" class="centered responsive-table cell-border">
+ 			<thead>
+ 				<tr>
+ 					<th>Número do Processo</th>
+ 					<th>Tipo</th>
+ 					<th>Descricao</th>
+ 					<th>Data e Hora de Início</th>
+ 					<th>Data e Hora Final</th>
+ 					<th>Local</th>
+ 					<th>Advogado Responsável do Setor</th>
+ 					<th>Advogado do Compromisso</th>
+ 				</tr>
+ 			</thead>
+ 			<tbody>
+ 				<%
+ 				for (var i = data.length - 1; i >= 0; i--) {
+ 					%>
+ 					<tr>
+ 						<td><%= data[i].numero %></td>
+ 						<td>
+ 							<%if(data[i].tipo==0){%>
+ 							Audiência
+ 							<%}else if(data[i].tipo==1){%>
+ 							Providência
+ 							<%}else if(data[i].tipo==2){%>
+ 							Reunião
+ 							<%}else if(data[i].tipo==3){%>
+ 							Julgamento
+ 							<%}else if(data[i].tipo==4){%>
+ 							Perícia
+ 							<%}else {%>
+ 							Não há
+ 							<%}%>
+ 						</td>
+ 						<td><%= data[i].nome %></td>
+ 						<td><%= data[i].data_inicial %></td>
+ 						<td><%= data[i].data_final %></td>
+ 						<td><%= data[i].local %></td>
+ 						<td><%= data[i].advogado_responsavel_setor %></td>
+ 						<td><%= data[i].advogado_compromisso %></td>
+
+ 					</tr>
+
+ 					<%}%>
+ 				</tbody>
+
+
+
+ 			</table>
+ 		</div>
+ 	</div>
+
+ 	<script>
+
+ 		$(document).on('click', '#filtro_audiencia', function (e) {
+ 			if($('#filtro_audiencia').prop('checked')){
+ 				console.log('estou checkado');
+ 			}else{
+
+ 				var table = $('#pauta_compromisso2').DataTable();
+
+ 				var filteredData = table
+ 				.column( 1 )
+ 				.data()
+ 				.filter( function ( value, index ) {
+ 					console.log('EEEEEEEEEEEEE VALUEEEEEEEEEEEEEEEEE EEEEEEEEEE');
+ 					console.log(value);
+ 					console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+ 					console.log(index);
+ 					return value > 2 ? true : false;
+ 				} );
+
+
+ 				console.log('------- TABELA PAUTA COMPROMISSO ---------');
+ 				console.log(table);
+ 				console.log('------------------------------------------');
+
+
+ 					// var filteredData = table.column(1).data().filter(function(value,index){
+ 					// 	return value == 0 ? true : false;
+ 					// })
+
+ 					console.log('================ FILTERED DATA ========================');
+ 					console.log(filteredData);
+ 					console.log('=======================================================');
+
+ 					console.log('NÃO CHECKADO');
+ 				}
+
+ 			});
+
+ 		</script>

@@ -1,0 +1,31 @@
+    <div class="card-panel white">
+      <h4>Editar Contato</h4>
+      <form method="POST" action="" enctype="multipart/form-data">
+        <input type="hidden" name="contatos[id]" value="<%= data.contatos[0].id %>">
+        <div class="right-align">
+          <a href="/sistema/contatos/" class="btn-floating btn-large waves-effect waves-light blue darken-2 left ajax-load"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+          <button data-href="/sistema/contatos/atualizar/" data-action="/sistema/contatos/" class="btn-floating btn-large waves-effect waves-light blue darken-2 ajax-submit">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input required="true" class="validate" type="text" name="contatos[nome]" value="<%= data.contatos[0].nome %>">
+            <label for="nome">Nome</label>
+          </div>
+        </div>
+        <div class="row Contatos_Lista">
+          <%- include('contatos_lista_todos_editar'); %>
+        </div>
+        <div class="row">
+          <div class="col s12 center-align">
+            <button class="btn-large blue white-text ajax-add-to" data-href="/sistema/contatos/adicionar/lista" data-to="Contatos_Lista">Adicionar</button>
+          </div>
+        </div>
+        <div class="right-align">
+          <button data-href="/sistema/contatos/atualizar/" data-action="/sistema/contatos/" class="btn waves-effect waves-light brass ajax-submit">
+            Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </button>
+        </div>
+      </form>
+    </div>

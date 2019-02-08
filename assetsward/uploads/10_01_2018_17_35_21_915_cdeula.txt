@@ -1,0 +1,98 @@
+1. GRANT OF LICENSE.
+
+1.1 United Admins Ltd (the Licensor) grants you (the user) a non-exclusive
+royalty-free license to make as many copies of the software accompanying
+this agreement as you want, as long as software and license is distributed
+in UNMODIFIED form and without charge.
+
+1.2 You shall not use, copy, rent, lease, sell, modify, decompile,
+disassemble, otherwise reverse engineer, or transfer the software, nor
+make use of any other such right except as provided in this Agreement. Any
+such unauthorized use shall result in immediate and automatic termination
+of this Agreement.
+
+1.3 You are specifically prohibited from charging, requesting donations
+for copies of the software, or distributing the software together with any
+other products without the Licensors prior written permission.
+
+1.4 If you're under 18 years of age, or subject to any law which requires
+you to seek the permission or consent of your parent or legal guardian in
+order to form legally binding contracts - you will have to have permission
+or consent of your parent or legal guardian in order to agree on this
+license.
+
+2. PRIVACY AND USER RIGHTS.
+
+2.1 User of this software should be aware that by agreeing this license,
+he also allows transfer of certain information from his computer to game
+servers and master servers.
+
+Information transferred may include, but is not limited to, results of
+cheat, memory and file scans, screenshots of game screens, users STEAM_ID,
+time of day, IP address of client and  server and nickname used.
+
+Under no circumtances will any other private or personal information or
+contents of  actual files or memory transferred.
+
+2.2 Screenshots containing game screens may be transferred to game servers
+and may be publically availabe on the internet. While the Licensor will
+try to make sure that no private or personal information is visible within
+the screenshots, we cannot guarantee it. User should take precautions to
+prevent the leaking of any personal information by shutting down all
+unnecessary programs while running this software.
+
+2.3 Any information about cheat programs on your system may be reported in
+public,  including results of cheat, memory and file scans. User of this
+program takes full responsibility for such events.
+
+2.3 Based on your previous and current cheat violations, you may be banned
+locally or globally from all gaming servers protected by this and
+associated software. In addition, the Licensor reserves the right to pass
+on your details to other server or blacklist operators.
+
+3. ALLOWED USE OF SOFTWARE
+
+3.1 You are allowed to install and run this software, as stated in
+agreement, in its unmodified form, in order to connect and play on
+Cheating-Death protected servers.  Any other use of this software is
+prohibited.  
+
+3.2 You may not decompile, reverse engineer, debug, analyze, disassemble,
+or otherwise reduce the Software to a human-perceivable form or use such
+methods for gaining any inside information how this software operates.
+You're not allowed to or discuss, transfer or make availabe any
+information about the internal operations of this software, for example,
+how it works, what it does, and or how to alter its operation or bypass
+protections or cause software to fail to operate propely.
+
+3.3 You are not allowed to run or use any program which in any way
+modifies or prevents proper operation of this software. Such a software is
+direct violation of this agreement and results in immediate and automatic
+termination of this Agreement.
+
+3.4 You may not modify the Software or create derivative works based upon
+the Software. Distribution of modified software is  also prohibited.
+
+3.5 You are allowed to use this software for its intented purpose, in
+unmodified form, free of charge as long as this license is valid.
+
+4. WARRANTY AND LIMITATION OF LIABILITY.
+
+This software is not FREE software. This software is (C)opyright 2004
+by United Admins Ltd and provided for FREE of charge to gaming community.
+
+This software comes with ABSOLUTELY NO WARRANTY OF ANY KIND.
+You,as a user of this software, take all responsibility, direct or
+indirect,resulting from the installation, use or removal of this software.
+
+If laws of your country conflict with any part of this license
+(for example, reverse-engineering is always allowed) - YOU ARE NOT
+ALLOWED TO USE OR INSTALL THIS SOFTWARE AT ALL! 
+Please obtain special license for your purpose from United Admins Ltd.
+
+All matters in relation to my use of the software and this agreement shall
+be governed by the laws of England and Wales.
+
+--------------------------------------------------------------------
+By installing and using this product, you agree on all the terms of
+this license.

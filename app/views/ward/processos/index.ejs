@@ -1,0 +1,23 @@
+ <a href="/sistema/processos/criar" class="ajax-load">
+  <div class="cream darken-3 tab-archive tab-nivel-2 tab-nivel-2-l">Criar Processo</div>
+</a>
+ <div class="cream tab-archive">Pesquisar/Editar</div>
+
+ <div class="card cream archive">
+  
+  <div class="header row">
+ 
+<!--     <a class="ajax-load" href="/sistema/processos/mortos">Acesse aqui os arquivos mortos 
+    	<i class="fa fa-archive" aria-hidden="true"></i>
+    </a> -->
+  <div class="right valign-wrapper">
+    <div class="black-text margin-r-5">Criar Processo</div>
+      <a class="btn-floating btn-large waves-effect waves-light bordo right ajax-load" href="/sistema/processos/criar">
+      	<i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  <%- include('processos_pesquisa'); %>
+  <%- include('tabela_interna_index'); %>
+  <%- include('detalhes_processos');%>
+</div>

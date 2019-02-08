@@ -3,20 +3,20 @@ var crypto = require('crypto');
 
 // FAZER LEITURA DAS CONFIGURAÇÕES
 
-var config = {
-					    "host"     : "mysql785.umbler.com",
-					    "user"     : "admin-young-adv",
-					    "password" : "6O(ayS4?{q{Ci",
-					    "database" : "young-adv"
-				  	};
-
-
 // var config = {
-// 						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
-// 						    "user"     : "b95fc3530ebace",
-// 						    "password" : "372884c6",
-// 						    "database" : "heroku_941b27a7b2edaff"
-// 					  	};
+// 					    "host"     : "mysql785.umbler.com",
+// 					    "user"     : "admin-young-adv",
+// 					    "password" : "6O(ayS4?{q{Ci",
+// 					    "database" : "young-adv"
+// 				  	};
+
+
+var config = {
+						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
+						    "user"     : "b95fc3530ebace",
+						    "password" : "372884c6",
+						    "database" : "heroku_941b27a7b2edaff"
+					  	};
 // var config = {
 // 						    "host"     : "localhost",
 // 						    "user"     : "root",
@@ -253,7 +253,6 @@ class Helper {
 		});
 	}
 	Update(table, data) {
-		console.log(data);
 		var values = '';
 		var array = [];
   	for (var key in data) {

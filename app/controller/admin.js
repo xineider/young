@@ -18,7 +18,6 @@ router.get('/', function (req, res, next) {
 		data['post'] = data_post;
 		model.GetCategorias().then(data_categoria => {
 			data['categoria'] = data_categoria;
-			console.log(data);
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', { html: 'admin/admin', data: data });
 		})
 	});

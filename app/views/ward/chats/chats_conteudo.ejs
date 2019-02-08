@@ -1,0 +1,74 @@
+
+  <div class="titulo" style="box-shadow: 0px -1px 5px black;padding-top: 5px;">
+    <div class="row">
+      <div class="col s4 center-align">
+        <img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Legolas600ppx.jpg" alt="" class="circle" style="width: 64px;height: 64px;">
+      </div>
+      <div class="col s8">
+        <p id="nome">
+          <%= data.usuario[0].nome %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="mensagens">
+    <%
+    var id = "";
+    if (typeof data.mensagens != 'undefined' && data.mensagens.length > 0) {
+      for (var i = data.mensagens.length - 1; i >= 0; i--) {
+        if (data.mensagens[i].texto != '' && data.mensagens[i].texto != 'undefined') {
+          if (i == 0) {
+            id = "final"
+          }
+          if (id_para == data.mensagens[i].id_usuario) {
+    %>
+          <div class="voce" id="<%= id %>">
+            <%= data.mensagens[i].texto %>
+          </div>
+    <%
+          } else {
+    %>
+          <div class="eu" id="<%= id %>">
+            <%= data.mensagens[i].texto %>
+          </div>
+    <%
+          }
+    %>
+    <%
+        }
+      }
+    }
+    %>
+  </div>
+  <div class="enviar-mensagem">
+    <input type="text" id="mensagem-texto" placeholder="Escreva sua mensagem...">
+    <i class="fa fa-paper-plane" id="enviar-msg" aria-hidden="true" data-id="<%= id_para %>"></i>
+  </div>
+<style type="text/css">
+  .chat-conteudo {
+    overflow: auto;
+    height: 90%;
+  }
+  .enviar-mensagem {
+    background-color: white;
+    position: fixed;
+    width: 78%;
+  }
+  .mensagens {
+    padding-top: 90px;
+    padding-bottom: 15px;
+  }
+  .titulo {
+    position: fixed;
+    width: 100%;
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+  if ($('.chat-conteudo').length > 0 && $("#final").length > 0) {
+    $('.chat-conteudo').animate({
+      scrollTop: $("#final").offset().top
+    }, -100);
+  }
+  
+</script>

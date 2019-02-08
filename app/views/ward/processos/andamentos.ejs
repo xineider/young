@@ -1,0 +1,25 @@
+<table class="centered highlight tabela_loc_and_processos">
+    <tbody>
+      <%
+      if (typeof data.andamentos != 'undefined' && data.andamentos.length > 0) {
+        for (var j = data.andamentos.length - 1; j >= 0; j--) {
+          %>
+          <tr class="row_processo_interno">
+            <td>
+              <%= data.andamentos[j].data %>
+            </td>
+            <td>
+              <%= data.andamentos[j].descricao %>
+            </td>
+          </tr>
+          <%
+        }
+      }else{%>
+      	<tr>
+      		<td>Não há Andamentos neste processo!</td>
+      	</tr>
+      <%
+      }
+      %>
+    </tbody>
+  </table>

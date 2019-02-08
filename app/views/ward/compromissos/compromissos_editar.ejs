@@ -1,0 +1,49 @@
+  <h4>Editar Compromisso</h4>
+  <form method="POST" action="" enctype="multipart/form-data">
+    <%
+    if (typeof data != 'undefined' && data.length > 0) {
+      for (var i = data.length - 1; i >= 0; i--) {
+        %>
+        <input type="hidden" value="<%= data[i].id %>" name="id">
+        <input type="hidden" name="deletado" value="1">
+        <div class="row">
+          <div class="input-field col s12">
+            <input required="true" class="validate" type="text" name="nome" value="<%= data[i].nome %>">
+            <label for="nome">Nome</label>
+          </div>
+          <div class="input-field col s12">
+            <label>Data Inicial do Compromisso</label>
+            <input required="true" type="text" class="datepicker" name="data_inicial" value="<%= data[i].data_inicial %>">
+          </div>
+          <div class="input-field col s12">
+            <label>Horário Inicial do Compromisso</label>
+            <input required="true" type="text" class="timepicker" name="hora_inicial" value="<%= data[i].hora_inicial %>">
+          </div>
+
+          <div class="input-field col s12">
+            <label>Data Final do Compromisso</label>
+            <input required="true" type="text" class="datepicker" name="data_final" value="<%= data[i].data_final %>">
+          </div>
+
+          <div class="input-field col s12">
+            <label>Horário Final do Compromisso</label>
+            <input required="true" type="text" class="timepicker" name="hora_final" value="<%= data[i].hora_final %>">
+          </div>
+
+
+        </div>
+        <div class="right-align">
+          <button class="modal-action modal-close waves-effect waves-light btn-flat grey lighten-2">Cancelar</button>
+
+          <button data-href="/sistema/compromissos/desativar/" data-action="/sistema/compromissos/" class="modal-action modal-close waves-effect btn-flat red lighten-2 white-text ajax-submit">Excluir</button>
+
+          <button data-href="/sistema/compromissos/atualizar/" data-action="/sistema/compromissos/" class="modal-action modal-close btn waves-effect waves-light bordo ajax-submit">
+            Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </button>
+        </div>
+        <%
+      }
+    }
+    %>
+  </form>
+</div>

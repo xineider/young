@@ -1,0 +1,95 @@
+ <a href="/sistema/compromissos/controle_distribuicao" class="ajax-load">
+ 	<div class="cream darken-3 tab-archive tab-nivel-2 tab-nivel-2-l">Controle de Distribuição</div>
+ </a>
+ <a href="/sistema/compromissos/pauta_compromisso" class="ajax-load">
+ 	<div class="cream darken-3 tab-archive tab-nivel-2 tab-nivel-2-r">Pauta de Compromissos</div>
+ </a>
+ <div class="cream tab-archive">Pauta de Julgamentos</div>
+ <div class="card cream archive">
+ 	<div class="header row">
+
+<!-- 		<div class="right-align">
+			<a class="btn-floating btn-large waves-effect waves-light bordo right modal-mount tooltipped" data-position="top" data-tooltip="Cadastrar Compromisso" data-link="/compromissos/criar" data-href="#modalinfo" data-back="/sistema/compromissos"><i class="fa fa-plus" aria-hidden="true"></i></a>
+		</div>
+	-->
+	<div class="row">
+
+		<div class="col s12">
+			<div class="left valign-wrapper">
+				<a class="btn-floating btn-large waves-effect waves-light blue darken-2 gerar-relatorio" data-nome-provisorio="Julgamentos" data-container-relatorio="#pauta_compromisso">
+					<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+				</a>
+				<div class="black-text margin-l-5">Gerar Relatório</div>
+
+			</div>
+			<div class="right valign-wrapper">
+				<div class="black-text margin-r-5">Criar Compromisso</div>
+				<a class="btn-floating btn-large waves-effect waves-light bordo right tooltipped abrir_compromissos_criacao" data-position="top" data-tooltip="Cadastrar Compromisso" data-link="/sistema/compromissos/criar_pauta_julgamento" data-href="#modalinfo" data-back="/sistema/compromissos/pauta_julgamento"><i class="fa fa-plus" aria-hidden="true"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="compromissos_container_criacao"></div>		
+	</div>
+
+
+</div>
+<!-- <div class="filtro_pauta">
+	<input type='checkbox' id='filtro_perito' name='filtros_pauta' checked='true'>
+	<label for='filtro_perito'>Perito</label>
+	<input type='checkbox' id='filtro_acordao' name='filtros_acordao' checked='true'>
+	<label for='filtro_acordao'>Acórdão/Sentença</label>
+	<input type='checkbox' id='filtro_despacho' name='filtros_pauta' checked='true'>
+	<label for='filtro_despacho'>Despacho/Decisões</label>
+	<input type='checkbox' id='filtro_peticoes' name='filtros_pauta' checked='true'>
+	<label for='filtro_peticoes'>Petições Diversas</label>
+	<input type='checkbox' id='filtro_quesitos' name='filtros_pauta' checked='true'>
+	<label for='filtro_quesitos'>Quesitos</label>
+	<input type='checkbox' id='filtro_manifestacao' name='filtros_pauta' checked='true'>
+	<label for='filtro_manifestacao'>Manif de Docs</label>
+	<input type='checkbox' id='filtro_prazosfisico' name='filtros_pauta' checked='true'>
+	<label for='filtro_prazosfisico'>Prazos Processos Físicos</label>
+</div> -->
+
+
+<table id="pauta_compromisso" class="centered responsive-table cell-border">
+	<thead>
+		<tr>
+			<th>Número do Processo</th>
+			<th>Tipo</th>
+			<th>Descricao</th>
+			<th>Data e Hora de Início</th>
+			<th>Data e Hora Final</th>
+			<th>Local</th>
+			<th>Advogado Responsável do Setor</th>
+			<th>Advogado do Compromisso</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%
+		for (var i = data.length - 1; i >= 0; i--) {
+			%>
+			<tr>
+				<td><%= data[i].numero %></td>
+				<td>
+					<%if(data[i].tipo==0){%>
+					Julgamento
+					<%}else {%>
+					Não há
+					<%}%>
+				</td>
+				<td><%= data[i].nome %></td>
+				<td><%= data[i].data_inicial %></td>
+				<td><%= data[i].data_final %></td>
+				<td><%= data[i].local %></td>
+				<td><%= data[i].advogado_responsavel_setor %></td>
+				<td><%= data[i].advogado_compromisso %></td>
+			</tr>
+
+			<%}%>
+		</tbody>
+
+
+
+	</table>
+</div>

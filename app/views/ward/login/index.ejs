@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ward Young</title>
+	<link rel='stylesheet' href='/assetsward/css/font-awesome.min.css' />
+	<link rel='stylesheet' href='/assetsward/css/materialize.min.css' />
+	<link rel='stylesheet' href='/assetsward/css/style.css' />	
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body class="login-background">
+	<main>
+		<section>
+			<div class="login">
+				<div class="login-card row">
+					<div class="col s12 m9 l5 card">
+						<form method="POST" action="/ward">
+							<div class="login-logo center-align">
+								<img src="/assetsward/imgs/logotype.png" alt="Logo Young">
+							</div>
+							<div class="login-error-message">
+								<%
+								if (typeof erro != 'undefined' && typeof tipo_erro != 'undefined' && tipo_erro == '404' || typeof erro != 'undefined' && typeof tipo_erro != 'undefined' && tipo_erro == 'login') {
+									%>
+									<div class="card-panel red darken-1 center-align" style="margin-bottom: 25px;">
+										<span class="white-text">
+											Usuário ou senha incorreto(s), tente novamente.
+										</span>
+									</div>
+									<%
+								}
+								%>
+							</div>
+							<div class="row login-input-container">
+								<div class="input-field col s12">
+									<input type="text" name="login" id="login" class="validate" autocomplete="off">
+									<label for="login">Usuário</label>
+								</div>
+								<div class="input-field col s12">
+									<input type="password" name="senha" id="senha" class="validate" autocomplete="off">
+									<label for="senha">Senha</label>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="center-align col s12">
+									<button class="btn btn-large btn-large-w btn-radius btn-login ruby darken-2 waves-effect waves-teal waves-light">
+										Entrar
+									</button>
+								</div>
+							</div>
+
+							<div class="row login-helpers">
+								<div class="col s12 center-align">
+									<a href="" class="link-underline">
+										Esqueceu sua senha?
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col s12 center-align">
+									<a href="" class="link-underline">
+										Ainda não possui conta? Cadastre-se
+									</a>
+								</div>
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<div class="center-align grey-text">
+			© copyright - Menso Vizio
+		</div>
+	</footer>
+
+</main>
+</body>
+
+<script src="/assetsward/js/jquery.min.js"></script>
+<script src="/assetsward/js/materialize.min.js"></script>
+
+
+</html>

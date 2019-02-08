@@ -10,7 +10,6 @@ var Control = require('./app/controller/control.js');
 const fileUpload = require('express-fileupload');
 
 var index = require('./app/controller/index');
-var login = require('./app/controller/login');
 var areasdeatuacao = require('./app/controller/areasdeatuacao');
 var contato = require('./app/controller/contato');
 var escritorio = require('./app/controller/escritorio');
@@ -19,8 +18,12 @@ var categoria = require ('./app/controller/categoria');
 var post = require('./app/controller/post');
 var admin = require('./app/controller/admin');
 
-/**/
-// var loginSis = require('./juridico/app/controller/login');
+/*Sistema*/
+var loginSis = require('./app/controller/ward/login');
+var indexSis = require('./app/controller/ward/index');
+var contatosSis = require('./app/controller/ward/contatos');
+var clientesSis = require('./app/controller/ward/clientes');
+var adversosSis = require('./app/controller/ward/adversos');
 
 var app = express();
 var control = new Control;
@@ -38,8 +41,8 @@ app.use(session({
 }));
  
 // Verifica usuario se esta logado ou não
-app.use(function (req, res, next) {
-  var pathname = parseurl(req).pathname;
+// app.use(function (req, res, next) {
+//   var pathname = parseurl(req).pathname;
   // console.log('**************** pathname *******************');
   // console.log(pathname);
   // if (pathname.indexOf("assets") == -1) {
@@ -53,46 +56,46 @@ app.use(function (req, res, next) {
   // }
   // console.log('************** indexOf admin ************************');
   // console.log(pathname.indexOf("admin"));
-  if ((pathname.indexOf("admin") != -1) && 
-      (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
-        req.isAjaxRequest() == true){
-    console.log('********************* criando session *******************');
-    console.log(pathname);
-    var id = req.headers['authority-optima-id'];
-    var hash = req.headers['authority-optima-hash'];
-    var nivel = req.headers['authority-optima-nivel'];
-    verificacao.VerificarUsuario(id, hash, nivel).then(data => {
-      if (data.length > 0) {
-        console.log('********************* segurança troca hash *******************');
-        console.log(pathname);
-        req.session.usuario = {};
-        req.session.usuario.id = id;
-        req.session.usuario.hash_login = hash;
-        req.session.usuario.nivel = nivel;
-        verificacao.GetConfig(id).then(data => {
-          req.session.usuario.config = data[0];
-          next();
-        });
-      } else {
-        console.log('********************* session destroy *******************');
-        console.log(pathname);
-        req.session.destroy(function(err) {
-          res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
-        });
-      }
-    });
-  } else if (control.Isset(req.session.usuario, false)
-    && (pathname.indexOf("admin") != -1)
-      && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
-        console.log('********************* else if - redirect / *******************');
-        console.log(pathname);
-    res.redirect('/');
-  } else {
-        console.log('********************* else para next *******************');
-        console.log(pathname);
-    next();
-  }
-});
+//   if ((pathname.indexOf("admin") != -1) && 
+//       (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1) && 
+//         req.isAjaxRequest() == true){
+//     console.log('********************* criando session *******************');
+//     console.log(pathname);
+//     var id = req.headers['authority-optima-id'];
+//     var hash = req.headers['authority-optima-hash'];
+//     var nivel = req.headers['authority-optima-nivel'];
+//     verificacao.VerificarUsuario(id, hash, nivel).then(data => {
+//       if (data.length > 0) {
+//         console.log('********************* segurança troca hash *******************');
+//         console.log(pathname);
+//         req.session.usuario = {};
+//         req.session.usuario.id = id;
+//         req.session.usuario.hash_login = hash;
+//         req.session.usuario.nivel = nivel;
+//         verificacao.GetConfig(id).then(data => {
+//           req.session.usuario.config = data[0];
+//           next();
+//         });
+//       } else {
+//         console.log('********************* session destroy *******************');
+//         console.log(pathname);
+//         req.session.destroy(function(err) {
+//           res.json('<img src="/assets/imgs/logout.gif"><script>setTimeout(function(){ window.location.replace("/"); }, 4100);</script>');
+//         });
+//       }
+//     });
+//   } else if (control.Isset(req.session.usuario, false)
+//     && (pathname.indexOf("admin") != -1)
+//       && (pathname.indexOf("css") == -1 && pathname.indexOf("js") == -1 && pathname.indexOf("imgs") == -1 && pathname.indexOf("fonts") == -1)) {
+//         console.log('********************* else if - redirect / *******************');
+//         console.log(pathname);
+//     res.redirect('/');
+//   } else {
+//         console.log('********************* else para next *******************');
+//         console.log(pathname);
+//     next();
+//   }
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -100,18 +103,18 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /assets
 app.use(favicon(path.join(__dirname, 'assets', 'logo_mini.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/assets", express.static(__dirname + '/assets'));
+app.use("/assetsward", express.static(__dirname + '/assetsward'));
 // app.use(express.static(path.join(__dirname, '/assets')));
 // console.log(path.join(__dirname, 'assets'));
 app.use(fileUpload());
 
 app.use('/', index);
-app.use('/login', index);
-// app.use('/ward', loginSis);
+app.use('/index', index);
 app.use('/areasdeatuacao', areasdeatuacao);
 app.use('/contato', contato);
 app.use('/escritorio', escritorio);
@@ -119,6 +122,17 @@ app.use('/equipe', equipe);
 app.use('/categoria', categoria);
 app.use('/post', post);
 app.use('/admin', admin);
+
+
+
+
+/*Sistema*/
+app.use('/ward', loginSis);
+app.use('/sistema', indexSis);
+app.use('/sistema/contatos', contatosSis);
+app.use('/sistema/clientes', clientesSis);
+app.use('/sistema/adversos', adversosSis);
+
 
 // app.use(function (req, res, next) {
 //   var pathname = parseurl(req).pathname;
@@ -154,7 +168,7 @@ app.use(function(err, req, res, next) {
 	if (typeof req.session.id_usuario != 'undefined' && req.session.id_usuario != 0) {
   	res.render('error', { erro: 'Página não existente.', tipo_erro: '404' });
   } else {
-  	res.render('login/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
+  	res.render('/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
   }
 });
 // app.listen(3000);
