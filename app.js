@@ -103,7 +103,7 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /assets
 app.use(favicon(path.join(__dirname, 'assets', 'logo_mini.ico')));
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
