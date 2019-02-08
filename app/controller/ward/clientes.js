@@ -243,7 +243,11 @@ router.post('/cadastrar', function(req, res, next) {
 								id_adverso: POST.id_adverso, numero: POST.numero_processo};
 
 								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-									res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+
+									/*Processo Ainda não está liberado para eles quando liberar remover*/
+
+									res.json(idCliente);
+									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
 								});
 
 							});
@@ -266,7 +270,10 @@ router.post('/cadastrar', function(req, res, next) {
 								console.log('0000000000000000000000000000000000000000000000000000000');
 
 								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-									res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+
+									res.json(idCliente);
+
+									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
 								});
 							});
 					}
@@ -295,7 +302,10 @@ router.post('/cadastrar', function(req, res, next) {
 
 
 								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-									res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+
+									res.json(id_cliente_cad);
+
+									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
 								});
 
 							});
@@ -309,7 +319,9 @@ router.post('/cadastrar', function(req, res, next) {
 								id_adverso: id_adverso_cad, numero: POST.numero_processo};
 
 								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-									res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+
+									res.json(id_cliente_cad);
+									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
 								});
 							});
 					}
