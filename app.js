@@ -133,7 +133,7 @@ app.use('/sistema', indexSis);
 app.use('/sistema/contatos', contatosSis);
 app.use('/sistema/clientes', clientesSis);
 app.use('/sistema/adversos', adversosSis);
-app.use('/sistema/adversos', configuracoesSis);
+app.use('/sistema/configuracoes', configuracoesSis);
 
 
 // app.use(function (req, res, next) {
