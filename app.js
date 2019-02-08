@@ -24,6 +24,7 @@ var indexSis = require('./app/controller/ward/index');
 var contatosSis = require('./app/controller/ward/contatos');
 var clientesSis = require('./app/controller/ward/clientes');
 var adversosSis = require('./app/controller/ward/adversos');
+var configuracoesSis = require('./app/controller/ward/configuracoes');
 
 var app = express();
 var control = new Control;
@@ -132,6 +133,7 @@ app.use('/sistema', indexSis);
 app.use('/sistema/contatos', contatosSis);
 app.use('/sistema/clientes', clientesSis);
 app.use('/sistema/adversos', adversosSis);
+app.use('/sistema/adversos', configuracoesSis);
 
 
 // app.use(function (req, res, next) {

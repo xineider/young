@@ -7,16 +7,6 @@
 
         <div class="row">
 
-          <div class="col s12 center">
-            <img id="imagem-usuario-config" src="<%= data[0].imagem %>" style="height: 150px;">
-            <div class="col s12">
-              <button class="btn waves-effect waves-light bordo darken-1 ajax-load">Alterar Imagem</button>
-            </div>
-
-
-
-          </div>
-
           <div class="input-field input-group-control col s12 m6 l4">
             <label for="nome">Nome *</label>
             <input required="true" class="validate" type="text" name="nome" value="<%= data[0].nome %>">
@@ -48,75 +38,20 @@
 
         </div>
 
-        <div class="bordo-line"></div>
 
-        <div class="row">
-          <h5 class="center">Notificações</h5>
+        <div class="right-align">
+          <button data-href="/sistema/configuracoes/atualizar/" data-action="/sistema/configuracoes/" class="btn waves-effect waves-light bordo ajax-submit">
+            Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </button>
+        </div>
 
-          <div class="">
-            <p>
-             <label>
-              <input type="checkbox">
-              <span>Atribuído à um processo por outro usuário</span>
-            </label>
-          </p>
+      </form>
 
-          <p>
-           <label>
-            <input type="checkbox">
-            <span>Atribuído à um prazo por outro usuário</span>
-          </label>
-        </p>
+      <a href="/sistema/configuracoes/alterar-senha/" class="btn waves-effect waves-light brass ajax-load" style="margin-bottom:10px;">
+        Alterar Senha
+      </a>
 
-        <p>
-         <label>
-          <input type="checkbox">
-          <span>Quando alguém entrar em contato comigo pelo chat</span>
-        </label>
-      </p>
-
-      <p>
-       <label>
-        <input type="checkbox" checked disabled>
-        <span>Atribuído à um compromisso do tipo audiência</span>
-      </label>
-    </p>
-
-    <p>
-     <label>
-      <input type="checkbox" checked disabled>
-      <span>Atribuído à um compromisso do tipo Reunião</span>
-    </label>
-  </p>
-
-  <p>
-   <label>
-    <input type="checkbox">
-    <span>Atribuído à um compromisso do tipo Julgamento</span>
-  </label>
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-<div class="right-align">
-  <button data-href="/sistema/configuracoes/atualizar/" data-action="/sistema/configuracoes/" class="btn waves-effect waves-light bordo ajax-submit">
-    Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
-  </button>
-</div>
-
-</form>
-
-<a href="/sistema/configuracoes/alterar-senha/" class="btn waves-effect waves-light brass ajax-load" style="margin-bottom:10px;">
-  Alterar Senha
-</a>
-
-</div>
+    </div>
 
 
 
