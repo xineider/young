@@ -20,6 +20,9 @@ router.get('/', function(req, res, next) {
 				model.SelecioneProcessos().then(data_processos => {
 					data.processos = data_processos;
 					model.UltimoProcessoAtivo().then(id_ultimo_processo =>{
+						if(id_ultimo_processo == ''){
+							res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
+						}else{
 						//id_ultimo_processo[0].id - retorna o último processo que não está deletado
 						model.SelecioneMaisDetalhesDoProcesso(id_ultimo_processo[0].id).then(data_mais_processos =>{
 							data.detalhes_processo = data_mais_processos;
@@ -34,7 +37,8 @@ router.get('/', function(req, res, next) {
 								});
 							});
 						});
-					});
+					}
+				});
 				});
 			});
 		});
