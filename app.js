@@ -197,7 +197,7 @@ app.use(function(err, req, res, next) {
 	if (typeof req.session.id_usuario != 'undefined' && req.session.id_usuario != 0) {
   	res.render('error', { erro: 'Página não existente.', tipo_erro: '404' });
   } else {
-  	res.render('/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
+  	res.render('ward/login/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
   }
 });
 // app.listen(3000);
