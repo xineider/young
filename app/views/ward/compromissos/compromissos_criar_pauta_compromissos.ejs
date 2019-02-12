@@ -1,6 +1,6 @@
 <div class="card white">
-    <div class="close_container_load">
-    <a class="btn btn-floating btn-medium blue darken-2 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
+  <div class="close_container_load">
+    <a class="btn btn-floating btn-medium grey darken-1 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
       <i class="fa fa-angle-double-up" aria-hidden="true"></i>  
     </a>
   </div>
@@ -14,14 +14,14 @@
         <input required="true" class="validate" type="text" name="nome">
       </div>
 
+      <input type="hidden" name="tipo_compromisso" value="0">
+
       <div class="select-field input-group-control col s12 m4">
         <label>Tipo do Compromisso</label>
         <select required='true' class="browser-default validate" name='tipo'>
-          <option value='0' selected>Audiência</option>
-          <option value='1'>Providência</option>
-          <option value='2'>Reunião</option>
-          <option value='3'>Julgamento</option>
-          <option value='4'>Perícia</option>
+          <option value='0' selected>Audiência</option>         
+          <option value='1'>Reunião</option>
+          <option value='2'>Perícia</option>
         </select>
 
       </div>
@@ -81,7 +81,13 @@
         <input required="true" type="text" name="local">
       </div>
 
-      <div class="col s12">
+      <div class="input-field input-group-control col s12 m8">
+        <label for="complemento">Observações</label>
+        <textarea type="text" name="complemento"></textarea>
+      </div>
+      
+
+<!--       <div class="col s12">
         <table>
           <thead>
             <tr>
@@ -137,7 +143,7 @@
          </tr>
        </tbody>
      </table>
-   </div>
+   </div> -->
 
  </div>
 

@@ -186,6 +186,29 @@ class ClientesModel {
 		});
 	}
 
+	CadastrarPasta(POST) {
+		return new Promise(function(resolve, reject) {
+			console.log('---------------- CADASTRAR PASTA -------------');
+			console.log(POST);
+			console.log('----------------------------------------------');
+			
+			helper.Query('SELECT id FROM documentos WHERE deletado = ? AND pasta_processos = ?', [0, 1]).then(data_id_documento => {
+				console.log('PPPPPPPPPPPPPPPP PEGANDO O ID DOS DOCUMENTOS PARA COLOCAR COMO DOC PAI PPPPPPPPPPPPPPPPPPPPPP');
+				console.log(data_id_documento);
+				console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+				POST.id_doc_pai = data_id_documento[0].id;
+
+				console.log(POST);
+
+
+
+				helper.Insert('documentos', POST).then(id_arquivo => {
+					resolve(id_arquivo);
+				});
+			});
+		});
+	}
+
 
 
 	AtualizarCliente(POST) {

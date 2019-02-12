@@ -28,7 +28,7 @@
               <td>
 
                 <a href="/sistema/clientes/editar/<%= data.clientes[i].id %>" class="ajax-load">
-                  <i class="fa fa-pencil-square-o green-text text-darken-2" aria-hidden="true"></i>
+                  <i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i>
                 </a>
                 <i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.clientes[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.clientes[i].nome %>'? " data-to="/sistema/clientes/desativar" data-back="/sistema/clientes" aria-hidden="true"></i>
               </td>
@@ -69,7 +69,7 @@
                 <li><a class="ajax-load btn-floating blue darken-2 btn tooltipped center-align" data-position="bottom" data-delay="50" data-tooltip="Imprimir Dados do Cliente" href="/sistema/clientes/imprimir/<%= data.clientes[i].id %>"><i class="fa fa-print" aria-hidden="true"></i></a></li>
               </ul>
             </div>
-            <a href="/sistema/clientes/editar/<%= data.clientes[i].id %>" class="ajax-load"><i class="fa fa-pencil-square-o green-text text-darken-2" aria-hidden="true"></i></a>
+            <a href="/sistema/clientes/editar/<%= data.clientes[i].id %>" class="ajax-load"><i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i></a>
             <i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.clientes[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.clientes[i].nome %>'? " data-to="/sistema/clientes/desativar" data-back="/sistema/clientes" aria-hidden="true"></i>
           </span>
         </div>

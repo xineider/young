@@ -3,74 +3,66 @@
     <ul class="collapsible" data-collapsible="accordion">
       <li>
         <div class="collapsible-header">
-         Filtro Avançado
+         Pesquisa Avançada
+       </div>
+       <div class="collapsible-body row" style="background:#fff">
+
+        <div class="input-field input-group-control col s12 m6">
+          <label for="numero">Número do Processo</label>          
+          <input id="numero" type="text" class="pesquisa" name="numero">
         </div>
-        <div class="collapsible-body row" style="background:#fff">
-      		<div class="col s12 m1 input-field">
-      			<label>
-      				Número
-      			</label>
-      			<input type="text" name="numero" class="pesquisa">
-      		</div>
-      		<div class="col s12 m3 input-field">
-      			<label>
-      				Cnpj
-      			</label>
-      			<input type="text" name="cnpj" class="pesquisa">
-      		</div>
-      		<div class="col s12 m3 select-field">
-      			<label>
-      				Responsavel
-      			</label>
-            <select class="browser-default pesquisa" name="id_usuario">
-              <option value="" selected>Selecione</option>
-              <%
-              if (typeof data.usuarios != 'undefined' && data.usuarios.length > 0) {
-                for (var i = data.usuarios.length - 1; i >= 0; i--) {
+        <div class="input-field input-group-control col s12 m6 ">
+         <label for="cnpj">Cnpj do Cliente</label>
+         <input type="text" name="cnpj" class="pesquisa">
+       </div>
+
+       <div class="col s12 m4 select-field input-group-control">
+        <label>Responsável</label>
+         <select class="browser-default pesquisa" name="id_usuario">
+          <option value="" selected>Selecione</option>
+          <%
+          if (typeof data.usuarios != 'undefined' && data.usuarios.length > 0) {
+            for (var i = data.usuarios.length - 1; i >= 0; i--) {
               %>
               <option value="<%= data.usuarios[i].id %>"><%= data.usuarios[i].nome %></option>
               <%
-                }
-              }
-              %>
-            </select>
-      		</div>
-      		<div class="col s12 m3 select-field">
-      			<label>
-      				Cliente
-      			</label>
-            <select class="browser-default pesquisa" name="id_cliente">
-              <option value="" selected>Selecione</option>
-              <%
-              if (typeof data.clientes != 'undefined' && data.clientes.length > 0) {
-                for (var i = data.clientes.length - 1; i >= 0; i--) {
-              %>
-              <option value="<%= data.clientes[i].id %>"><%= data.clientes[i].nome %></option>
-              <%
-                }
-              }
-              %>
-            </select>
-      		</div>
-      		<div class="col s12 m2 select-field">
-      			<label>
-      				Adverso
-      			</label>
-            <select class="browser-default pesquisa" name="id_adverso">
-              <option value="" selected>Selecione</option>
-              <%
-              if (typeof data.adversos != 'undefined' && data.adversos.length > 0) {
-                for (var i = data.adversos.length - 1; i >= 0; i--) {
-              %>
-              <option value="<%= data.adversos[i].id %>"><%= data.adversos[i].nome %></option>
-              <%
-                }
-              }
-              %>
-            </select>
-      		</div>
-        </div>
-      </li>
-    </ul>
-	</div>
+            }
+          }
+          %>
+        </select>
+      </div>
+      <div class="col s12 m4 select-field input-group-control">
+       <label>Cliente</label>
+       <select class="browser-default pesquisa" name="id_cliente">
+        <option value="" selected>Selecione</option>
+        <%
+        if (typeof data.clientes != 'undefined' && data.clientes.length > 0) {
+          for (var i = data.clientes.length - 1; i >= 0; i--) {
+            %>
+            <option value="<%= data.clientes[i].id %>"><%= data.clientes[i].nome %></option>
+            <%
+          }
+        }
+        %>
+      </select>
+    </div>
+    <div class="col s12 m4 select-field input-group-control">
+     <label>Adverso</label>
+     <select class="browser-default pesquisa" name="id_adverso">
+      <option value="" selected>Selecione</option>
+      <%
+      if (typeof data.adversos != 'undefined' && data.adversos.length > 0) {
+        for (var i = data.adversos.length - 1; i >= 0; i--) {
+          %>
+          <option value="<%= data.adversos[i].id %>"><%= data.adversos[i].nome %></option>
+          <%
+        }
+      }
+      %>
+    </select>
+  </div>
+</div>
+</li>
+</ul>
+</div>
 </form>

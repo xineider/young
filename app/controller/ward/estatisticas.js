@@ -12,7 +12,20 @@ app.use(require('express-is-ajax-request'));
 /* GET pagina de login. */
 router.get('/', function(req, res, next) {
 	// var id_usuario = req.session.usuario.id;
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/estatisticas/index', data: data, usuario: req.session.usuario});
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/estatisticas/marketing', data: data, usuario: req.session.usuario});
+});
+
+
+router.get('/setor', function(req, res, next) {
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/estatisticas/setor', data: data, usuario: req.session.usuario});
+});
+
+router.get('/individual', function(req, res, next) {
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/estatisticas/individual', data: data, usuario: req.session.usuario});
+});
+
+router.get('/desempenho', function(req, res, next) {
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/estatisticas/desempenho', data: data, usuario: req.session.usuario});
 });
 
 

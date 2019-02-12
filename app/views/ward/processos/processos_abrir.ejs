@@ -8,7 +8,7 @@
 
  		<div class="row card padding-t-10 center ">
  			<h5>Status do Processo</h5>
- <!-- 			<p class="center">* Quando selecionado uma das ações abaixo e o processo ser salvo, o cliente receberá um alerta pelo aplicativo sobre a ação escolhida.</p> -->
+ 			<!-- 			<p class="center">* Quando selecionado uma das ações abaixo e o processo ser salvo, o cliente receberá um alerta pelo aplicativo sobre a ação escolhida.</p> -->
 
  			<div class='status-timeline-processo'>
  				<div class="status-timeline-processo-line hide-on-med-and-down"></div>
@@ -74,6 +74,8 @@
 
  		<div class="bordo-line"></div>
 
+ 		
+
  		<div class="row card padding-b-10 padding-t-10">
  			<%- include('area_outros_detalhes_processo'); %>
  		</div>
@@ -128,8 +130,22 @@
  		</div>
 
 
+ 		<div class="fixed-action-btn" style="bottom:23%;">
+
+ 			<button style="position: absolute;" data-href="/sistema/processos/atualizar/" data-action="/sistema/processos" class="right btn-floating btn-large ruby darken-2 ajax-submit pulse tooltipped" data-position="left" data-tooltip="Atualizar Processo">
+ 				<i class="fa fa-floppy-o bordo-text" aria-hidden="true"></i>
+ 			</button>
+
+
+ 			<button data-href="/sistema/processos/atualizar/" data-action="/sistema/processos" class="right btn-floating btn-large golden darken-2 ajax-submit pulse tooltipped" data-position="left" data-tooltip="Atualizar Processo">
+ 				<i class="fa fa-floppy-o bordo-text" aria-hidden="true"></i>
+ 			</button>
+ 		</div>
+ 		
+
+
  		<div class="right-align">
- 			<button data-href="/sistema/processos/atualizar/" data-action="/sistema/processos" class="btn waves-effect waves-light brass ajax-submit">
+ 			<button data-href="/sistema/processos/atualizar/" data-action="/sistema/processos" class="btn waves-effect waves-light golden darken-2 ajax-submit bordo-text">
  				Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
  			</button>
  		</div>

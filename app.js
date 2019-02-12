@@ -25,6 +25,18 @@ var contatosSis = require('./app/controller/ward/contatos');
 var clientesSis = require('./app/controller/ward/clientes');
 var adversosSis = require('./app/controller/ward/adversos');
 var configuracoesSis = require('./app/controller/ward/configuracoes');
+var tarefasSis = require('./app/controller/ward/tarefas');
+var processosSis = require('./app/controller/ward/processos');
+var estatisticasSis = require('./app/controller/ward/estatisticas');
+var compromissosSis = require('./app/controller/ward/compromissos');
+var chatsSis = require('./app/controller/ward/chats');
+var notificacoesSis = require('./app/controller/ward/notificacoes');
+var documentosSis = require('./app/controller/ward/documentos');
+var usuariosSis = require('./app/controller/ward/usuarios');
+var setoresSis = require('./app/controller/ward/setores');
+var relatoriosSis = require('./app/controller/ward/relatorios');
+var apiSis = require('./app/controller/ward/api');
+var ferramentasSis = require('./app/controller/ward/ferramentas');
 
 var app = express();
 var control = new Control;
@@ -130,10 +142,25 @@ app.use('/admin', admin);
 /*Sistema*/
 app.use('/ward', loginSis);
 app.use('/sistema', indexSis);
+
+
 app.use('/sistema/contatos', contatosSis);
 app.use('/sistema/clientes', clientesSis);
 app.use('/sistema/adversos', adversosSis);
 app.use('/sistema/configuracoes', configuracoesSis);
+
+app.use('/sistema/tarefas', tarefasSis);
+app.use('/sistema/processos', processosSis);
+app.use('/sistema/estatisticas', estatisticasSis);
+app.use('/sistema/compromissos', compromissosSis);
+app.use('/sistema/chats', chatsSis);
+app.use('/sistema/notificacoes', notificacoesSis);
+app.use('/sistema/documentos', documentosSis);
+app.use('/sistema/usuarios', usuariosSis);
+app.use('/sistema/setores', setoresSis);
+app.use('/sistema/relatorios', relatoriosSis);
+app.use('/sistema/api', apiSis);
+app.use('/sistema/ferramentas', ferramentasSis);
 
 
 // app.use(function (req, res, next) {

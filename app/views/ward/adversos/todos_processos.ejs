@@ -1,6 +1,6 @@
 <div class="col s12 card white" style='margin-top:30px;'>
 		<div class="close_container_load">
-		<a class="btn btn-floating btn-medium blue darken-2 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
+		<a class="btn btn-floating btn-medium grey darken-1 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
 			<i class="fa fa-angle-double-up" aria-hidden="true"></i>	
 		</a>
 	</div>
@@ -48,7 +48,7 @@
 							if (typeof morto == 'undefined') {
 								%>
 								<td>
-									<a style="font-size: 1.4em;" href="/sistema/processos/abrir/<%= data.processos_adverso[i].id %>" class="ajax-load"><i class="fa fa-pencil green-text text-darken-2" aria-hidden="true"></i></a>
+									<a style="font-size: 1.4em;" href="/sistema/processos/abrir/<%= data.processos_adverso[i].id %>" class="ajax-load"><i class="fa fa-pencil bordo-text" aria-hidden="true"></i></a>
 									<a href="" style="font-size: 1.4em;">
 										<i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.processos_adverso[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.processos_adverso[i].nome %>'? " data-to="/sistema/processos/desativar" data-back="/sistema/processos" aria-hidden="true"></i>
 									</a>

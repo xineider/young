@@ -155,28 +155,33 @@
 
 <div class="row">
   <h5>Informações de Residência</h5>
-  <div class="input-field input-group-control col s12 m3">
+  <div class="input-field input-group-control full-width col s12 m3">
     <label for="cep">CEP</label>
-    <input required="true" class="cep validate" type="text" name="cep">
+    <input required="true" class="cep" type="text" name="cep">
   </div>
-  <div class="input-field input-group-control col s12 m5">
-    <label for="rua">Rua *</label>
-    <input required="true" class="rua validate" type="text" name="rua">
-  </div>
+
   <div class="input-field input-group-control col s12 m4">
     <label for="bairro">Bairro *</label>
     <input required="true" class="bairro validate" type="text" name="bairro" id="bairro">
   </div>
-  <div class="input-field input-group-control col s12 m3">
-    <label for="numero">Número *</label>
-    <input required="true" class="validate numero" type="text" name="numero">
-  </div>
-  <div class="input-field input-group-control col s12 m5">
-    <label for="cidade">Cidade *</label>
-    <input required="true" class="cidade validate" type="text" name="cidade">
-  </div>
-  <div class="input-field input-group-control col s12 m4">
-    <label for="estado">Estado *</label>
-    <input required="true" class="uf validate" type="text" name="estado">
+
+  <div style="padding: 0;" class="col s12">
+    <div class="input-field input-group-control full-width input col s12 m5">
+      <label for="rua">Rua *</label>
+      <input required="true" class="rua validate" type="text" name="rua">
+    </div>
+
+    <div class="input-field input-group-control full-width col s12 m2 l1">
+      <label for="numero" style="left:0">Número *</label>
+      <input required="true" class="numero validate" type="text" name="numero">
+    </div>
+    <div class="input-field input-group-control full-width col s12 m5">
+      <label for="cidade">Cidade *</label>
+      <input required="true" class="cidade validate" type="text" name="cidade">
+    </div>
+    <div class="input-field input-group-control full-width col s12 m2 l1">
+      <label for="estado">Estado *</label>
+      <input required="true" class="uf validate" type="text" name="estado">
+    </div>
   </div>
 </div>

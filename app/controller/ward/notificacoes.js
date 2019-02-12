@@ -17,4 +17,20 @@ router.get('/', function(req, res, next) {
 });
 
 
+
+
+router.get('/remover_visto/:id', function(req, res, next) {
+	var id = req.params.id;
+	data_visto = {id:id,visto:1};
+	console.log('=============== remover_visto ===================');
+	console.log(data_visto);
+	console.log('=============================================');
+	model.AtualizarNotificacao(data_visto).then(data=>{
+		res.json(data);
+	});
+});
+
+
+
+
 module.exports = router;

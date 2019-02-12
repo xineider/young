@@ -142,7 +142,7 @@ router.post('/pesquisar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
 	model.ProcurarAdversos(POST).then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/adversos_interna_index', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/tabela_interna_only', data: data, usuario: req.session.usuario});
 	});
 });
 

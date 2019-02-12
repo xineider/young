@@ -8,7 +8,7 @@ class IndexModel {
 	Login(POST) {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples
-			helper.Query('SELECT id, nivel,imagem FROM usuarios WHERE login = ? AND senha = ?', [POST.login, POST.senha]).then(data => {
+			helper.Query('SELECT id, nivel,imagem,nome FROM usuarios WHERE login = ? AND senha = ?', [POST.login, POST.senha]).then(data => {
 				console.log(data);
 	  		if (data.length > 0) {
 	        var hash_login = helper.Encrypt(Date());

@@ -57,6 +57,7 @@ router.post('/cadastrar', function(req, res, next) {
 router.post('/cadastrar/pasta', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
+	POST.id_usuario = req.session.usuario.id;
 	model.CadastrarPasta(POST).then(data => {
 		res.json(data);
 	});

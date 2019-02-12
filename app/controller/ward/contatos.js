@@ -12,33 +12,33 @@ app.use(require('express-is-ajax-request'));
 /* GET pagina de login. */
 router.get('/', function(req, res, next) {
 	model.SelecioneContatos().then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/index', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/index', data: data, usuario: req.session.usuario});
 	});
 });
 router.get('/criar', function(req, res, next) {
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/contatos_criar', data: data, usuario: req.session.usuario});
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/contatos_criar', data: data, usuario: req.session.usuario});
 });
 router.get('/editar/:id', function(req, res, next) {
 	var id = req.params.id;
 	model.SelecionarContato(id).then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/contatos_editar', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/contatos_editar', data: data, usuario: req.session.usuario});
 	});
 });
 router.get('/ver/lista/:id', function(req, res, next) {
 	var id = req.params.id;
 	model.SelecionarContatoLista(id).then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/contatos_lista_todos', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/contatos_lista_todos', data: data, usuario: req.session.usuario});
 	});
 });
 router.get('/adicionar/lista', function(req, res, next) {
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/contatos_lista', data: data, usuario: req.session.usuario});
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/contatos_lista', data: data, usuario: req.session.usuario});
 });
 
 	router.post('/pesquisar', function(req, res, next) {
 		// Recebendo o valor do post
 		POST = req.body;
 		model.ProcurarContatos(POST).then(data => {
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/contatos/contatos_interna_index', data: data, usuario: req.session.usuario});
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/contatos/tabela_interna_only', data: data, usuario: req.session.usuario});
 		});
 	});
 

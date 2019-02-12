@@ -62,33 +62,40 @@
       <input class="validate" type="text" name="contato" value="<%= data[0].contato %>">
     </div>
   </div>
+
   <div class="row">
-    <h5>Informações de Residência</h5>
-    <div class="input-field input-group-control col s12 m3">
-      <label for="cep">CEP</label>
-      <input class="cep validate" type="text" name="cep" value="<%= data[0].cep %>">
-    </div>
-    <div class="input-field input-group-control col s12 m5">
+  <h5>Informações de Residência</h5>
+  <div class="input-field input-group-control full-width col s12 m3">
+    <label for="cep">CEP</label>
+    <input required="true" class="cep" type="text" name="cep" value="<%= data[0].cep %>">
+  </div>
+
+  <div class="input-field input-group-control col s12 m4">
+    <label for="bairro">Bairro *</label>
+    <input required="true" class="bairro validate" type="text" name="bairro" id="bairro" value="<%= data[0].bairro %>">
+  </div>
+
+  <div style="padding: 0;" class="col s12">
+    <div class="input-field input-group-control full-width input col s12 m5">
       <label for="rua">Rua *</label>
       <input required="true" class="rua validate" type="text" name="rua" value="<%= data[0].rua %>">
     </div>
-    <div class="input-field input-group-control col s12 m4">
-      <label for="bairro">Bairro *</label>
-      <input required="true" class="bairro validate" type="text" name="bairro" id="bairro" value="<%= data[0].bairro %>">
-    </div>
-    <div class="input-field input-group-control col s12 m3">
-      <label for="numero">Número *</label>
+
+    <div class="input-field input-group-control full-width col s12 m2 l1">
+      <label for="numero" style="left:0">Número *</label>
       <input required="true" class="numero validate" type="text" name="numero" value="<%= data[0].numero %>">
     </div>
-    <div class="input-field input-group-control col s12 m5">
+    <div class="input-field input-group-control full-width col s12 m5">
       <label for="cidade">Cidade *</label>
       <input required="true" class="cidade validate" type="text" name="cidade" value="<%= data[0].cidade %>">
     </div>
-    <div class="input-field input-group-control col s12 m4">
+    <div class="input-field input-group-control full-width col s12 m2 l1">
       <label for="estado">Estado *</label>
       <input required="true" class="uf validate" type="text" name="estado" value="<%= data[0].estado %>">
     </div>
   </div>
+</div>
+
   <div class="row">
     <h5>Outros</h5>
     <div class="input-field input-group-control col s12">

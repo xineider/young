@@ -16,7 +16,10 @@ body.row{
 }
 
 .cocoa{
-  background-color:#4a3214;
+  /*background-color:#4a3214;*/
+  background:linear-gradient(to bottom, rgb(156, 156, 156) 0%,rgb(204, 204, 204) 50%,rgb(204, 204, 204) 50%,rgba(156, 156, 156, 1) 100%);
+  color: rgb(79, 33, 40);
+  border: 1px solid rgb(79, 33, 40);
 }
 
 
@@ -47,7 +50,7 @@ body.row{
 
 
 .bordo-text {
-  color: rgb(79, 33, 40);
+  color: rgb(79, 33, 40)!important;
 }
 
 
@@ -62,6 +65,13 @@ body.row{
   background:#a05460;
 }
 
+.brass.darken-1{
+  background:#bfbf56;
+}
+
+.bold{
+  font-weight: bold;
+}
 
 .golden {
   background: rgb(252,234,187);
@@ -76,6 +86,18 @@ body.row{
 .golden-text {
   color: rgb(252,234,187);
 }
+
+
+.golden.darken-2{
+  background: rgb(255,216,63);
+  background: -moz-linear-gradient(top, rgba(255,216,63,1) 0%, rgba(255,234,158,1) 50%, rgba(255,216,63,1) 100%);
+  background: -webkit-linear-gradient(top, rgba(255,216,63,1) 0%,rgba(255,234,158,1) 50%,rgba(255,216,63,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,216,63,1) 0%,rgba(255,234,158,1) 50%,rgba(255,216,63,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd83f', endColorstr='#ffd83f',GradientType=0 );
+}
+
+
+
 .btn.bordo:hover:not(.disabled), .btn.bordo:focus:not(.disabled){
   color: rgb(66,25,31);
   background: #fff;
@@ -118,9 +140,12 @@ body.row{
 }
 
 .btn.cocoa:hover:not(.disabled), .btn.cocoa:focus:not(.disabled){
-  color:#4a3214;
-  background-color: #fff;
-  border: 2px inset #4a3214;
+/*  color:#4a3214;*/
+  /*background-color: #fff;*/
+  /*border: 2px inset #4a3214;*/
+  color:#fff;
+  background:linear-gradient(to bottom, rgba(66,25,31,1) 0%,rgba(105,48,57,1) 50%,rgba(105,48,57,1) 50%,rgba(66,25,31,1) 100%);
+  border:2px #737373
 }
 
 .btn.cocoa.disabled{
@@ -221,6 +246,94 @@ input,textarea,select{
 }
 
 
+
+input:not([type]):focus:not([readonly]), 
+input[type=text]:not(.browser-default):focus:not([readonly]), 
+input[type=password]:not(.browser-default):focus:not([readonly]), 
+input[type=email]:not(.browser-default):focus:not([readonly]), 
+input[type=url]:not(.browser-default):focus:not([readonly]), 
+input[type=time]:not(.browser-default):focus:not([readonly]), 
+input[type=date]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]), 
+input[type=tel]:not(.browser-default):focus:not([readonly]), 
+input[type=number]:not(.browser-default):focus:not([readonly]), 
+input[type=search]:not(.browser-default):focus:not([readonly]), 
+textarea.materialize-textarea:focus:not([readonly]){
+  box-shadow:0 1px 0 0 rgb(79, 33, 40);
+}
+
+input:not([type]):focus:not([readonly]), 
+input[type=text]:not(.browser-default):focus:not([readonly]), 
+input[type=password]:not(.browser-default):focus:not([readonly]), 
+input[type=email]:not(.browser-default):focus:not([readonly]), 
+input[type=url]:not(.browser-default):focus:not([readonly]), 
+input[type=time]:not(.browser-default):focus:not([readonly]), 
+input[type=date]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]), 
+input[type=tel]:not(.browser-default):focus:not([readonly]), 
+input[type=number]:not(.browser-default):focus:not([readonly]), 
+input[type=search]:not(.browser-default):focus:not([readonly]), 
+textarea.materialize-textarea:focus:not([readonly]){
+  border-bottom-color:rgb(79, 33, 40);
+}
+
+
+
+.datepicker-date-display,.timepicker-digital-display,.fc-event, .fc-event-dot{
+  background-color: rgb(66,25,31);
+}
+
+.datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done,.timepicker-close{
+  color: rgb(79, 33, 40);
+}
+
+.datepicker-table td.is-today{
+  color: rgb(79, 33, 40)!important;
+}
+
+.datepicker-table td.is-selected{
+  background-color: rgb(79, 33, 40);
+}
+
+.datepicker-day-button:focus,.timepicker-tick.active, .timepicker-tick:hover{
+   background-color: rgba(79, 33, 40,0.4);
+}
+
+.dropdown-content li>a, .dropdown-content li>span{
+  color: rgb(79, 33, 40);
+}
+
+.timepicker-canvas line{
+  stroke:rgb(79, 33, 40);
+}
+
+.timepicker-canvas-bg{
+  fill:rgb(79, 33, 40);
+}
+
+.timepicker-canvas-bearing{
+  fill: rgb(79, 33, 40);
+}
+
+
+.sidenav{
+  height: calc(100% - 85px);
+  top: 142px;
+}
+
+
+
+/*calendar*/
+
+.fc-button:focus{
+  background-color:#b3b3b3;
+}
+
+.fc-event{
+  border-color: rgb(79, 33, 40);
+}
 
 
 
@@ -345,7 +458,7 @@ header {
   padding: 9.6px 12px;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: #eeeeee;
+  border-color: #bdbdbd;
   background-color: #fff;
   color: #333333;
   text-decoration: none;
@@ -354,9 +467,13 @@ header {
   cursor: pointer;
 }
 
-.notificacao-content  .notificacao-item:hover {
-  background-color: #f9f9f9;
-  border-color: #eeeeee;
+.notificacao-content .notificacao-item:hover {
+  background-color: #c7c7c7;
+  border-color: #888888;
+}
+
+.notificacao-content a:last-child .notificacao-item{
+  border-color:transparent;
 }
 
 .notificacao-content .notificao-footer{
@@ -1287,8 +1404,8 @@ box-shadow: 0 1px 0 0 #fff;*/
     cursor: pointer;
     position: absolute;
     right: 0%;
-    bottom: 21px;
-    background-color: #3576ec;
+    top: 5px;
+    /*bottom: 21px;*/
     padding: 10px;
     border-radius: 50%;
     color: #fff;

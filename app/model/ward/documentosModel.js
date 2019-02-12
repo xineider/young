@@ -60,14 +60,16 @@ class DocumentosModel {
 	}
 	GetDocumentos(id_user, id){
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT id, arquivo, tipo, DATE_FORMAT(data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro FROM documentos WHERE deletado = ? AND id_usuario = ? AND onde = ? AND id_doc_pai = ?', [0, id_user, 2, id]).then(data => {
+			helper.Query('SELECT id, arquivo, tipo, DATE_FORMAT(data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro FROM documentos WHERE \
+				(deletado = ? AND onde = ? AND id_doc_pai = ?) AND (id_usuario = ? OR (SELECT b.id FROM documentos as b WHERE b.deletado = ? AND b.id = ? AND geral = ?))', [0, 2, id,id_user,0,id,1]).then(data => {
       	resolve(data);
 			});
 		});
 	}
 	GetPastas(id) {
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT id, tipo, arquivo, data_cadastro FROM documentos WHERE deletado = ? AND id_usuario = ? AND onde = ? AND tipo = ? AND id_doc_pai = ?', [0, id, 2, 1, 0]).then(data => {
+			helper.Query('SELECT id, tipo, arquivo, data_cadastro FROM documentos WHERE \
+				deletado = ? AND (id_usuario = ? OR geral = ?) AND onde = ? AND tipo = ? AND id_doc_pai = ?', [0, id,1, 2, 1, 0]).then(data => {
       	resolve(data);
 			});
 		});
@@ -75,7 +77,8 @@ class DocumentosModel {
 
 	GetPastasTodas(id) {
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id, a.tipo, a.id_doc_pai, IFNULL(CONCAT((SELECT CONCAT((SELECT c.arquivo FROM documentos as c WHERE c.id = b.id_doc_pai), '/', b.arquivo) FROM documentos as b WHERE b.id = a.id_doc_pai), '/', a.arquivo), IFNULL(CONCAT((SELECT b.arquivo FROM documentos as b WHERE b.id = a.id_doc_pai), '/', a.arquivo), a.arquivo)) as arquivo FROM documentos as a WHERE a.deletado = ? AND a.id_usuario = ? AND a.onde = ? AND a.tipo = ?", [0, id, 2, 1]).then(data => {
+			helper.Query("SELECT a.id, a.tipo, a.id_doc_pai, \
+				IFNULL(CONCAT((SELECT CONCAT((SELECT c.arquivo FROM documentos as c WHERE c.id = b.id_doc_pai), '/', b.arquivo) FROM documentos as b WHERE b.id = a.id_doc_pai), '/', a.arquivo), IFNULL(CONCAT((SELECT b.arquivo FROM documentos as b WHERE b.id = a.id_doc_pai), '/', a.arquivo), a.arquivo)) as arquivo FROM documentos as a WHERE a.deletado = ? AND (a.id_usuario = ? OR a.geral = ?) AND a.onde = ? AND a.tipo = ?", [0, id, 1, 2, 1]).then(data => {
       	resolve(data);
 			});
 		});
@@ -94,7 +97,6 @@ class DocumentosModel {
 
 	CadastrarPasta(POST) {
 		return new Promise(function(resolve, reject) {
-			POST.senha = helper.Encrypt(senha);
 			helper.Insert('documentos', POST).then(id_arquivo => {
 				resolve(id_arquivo);
 			});

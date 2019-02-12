@@ -17,7 +17,7 @@ class IndexModel {
 	}
 	GetUltimasTarefas(id_usuario){
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT id, nome, DATE_FORMAT(data_prevista, "%d/%m/%Y") as data_prevista FROM tarefas WHERE id_usuario = ? AND deletado = ? LIMIT 5', [id_usuario, 0]).then(data => {
+			helper.Query('SELECT id, nome, status, DATE_FORMAT(data_prevista, "%d/%m/%Y") as data_prevista FROM tarefas WHERE id_usuario = ? AND deletado = ? ORDER BY data_cadastro DESC LIMIT 3', [id_usuario, 0]).then(data => {
 				resolve(data);
 			});
 		});
@@ -53,10 +53,20 @@ class IndexModel {
 
 	GetUltimasNotificacoes(id_usuario){
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT texto, DATE_FORMAT(data_cadastro, "%d/%m/%Y") as data_cadastro FROM notificacoes WHERE id_usuario = ? AND deletado = ? ORDER BY data_cadastro ASC LIMIT 5', [id_usuario, 0]).then(data => {
+			helper.Query('SELECT *, CONCAT(texto, " às ", DATE_FORMAT(data_cadastro, "%d/%m/%Y %H:%i")) as texto FROM notificacoes WHERE id_usuario = ? AND deletado = ? ORDER BY data_cadastro DESC LIMIT 5', [id_usuario, 0]).then(data => {
 				resolve(data);
 			});
 		});
 	}
+
+	GetNotificacoesQtdNaoVistas(id_usuario){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT COUNT(visto) as qtdNova FROM notificacoes WHERE id_usuario = ? AND deletado = ? AND visto = ?', [id_usuario, 0, 0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
 }
 module.exports = IndexModel;

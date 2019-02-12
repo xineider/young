@@ -11,13 +11,13 @@ app.use(require('express-is-ajax-request'));
 
 router.get('/', function(req, res, next) {
 	model.GetConfiguracoes(req.session.usuario.id).then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/configuracoes/configuracoes', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/configuracoes/configuracoes', data: data, usuario: req.session.usuario});
 	});
 });
 
 
 router.get('/alterar-senha/', function(req, res, next) {
-	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/configuracoes/alterar_senha', data: data, usuario: req.session.usuario});
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/configuracoes/alterar_senha', data: data, usuario: req.session.usuario});
 });
 
 

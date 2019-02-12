@@ -43,6 +43,9 @@ $(document).on('ready', function () {
 		validarDataTable($('#tabela_interna_adverso'));
 		validarDataTable($('#tabela_interna_contato'));
 		validarDataTable($('#tabela_interna_processo'));
+		validarDataTable($('#tabela_interna_notificacoes'));
+
+		
 
 		
 		
@@ -253,19 +256,24 @@ $(document).on('ready', function () {
 		AddInputDel($(this));
 	});
 
-	$(document).on('click', '.folder.active', function (e) {
+	$(document).on('click', '.folder', function (e) {
 		e.preventDefault();
-		$(this).find('i:first-child:not(.fa-times)').toggleClass('fa-folder fa-folder-open');
-		$(this).find('i:last-child').toggleClass('fa-caret-down fa-caret-up');
-		console.log($(this).data('ajax'));
-		if ($(this).data('ajax') == 1) {
-			LoadArquivos($(this).data('id'), $(this));
+		if($(this).parent().hasClass('active')){
+			console.log('estou dentro do folder.active!!!!!!!!!!!');
+			$(this).find('i:first-child:not(.fa-times)').toggleClass('fa-folder fa-folder-open');
+			$(this).find('i:last-child').toggleClass('fa-caret-down fa-caret-up');
+			console.log($(this).data('ajax'));
+			if ($(this).data('ajax') == 1) {
+				LoadArquivos($(this).data('id'), $(this));
+			}
+		}else{
+			$(this).find('i:first-child:not(.fa-times)').toggleClass('fa-folder-open fa-folder');
+			$(this).find('i:last-child').toggleClass('fa-caret-up fa-caret-down');
 		}
 	});
-	$(document).on('click', '.folder:not(.active)', function (e) {
-		$(this).find('i:first-child:not(.fa-times)').toggleClass('fa-folder-open fa-folder');
-		$(this).find('i:last-child').toggleClass('fa-caret-up fa-caret-down');
-	});
+	// $(document).on('click', '.folder:not(.active)', function (e) {
+		
+	// });
 
 	$(document).on('click', '.row_processo_interno', function () {
 		/*Removido a classe selecionado independente de quem seja*/
@@ -570,6 +578,10 @@ $(document).on('click','.load_especifico_to_container',function(e){
 	$(document).on('keyup change', '.pesquisa', function () {
 		Pesquisar($(this));
 	});
+
+	$(document).on('change paste keyup','.pesquisa-input',function(){
+		Pesquisar($(this));
+	});
 	$(document).on('click', '.DesbloquearSenha', function () {
 		$(this).find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
 		DesbloquearSenha($(this).data('id'), $(this).data('senha'));
@@ -610,9 +622,12 @@ $(document).on('click','.load_especifico_to_container',function(e){
 
 		if($('main').find(anchorId).length>0){
 			$('main').find(anchorId).val(id);
+			/*faço o trigger para simular um change serve para a pesquisa de cruzamento funcionar*/
+			$('main').find(anchorId).trigger('change');
 			$('main').find(anchorDescricao).val(descricao);
 		}else{
 			$('#modalinfo').find(anchorId).val(id);
+			$('#modalinfo').find(anchorId).trigger('change');
 			$('#modalinfo').find(anchorDescricao).val(descricao);
 		}
 
@@ -709,6 +724,14 @@ $(document).on('click','.load_especifico_to_container',function(e){
 
 	});
 
+	$(document).on('click', '.notificacao_ver', function (e) {
+		e.preventDefault();
+		console.log('NNNNNNNNNNNNNN NOTIFICACAO VER NNNNNNNNNNNNNNNNNNNNNNNNN');
+		console.log($(this).data('id'));
+		console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
+		RemoverVistoNotificacao($(this).data('id'));
+	});
+
 
 	$(document).on('click', 'a .remove-doc', function (e) {
 		e.preventDefault();
@@ -746,13 +769,8 @@ $(document).on('click','.load_especifico_to_container',function(e){
 
 	$(document).on('click','#notificacoes',function(e){
 		e.stopPropagation();
-		if($('.notificacoes-numero').hasClass('hide')){
-			$('.notificacoes-numero').removeClass('hide');
-			$('.notificacao-content').addClass('hide');
-		}else{
-			$('.notificacoes-numero').addClass('hide');
-			$('.notificacao-content').removeClass('hide');
-		}
+		$('.notificacao-content').toggleClass('hide');
+		$('.notificacoes-numero').toggleClass('hide');
 
 		if(!($('.user-dropdown-content').hasClass('hide'))){
 			$('.user-dropdown-content').addClass('hide');
@@ -935,6 +953,62 @@ function AddTo(link, to) {
     }
   });
 }
+function RemoverVistoNotificacao(id) {
+	$.ajax({
+		method: "GET",
+		async: true,
+		url: '/sistema/notificacoes/remover_visto/'+id,
+		beforeSend: function(request) {
+			console.log('----------------URL------------------');
+			console.log('/sistema/notificacoes/remover_visto/'+id);
+			console.log('--------------------------------------');
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+		},
+		success: function(data) {
+			
+		},
+		error: function(xhr) { // if error occured
+			removerLoader();
+		},
+		complete: function() {
+		}
+	});
+}
+
+function allAutoCompletes(){
+	autoCompleteId('#desc_tipo_causa','/sistema/processos/pesquisar-todos-tipo-causa-autocomplete/','#id_tipo_causa');
+	autoCompleteId('#desc_assunto','/sistema/processos/pesquisar-todos-assunto-autocomplete/','#id_assunto');
+	autoCompleteId('#desc_comarca','/sistema/processos/pesquisar-todos-comarca-autocomplete/','#id_comarca');
+	autoCompleteId('#desc_tipo_acao_rito','/sistema/processos/pesquisar-todos-tipo-acao-rito-autocomplete/','#id_tipo_acao_rito');
+	autoCompleteId('#desc_vara','/sistema/processos/pesquisar-todos-vara-autocomplete/','#id_vara');
+	autoCompleteId('#desc_categoria','/sistema/processos/pesquisar-todos-categoria-autocomplete/','#id_categoria');
+	autoCompleteId('#desc_fase','/sistema/processos/pesquisar-todos-fase-autocomplete/','#id_fase');
+	autoCompleteId('#desc_advogado','/sistema/processos/pesquisar-todos-advogados-autocomplete/','#id_advogado');
+	autoCompleteId('#desc_cliente','/sistema/processos/pesquisar-todos-clientes-autocomplete/','#id_cliente');
+	autoCompleteId('#desc_categoria_cliente','/sistema/processos/pesquisar-todos-clientes-por-categoria-autocomplete/','#id_categoria_cliente');
+	autoCompleteId('#desc_adverso','/sistema/processos/pesquisar-todos-adversos-autocomplete/','#id_adverso');
+	autoCompleteId('#desc_advogado_setor','/sistema/processos/pesquisar-todos-advogados-autocomplete/','#id_advogado_setor');
+	autoCompleteId('#desc_advogado_compromisso','/sistema/processos/pesquisar-todos-advogados-autocomplete/','#id_advogado_compromisso');
+	autoCompleteId('#desc_tipo_causa_apenso','/sistema/processos/pesquisar-todos-tipo-causa-apenso-autocomplete/','#id_tipo_causa_apenso');
+	autoCompleteId('#desc_posicao_apenso','/sistema/processos/pesquisar-todos-posicao-apenso-autocomplete/','#id_posicao_apenso');
+	autoCompleteId('#desc_comarca_apenso','/sistema/processos/pesquisar-todos-comarca-autocomplete/','#id_comarca_apenso');
+	autoCompleteId('#desc_vara_apenso','/sistema/processos/pesquisar-todos-vara-autocomplete/','#id_vara_apenso');
+	autoCompleteId('#desc_foro_apenso','/sistema/processos/pesquisar-todos-foro-autocomplete/','#id_foro_apenso');
+	autoCompleteId('#desc_situacao_apenso','/sistema/processos/pesquisar-todos-situacao-apenso-autocomplete/','#id_situacao_apenso');
+	autoCompleteId('#desc_advogado_apenso','/sistema/processos/pesquisar-todos-advogados-autocomplete/','#id_advogado_apenso');
+	autoCompleteId('#desc_advogado_recurso','/sistema/processos/pesquisar-todos-advogados-autocomplete/','#id_advogado_recurso');
+	autoCompleteId('#desc_relator_recurso','/sistema/processos/pesquisar-todos-relator-recurso-autocomplete/','#id_relator_recurso');
+	autoCompleteId('#desc_tipo_recurso','/sistema/processos/pesquisar-todos-tipo-recurso-autocomplete/','#id_tipo_recurso');
+	autoCompleteId('#desc_posicao_cliente_recurso','/sistema/processos/pesquisar-todos-posicao-cliente-autocomplete/','#id_posicao_cliente_recurso');
+	autoCompleteId('#desc_tribunal_recurso','/sistema/processos/pesquisar-todos-tribunal-recurso-autocomplete/','#id_tribunal_recurso');
+	autoCompleteId('#desc_turma_camara_recurso','/sistema/processos/pesquisar-todos-turma-camara-recurso-autocomplete/','#id_turma_camara_recurso');
+	
+
+}
+
+
 function FormatInputs(focus) {
 	$('.cnpj').mask('00.000.000/0000-00', {reverse: true});
 	$('.cpf').mask('000.000.000-00', {reverse: true});
@@ -950,7 +1024,7 @@ function FormatInputs(focus) {
 	});
 	// if(!($('#numero_processo_npadrao').prop('checked')) || typeof $('#numero_processo_npadrao') == undefined){
 	// 	console.log('estou caindo aqui');
-		
+
 	// }
 	$('.numero_processo').mask('AAAAAAA-00.0000.0.00.0000');
 	$('.money').mask('000000000000000,00', {reverse: true});
@@ -1021,9 +1095,9 @@ function FormatInputs(focus) {
 	ActiveMaterializeInput(focus);
 	autoCompleteLoadEspecifico('#cpf_cnpj_adverso_pesquisa','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj-autocomplete/','.container_adverso_load','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj');
 	autoCompleteLoadEspecifico('#cpf_cnpj_cliente_pesquisa','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj-autocomplete/','.container_cliente_load','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj');
-
 	autoCompleteLink('#search_header','/sistema/processos/pesquisar-processo-por-numero-autocomplete/','/sistema/processos/abrir/');
 
+	allAutoCompletes();
 }
 
 function GetEndereco(cep, pai) {
@@ -1045,6 +1119,11 @@ function GetEndereco(cep, pai) {
 				$(pai).find('.rua').val(data['logradouro']).focus();
 				$(pai).find('.uf').val(data['uf']).focus();
 				$(pai).find('.bairro').val(data['bairro']).focus();
+				console.log('bairro');
+				console.log($(pai).find('.bairro'));
+				console.log('numero');
+				console.log($(pai).find('.numero'));
+
 				$(pai).find('.numero').focus();
 			}
 		},
@@ -1156,8 +1235,10 @@ function SubmitComentario(post, link, back, method) {
 			if (typeof data != undefined && data > 0) {
 				M.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
 			}
-			$('.novos-comentarios').prepend('<p><b>Comentario:</b>'+ '&nbsp;'+$('#texto_comentario').val()+'</p>');
-			$('#texto_comentario').val('');
+			if(data=='novo_comentario'){
+				$('.novos-comentarios').prepend('<p><b>Comentario:</b>'+ '&nbsp;'+$('#texto_comentario').val()+'</p>');
+				$('#texto_comentario').val('');
+			}
 		},
     error: function(xhr) { // if error occured
     	removerLoader();
@@ -1699,6 +1780,9 @@ function LoadArquivos(id, isso) {
 			adicionarLoader();
 		},
 		success: function(data) {
+			if(data == ''){
+				data = '<ul class="collapsible" data-collapsible="expandable"><li>Não existem arquivos nesta pasta</li></ul>';
+			}
 			isso.parent().find('.collapsible-body').html(data);
 		},
 		error: function(xhr) { // if error occured
@@ -1759,6 +1843,9 @@ function Pesquisar(isso) {
 	var form = isso.closest('form');
 	var post = form.serializeArray();
 	var link = form.data('link');
+	console.log('llllllink');
+	console.log(link);
+	console.log('llllllink');
 	// console.log(link);
 	$.ajax({
 		method: "POST",
@@ -1773,6 +1860,10 @@ function Pesquisar(isso) {
 		success: function(data) {
 			console.log(data);
 			$('#tabela_interna_processo').html(data);
+			$('#tabela_interna_adverso').html(data);
+			$('#tabela_interna_cliente').html(data);
+			$('#tabela_interna_contato').html(data);
+			$('#documento').html(data);
 		},
 		error: function(xhr) { // if error occured
 			removerLoader();
@@ -1781,6 +1872,8 @@ function Pesquisar(isso) {
 		}
 	});
 }
+
+
 
 
 
@@ -1931,6 +2024,8 @@ function loadEspecificoPagina(url,lugar){
     },
     complete: function() {
     	removerLoader();
+    	/*chamo a função para os autocompletes de dentro do load funcionarem*/
+    	allAutoCompletes();
     }
   });
 }
@@ -2060,6 +2155,56 @@ function autoCompleteLink(element,url,linkabrir){
 }
 
 
+function autoCompleteId(element,url,idSetar){
+	$(element).autocomplete({
+		source: function( request, response ){
+			$.ajax({
+				method:'GET',
+				async:true,
+				dataType:'json',
+				url:url+request.term,
+				beforeSend: function() {
+					console.log('ESTOU ENVIANDO ALGO');
+				},
+				success: function(data) {
+					console.log('DDDDDDDDDDDD DATA AUTOCOMPLETE DDDDDDDDDDDDDDDDDDD');
+					console.log(data);
+					console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+					response($.map(data, function (item) {
+						return {
+							label: item.name,
+							value: item.name,
+							id: item.id
+						};
+					}));
+				},
+				error: function(xhr) {
+					console.log(xhr);
+				},
+				complete: function() {
+				}
+			});
+		},
+		select:function(event,ui){
+			$(idSetar).val(ui.item.id);
+			/*faço o trigger para simular um change serve para a pesquisa de cruzamento funcionar*/
+			$(idSetar).trigger('change');	
+		}
+
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function demoFromHTML(elemento) {
@@ -2108,7 +2253,15 @@ function demoFromHTML(elemento) {
 function autoTablePdf(element,nomeProvisorio){
 	var doc = new jsPDF();
   // You can use html:
-  doc.autoTable({html: element});
+  // doc.autoTable({html: element});
+
+  doc.autoTable({
+  	html:element,
+  	headStyles:{
+  		fillColor:[79, 33, 40],
+  		textColor:[255,255,255]
+  	}
+  })
 
 
   /*só para gerar um nome único*/

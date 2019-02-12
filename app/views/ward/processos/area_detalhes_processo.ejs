@@ -1,20 +1,14 @@
 		<div class="col s12">
-			<div class="input-field input-group-control col s6 m3">
+			<div class="input-field input-group-control col s12 m4">
 				<label for="numero_processo">N° Processo</label>
-				<input style="width: 80%;" value="<%= data.detalhes_processo[0].numero %>" id="numero_processo" name="numero" type="text" class="numero_processo">
+				<input value="<%= data.detalhes_processo[0].numero %>" id="numero_processo" name="numero" type="text" class="numero_processo">
 			<!--  				<button class="right" title="Informar a página jurídica sobre este processo"><i class="fa fa-arrow-circle-down"></i></button>
 				<button class="right" title="Consultar este processo na internet"><i class="fa fa-arrow-circle-right"></i></button> -->
 				<input class="hide" type="checkbox" id="nexiste" value="0"/>
-			</div>
-
-			<div class="input-field input-group-control col s6 m2">
-				<p>
-					<label>
-						<input type="checkbox" id="numero_processo_npadrao">
-						<span for="numero_processo_npadrao">N° Fora do Padrão?</span>
-					</label>
-				</p>
-				
+				<label>
+					<input type="checkbox" id="numero_processo_npadrao">
+					<span for="numero_processo_npadrao">N° Fora do Padrão?</span>
+				</label>
 			</div>
 
 <!-- 			<div class="input-field input-group-control col s6 m1">
@@ -22,17 +16,17 @@
 				<input disabled value="79183" id="pasta_processo" type="text">
 			</div> -->
 
-			<div class="input-field input-group-control col s6 m2">
+			<div class="input-field input-group-control col s12 m2">
 				<label for="cliente_numero">Cliente</label>					
 				<input disabled value="<%=data.detalhes_processo[0].id_cliente %>" id="cliente_numero" type="text">
 			</div>
 
-			<div class="input-field input-group-control col s6 m1">
+			<div class="input-field input-group-control col s12 m2">
 				<label for="adverso_numero">Adverso</label>					
 				<input disabled value="<%=data.detalhes_processo[0].id_adverso %>" id="adverso_numero" type="text">
 			</div>
 
-			<div class="input-field input-group-control col s6 m4">
+			<div class="input-field input-group-control col s12 m4">
 				<label for="distribuicao">Distribuição</label>					
 				<input class="datepicker" type="text" name="distribuicao" value="<%= data.processos[0].distribuicao %>">
 			</div>
@@ -43,12 +37,12 @@
 		<div class="col s12">
 
 
-			<div class="input-field input-group-control col s6 m4">
+			<div class="input-field input-group-control col s12 m4">
 				<label for="citacao">Citação</label>					
 				<input class="datepicker" type="text" name="citacao" value="<%= data.processos[0].citacao %>">
 			</div>
 
-			<div class="input-field input-group-control col s6 m4">
+			<div class="input-field input-group-control col s12 m4">
 				<label for="cadastro">Cadastro</label>					
 				<input disabled value="<%= data.processos[0].data_cadastro %>" id="cadastro" type="text">
 			</div>

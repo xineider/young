@@ -1,5 +1,10 @@
+<% if(data.adicionar_link!=undefined){%>
 <a class="btn bordo ajax-load" data-link="<%= data.adicionar_link %>" data-href="#modalinfo2">Adicionar Novo Registro</a>
-<a class="btn bordo">Gerar Relatório</a>
+<%}%>
+<a class="btn waves-effect waves-light golden darken-2 bordo-text gerar-relatorio" data-nome-provisorio="<%= data.nome_relatorio%>" data-container-relatorio="#tabela_interna">
+  <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+  Gerar Relatório
+</a>
 
 <form method="POST" action="" enctype="multipart/form-data">
 <table class="centered highlight tabela_loc_processos tabela_filtrada" id="tabela_interna">

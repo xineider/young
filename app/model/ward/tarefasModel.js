@@ -31,6 +31,11 @@ class TarefasModel {
 		});
 	}
 	CadastrarTarefaComentario(data, id_usuario) {
+		console.log('data');
+		console.log(data);
+		console.log('id_usuario');
+		console.log(id_usuario);
+
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT id_usuario FROM tarefas WHERE id = ?', [data.id_tarefa]).then(data_tarefa => {
 				data.tipo = data_tarefa[0].id_usuario == id_usuario ? 1 : 2;
@@ -40,6 +45,17 @@ class TarefasModel {
 			});
 		});
 	}
+
+
+	CadastrarNotificacao(POST){
+		return new Promise(function(resolve, reject) {
+			helper.Insert('notificacoes', POST).then(data => {				
+				resolve(data);
+			});
+		});
+	}
+
+
 	AtualizarTopico(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Update('tarefas_topicos', data).then(data => {
@@ -74,33 +90,55 @@ class TarefasModel {
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT *,\
 				DATE_FORMAT(data, '%d/%m/%Y') as data		\
-			 FROM requisicoes WHERE deletado = ?", [0]).then(data => {
-				console.log(data);
-				resolve(data);
+				FROM requisicoes WHERE deletado = ?", [0]).then(data => {
+					console.log(data);
+					resolve(data);
+				});
 			});
-		});
 
 	}
-	SelecioneTarefas(id) {
+	SelecioneTodasTarefasDoUsuario(id,nivel) {
 		return new Promise(function(resolve, reject) {
-			if (id == 1) {
-				helper.Query('SELECT a.id_usuario, (SELECT d.nome FROM usuarios as d WHERE d.id = a.id_usuario LIMIT 1) as nome_usuario\
+			if (nivel == 2) {
+				helper.Query('SELECT a.id_usuario, \
+					(SELECT d.nome FROM usuarios as d WHERE d.id = a.id_usuario LIMIT 1) as nome_usuario\
 					FROM tarefas as a \
-					WHERE a.deletado = ? GROUP BY a.id_usuario',
-					[1, 0]).then(data => {
+					WHERE a.deletado = ? AND a.id_responsavel = ? GROUP BY a.id_usuario',[0,id]).then(data => {
 						resolve(data);
 					});
-				} else {
-					helper.Query('SELECT a.id, a.nome, DATE_FORMAT(a.data_final,"%d/%m/%Y") as data_prevista, TIMEDIFF(a.tempo_previsto, a.tempo_gasto) as tempo_previsto, a.descricao, \
-						(SELECT ((SELECT SUM(b.status) FROM tarefas_topicos as b WHERE b.id_tarefa = a.id AND status = 1 LIMIT 1)/(SELECT COUNT(c.id) FROM tarefas_topicos as c WHERE c.id_tarefa = a.id LIMIT 1)) as porcentagem FROM `tarefas_topicos` WHERE id_tarefa = a.id LIMIT 1) as porcentagem\
+				}else if(nivel == 1){
+					helper.Query('SELECT a.id_usuario, \
+						(SELECT d.nome FROM usuarios as d WHERE d.id = a.id_usuario LIMIT 1) as nome_usuario\
 						FROM tarefas as a \
-						WHERE a.id_usuario = ? AND a.deletado = ?',
-						[id, 0]).then(data => {
+						WHERE a.deletado = ? GROUP BY a.id_usuario',[0]).then(data => {
 							resolve(data);
 						});
-					}
-				});
+					} else {
+						helper.Query('SELECT a.id, a.nome, DATE_FORMAT(a.data_final,"%d/%m/%Y") as data_prevista, TIMEDIFF(a.tempo_previsto, a.tempo_gasto) as tempo_previsto, a.descricao, \
+							(SELECT ((SELECT SUM(b.status) FROM tarefas_topicos as b WHERE b.id_tarefa = a.id AND status = 1 LIMIT 1)/(SELECT COUNT(c.id) FROM tarefas_topicos as c WHERE c.id_tarefa = a.id LIMIT 1)) as porcentagem FROM `tarefas_topicos` WHERE id_tarefa = a.id LIMIT 1) as porcentagem\
+							FROM tarefas as a \
+							WHERE a.id_usuario = ? AND a.deletado = ?',
+							[id, 0]).then(data => {
+								resolve(data);
+							});
+						}
+					});
 	}
+
+	SelecionarTarefa(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id, a.nome, DATE_FORMAT(a.data_final,"%d/%m/%Y") as data_prevista, \
+				TIMEDIFF(a.tempo_previsto, a.tempo_gasto) as tempo_previsto, a.descricao, \
+				(SELECT ((SELECT SUM(b.status) FROM tarefas_topicos as b WHERE b.id_tarefa = a.id AND status = 1 LIMIT 1)/(SELECT COUNT(c.id) FROM tarefas_topicos as c WHERE c.id_tarefa = a.id LIMIT 1)) as porcentagem FROM `tarefas_topicos` WHERE id_tarefa = a.id LIMIT 1) as porcentagem\
+				FROM tarefas as a \
+				WHERE a.id_usuario = ? AND a.deletado = ?',
+				[id, 0]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
 	SelecioneComentarios(id) {
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT texto FROM tarefas_comentarios WHERE deletado = ? AND id_tarefa = ?', [0, id]).then(data => {
@@ -117,8 +155,10 @@ class TarefasModel {
 	}
 	SelecioneInfos(id) {
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT a.descricao, DATE_FORMAT(a.data_prevista,"%d/%m/%Y") as data_prevista, (SELECT b.nome FROM usuarios as b WHERE b.id = a.id_responsavel) as responsavel,\
-				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario, TIME_TO_SEC(a.tempo_gasto) * 1000 as tempo_gasto,\
+			helper.Query('SELECT a.descricao, a.nome, a.id_responsavel, a.status, DATE_FORMAT(a.data_prevista,"%d/%m/%Y") as data_prevista, \
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_responsavel) as responsavel,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario, \
+				TIME_TO_SEC(a.tempo_gasto) * 1000 as tempo_gasto,\
 				a.id_usuario\
 				FROM tarefas as a WHERE a.deletado = ? AND a.id = ?', [0, id]).then(data => {
 					resolve(data);

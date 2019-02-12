@@ -1,6 +1,6 @@
 <div class="card white">
   <div class="close_container_load">
-    <a class="btn btn-floating btn-medium blue darken-2 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
+    <a class="btn btn-floating btn-medium grey darken-2 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
       <i class="fa fa-angle-double-up" aria-hidden="true"></i>  
     </a>
   </div>
@@ -58,7 +58,7 @@
       <div class="input-field input-group-control-with-search col s12 m4">
         <label for="desc_advogado_setor">Advogado Responsável do Setor</label>
         <input disabled value="" id="desc_advogado_setor" type="text">
-        <a class="btn cocoa modal-mount-anchor-advogado-setor-compromisso" data-link="/processos/selecionar-todos-advogados-do-setor-compromisso" data-modal="#modalinfo" data-anchor-id="#id_advogado_setor" data-anchor-descricao="#desc_advogado_setor" data-anchor-advogado-compromisso="#desc_advogado_compromisso" data-anchor-id-advogado-compromisso="#id_advogado_compromisso">
+        <a class="btn cocoa modal-mount-anchor-advogado-setor-compromisso validate" data-link="/processos/selecionar-todos-advogados-do-setor-compromisso" data-modal="#modalinfo" data-anchor-id="#id_advogado_setor" data-anchor-descricao="#desc_advogado_setor" data-anchor-advogado-compromisso="#desc_advogado_compromisso" data-anchor-id-advogado-compromisso="#id_advogado_compromisso">
           <i class="fa fa-search"></i>
         </a>
         <input type="hidden" name="id_advogado_setor" id="id_advogado_setor">
@@ -77,10 +77,15 @@
 
       <div class="input-field input-group-control col s12 m4">
         <label>Local</label>
-        <input required="true" type="text" name="local">
+        <input type="text" name="local">
       </div>
 
-      <div class="col s12">
+      <div class="input-field input-group-control col s12 m8">
+        <label for="complemento">Observações</label>
+        <textarea type="text" name="complemento"></textarea>
+      </div>
+
+<!--       <div class="col s12">
         <table>
           <thead>
             <tr>
@@ -136,7 +141,7 @@
          </tr>
        </tbody>
      </table>
-   </div>
+   </div> -->
 
  </div>
 

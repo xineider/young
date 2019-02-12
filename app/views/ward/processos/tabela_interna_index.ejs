@@ -1,6 +1,6 @@
 <div class="card" style="max-height: 50%">
   <div class="pane" style="padding-top:10px;">
-    <table class="centered highlight responsive-table tabela_loc_processos cell-border tabela_filtrada" id="tabela_interna_processo" style="width:100%;">
+    <table class="centered highlight responsive-table tabela_loc_processos cell-border" id="tabela_interna_processo" style="width:100%;">
       <thead>
         <tr>
           <th>Número do Processo</th>
@@ -37,7 +37,7 @@
 
             <td>
               <a style="font-size: 1.4em;" href="/sistema/processos/abrir/<%= data.processos[i].id %>" class="ajax-load">
-                <i class="fa fa-pencil green-text text-darken-2" aria-hidden="true"></i>
+                <i class="fa fa-pencil bordo-text text-darken-2" aria-hidden="true"></i>
               </a>
               <a href="" style="font-size: 1.4em;">
                 <i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.processos[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.processos[i].nome %>'? " data-to="/sistema/processos/desativar" data-back="/sistema/processos" aria-hidden="true"></i>

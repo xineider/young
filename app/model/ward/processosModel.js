@@ -106,9 +106,9 @@ class ProcessosModel {
 			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
-				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado, \
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
 				(SELECT c.numero FROM apenso as c WHERE c.id = a.id_apenso)as numero \
-				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data_inicial ASC", [0,id,0]).then(data => {
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data_inicial ASC", [1,0,id,0]).then(data => {
 					resolve(data);
 				});
 			});
@@ -119,9 +119,9 @@ class ProcessosModel {
 			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
-				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado, \
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
 				(SELECT c.numero FROM recurso as c WHERE c.id = a.id_recurso)as numero \
-				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_recurso != ? ORDER BY a.data_inicial ASC", [0,id,0]).then(data => {
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_recurso != ? ORDER BY a.data_inicial ASC", [1,0,id,0]).then(data => {
 					resolve(data);
 				});
 			});
@@ -160,8 +160,9 @@ class ProcessosModel {
 			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
-				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
-				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_setor AND b.cargo = ?)as advogado, \
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado_compromisso \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_inicial ASC", [1,1,0,id]).then(data => {
 					resolve(data);
 				});
 			});
@@ -172,8 +173,8 @@ class ProcessosModel {
 			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
-				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
-				FROM compromissos as a WHERE a.deletado = ? AND a.id_apenso = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_apenso = ? ORDER BY a.data_inicial ASC", [1,0,id]).then(data => {
 					resolve(data);
 				});
 			});
@@ -184,8 +185,8 @@ class ProcessosModel {
 			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
-				(SELECT b.nome FROM advogados as b WHERE b.id = a.id_advogado_compromisso)as advogado \
-				FROM compromissos as a WHERE a.deletado = ? AND a.id_recurso = ? ORDER BY a.data_inicial ASC", [0,id]).then(data => {
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado \
+				FROM compromissos as a WHERE a.deletado = ? AND a.id_recurso = ? ORDER BY a.data_inicial ASC", [1,0,id]).then(data => {
 					resolve(data);
 				});
 			});
@@ -288,33 +289,56 @@ class ProcessosModel {
 
 
 	AtualizarRecurso(POST) {
-		if (POST.id_processo == "")
+		if (POST.id_processo == ""){
 			delete POST.id_processo;
-		if (POST.id_advogado == "")
+			console.log('id_processo');
+		}
+		if (POST.id_advogado == ""){
 			delete POST.id_advogado;
-		if (POST.id_apenso == "" || POST.id_apenso == undefined)
-			delete POST.apenso;
-		if (POST.relator == "")
-			delete POST.relator;
-		if (POST.id_tipo_recurso == "")
+			console.log('advogado');
+		}
+		if (POST.id_apenso == "" || POST.id_apenso == undefined || POST.id_apenso == 'undefined'){
+			delete POST.id_apenso;
+			console.log('APENSO');
+		}
+		if (POST.id_relator == ""){
+			delete POST.id_relator;
+			console.log('relator');
+		}
+		if (POST.id_tipo_recurso == ""){
 			delete POST.id_tipo_recurso;
-		if (POST.id_posicao_cliente == "")
+			console.log('id_tipo_recurso');
+		}
+		if (POST.id_posicao_cliente == ""){
 			delete POST.id_posicao_cliente;
-		if (POST.id_tribunal == "")
+			console.log('id_posicao_cliente');
+		}
+		if (POST.id_tribunal == ""){
 			delete POST.id_tribunal;
-		if (POST.id_turma_camara == "")
+			console.log('id_tribunal');
+		}
+		if (POST.id_turma_camara == ""){
 			delete POST.id_turma_camara;
-		if(POST.interposicao == "")
-			delete POST.interposicao
-		if(POST.ajuizado == "")
-			delete POST.ajuizado
-
-
-		POST = helper.PrepareDates(POST, ['interposicao']);
-		POST = helper.PrepareDates(POST, ['ajuizado']);
-		console.log('************** POST FINAL ********************');
+			console.log('id_turma_camara');
+		}
+		if(POST.interposicao == ""){
+			delete POST.interposicao;
+			console.log('INTERPOSICAO')
+		}else{
+			;
+			POST = helper.PrepareDates(POST, ['interposicao']);
+		}
+		if(POST.ajuizado == ""){
+			delete POST.ajuizado;
+			console.log('AJUIZADO');
+		}else{
+			
+			POST = helper.PrepareDates(POST, ['ajuizado']);
+		}
+	
+		console.log('************** POST FINAL ATUALIZA RECURSO ********************');
 		console.log(POST);
-		console.log('**********************************************');
+		console.log('***************************************************************');
 
 		return new Promise(function(resolve, reject) {
 			helper.Update('recurso', POST).then(data => {
@@ -324,11 +348,13 @@ class ProcessosModel {
 	}
 
 
-
-
-
-
-
+	CadastrarNotificacao(POST){
+		return new Promise(function(resolve, reject) {
+			helper.Insert('notificacoes', POST).then(data => {				
+				resolve(data);
+			});
+		});
+	}
 
 
 
@@ -356,15 +382,15 @@ class ProcessosModel {
 				DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
 				(SELECT b.nome FROM clientes as b WHERE b.id = a.id_cliente) as cliente,\
 				(SELECT c.nome FROM adversos as c WHERE c.id = a.id_adverso) as adverso,\
-				(SELECT d.descricao FROM tipo_causa as d WHERE d.id=a.id_tipo_causa) as tipo_causa,\
-				(SELECT e.nome FROM advogados as e WHERE e.id=a.id_advogado) as advogado,\
-				(SELECT f.descricao FROM assunto_processo as f WHERE f.id=a.id_assunto) as assunto,\
-				(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
-				(SELECT h.descricao FROM tipo_acao_rito_processo as h WHERE h.id=a.id_tipo_acao_rito) as tipo_acao_rito,\
-				(SELECT i.descricao FROM vara_processo as i WHERE i.id=a.id_vara) as vara,\
-				(SELECT j.descricao FROM categoria_processo as j WHERE j.id=a.id_categoria) as categoria,\
-				(SELECT k.descricao FROM fase_processo as k WHERE k.id=a.id_fase) as fase\
-				FROM processos as a WHERE a.id = ?", [id]).then(data => {
+				(SELECT d.descricao FROM descricao_generico as d WHERE d.id=a.id_tipo_causa AND tipo = ?) as tipo_causa,\
+				(SELECT e.nome FROM usuarios as e WHERE e.id=a.id_advogado AND e.cargo = ?) as advogado,\
+				(SELECT f.descricao FROM descricao_generico as f WHERE f.id=a.id_assunto AND tipo = ?) as assunto,\
+				(SELECT g.descricao FROM descricao_generico as g WHERE g.id=a.id_comarca AND tipo = ?) as comarca,\
+				(SELECT h.descricao FROM descricao_generico as h WHERE h.id=a.id_tipo_acao_rito AND tipo = ?) as tipo_acao_rito,\
+				(SELECT i.descricao FROM descricao_generico as i WHERE i.id=a.id_vara AND tipo = ?) as vara,\
+				(SELECT j.descricao FROM descricao_generico as j WHERE j.id=a.id_categoria AND tipo = ?) as categoria,\
+				(SELECT k.descricao FROM descricao_generico as k WHERE k.id=a.id_fase AND tipo = ?) as fase\
+				FROM processos as a WHERE a.id = ?", [13,1,0,19,12,18,1,3,id]).then(data => {
 					resolve(data);
 				});
 			});
@@ -392,6 +418,35 @@ class ProcessosModel {
 			});
 		});
 	}
+
+
+
+	SelecioneTodosDescricaoGenerica(tipo){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM descricao_generico WHERE deletado = ? AND tipo = ? ORDER BY descricao DESC', [0,tipo]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	VerificarSeOutroAdvogadoFoiAtribuidoAoProcesso(id_advogado,id_processo){
+		console.log('id processo ikkkkkkkkkkkk');
+		console.log(id_processo);
+		console.log('id advogado iiiiiiiiiiiii');
+		console.log(id_advogado);
+
+
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT id_advogado FROM processos WHERE id_advogado = ? AND id = ?', [id_advogado,id_processo]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
 
 
 	SelecioneTodosTipoCausasApenso(){
@@ -503,6 +558,26 @@ class ProcessosModel {
 		});
 	}
 
+	SelecioneTodosAdversos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM adversos WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneTodosClientesPorCategoria() {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT *,nome as descricao FROM grupos WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
 	SelecioneTodosClientesMenosOEnvolvido(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT *, nome as descricao FROM clientes WHERE deletado = ? AND id != ? ORDER BY descricao DESC', [0,id]).then(data => {
@@ -568,11 +643,27 @@ class ProcessosModel {
 
 	SelecioneTodosAdvogados(){
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT *, nome as descricao FROM advogados WHERE deletado = ? ORDER BY nome DESC', [0]).then(data => {
+			helper.Query('SELECT *, nome as descricao FROM usuarios WHERE deletado = ? AND cargo = ? ORDER BY nome DESC', [0,1]).then(data => {
 				resolve(data);
 			});
 		});
 	}
+
+
+	PesquisarTodosAdvogadosAutocomplete(pesquisa){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id ,	a.nome as name	FROM usuarios as a WHERE a.deletado = ? AND cargo = ? AND \
+				a.nome LIKE CONCAT (?, "%") LIMIT 5',[0,1,pesquisa]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
+
+
+
+
 
 	SelecioneTodosProcessos(){
 		return new Promise(function(resolve, reject) {
@@ -625,13 +716,14 @@ class ProcessosModel {
 	// }
 
 
+
 	ProcurarProcesso(POST) {
 		return new Promise(function(resolve, reject) {
 			var where = '';
 			var array = [];
-			console.log('000000000000000 POST 00000000000000000000');
-			console.log(POST);
-			console.log('00000000000000000000000000000000000000000');
+			// console.log('000000000000000 POST 00000000000000000000');
+			// console.log(POST);
+			// console.log('00000000000000000000000000000000000000000');
 			
 			for (var key in POST) {
 				if (typeof POST[key] != 'undefined' && POST[key] != '') {
@@ -660,19 +752,87 @@ class ProcessosModel {
 			console.log(where);
 			console.log('============================================');
 
+			/*boto 5 no deletado pq tem and nos array aí não dá problema pois tbm tenho que achar os
+			deletados(gambiarra)*/
 			helper.Query("SELECT a.*, \
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y %H:%i') as data_processo,\
+				DATE_FORMAT(a.data_cadastro, '%Y%m%d %H:%i') as data_table_filtro,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+				(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
 				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso,\
-				(SELECT e.nome FROM clientes as e WHERE e.id = a.id_cliente) as cliente \
+				(SELECT e.cpf_cnpj FROM clientes as e WHERE e.id = a.id_cliente) as cpf_cnpj \
 				FROM processos as a \
 				LEFT JOIN clientes as c ON a.id_cliente = c.id \
-				WHERE a.deletado = ? "+ where,[0,array]).then(dataProcessoPorNumero => {
-					console.log(dataProcessoPorNumero);
+				WHERE a.deletado != ? "+ where,[5,array]).then(dataProcessoPorNumero => {
+					// console.log(dataProcessoPorNumero);
 					resolve(dataProcessoPorNumero);
 					
 				});
 			});
 	}
+
+
+	ProcurarProcessoCruzamento(POST) {
+		return new Promise(function(resolve, reject) {
+			var where = '';
+			var array = [];
+			// console.log('000000000000000 POST 00000000000000000000');
+			// console.log(POST);
+			// console.log('00000000000000000000000000000000000000000');
+			
+			for (var key in POST) {
+				if (typeof POST[key] != 'undefined' && POST[key] != '') {
+					console.log('------------------- CHAVE ---------------');
+					console.log(key);
+					console.log('-----------------------------------------');
+					console.log('PPPPPPPPPPPPPPPPPP POST[key] PPPPPPPPPPPPPPPPPPPPPPPP');
+					console.log(POST[key]);
+					console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+					if(key == 'cnpj'){
+						where += 'AND c.cpf_cnpj LIKE "%"?"%"'
+						console.log('no if');
+					}else if(key == 'numero'){
+						where += 'AND a.numero LIKE "%"?"%"'
+					}else{
+						where += 'AND a.' + key + ' = ? ';
+						console.log('no else');
+					}
+					array.push(POST[key]);
+				}
+			}
+
+			console.log('----------------- ARRAY --------------------');
+			console.log(array);
+			console.log('--------------------------------------------');
+			console.log('============== WHERE =======================');
+			console.log(where);
+			console.log('============================================');
+
+
+			/*boto 5 no deletado pq tem and nos array aí não dá problema pois tbm tenho que achar os
+			deletados(gambiarra)*/
+
+			helper.Query("SELECT a.*, \
+				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y %H:%i') as data_processo,\
+				DATE_FORMAT(a.data_cadastro, '%Y%m%d %H:%i') as data_table_filtro,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
+				(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
+				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso,\
+				(SELECT e.cpf_cnpj FROM clientes as e WHERE e.id = a.id_cliente) as cpf_cnpj \
+				FROM processos as a \
+				LEFT JOIN clientes as c ON a.id_cliente = c.id \
+				WHERE a.deletado != ? "+ where,[5,array]).then(dataProcessoPorNumero => {
+					// console.log(dataProcessoPorNumero);
+					resolve(dataProcessoPorNumero);
+					
+				});
+			});
+	}
+
+
+
+
 	SelecioneProcessosMortos() {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples
@@ -745,6 +905,52 @@ class ProcessosModel {
 			});
 	}
 
+	PesquisarDescricaoGenericaAutocomplete(pesquisa,tipo) {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id ,	a.descricao as name	FROM descricao_generico as a WHERE a.deletado = ? AND tipo = ? AND \
+				a.descricao LIKE CONCAT (?, "%") LIMIT 5',[0,tipo,pesquisa]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	PesquisarClientesAutocomplete(pesquisa) {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id ,	a.nome as name	FROM clientes as a WHERE a.deletado = ? AND \
+				a.nome LIKE CONCAT (?, "%") LIMIT 5',[0,pesquisa]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	PesquisarAdversosAutocomplete(pesquisa) {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id ,	a.nome as name	FROM adversos as a WHERE a.deletado = ? AND \
+				a.nome LIKE CONCAT (?, "%") LIMIT 5',[0,pesquisa]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	PesquisarClientesCategoriaAutocomplete(pesquisa) {
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id ,	a.nome as name	FROM grupos as a WHERE a.deletado = ? AND \
+				a.nome LIKE CONCAT (?, "%") LIMIT 5',[0,pesquisa]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecioneTodosTipoCausasApenso(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT * FROM tipo_causa_apenso WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
 
 
 
@@ -752,18 +958,18 @@ class ProcessosModel {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples
 			helper.Query("SELECT a.*,\
-				(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
-				(SELECT c.descricao FROM tipo_causa_apenso as c WHERE c.id=a.id_tipo_causa_apenso) as tipo_causa,\
-				(SELECT d.descricao FROM posicao_apenso as d WHERE d.id=a.id_posicao_apenso) as posicao,\
-				(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
-				(SELECT i.descricao FROM vara_processo as i WHERE i.id=a.id_vara) as vara,\
-				(SELECT k.descricao FROM foro as k WHERE k.id=a.id_foro) as foro,\
-				(SELECT l.descricao FROM posicao_apenso as l WHERE l.id=a.id_situacao_apenso) as situacao,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id=a.id_advogado AND b.cargo = ?) as advogado,\
+				(SELECT c.descricao FROM descricao_generico as c WHERE c.id=a.id_tipo_causa_apenso AND tipo = ?) as tipo_causa,\
+				(SELECT d.descricao FROM descricao_generico as d WHERE d.id=a.id_posicao_apenso AND tipo = ?) as posicao,\
+				(SELECT g.descricao FROM descricao_generico as g WHERE g.id=a.id_comarca AND tipo = ?) as comarca,\
+				(SELECT i.descricao FROM descricao_generico as i WHERE i.id=a.id_vara AND tipo = ?) as vara,\
+				(SELECT k.descricao FROM descricao_generico as k WHERE k.id=a.id_foro AND tipo = ?) as foro,\
+				(SELECT l.descricao FROM descricao_generico as l WHERE l.id=a.id_situacao_apenso AND tipo = ?) as situacao,\
 				DATE_FORMAT(a.distribuicao, '%d/%m/%Y') as distribuicao,\
 				DATE_FORMAT(a.citacao, '%d/%m/%Y') as citacao,\
 				DATE_FORMAT(a.sentenca, '%d/%m/%Y') as sentenca, \
 				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
-				FROM apenso as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+				FROM apenso as a WHERE a.id = ? AND a.deletado = ?", [1,14,7,19,18,4,7,id,0]).then(data => {
 					resolve(data);
 				});
 			});
@@ -774,7 +980,7 @@ class ProcessosModel {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples
 			helper.Query("SELECT a.*,\
-				(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
+				(SELECT b.nome FROM usuarios as b WHERE b.id=a.id_advogado AND b.cargo = ?) as advogado,\
 				(SELECT c.descricao FROM relator as c WHERE c.id=a.id_relator) as relator,\
 				(SELECT d.descricao FROM tipo_causa_recurso as d WHERE d.id=a.id_tipo_recurso) as tipo_recurso,\
 				(SELECT g.descricao FROM posicao_recurso as g WHERE g.id=a.id_posicao_cliente) as posicao_cliente,\
@@ -782,12 +988,19 @@ class ProcessosModel {
 				(SELECT k.descricao FROM turma_camara as k WHERE k.id=a.id_turma_camara) as turma_camara,\
 				DATE_FORMAT(a.ajuizado, '%d/%m/%Y') as ajuizado,\
 				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
-				FROM recurso as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+				FROM recurso as a WHERE a.id = ? AND a.deletado = ?", [1,id, 0]).then(data => {
 					resolve(data);
 				});
 			});
 	}
 
+	SelecionarDescricaoGenericoPorId(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.* FROM descricao_generico as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
 
 
 
@@ -798,7 +1011,7 @@ class ProcessosModel {
 	// 		// Adicione a query com scape(?) e os respectivos valores em um array simples
 
 	// 		helper.Query("SELECT a.*, \
-	// 			(SELECT b.nome FROM advogados as b WHERE b.id=a.id_advogado) as advogado,\
+	// 			(SELECT b.nome FROM usuarios as b WHERE b.id=a.id_advogado AND b.cargo = ?) as advogado,\
 	// 			(SELECT c.descricao FROM tipo_causa_apenso as c WHERE c.id=a.id_tipo_causa_apenso) as tipo_causa,\
 	// 			(SELECT d.descricao FROM posicao_apenso as d WHERE d.id=a.id_posicao_apenso) as posicao,\
 	// 			(SELECT g.descricao FROM comarca as g WHERE g.id=a.id_comarca) as comarca,\
@@ -809,11 +1022,29 @@ class ProcessosModel {
 	// 			DATE_FORMAT(a.citacao, '%d/%m/%Y') as citacao,\	
 	// 			DATE_FORMAT(a.sentenca, '%d/%m/%Y') as sentenca, \
 	// 			DATE_FORMAT(a.data_cadastro, '%d/%m/%Y') as data_cadastro \
-	// 			FROM apenso as a WHERE a.id = ? AND a.deletado = ? LIMIT 1", [id, 0]).then(data => {
+	// 			FROM apenso as a WHERE a.id = ? AND a.deletado = ? LIMIT 1", [1,id, 0]).then(data => {
 	// 				resolve(data);
 	// 			});
 	// 		});
 	// }
+
+
+
+
+	CadastrarDescricaoGenerico(data) {
+		return new Promise(function(resolve, reject) {
+			console.log('777777777777777 CADASTRAR TIPO GENERICO MODEL 777777777777777777777777');
+			console.log(data);
+			console.log('7777777777777777777777777777777777777777777777777777777777777777777');
+			helper.Insert('descricao_generico', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
 
 	CadastrarTipoCausa(data) {
 		return new Promise(function(resolve, reject) {
@@ -856,6 +1087,36 @@ class ProcessosModel {
 			});
 		});
 	}
+
+
+	CadastrarPasta(POST) {
+		return new Promise(function(resolve, reject) {
+			console.log('---------------- CADASTRAR PASTA -------------');
+			console.log(POST);
+			console.log('----------------------------------------------');
+			
+			helper.Query('SELECT id FROM documentos WHERE deletado = ? AND pasta_processos = ?', [0, 1]).then(data_id_documento => {
+				console.log('PPPPPPPPPPPPPPPP PEGANDO O ID DOS DOCUMENTOS PARA COLOCAR COMO DOC PAI PPPPPPPPPPPPPPPPPPPPPP');
+				console.log(data_id_documento);
+				console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+				POST.id_doc_pai = data_id_documento[0].id;
+
+				console.log(POST);
+
+
+
+				helper.Insert('documentos', POST).then(id_arquivo => {
+					resolve(id_arquivo);
+				});
+			});
+		});
+	}
+
+
+
+
+
+
 
 	CadastrarOutrosEnvolvidos(POST){
 		return new Promise(function(resolve, reject) {
@@ -942,6 +1203,15 @@ class ProcessosModel {
 
 	}
 
+	AtualizarDescricaoGenerico(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Update('descricao_generico', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
 
 	AtualizarCaptacao(data) {
 		return new Promise(function(resolve, reject) {
@@ -978,7 +1248,7 @@ class ProcessosModel {
 		});
 	}
 
-		DesativarApenso(data) {
+	DesativarApenso(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('apenso', data).then(data => {
 				resolve(data);
@@ -989,6 +1259,14 @@ class ProcessosModel {
 	DesativarRecurso(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('recurso', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	DesativarDescricaoGenerico(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('descricao_generico', data).then(data => {
 				resolve(data);
 			});
 		});

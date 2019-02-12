@@ -1,7 +1,7 @@
 <div class="col s12 card white">
 
 	<div class="close_container_load">
-		<a class="btn btn-floating btn-medium blue darken-2 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
+		<a class="btn btn-floating btn-medium grey darken-1 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
 			<i class="fa fa-angle-double-up" aria-hidden="true"></i>  
 		</a>
 	</div>
@@ -44,7 +44,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_advogado_recurso">Advogado Responsável</label>
-				<input disabled value="<%= data.detalhes_processo[0].advogado %>" id="desc_advogado_recurso" type="text">
+				<input value="<%= data.detalhes_processo[0].advogado %>" id="desc_advogado_recurso" type="text">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-advogados" data-href="#modalinfo" data-anchor-id="#id_advogado_recurso" data-anchor-descricao="#desc_advogado_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -54,7 +54,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_relator_recurso">Relator</label>
-				<input disabled id="desc_relator_recurso" type="text" value="<%= data.recurso[0].relator %>">
+				<input id="desc_relator_recurso" type="text" value="<%= data.recurso[0].relator %>">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-relator-recurso" data-href="#modalinfo" data-anchor-id="#id_relator_recurso" data-anchor-descricao="#desc_relator_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -66,7 +66,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_tipo_recurso">Tipo do Recurso</label>
-				<input disabled id="desc_tipo_recurso" type="text" value="<%= data.recurso[0].tipo_recurso %>">
+				<input id="desc_tipo_recurso" type="text" value="<%= data.recurso[0].tipo_recurso %>">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-tipo-recurso" data-href="#modalinfo" data-anchor-id="#id_tipo_recurso" data-anchor-descricao="#desc_tipo_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -76,7 +76,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_posicao_cliente_recurso">Posição do Cliente</label>
-				<input disabled type="text" id="desc_posicao_cliente_recurso" value="<%= data.recurso[0].posicao_cliente %>">
+				<input type="text" id="desc_posicao_cliente_recurso" value="<%= data.recurso[0].posicao_cliente %>">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-posicao-cliente" data-href="#modalinfo" data-anchor-id="#id_posicao_cliente_recurso" data-anchor-descricao="#desc_posicao_cliente_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -85,7 +85,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_tribunal_recurso">Tribunal</label>
-				<input disabled id="desc_tribunal_recurso" type="text" value="<%= data.recurso[0].tribunal %>">
+				<input id="desc_tribunal_recurso" type="text" value="<%= data.recurso[0].tribunal %>">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-tribunal-recurso" data-href="#modalinfo" data-anchor-id="#id_tribunal_recurso" data-anchor-descricao="#desc_tribunal_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -94,7 +94,7 @@
 
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_turma_camara_recurso">Turma ou Câmara</label>
-				<input disabled id="desc_turma_camara_recurso" type="text" value="<%= data.recurso[0].turma_camara %>">
+				<input id="desc_turma_camara_recurso" type="text" value="<%= data.recurso[0].turma_camara %>">
 				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-turma-camara-recurso" data-href="#modalinfo" data-anchor-id="#id_turma_camara_recurso" data-anchor-descricao="#desc_turma_camara_recurso">
 					<i class="fa fa-search"></i>
 				</a>
@@ -206,7 +206,10 @@
 										Administrativo
 										<%break;
 										case 2:%>
-										Extra Especial
+										Financeiro
+										<%break;
+										case 3:%>
+										Outro
 										<%break;}%>
 
 									</td>
@@ -234,7 +237,7 @@
 
 
 					<div class="col s12 margin-b-1rem">
-						<button data-href="/sistema/processos/editar-recurso/" class="btn waves-effect waves-light brass ajax-submit" data-action="/sistema/processos/abrir/<%= data.detalhes_processo[0].id %>">
+						<button data-href="/sistema/processos/editar-recurso/" class="btn waves-effect waves-light golden darken-2 ajax-submit bordo-text" data-action="/sistema/processos/abrir/<%= data.detalhes_processo[0].id %>">
 							Salvar Recurso 
 						</button>
 					</div>

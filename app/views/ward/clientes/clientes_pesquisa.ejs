@@ -3,13 +3,31 @@
 		<ul class="collapsible" data-collapsible="accordion">
 			<li>
 				<div class="collapsible-header">
-					Caixa de Pesquisa
+					Pesquisa Avançada
 				</div>
 				<div class="collapsible-body row">
-					<div class="col s12 m4 l2 select-field">
-						<label>
-							Grupo
-						</label>
+
+					<div class="col s12 m4 l3 input-field input-group-control">
+						<label for="nome">Nome</label>
+						<input type="text" name="nome" class="pesquisa">
+					</div>
+
+					<div class="col s12 m4 l3 input-field input-group-control">
+						<label for="cpf_cnpj">CPF/CNPJ</label>
+						<input type="text" name="cpf_cnpj" class="pesquisa">
+					</div>
+
+					<div class="col s12 m4 l3 select-field input-group-control">
+						<label for="tipo">Tipo</label>
+						<select class="browser-default pesquisa" name="tipo">
+							<option value="" selected>Selecione</option>
+							<option value="1">Pessoa Juridica</option>
+							<option value="2">Pessoa Fisica</option>
+						</select>
+					</div>
+
+					<div class="col s12 m4 l3 select-field input-group-control">
+						<label for="id_grupo">Grupo</label>
 						<select class="browser-default pesquisa" name="id_grupo">
 							<option value="" selected>Selecione</option>
 							<%
@@ -23,191 +41,25 @@
 							%>
 						</select>
 					</div>
-					<div class="col s12 m4 l2 select-field">
-						<label>
-							Estado Civil
-						</label>
-						<select class="browser-default pesquisa" name="estado_civil">
-							<option value="" selected>Selecione</option>
-							<option value="1">Solteiro</option>
-							<option value="2">Casado</option>
-							<option value="3">Separado</option>
-							<option value="4">Divorciado</option>
-							<option value="5">Viuvo</option>
-						</select>
-					</div>
-					<div class="col s12 m4 l2 select-field">
-						<label>
-							Tipo
-						</label>
-						<select class="browser-default pesquisa" name="tipo">
-							<option value="" selected>Selecione</option>
-							<option value="1">Pessoa Juridica</option>
-							<option value="2">Pessoa Fisica</option>
-						</select>
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Nome
-						</label>
-						<input type="text" name="nome" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Perfil
-						</label>
-						<input type="text" name="perfil" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Observações
-						</label>
-						<input type="text" name="observacoes" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Rua
-						</label>
-						<input type="text" name="rua" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Bairro
-						</label>
-						<input type="text" name="bairro" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Número
-						</label>
-						<input type="text" name="numero" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Cidade
-						</label>
-						<input type="text" name="cidade" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Estado
-						</label>
-						<input type="text" name="estado" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							CEP
-						</label>
-						<input type="text" name="cep" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							CPF/CNPJ
-						</label>
-						<input type="text" name="cpf_cnpj" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							RG
-						</label>
-						<input type="text" name="rg" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							CTPS
-						</label>
-						<input type="text" name="ctps" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Série
-						</label>
-						<input type="text" name="serie" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Número do Pis
-						</label>
-						<input type="text" name="n_pis" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Número do Beneficio
-						</label>
-						<input type="text" name="n_beneficio" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Nascimento
-						</label>
-						<input type="text" name="nascimento" class="nascimento pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Profissão
-						</label>
-						<input type="text" name="profissao" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Telefone Pessoal
-						</label>
-						<input type="text" name="tel_pessoal" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Telefone do Trabalho
-						</label>
-						<input type="text" name="tel_trabalho" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Telefone de Contato
-						</label>
-						<input type="text" name="tel_contato" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Telefone Outro
-						</label>
-						<input type="text" name="tel_outro" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Email
-						</label>
+
+					<div class="col s12 m4 l3 input-field input-group-control">
+						<label for="email">Email</label>
 						<input type="text" name="email" class="pesquisa">
 					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Inscrição Estadual
-						</label>
-						<input type="text" name="inscricao_estadual" class="pesquisa">
+
+
+					<div class="col s12 m4 l3 input-field input-group-control">
+						<label for="cidade">Cidade</label>
+						<input type="text" name="cidade" class="pesquisa">
 					</div>
-					<div class="col s12 m4 l2 input-field">
-						<label>
-							Banco
-						</label>
-						<input type="text" name="banco" class="pesquisa">
+					<div class="col s12 m4 l3 input-field input-group-control">
+						<label for="estado">Estado</label>
+						<input type="text" name="estado" class="pesquisa">
 					</div>
-					<div class="col s12 m4 l2 input-field">
-						<label>
-							Agência
-						</label>
-						<input type="text" name="agencia" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l2 input-field">
-						<label>
-							Número da Conta
-						</label>
-						<input type="text" name="n_conta_corrente" class="pesquisa">
-					</div>
-					<div class="col s12 m4 l3 input-field">
-						<label>
-							Atualização
-						</label>
-						<input type="text" name="atualizacao" class="pesquisa">
-					</div>
+
+
+					
+
 				</div>
 			</li>
 		</div>

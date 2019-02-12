@@ -144,11 +144,10 @@ router.get('/pesquisar-cliente-por-cpf-cnpj-autocomplete/:cpf_cnpj', function(re
 router.get('/selecionar-todos-modal', function(req, res, next) {
 	model.SelecioneClientesDescricao().then(data_clientes =>{
 		data.dados = data_clientes;
-		data.adicionar_link = '/clientes/adicionar-simples';
 		console.log('************************** Dentro do Clientes Modal **************************');
 		console.log(data);
 		console.log('**************************************************************************');
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 	});
 });
 
@@ -177,7 +176,7 @@ router.post('/pesquisar', function(req, res, next) {
 	POST = req.body;
 	model.ProcurarClientes(POST).then(data_clientes => {
 		data.clientes = data_clientes;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/clientes_interna_index', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/tabela_interna_only', data: data, usuario: req.session.usuario});
 	});
 });
 
@@ -215,167 +214,168 @@ router.post('/cadastrar', function(req, res, next) {
 			bairro:POST.bairro_adverso, cep:POST.cep_adverso, cidade:POST.cidade_adverso, 
 			estado:POST.estado_adverso, numero: POST.numero_adverso };
 
-			/*quer dizer que foi selecionado um cliente*/
-			if(POST.id != undefined){
-				console.log('IDDDDDDDDDDDDDDDDDDDDDDD TENHO IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
-				console.log(POST.id);
-				console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+			var dadosDocumentos = {id_usuario:req.session.usuario.id,arquivo:POST.numero_processo,
+				tipo:1,onde:2};
+
+
+				/*quer dizer que foi selecionado um cliente*/
+				if(POST.id != undefined){
+					console.log('IDDDDDDDDDDDDDDDDDDDDDDD TENHO IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+					console.log(POST.id);
+					console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
 
 
 
-				dadosCliente['id'] = POST.id;
+					dadosCliente['id'] = POST.id;
 
-				model.AtualizarCliente(dadosCliente).then(idCliente=>{
+					model.AtualizarCliente(dadosCliente).then(idCliente=>{
 
-					/*é diferente do primeiro pq ele tá setado o id adverso para fazer com a pesquisa da lupa*/
-					if(POST.id_adverso != ''){
+						/*é diferente do primeiro pq ele tá setado o id adverso para fazer com a pesquisa da lupa*/
+						if(POST.id_adverso != ''){
 
-						console.log('AAAAAAAAAAAAAAAAAAAA TENHO ID AAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-						console.log(POST.id_adverso);
-						console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+							console.log('AAAAAAAAAAAAAAAAAAAA TENHO ID AAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+							console.log(POST.id_adverso);
+							console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
 
-						dadosAdverso['id'] = POST.id_adverso;
+							dadosAdverso['id'] = POST.id_adverso;
 
-						model.AtualizarAdverso(dadosAdverso).then(idAdverso=>{
-							var dadosProcesso = {id_usuario: req.session.usuario.id, 
-								id_cliente:POST.id, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
-								id_adverso: POST.id_adverso, numero: POST.numero_processo};
+							model.AtualizarAdverso(dadosAdverso).then(idAdverso=>{
+								var dadosProcesso = {id_usuario: req.session.usuario.id, 
+									id_cliente:POST.id, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
+									id_adverso: POST.id_adverso, numero: POST.numero_processo};
 
-								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
 
-									/*Processo Ainda não está liberado para eles quando liberar remover*/
+											res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+										});
+									});
 
-									res.json(idCliente);
-									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
 								});
 
-							});
+							/*quer dizer que não foi selecionado um adverso*/
+						}else{
 
-						/*quer dizer que não foi selecionado um adverso*/
-					}else{
-
-						console.log('MMMMMMMMMMMMMM NÃO TENHO id adverso MMMMMMMMMMMMMMMMMMMMMMM');
-						console.log(dadosAdverso);
-						console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');
+							console.log('MMMMMMMMMMMMMM NÃO TENHO id adverso MMMMMMMMMMMMMMMMMMMMMMM');
+							console.log(dadosAdverso);
+							console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');
 
 
-						model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
-							var dadosProcesso = {id_usuario: req.session.usuario.id, 
-								id_cliente:POST.id, id_posicao_cliente: POST.id_posicao_cadastro_cliente,
-								id_adverso: id_adverso_cad, numero: POST.numero_processo};
+							model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
+								var dadosProcesso = {id_usuario: req.session.usuario.id, 
+									id_cliente:POST.id, id_posicao_cliente: POST.id_posicao_cadastro_cliente,
+									id_adverso: id_adverso_cad, numero: POST.numero_processo};
 
-								console.log('000000000000 dados processo 000000000000000000000000000');
-								console.log(dadosProcesso);
-								console.log('0000000000000000000000000000000000000000000000000000000');
+									console.log('000000000000 dados processo 000000000000000000000000000');
+									console.log(dadosProcesso);
+									console.log('0000000000000000000000000000000000000000000000000000000');
 
-								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-
-									res.json(idCliente);
-
-									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
+											res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+										});
+									});
 								});
-							});
-					}
+						}
 
 
 
-				});
+					});
 
-				/*quer dizer que não foi selecionado um cliente*/
-			}else{
+					/*quer dizer que não foi selecionado um cliente*/
+				}else{
 
-				console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN NAO TENHO ID NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
-				console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
-
-
-				model.CadastrarCliente(dadosCliente).then(id_cliente_cad => {
-					/*quer dizer que foi selecionado um adverso*/
-					if(POST.id_adverso != ''){
-						dadosAdverso['id'] = POST.id_adverso;
+					console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN NAO TENHO ID NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
+					console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
 
 
-						model.AtualizarAdverso(dadosAdverso).then(idAdverso=>{
-							var dadosProcesso = {id_usuario: req.session.usuario.id, 
-								id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
-								id_adverso: POST.id_adverso, numero: POST.numero_processo};
+					model.CadastrarCliente(dadosCliente).then(id_cliente_cad => {
+						/*quer dizer que foi selecionado um adverso*/
+						if(POST.id_adverso != ''){
+							dadosAdverso['id'] = POST.id_adverso;
 
 
-								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+							model.AtualizarAdverso(dadosAdverso).then(idAdverso=>{
+								var dadosProcesso = {id_usuario: req.session.usuario.id, 
+									id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
+									id_adverso: POST.id_adverso, numero: POST.numero_processo};
 
-									res.json(id_cliente_cad);
 
-									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
+											res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+										});
+									});
+
 								});
 
-							});
+							/*quer dizer que não foi selecionado um adverso*/
+						}else{
 
-						/*quer dizer que não foi selecionado um adverso*/
-					}else{
+							model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
+								var dadosProcesso = {id_usuario: req.session.usuario.id, 
+									id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente,
+									id_adverso: id_adverso_cad, numero: POST.numero_processo};
 
-						model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
-							var dadosProcesso = {id_usuario: req.session.usuario.id, 
-								id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente,
-								id_adverso: id_adverso_cad, numero: POST.numero_processo};
-
-								model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-
-									res.json(id_cliente_cad);
-									// res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
+											res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+										});
+									});
 								});
-							});
-					}
+						}
 
 
-				});
-			}
+					});
+				}
 
-		});
-
-
-
-
-
-	// model.CadastrarCliente(dadosCliente).then(id_cliente_cad => {
-
-	// 	//quer dizer que foi selecionado um adverso
-
-	// 	if(POST.id_adverso != ''){
-	// 		console.log('--------------------- SELECIONEI UM ADVERSO ------------');
-	// 		console.log(POST.id_adverso);
-	// 		console.log('--------------------------------------------------------');
-
-	// 		var dadosProcesso = {id_usuario: POST.id_usuario, id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente, id_adverso: POST.id_adverso, numero: POST.numero_processo};
-	// 		console.log('DDDDDDDDDDDDDDDDD DADOS DO PROCESSO AO CADASTRAR COM ADVERSO SELECIONADO DDDDDDDDDDDDDDDD');
-	// 		console.log(dadosProcesso);
-	// 		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
-	// 		model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-	// 			res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
-	// 		});
-
-	// 	}else{
-	// 		model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
-	// 			console.log('========================= NÃO TINHA ADVERSO ==================');
-	// 			console.log(id_adverso_cad);
-	// 			console.log('==============================================================');
-	// 			var dadosProcesso = {id_posicao_cliente: POST.id_posicao_cadastro_cliente, id_usuario: POST.id_usuario, id_cliente:id_cliente_cad, id_adverso: id_adverso_cad, numero: POST.numero_processo};
-	// 			console.log('@@@@@@@@@@@@@@@@@@ DADOS DO PROCESSO NO CADASTRAR ADVERSO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-	// 			console.log(dadosProcesso);
-	// 			console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
-	// 			model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
-	// 				res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
-	// 			});
-
-	// 		});
-	// 	};
-	// });
+			});
 
 
 
 
 
-	router.post('/cadastrar/grupo', function(req, res, next) {
+// model.CadastrarCliente(dadosCliente).then(id_cliente_cad => {
+
+// 	//quer dizer que foi selecionado um adverso
+
+// 	if(POST.id_adverso != ''){
+// 		console.log('--------------------- SELECIONEI UM ADVERSO ------------');
+// 		console.log(POST.id_adverso);
+// 		console.log('--------------------------------------------------------');
+
+// 		var dadosProcesso = {id_usuario: POST.id_usuario, id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente, id_adverso: POST.id_adverso, numero: POST.numero_processo};
+// 		console.log('DDDDDDDDDDDDDDDDD DADOS DO PROCESSO AO CADASTRAR COM ADVERSO SELECIONADO DDDDDDDDDDDDDDDD');
+// 		console.log(dadosProcesso);
+// 		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+// 		model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+// 			res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+// 		});
+
+// 	}else{
+// 		model.CadastrarAdverso(dadosAdverso).then(id_adverso_cad =>{
+// 			console.log('========================= NÃO TINHA ADVERSO ==================');
+// 			console.log(id_adverso_cad);
+// 			console.log('==============================================================');
+// 			var dadosProcesso = {id_posicao_cliente: POST.id_posicao_cadastro_cliente, id_usuario: POST.id_usuario, id_cliente:id_cliente_cad, id_adverso: id_adverso_cad, numero: POST.numero_processo};
+// 			console.log('@@@@@@@@@@@@@@@@@@ DADOS DO PROCESSO NO CADASTRAR ADVERSO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+// 			console.log(dadosProcesso);
+// 			console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+// 			model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
+// 				res.send({result:'redirect',url:'/sistema/processos/abrir/'+id_processo_cad});				
+// 			});
+
+// 		});
+// 	};
+// });
+
+
+
+
+
+router.post('/cadastrar/grupo', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
 	model.CadastrarGrupo(POST).then(data => {
@@ -384,7 +384,7 @@ router.post('/cadastrar', function(req, res, next) {
 });
 
 
-	router.post('/atualizar/', function(req, res, next) {
+router.post('/atualizar/', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
 	console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSS POST DO ATUALIZAR CLIENTES SSSSSSSSSSSSS');
@@ -396,7 +396,7 @@ router.post('/cadastrar', function(req, res, next) {
 	});
 });
 
-	router.post('/desativar', function(req, res, next) {
+router.post('/desativar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
 	model.DesativarCliente(POST).then(data=> {
@@ -404,4 +404,4 @@ router.post('/cadastrar', function(req, res, next) {
 	});
 });
 
-	module.exports = router;
+module.exports = router;

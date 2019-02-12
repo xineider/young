@@ -37,6 +37,9 @@
                 </div>
 
                 <div class="pipeline-body">
+
+                  <div class="tarja-pipeline">Dados Vinculados ao Marketing não Disponíveis ao Usuário!</div>
+
                   <div class="col s3" ondrop="drop(event)" ondragover="allowDrop(event)">
                    <%
                    if (typeof data.requisicao != 'undefined' && data.requisicao.length > 0) {
@@ -196,6 +199,17 @@
           overflow-y: auto;
           outline: none;
           flex-grow: 1;
+        }
+
+        .tarja-pipeline{
+          background: rgba(27, 27, 27, 0.78);
+          width: 100%;
+          color: #fff;
+          font-weight: bold;
+          position: absolute;
+          top: 50%;
+          text-align: center;
+          padding: 5px;
         }
 
 
