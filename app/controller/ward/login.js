@@ -45,6 +45,13 @@ router.post('/', function(req, res, next) {
 
 /* GET pagina de login. */
 router.get('/logout', function(req, res, next) {
+
+	console.log('CAI AQUI NO LOGOUT DO LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+	console.log('CAI AQUI NO LOGOUT DO LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+	console.log('CAI AQUI NO LOGOUT DO LOGIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+
+
 	req.session.destroy(function(err) {
   	console.log(err);
 	});
