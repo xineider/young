@@ -150,8 +150,7 @@ class CompromissosModel {
 
 	SelecionarTempo(){
 		return new Promise(function(resolve, reject) {
-			helper.Query('SELECT DATE_FORMAT(NOW(),"%d/%m/%Y") as hoje \
-				FROM processos as a WHERE a.deletado = ? LIMIT ?', [0,1]).then(data => {					
+			helper.Query('SELECT DATE_FORMAT(NOW(),"%d/%m/%Y") as hoje').then(data => {					
 					resolve(data);
 				});
 			});
