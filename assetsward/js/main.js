@@ -132,6 +132,23 @@ $(document).on('ready', function () {
 		$(modal).find('#id').val(id);
 		$(modal).find('button').data('href', to).data('action', back);
 	});
+
+	$(document).on('click', '.modal-remover-mount-reload', function (e) {
+		e.preventDefault();
+		var modal = $(this).data('href');
+		var texto = $(this).data('texto');
+		var id = $(this).data('id');
+		var to = $(this).data('to');
+		var container = $(this).data('container')
+
+		$(modal).modal('open');
+		$(modal).find('#texto').text(texto);
+		$(modal).find('#id').val(id);
+		$(modal).find('button').data('href', to).data('container', container);
+	});
+
+
+
 	$(document).on('click', '.modal-mount', function (e) {
 		e.preventDefault();
 		var modal = $(this).data('href');
@@ -388,11 +405,12 @@ $(document).on('ready', function () {
 		var metodo = $(this).data('method');
 		var idProcesso = $(this).data('id');
 		var idCliente = $(this).data('id-cliente');
+		var container = $(this).data('container');
 		var post = {id_processo:idProcesso,id_cliente:idCliente};
 		console.log(post);
 		console.log('estou no cadastro sem form');
-		var method = (metodo != undefined && metodo != '') ? metodo : 'POST';
-		SubmitAjaxNoBack(post,link,method);
+		
+		SubmitAjaxContainerReload(post,link,container)
 	});
 
 	$(document).on("click","input[name='id_posicao_cliente']",function(e){
@@ -960,6 +978,7 @@ function GoTo(link, state) {
     	$('.tooltipped').tooltip({delay: 50});
     	$('.modal').modal('close');
     	$("html, body").animate({ scrollTop: 0 }, "slow");
+    	ActiveMaterializeInput();
     	FormatInputs();
     }
   });
@@ -1200,7 +1219,6 @@ function FormatInputs(focus) {
 	quando o usuario adicionar muitos processo, arrumar uma altura que fique bom*/
 	$('.pane').css('max-height', 500);
 
-	ActiveMaterializeInput(focus);
 	autoCompleteLoadEspecifico('#cpf_cnpj_adverso_pesquisa','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj-autocomplete/','.container_adverso_load','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj');
 	autoCompleteLoadEspecifico('#cpf_cnpj_cliente_pesquisa','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj-autocomplete/','.container_cliente_load','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj');
 	autoCompleteLink('#search_header','/sistema/processos/pesquisar-processo-por-numero-autocomplete/','/sistema/processos/abrir/');
@@ -2173,6 +2191,7 @@ function loadEspecificoPagina(url,lugar){
     	removerLoader();
     	/*chamo a função para os autocompletes de dentro do load funcionarem*/
     	allAutoCompletes();
+    	FormatInputs();
     }
   });
 }

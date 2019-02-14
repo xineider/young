@@ -359,9 +359,12 @@ textarea.materialize-textarea:focus:not([readonly]){
 #tabela_interna_contato,
 #tabela_interna_processo,
 #tabela_interna_notificacoes,
+.container_adverso_load,
+.container_cliente_load,
 .tabela-uppercase{
   text-transform: uppercase;
 }
+
 
 
 

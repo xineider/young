@@ -118,7 +118,7 @@ router.get('/abrir/:id', function(req, res, next) {
 											model.SelecioneTodosAndamentosDoRecursoDoProcesso(id).then(data_andamentos_recurso =>{
 												data.andamentos_recursos = data_andamentos_recurso;
 												console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
-												console.log(data.recursos);
+												console.log(data.detalhes_processo);
 												console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
 												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
 											});
@@ -640,6 +640,7 @@ router.post('/cadastrar_compromisso', function(req, res, next) {
 	console.log(POST);
 	console.log('----------------------------------------------------------------');
 
+
 	data_insert = {id_usuario: req.session.usuario.id,
 		id_processo:POST.id,id_advogado_setor: POST.id_advogado_setor,
 		id_advogado_compromisso:POST.id_advogado_compromisso,tipo_compromisso:POST.tipo_compromisso, tipo:POST.tipo,
@@ -652,9 +653,15 @@ router.post('/cadastrar_compromisso', function(req, res, next) {
 		console.log(data_insert);
 		console.log('============================================');
 
-		model.CadastrarCompromisso(data_insert).then(data => {
-			res.json(data);
+		model.CadastrarCompromisso(data_insert).then(data_cad_comp => {
+			model.SelecioneCompromissosDoProcesso(POST.id).then(data_compromisso_processo =>{
+				data.compromissos = data_compromisso_processo;
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+			});
 		});
+
+
+
 	});
 
 router.post('/cadastrar_compromisso_apenso', function(req, res, next) {
@@ -901,6 +908,27 @@ router.post('/cadastrar_recurso_simples', function(req, res, next) {
 
 
 
+router.get('/outros_envolvidos_adverso/:id',function(req, res, next){
+	var idProcesso = req.params.id;
+	console.log('OUTROS ENVOLVIDOS ADVERSO OOOOOOOOOOOOOOOOOOOOOOOOOOO');
+	console.log(idProcesso);
+	console.log('OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+	model.SelecionarAdversoPorProcesso(idProcesso).then(id_adverso =>{
+		data.id_processo = idProcesso;
+		data.id_adverso = id_adverso;
+		model.SelecionarEnvolvidosAdverso(idProcesso).then(data_envolvidos =>{
+			data.outros = data_envolvidos;
+			model.SelecionarTiposOutrosEnvolvidos().then(data_tipos_posicoes =>{
+				data.outros_posicoes = data_tipos_posicoes;			
+				console.log('--------------------- DETALHES ENVOLVIDOS ----------------------');
+				console.log(data.outros);
+				console.log('----------------------------------------------------------------');
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/outros_envolvidos_adverso', data: data, usuario: req.session.usuario});
+			});
+		});
+	});
+});
+
 
 
 
@@ -929,14 +957,47 @@ router.get('/selecionar-todos-adversos-outros/:id/:idProcesso', function(req, re
 	model.SelecioneTodosAdversosMenosOEnvolvido(idAdverso).then(data_dados =>{
 		data.dados = data_dados;
 		data.cadastrar_item = '/sistema/processos/cadastrar-envolvido-adverso';
+		data.adicionar_link = '/adversos/criar-simples/'+idAdverso+'/'+idProcesso;
 		data.id_adverso = idAdverso;
 		data.id_processo = idProcesso;
+		data.container = '.container_adverso_load';
 		console.log('hhhhhhhhhhhhhhhhhhhhhhh Selecionar Adversos outros hhhhhhhhhhhhhhhhh');
 		console.log(data);
 		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar', data: data, usuario: req.session.usuario});
 	});
 });
+
+
+router.post('/cadastrar-adverso-simples', function(req, res, next) {
+	POST = req.body;
+	console.log('DDDDDDDDDD CADASTRO DO ADVERSO SIMPLES DDDDDDDDDDDD');
+	console.log(POST);
+	console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+	data_insert = {nome:POST.nome,tipo:POST.tipo,cpf_cnpj:POST.cpf_cnpj,tel:POST.tel,
+		email:POST.email,contato:POST.contato,cep:POST.cep,bairro:POST.bairro,rua:POST.rua,
+		numero:POST.numero,estado:POST.estado,cidade:POST.cidade,advogado:POST.advogado};
+
+		idAdverso = POST.id_adverso_nao_envolvido;
+		idProcesso = POST.id_processo;
+
+		model.CadastrarAdverso(data_insert).then(dataCadastroAdverso=> {
+			model.SelecioneTodosAdversosMenosOEnvolvido(idAdverso).then(data_dados =>{
+				data.dados = data_dados;
+				data.cadastrar_item = '/sistema/processos/cadastrar-envolvido-adverso';
+				data.adicionar_link = '/adversos/criar-simples/'+idAdverso+'/'+idProcesso;
+				data.id_adverso = idAdverso;
+				data.id_processo = idProcesso;
+				data.container = '.container_adverso_load';
+				console.log('hhhhhhhhhhhhhhhhhhhhhhh Selecionar Adversos outros hhhhhhhhhhhhhhhhh');
+				console.log(data);
+				console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar', data: data, usuario: req.session.usuario});
+			});
+		});
+	});
+
+
 
 
 
@@ -1122,10 +1183,6 @@ router.get('/alterar_adverso_processo/:id',function(req, res, next){
 
 
 
-
-
-
-
 router.post('/pesquisar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
@@ -1291,6 +1348,11 @@ router.post('/cadastrar-envolvido',function(req, res, next){
 });
 
 
+
+
+
+
+
 router.post('/cadastrar-envolvido-adverso',function(req, res, next){
 	POST = req.body;
 	data_insert = {id_processo:POST.id_processo, id_adverso:POST.id_cliente, id_outros_tipo:0};
@@ -1301,8 +1363,22 @@ router.post('/cadastrar-envolvido-adverso',function(req, res, next){
 	console.log(data_insert);
 	console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
 
-	model.CadastrarOutrosEnvolvidosAdverso(data_insert).then(data =>{
-		res.send({result:'redirect',url:'/sistema/processos/abrir/'+POST.id_processo});
+	model.CadastrarOutrosEnvolvidosAdverso(data_insert).then(data_o =>{
+		model.SelecionarAdversoPorProcesso(POST.id_processo).then(id_adverso =>{
+			data.id_processo = POST.id_processo;
+			data.id_adverso = id_adverso;
+			model.SelecionarEnvolvidosAdverso(POST.id_processo).then(data_envolvidos =>{
+				data.outros = data_envolvidos;
+				model.SelecionarTiposOutrosEnvolvidos().then(data_tipos_posicoes =>{
+					data.outros_posicoes = data_tipos_posicoes;			
+					console.log('--------------------- DETALHES ENVOLVIDOS ----------------------');
+					console.log(data);
+					console.log('----------------------------------------------------------------');
+					res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/outros_envolvidos_adverso', data: data, usuario: req.session.usuario});
+				});
+			});
+
+		});
 	});
 });
 
@@ -1318,12 +1394,22 @@ router.post('/atualizar_envolvido/:iterador', function(req, res, next) {
 
 		console.log('GGGGGGGGGGGGGGGGGGGGGGGGG ID CLIENTE OUTROS GGGGGGGGGGGGGGG');
 		console.log(POST.id_outros[i]);
+
 		console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+
+		console.log('SEM ITTTTTTTTTTTTTTTTTTTTTTTTTTT');
+		console.log(POST.id_outros);
+		console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
 
 		
 		console.log('AAAAAAAAAAAAAAAAAAAAAAAA ENVOLVIDO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 		console.log(POST);
 		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+		console.log('TIPO PPPPPPPPPPPPPPPPPPPPP');
+		console.log(POST.id_outros_tipo[i]);
+		console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+
 		//idProcesso, idCliente, id_outros_tipo
 		data_insert = {id:POST.id_outros[i], id_processo:POST.id, id_cliente: POST.id_cliente[i] ,id_outros_tipo:POST.id_outros_tipo[i]};
 
@@ -1333,11 +1419,29 @@ router.post('/atualizar_envolvido/:iterador', function(req, res, next) {
 
 		model.AtualizarOutroEnvolvido(data_insert).then(data =>{
 			res.json(data);
-		})
-		// model.AtualizarProcesso(POST).then(data => {
-		// 	res.json(data);
-		// });
+		});
 	});
+
+
+
+router.post('/atualizar_envolvido_adverso/:iterador', function(req, res, next) {
+		// Recebendo o valor do post
+		var i = req.params.iterador;
+		POST = req.body;
+
+		if(Array.isArray(POST.id_outros)){
+			data_insert = {id:POST.id_outros[i], id_outros_tipo:POST.id_outros_tipo[i]};
+		}else{
+			data_insert = {id:POST.id_outros, id_outros_tipo:POST.id_outros_tipo};
+		}
+
+		model.AtualizarOutroEnvolvidoAdverso(data_insert).then(data =>{
+			res.json(data);
+		});
+	});
+
+
+
 
 
 router.post('/alterar_cliente_processo', function(req, res, next) {
@@ -1460,6 +1564,27 @@ router.post('/desativar-descricao-generico', function(req, res, next) {
 	});
 });
 
+
+
+router.post('/desativar-outros-envolvidos-adverso/:idProcesso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	var idProcesso = req.params.idProcesso;
+
+	model.DesativarOutrosEnvolvidosAdverso(POST).then(datadeletado=> {
+		model.SelecionarAdversoPorProcesso(idProcesso).then(id_adverso =>{
+			data.id_processo = idProcesso;
+			data.id_adverso = id_adverso;
+			model.SelecionarEnvolvidosAdverso(idProcesso).then(data_envolvidos =>{
+				data.outros = data_envolvidos;
+				model.SelecionarTiposOutrosEnvolvidos().then(data_tipos_posicoes =>{
+					data.outros_posicoes = data_tipos_posicoes;
+					res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/outros_envolvidos_adverso', data: data, usuario: req.session.usuario});
+				});
+			});
+		});
+	});
+});
 
 
 

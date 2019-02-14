@@ -18,6 +18,21 @@ router.get('/', function(req, res, next) {
 router.get('/criar', function(req, res, next) {
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/adversos_criar', data: data, usuario: req.session.usuario});
 });
+
+router.get('/criar-simples/:idAdverso/:idProcesso', function(req, res, next) {	
+	var idAdverso = req.params.idAdverso;
+	var idProcesso = req.params.idProcesso;	
+	data.idAdversoNaoEnvolvido = idAdverso;
+	data.idProcesso = idProcesso;
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/adversos_criar_simples', data: data, usuario: req.session.usuario});
+});
+
+
+
+
+
+
+
 router.get('/editar/:id', function(req, res, next) {
 	var id = req.params.id;
 	model.SelecionarAdverso(id).then(data => {
@@ -60,25 +75,6 @@ router.get('/listar_todos_processos/:id',function(req, res, next){
 		console.log(data);
 		console.log('===============================================================');
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/todos_processos', data: data, usuario: req.session.usuario});
-	});
-});
-
-
-router.get('/outros_envolvidos/:id',function(req, res, next){
-	var idProcesso = req.params.id;
-	model.SelecionarAdversoPorProcesso(idProcesso).then(id_adverso =>{
-		data.id_processo = idProcesso;
-		data.id_adverso = id_adverso;
-		model.SelecionarEnvolvidosAdverso(idProcesso).then(data_envolvidos =>{
-			data.outros = data_envolvidos;
-			model.SelecionarTiposOutrosEnvolvidos().then(data_tipos_posicoes =>{
-				data.outros_posicoes = data_tipos_posicoes;			
-				console.log('--------------------- DETALHES ENVOLVIDOS ----------------------');
-				console.log(data);
-				console.log('----------------------------------------------------------------');
-				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/outros_envolvidos', data: data, usuario: req.session.usuario});
-			});
-		});
 	});
 });
 

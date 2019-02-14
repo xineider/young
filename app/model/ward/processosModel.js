@@ -218,8 +218,46 @@ class ProcessosModel {
 			});
 	}
 
+	SelecionarAdversoPorProcesso(idProcesso){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT id_adverso \
+				FROM processos as a WHERE id = ? LIMIT 1", [idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	SelecionarTiposOutrosEnvolvidos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT * FROM outros_envolvidos_tipo_processo WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
 
 
+
+
+	SelecionarEnvolvidosAdverso(idProcesso) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*, \
+				(SELECT nome FROM adversos as b WHERE a.id_adverso = b.id) as nome,\
+				(SELECT descricao FROM outros_envolvidos_tipo_processo as c WHERE a.id_outros_tipo = c.id)as posicao\
+				FROM outros_envolvidos_adverso_processo as a WHERE deletado = ? AND id_processo = ?", [0,idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+	CadastrarAdverso(POST) {
+		return new Promise(function(resolve, reject) {
+			POST = helper.PrepareDates(POST, ['nascimento']);
+			helper.Insert('adversos', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
 
 
 	CadastrarCompromisso(POST) {
@@ -239,10 +277,10 @@ class ProcessosModel {
 
 		return new Promise(function(resolve, reject) {
 			helper.Insert('compromissos', POST).then(data => {
-				helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
+				// helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
 					console.log(data);
 					resolve(data);
-				});
+				// });
 			});
 		});
 	}
@@ -404,7 +442,7 @@ class ProcessosModel {
 				(SELECT e.descricao FROM origem_captacao_processo as e WHERE e.id = c.id_captador)as origem  \
 				FROM processos as a \
 				LEFT JOIN captacao_processo as c ON a.id = c.id_processo \
-				WHERE a.deletado = ? AND a.id = ?', [0,id]).then(data => {
+				WHERE a.id = ?', [id]).then(data => {
 					resolve(data);
 				});
 			});
@@ -1212,6 +1250,16 @@ class ProcessosModel {
 
 	}
 
+		AtualizarOutroEnvolvidoAdverso(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Update('outros_envolvidos_adverso_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
+
 	AtualizarDescricaoGenerico(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Update('descricao_generico', data).then(data => {
@@ -1280,6 +1328,19 @@ class ProcessosModel {
 			});
 		});
 	}
+
+
+	DesativarOutrosEnvolvidosAdverso(data){
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('outros_envolvidos_adverso_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
 
 
 }
