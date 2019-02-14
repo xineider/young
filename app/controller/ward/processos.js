@@ -48,7 +48,16 @@ router.get('/', function(req, res, next) {
 router.get('/detalhes/:id', function(req, res, next) {
 	model.SelecioneMaisDetalhesDoProcesso(req.params.id).then(data_mais_processo => {
 		data.detalhes_processo = data_mais_processo;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/mais_processo', data: data, usuario: req.session.usuario});
+		model.SelecionarEnvolvidosCliente(req.params.id).then(data_envolvidos_processo =>{
+			data.envolvidos_cliente = data_envolvidos_processo;
+			model.SelecionarEnvolvidosAdverso(req.params.id).then(data_envolvidos_adverso =>{
+				data.envolvidos_adverso = data_envolvidos_adverso;
+				console.log('MMMMMMMMMMMMMMMMMMMM MAIS DETALHES MMMMMMMMMMMMMMMMMMMMMMMMMMM');
+				console.log(data);
+				console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/mais_processo', data: data, usuario: req.session.usuario});
+			});
+		});
 	});
 });
 
@@ -58,6 +67,10 @@ router.get('/andamentos/:id', function(req, res, next) {
 		data.andamentos = data_andamento_processo;
 		model.SelecionarTempo().then(data_tempo=>{
 			data.tempo = data_tempo;
+			data.id_processo = req.params.id;
+			console.log('aaaaaaaaaaaaaaaaaa andamentos aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+			console.log(data);
+			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/andamentos', data: data, usuario: req.session.usuario});
 		});
 	});
@@ -66,6 +79,7 @@ router.get('/andamentos/:id', function(req, res, next) {
 router.get('/compromissos/:id', function(req, res, next) {
 	model.SelecioneCompromissosDoProcesso(req.params.id).then(data_compromisso_processo => {
 		data.compromissos = data_compromisso_processo;
+		data.id_processo = req.params.id;
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/compromissos_processo', data: data, usuario: req.session.usuario});
 	});
 });
@@ -1223,6 +1237,9 @@ router.post('/cadastrar', function(req, res, next) {
 router.post('/andamentos_cadastrar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
+	console.log('qqqqqqqqqqqqqqqqqqqq');
+	console.log(POST);
+	console.log('qqqqqqqqqqqqqqqqqqqqqq');
 
 	if(POST.andamento_descricao != ''){
 		data_insert = {id_processo: POST.id, id_usuario:req.session.usuario.id, descricao:POST.andamento_descricao, data: POST.andamento_data};

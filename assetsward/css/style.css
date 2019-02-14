@@ -234,6 +234,13 @@ input,textarea,select{
 }
 
 
+.tabbs .tab{
+  height: initial;
+  line-height: inherit;
+
+}
+
+
 /*cor dos radio checkado*/
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after{
   border: 2px solid #5b272f;

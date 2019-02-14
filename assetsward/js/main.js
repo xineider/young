@@ -27,6 +27,7 @@ $(document).on('ready', function () {
 
 		validarDataTable($('.tabela_filtrada'))
 		validarDataTable($('#tabela_andamentos'));
+		validarDataTable($('#tabela_andamentos_more_details'));
 		validarDataTable($('#tabela_todos_clientes'));
 		validarDataTable($('#pauta_compromisso'));
 		validarDataTable($('#tabela_todos_apensos'));
@@ -303,8 +304,10 @@ $(document).on('ready', function () {
 
 	$(document).on('click', '.row_processo_interno', function () {
 		/*Removido a classe selecionado independente de quem seja*/
+		console.log('estou clicando na row!');
 		$('.tabela_loc_processos').find('.row_processo_interno.selecionado').removeClass('selecionado');
 		var id = $(this).find('.id_processo_interno').val();
+		console.log(id);
 		$(this).addClass('selecionado');
 		// LoadMaisDetalhesProcesso(id);
 		// loadAndamentos(id);

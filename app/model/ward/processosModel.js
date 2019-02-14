@@ -250,6 +250,18 @@ class ProcessosModel {
 			});
 	}
 
+		SelecionarEnvolvidosCliente(idProcesso) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*, \
+				(SELECT nome FROM clientes as b WHERE a.id_cliente = b.id) as nome,\
+				(SELECT descricao FROM outros_envolvidos_tipo_processo as c WHERE a.id_outros_tipo = c.id)as posicao\
+				FROM outros_envolvidos_cliente_processo as a WHERE deletado = ? AND id_processo = ?", [0,idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
 	CadastrarAdverso(POST) {
 		return new Promise(function(resolve, reject) {
 			POST = helper.PrepareDates(POST, ['nascimento']);
