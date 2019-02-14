@@ -217,6 +217,18 @@ input,textarea,select{
 
 /*Materialize OverCss*/
 
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+
 .tabs .indicator {
   background-color:rgb(134, 57, 68);
 }
@@ -238,6 +250,10 @@ input,textarea,select{
   height: initial;
   line-height: inherit;
 
+}
+
+.pointer{
+  cursor: pointer;
 }
 
 

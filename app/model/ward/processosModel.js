@@ -157,16 +157,40 @@ class ProcessosModel {
 
 	SelecioneCompromissosDoProcesso(id){
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.tipo_compromisso, a.nome,a.data_inicial,a.data_final,\
+			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_setor AND b.cargo = ?)as advogado, \
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado_compromisso \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_inicial ASC", [1,1,0,id]).then(data => {
+					console.log('SSSSSSSSSSSSSS SelecioneCompromissosDoProcesso SSSSSS');
+					console.log(data);
+					console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
 					resolve(data);
 				});
 			});
 	}
+
+
+	SelecionarCompromissoDoProcesso(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,\
+				(SELECT nome FROM usuarios as c WHERE c.id = a.id_advogado_setor) as nome_advogado_setor,\
+				(SELECT nome FROM usuarios as d WHERE d.id = a.id_advogado_compromisso) as nome_advogado_compromisso,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial,\
+				DATE_FORMAT(a.data_inicial,'%H:%m') as hora_inicial, \
+				DATE_FORMAT(a.data_final,'%H:%m') as hora_final,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final\
+				FROM compromissos as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
+					console.log('############# Dados do SelecionarEvento(id) ###################');
+					console.log(data);
+					console.log('###############################################################');
+					resolve(data);
+				});
+			});
+	}
+
+
 
 	SelecionarCompromissosDoApenso(id){
 		return new Promise(function(resolve, reject) {
@@ -250,7 +274,7 @@ class ProcessosModel {
 			});
 	}
 
-		SelecionarEnvolvidosCliente(idProcesso) {
+	SelecionarEnvolvidosCliente(idProcesso) {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples
 			helper.Query("SELECT a.*, \
@@ -289,6 +313,31 @@ class ProcessosModel {
 
 		return new Promise(function(resolve, reject) {
 			helper.Insert('compromissos', POST).then(data => {
+				// helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
+					console.log(data);
+					resolve(data);
+				// });
+			});
+		});
+	}
+
+	AtualizarCompromisso(POST) {
+		POST = helper.PrepareDates(POST, ['data_inicial']);
+		POST = helper.PrepareDates(POST, ['data_final']);
+		POST.data_inicial = POST.data_inicial +' '+ POST.hora_inicial + ':00';
+		POST.data_final = POST.data_final +' '+ POST.hora_final + ':00';
+		delete POST.hora_inicial;
+		delete POST.hora_final;
+
+		// POST.id_processo = 1;
+		// POST.id_advogado = 1;
+
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Update('compromissos', POST).then(data => {
 				// helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
 					console.log(data);
 					resolve(data);
@@ -1262,7 +1311,7 @@ class ProcessosModel {
 
 	}
 
-		AtualizarOutroEnvolvidoAdverso(data) {
+	AtualizarOutroEnvolvidoAdverso(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Update('outros_envolvidos_adverso_processo', data).then(data => {
 				resolve(data);
@@ -1345,6 +1394,14 @@ class ProcessosModel {
 	DesativarOutrosEnvolvidosAdverso(data){
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('outros_envolvidos_adverso_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	DesativarCompromisso(data){
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('compromissos', data).then(data => {
 				resolve(data);
 			});
 		});

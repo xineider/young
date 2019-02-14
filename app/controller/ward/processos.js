@@ -132,7 +132,7 @@ router.get('/abrir/:id', function(req, res, next) {
 											model.SelecioneTodosAndamentosDoRecursoDoProcesso(id).then(data_andamentos_recurso =>{
 												data.andamentos_recursos = data_andamentos_recurso;
 												console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
-												console.log(data.detalhes_processo);
+												console.log(data.compromissos);
 												console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
 												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
 											});
@@ -247,6 +247,24 @@ router.get('/adicionar-compromisso/',function(req, res, next){
 	data.cadastrar_link = '/sistema/processos/cadastrar_compromisso';
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_compromisso', data: data, usuario: req.session.usuario});
 });
+
+
+router.get('/editar-compromisso/:id',function(req, res, next){
+	var id = req.params.id;
+	data.cadastrar_link = '/sistema/processos/editar_compromisso';
+	console.log('EEEEEEEEEEEEEEEEE EDITAR-COMPROMISSO EEEEEEEEEEEEEEEEEEEEEE');
+	console.log('eEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+
+	model.SelecionarCompromissoDoProcesso(id).then(data_compromisso => {
+		data.compromisso = data_compromisso;
+		console.log('222222222222222222222 EDITAR COMPROMISSO 22222222222222222222222222222');
+		console.log(data);
+		console.log('2222222222222222222222222222222222222222222222222222222222222222222222');
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/processos/editar_compromisso', data: data, usuario: req.session.usuario});
+	});
+});
+
+
 
 
 router.get('/adicionar-compromisso-apenso/',function(req, res, next){
@@ -668,6 +686,34 @@ router.post('/cadastrar_compromisso', function(req, res, next) {
 		console.log('============================================');
 
 		model.CadastrarCompromisso(data_insert).then(data_cad_comp => {
+			model.SelecioneCompromissosDoProcesso(POST.id).then(data_compromisso_processo =>{
+				data.compromissos = data_compromisso_processo;
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+			});
+		});
+	});
+
+router.post('/editar_compromisso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('---------------------- CADASTRAR_COMPROMISSO -------------------');
+	console.log(POST);
+	console.log('----------------------------------------------------------------');
+
+
+	data_insert = {id:POST.id_compromisso,id_usuario: req.session.usuario.id,
+		id_processo:POST.id,id_advogado_setor: POST.id_advogado_setor,
+		id_advogado_compromisso:POST.id_advogado_compromisso,tipo_compromisso:POST.tipo_compromisso, tipo:POST.tipo,
+		nome:POST.nome_compromisso,data_inicial:POST.data_inicial_compromisso,
+		hora_inicial: POST.hora_inicial_compromisso, data_final:POST.data_final_compromisso,
+		hora_final: POST.hora_final_compromisso,local: POST.local_compromisso, 
+		complemento:POST.complemento_compromisso};
+
+		console.log('================== DATA_INSERT =============');
+		console.log(data_insert);
+		console.log('============================================');
+
+		model.AtualizarCompromisso(data_insert).then(data_cad_comp => {
 			model.SelecioneCompromissosDoProcesso(POST.id).then(data_compromisso_processo =>{
 				data.compromissos = data_compromisso_processo;
 				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
@@ -1603,6 +1649,25 @@ router.post('/desativar-outros-envolvidos-adverso/:idProcesso', function(req, re
 	});
 });
 
+
+
+router.post('/desativar-compromisso/:idProcesso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	var idProcesso = req.params.idProcesso;
+
+	console.log('PPPPPPPPPPPPPP POST DESATIVAR COMPROMISSO PPPPPPPPPPPPP');
+	console.log(POST);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+
+	model.DesativarCompromisso(POST).then(datadeletado=> {
+		model.SelecioneCompromissosDoProcesso(idProcesso).then(data_compromisso_processo =>{
+			data.compromissos = data_compromisso_processo;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+		});
+	});
+});
 
 
 module.exports = router;

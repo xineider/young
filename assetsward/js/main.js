@@ -307,10 +307,13 @@ $(document).on('ready', function () {
 		console.log('estou clicando na row!');
 		$('.tabela_loc_processos').find('.row_processo_interno.selecionado').removeClass('selecionado');
 		var id = $(this).find('.id_processo_interno').val();
+		const numero_processo = $(this).find('.numero_processo').text();
 		console.log(id);
+		console.log(numero_processo);
 		$(this).addClass('selecionado');
 		// LoadMaisDetalhesProcesso(id);
 		// loadAndamentos(id);
+		$('#numero_more_details').html(numero_processo);
 		loadEspecificoPagina('/sistema/processos/detalhes/'+id,$('#tab_container_mais_processo'))
 		loadEspecificoPagina('/sistema/processos/andamentos/'+id,$('#tab_container_andamentos_processo'));
 		loadEspecificoPagina('/sistema/processos/compromissos/'+id,$('#tab_container_compromissos_processo'));
@@ -1220,7 +1223,7 @@ function FormatInputs(focus) {
 	$('.tabela_loc_processos tbody').children(':first').addClass('selecionado');
 	/*Adicionar tamanho máximo para o pane onde fica a tabela, para sempre ter um overflow
 	quando o usuario adicionar muitos processo, arrumar uma altura que fique bom*/
-	$('.pane').css('max-height', 500);
+	$('.pane').css('max-height', 400);
 
 	autoCompleteLoadEspecifico('#cpf_cnpj_adverso_pesquisa','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj-autocomplete/','.container_adverso_load','/sistema/adversos/pesquisar-adverso-por-cpf-cnpj');
 	autoCompleteLoadEspecifico('#cpf_cnpj_cliente_pesquisa','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj-autocomplete/','.container_cliente_load','/sistema/clientes/pesquisar-cliente-por-cpf-cnpj');
@@ -1442,6 +1445,28 @@ function ActiveMaterializeInput(focus) {
 		}
 	});
 }
+
+function FocusInputModal(modal) {
+	$(modal).find('textarea:not(disabled):not([type="hidden"]').each(function () {
+		if ($(this).val() == '') {
+			$(this).focus();
+		}
+	});
+
+
+	$(modal).find('input:not(disabled):not([type="hidden"])').each(function () {
+		console.log('ffffffffffffff input focus ffffffffffffffff');
+		console.log($(this));
+		console.log($(this).val());
+		if ($(this).val() == '') {
+			$(this).focus();
+			$(modal).find('input:not([disabled]):not([type="hidden"])').first().focus();
+		}
+	});
+}
+
+
+
 function MountModal(modal, link) {
 	$.ajax({
 		method: "GET",
@@ -1466,6 +1491,7 @@ function MountModal(modal, link) {
     	$('.material-tooltip').remove();
     	$('.tooltipped').tooltip({delay: 50});
     	FormatInputs();
+    	FocusInputModal(modal);
     }
   });
 }
@@ -2216,6 +2242,11 @@ function autoCompleteLoadEspecifico(element,url,container,linkload){
 					console.log(url+request.term);
 				},
 				success: function(data) {
+
+					console.log('-------------------- ELEMENTO ------------------------');
+					console.log(element);
+					console.log('------------------------------------------------------');
+
 					console.log('------------------------ RETORNO DOS DADOS -----------------');
 					console.log(data);
 					console.log('------------------------------------------------------------');
@@ -2240,6 +2271,7 @@ function autoCompleteLoadEspecifico(element,url,container,linkload){
 			});
 		},
 		select:function(event,ui){
+			$(element).removeAttr('type');
 
 			console.log('eeeeeeeeeeeeeeeeeeeee evento eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
 			console.log(event);
