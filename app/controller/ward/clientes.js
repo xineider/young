@@ -198,7 +198,7 @@ router.post('/cadastrar', function(req, res, next) {
 
 	var dadosCliente = {nome:POST.nome, tipo: POST.tipo,
 		id_grupo: POST.id_grupo,cpf_cnpj: POST.cpf_cnpj, rg:POST.rg, 
-		ctps:POST.ctps, serie:POST.serie, n_pis:POST.n_pis, perfil:POST.perfil, 
+		ctps:POST.ctps, serie:POST.serie, n_pis:POST.n_pis, 
 		n_beneficio: POST.n_beneficio, profissao: POST.profissao, 
 		nascimento: POST.nascimento ,inscricao_estadual:POST.inscricao_estadual, 
 		email:POST.email, tel_pessoal:POST.tel_pessoal,tel_trabalho:POST.tel_trabalho,

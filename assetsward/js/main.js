@@ -234,6 +234,15 @@ $(document).on('ready', function () {
 		GoTo(link, true);		
 	});
 
+	/*usada para as tarefas*/
+	$(document).on('click', '.ajax-load-open-collapsible', function(e) {
+		e.preventDefault();
+		var link = $(this).attr('href');
+		var id_collapsible = $(this).data('id');
+		console.log(link);
+		GoToOpenCollapsible(link, true,id);		
+	});
+
 	$(document).on('click', '.ajax-load-to', function(e) {
 		e.preventDefault();
 		var link = $(this).data('href');
@@ -334,6 +343,23 @@ $(document).on('ready', function () {
 			SubmitAjaxNoBack(post, link, method);
 		}
 	});
+
+
+	$(document).on('click', '.ajax-submit-container-reload', function(e) {
+		e.preventDefault();
+		var form = $(this).parents('form');
+		var post = form.serializeArray();
+		var link = $(this).data('href');
+		var container = $(this).data('container');
+		console.log('container');
+		console.log(container);
+		if (VerificarForm(form) == true) {
+			console.log('está correto');
+			SubmitAjaxContainerReload(post, link, container);
+		}
+	});
+
+
 
 	$(document).on('click', '.ajax-search', function(e) {
 		e.preventDefault();
@@ -534,6 +560,46 @@ $(document).on('click','.load_especifico_to_container',function(e){
 			SubmitComentario(post, link, back, method);
 		}
 	});
+
+
+	$(document).on('change', 'select[name="tipo_compromisso"]', function (e) {
+		console.log($(this).val());
+		var tipo = $('#select_tipo_compromisso');
+		console.log(tipo);
+		tipo.empty();
+		if($(this).val() == 0) {
+			tipo.append("\
+				<label>Tipo do Compromisso</label>\
+				<select class='browser-default validate' name='tipo'>\
+				<option value='0' selected>Audiência</option>\
+				<option value='1'>Reunião</option>\
+				<option value='2'>Perícia</option>\
+				</select>");
+
+		}else if($(this).val() == 1){
+			tipo.append("\
+				<label>Tipo do Compromisso</label>\
+				<select class='browser-default validate' name='tipo'>\
+				<option value='0' selected>Acórdão/Sentença</option>\
+				<option value='1'>Despacho/Decisões</option>\
+				<option value='2'>Petições Diversas</option>\
+				<option value='3'>Quesitos</option>\
+				<option value='4'>Manif de Docs</option>\
+				<option value='5'>Prazos Processos Físicos</option>\
+				<option value='6'>Perito</option>\
+				<option value='7'>Providência</option>\
+				</select>");
+		}else if($(this).val() == 2){
+			tipo.append("\
+				<label>Tipo do Compromisso</label>\
+				<select class='browser-default validate' name='tipo'>\
+				<option value='0' selected>Julgamento</option>\
+				</select>");
+		}
+	});
+
+
+
 
 	$(document).on('change', 'select[name="id_doc_pai"]', function (e) {
 		console.log($(this).val());
@@ -901,6 +967,48 @@ function GoTo(link, state) {
 		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
 	}
 }
+
+function GoToOpenCollapsible(link, state,id) {
+	$.ajax({
+		method: "GET",
+		async: true,
+		url: link,
+		beforeSend: function(request) {
+			console.log('setando');
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			console.log('LINK');
+			console.log(link);
+			console.log('state');
+			console.log(state);
+			console.log('id')
+			console.log(id);
+			$('main').html(data);
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    },
+    complete: function() {
+    	removerLoader();
+    	$('.material-tooltip').remove();
+    	$('.tooltipped').tooltip({delay: 50});
+    	$('.modal').modal('close');
+    	$("html, body").animate({ scrollTop: 0 }, "slow");
+    	FormatInputs();
+    }
+  });
+	if (state == true) {
+		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
+	}
+}
+
+
+
+
 function LoadTo(link, to) {
 	$.ajax({
 		method: "GET",
@@ -1215,6 +1323,45 @@ function SubmitAjaxNoBack(post, link, method) {
     }
   });
 }
+
+
+function SubmitAjaxContainerReload(post, link, container) {
+	$.ajax({
+		method: 'POST',
+		async: true,
+		data: post,
+		url: link,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			console.log('container');
+			console.log(container);
+			console.log('XxXxXxXxXxXxXxXxXxXxXxXx Data XxXxXxXxXxXxXxXxXxXxXxXx');
+			console.log(data);
+			console.log('XxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx');
+			$(container).html(data);
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    	console.log(xhr.statusText);
+    },
+    complete: function(data) {
+    	removerLoader();
+    	
+    }
+  });
+}
+
+
+
+
+
+
+
 
 function SubmitComentario(post, link, back, method) {
 	$.ajax({

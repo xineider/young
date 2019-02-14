@@ -10,7 +10,7 @@
         <div class="row">
 
           <div class="input-field input-group-control col s12">
-            <label for="nome">Nome</label>
+            <label for="nome">Descrição</label>
             <input required="true" class="validate" type="text" name="nome" value="<%= data[i].nome %>">
           </div>
 
@@ -20,7 +20,7 @@
             <label for="tipo">Tipo do Compromisso</label>
             <select required="true" class="browser-default" name="tipo" value="<%= data[0].tipo %>">
 
-              <option value='0' <%= data[0].tipo == 0 ? 'selected="true"' : '' %>>Acórdão/Setença</option>
+              <option value='0' <%= data[0].tipo == 0 ? 'selected="true"' : '' %>>Acórdão/Sentença</option>
               <option value='1' <%= data[0].tipo == 1 ? 'selected="true"' : '' %>>Despacho/Decisões</option>
               <option value='2' <%= data[0].tipo == 2 ? 'selected="true"' : '' %>>Petições Diversas</option>
               <option value='3' <%= data[0].tipo == 3 ? 'selected="true"' : '' %>>Quesitos</option>

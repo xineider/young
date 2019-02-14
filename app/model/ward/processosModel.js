@@ -157,7 +157,7 @@ class ProcessosModel {
 
 	SelecioneCompromissosDoProcesso(id){
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.tipo_compromisso, a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_setor AND b.cargo = ?)as advogado, \
@@ -239,10 +239,10 @@ class ProcessosModel {
 
 		return new Promise(function(resolve, reject) {
 			helper.Insert('compromissos', POST).then(data => {
-				// helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
+				helper.Insert('compromissos',"SET @@time_zone = '-3:00';").then(dataTime =>{
 					console.log(data);
 					resolve(data);
-				// });
+				});
 			});
 		});
 	}
@@ -335,7 +335,7 @@ class ProcessosModel {
 			
 			POST = helper.PrepareDates(POST, ['ajuizado']);
 		}
-	
+
 		console.log('************** POST FINAL ATUALIZA RECURSO ********************');
 		console.log(POST);
 		console.log('***************************************************************');
@@ -647,6 +647,15 @@ class ProcessosModel {
 				resolve(data);
 			});
 		});
+	}
+
+	SelecioneTodosAdvogadosExtra(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT *, nome as descricao FROM usuarios WHERE deletado = ? AND cargo = ? ORDER BY nome DESC', [0,1]).then(data => {
+				resolve(data);
+			});
+		});
+
 	}
 
 

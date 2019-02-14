@@ -421,7 +421,7 @@
 						%>
 						<% if (data.tarefas[i].status == 0) {%>
 
-						<a class="ajax-load" href="/sistema/tarefas/tarefas">
+						<a class="ajax-load" href="/sistema/tarefas/tarefas" data-id="<%=data.tarefas[i].id%>">
 							<div class="card ui-draggable bordo-text" id="drag1">
 								<%= data.tarefas[i].nome%>
 								<i style="position:absolute;right:5px" class="fa fa-search" aria-hidden="true"></i>
@@ -441,7 +441,7 @@
 						%>
 						<% if (data.tarefas[i].status == 1) {%>
 
-						<a class="ajax-load" href="/sistema/tarefas/tarefas">
+						<a class="ajax-load" href="/sistema/tarefas/tarefas" data-id="<%=data.tarefas[i].id%>">
 							<div class="card ui-draggable bordo-text" id="drag1">
 								<%= data.tarefas[i].nome%>
 								<i style="position:absolute;right:5px" class="fa fa-search" aria-hidden="true"></i>
@@ -461,7 +461,7 @@
 					%>
 					<% if (data.tarefas[i].status == 2) {%>
 
-					<a class="ajax-load" href="/sistema/tarefas/tarefas">
+					<a class="ajax-load" href="/sistema/tarefas/tarefas" data-id="<%=data.tarefas[i].id%>">
 						<div class="card ui-draggable bordo-text" id="drag1">
 							<%= data.tarefas[i].nome%>
 							<i style="position:absolute;right:5px" class="fa fa-search" aria-hidden="true"></i>
@@ -479,7 +479,7 @@
 					%>
 					<% if (data.tarefas[i].status == 3) {%>
 
-					<a class="ajax-load" href="/sistema/tarefas/tarefas">
+					<a class="ajax-load-open-collapsible" href="/sistema/tarefas/tarefas" data-id="<%=data.tarefas[i].id%>">
 						<div class="card ui-draggable bordo-text" id="drag1">
 							<%= data.tarefas[i].nome%>
 							<i style="position:absolute;right:5px" class="fa fa-search" aria-hidden="true"></i>

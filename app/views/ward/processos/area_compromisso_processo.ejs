@@ -14,7 +14,7 @@
 						<thead>
 							<tr>
 								<th>Tipo</th>
-								<th>Descricao</th>
+								<th>Descrição</th>
 								<th>Data e Hora de Início</th>
 								<th>Data e Hora Final</th>
 								<th>Local</th>
@@ -28,16 +28,38 @@
 								%>
 								<tr>
 									<td>
+
+										<%if(data.compromissos[i].tipo_compromisso == 0){%>
+
 										<%if(data.compromissos[i].tipo==0){%>
 										Audiência
 										<%}else if(data.compromissos[i].tipo==1){%>
 										Reunião
 										<%}else if(data.compromissos[i].tipo==2){%>
 										Perícia
-										<%}else {%>
-										Não há
+										<%}}else if(data.compromissos[i].tipo_compromisso == 1){%>
+										<%if(data.compromissos[i].tipo==0) {%>
+										Acordão/Sentença
+										<%}else if(data.compromissos[i].tipo==1){%>
+										Despacho/Decisões
+										<%}else if(data.compromissos[i].tipo==2){%>
+										Petições Diversas
+										<%}else if(data.compromissos[i].tipo==3){%>
+										Quesitos
+										<%}else if(data.compromissos[i].tipo==4){%>
+										Manifestação de Documentos
+										<%}else if(data.compromissos[i].tipo==5){%>
+										Prazos Processos Físicos
+										<%}else if(data.compromissos[i].tipo==6){%>
+										Perito
+										<%}else if(data.compromissos[i].tipo==7){%>
+										Providência
+										<%}}else if(data.compromissos[i].tipo_compromisso == 2){%>
+										<%if(data.compromissos[i].tipo==0) {%>
+										Julgamento
+										<%}}else{%>
+										Não Há
 										<%}%>
-
 
 
 									</td>

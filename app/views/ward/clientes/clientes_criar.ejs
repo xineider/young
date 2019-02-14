@@ -54,6 +54,8 @@
 
         </div>
 
+        <div class="bordo-line"></div>
+
 
         <div class="row">
           <h4>Cadastro de Adverso</h4>
@@ -77,22 +79,22 @@
 
         </div>
 
-
+        <div class="bordo-line"></div>
 
         <div class="row">
           <h4>Cadastro do Processo</h4>
-          <b><span>Tipo do Cliente *</span></b>
+          <b><span>Selecione o Tipo do Cliente *(Obrigatório)</span></b>
 
           <div class="radio_posicao_cliente_container">
 
-            <div class="col s12 m3 offset-m2">
+            <div class="col s12 m4 offset-m1">
               <label>
-                <div class="radio_posicao_cliente bordo">
+                <div class="radio_posicao_cliente white">
                   <div class="cream darken-1 radio_posicao_image">              
-                    <input name="id_posicao_cadastro_cliente" type="radio" id="autorRadio" value="1" required>
+                    <input name="id_posicao_cadastro_cliente" type="radio" id="autorRadio" value="1" required selected="true">
                     <img src="/assetsward/imgs/icon_autor_v2.png">
                   </div>
-                  <div class="center">Autor</div>
+                  <div class="center bordo-text">Autor</div>
                 </div>
               </label>
             </div>
@@ -124,7 +126,7 @@
           </div>
 
           <div class="input-field input-group-control col s12">
-           <b><label for="numero_processo" class="bordo-text">Número do Processo *</label></b>       
+           <b><label for="numero_processo" class="bordo-text">Número do Processo *(Obrigatório)</label></b>       
            <input required="true" type="text" name="numero_processo" id="numero_processo_cliente" class="numero_processo">
          </div>
 

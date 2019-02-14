@@ -47,6 +47,11 @@ body.row{
 }
 
 
+.bordo-line{
+  height: 2px;
+  margin: 30px 0;
+  background: linear-gradient(to right, rgba(224,208,172,0) 0%,rgb(103, 47, 56) 25%,rgb(87, 40, 48) 50%,rgb(90, 39, 48) 75%,rgba(224,198,137,0) 100%);
+}
 
 
 .bordo-text {
@@ -140,7 +145,7 @@ body.row{
 }
 
 .btn.cocoa:hover:not(.disabled), .btn.cocoa:focus:not(.disabled){
-/*  color:#4a3214;*/
+  /*  color:#4a3214;*/
   /*background-color: #fff;*/
   /*border: 2px inset #4a3214;*/
   color:#fff;
@@ -298,7 +303,7 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 
 .datepicker-day-button:focus,.timepicker-tick.active, .timepicker-tick:hover{
-   background-color: rgba(79, 33, 40,0.4);
+ background-color: rgba(79, 33, 40,0.4);
 }
 
 .dropdown-content li>a, .dropdown-content li>span{
@@ -333,6 +338,29 @@ textarea.materialize-textarea:focus:not([readonly]){
 
 .fc-event{
   border-color: rgb(79, 33, 40);
+}
+
+.tabela_filtrada,
+#tabela_andamentos,
+#tabela_todos_clientes,
+#pauta_compromisso,
+#tabela_todos_apensos,
+#tabela_todos_recursos,
+#tabela_todos_compromissos_dos_apensos,
+#tabela_todos_andamentos_dos_apensos,
+#tabela_todos_compromissos_dos_recursos,
+#tabela_todos_andamentos_dos_recursos,
+#tabela_compromissos_do_recurso,
+#tabela_compromissos_do_apenso,
+#tabela_andamentos_do_apenso,
+#tabela_andamentos_do_recurso,
+#tabela_interna_cliente,
+#tabela_interna_adverso,
+#tabela_interna_contato,
+#tabela_interna_processo,
+#tabela_interna_notificacoes,
+.tabela-uppercase{
+  text-transform: uppercase;
 }
 
 
@@ -427,7 +455,7 @@ header {
 }
 
 .notificacao-content{
-  position: absolute;
+  position: fixed;
   top: 55px;
   right: 35px;
   float: left;
@@ -497,7 +525,7 @@ header {
 /*FIM Notificações header*/
 
 .user-dropdown-content{
-  position: absolute;
+  position: fixed;
   top: 55px;
   right: 25px;
   float: left;

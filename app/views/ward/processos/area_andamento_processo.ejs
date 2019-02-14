@@ -17,59 +17,21 @@
 				</div>
 				<div class="input-field input-group-control col s12">
 					<label for="andamento_descricao">Descrição</label>
-					<textarea name="andamento_descricao"></textarea>
+					<textarea name="andamento_descricao" class="validate"></textarea>
 				</div>				
 			</div>
 
-				<button data-href="/sistema/processos/andamentos_cadastrar" class="btn waves-effect waves-light bordo ajax-submit-no-back right">Salvar Novo Andamento</button>
+			<button data-href="/sistema/processos/andamentos_cadastrar" class="btn waves-effect waves-light bordo ajax-submit-container-reload right" data-container="#container_tabela_andamentos_reload">Salvar Novo Andamento</button>
 
 
 
+		</div>
+
+
+
+		<div class="col s12">
+			<div class="card white padding-a-15" id="container_tabela_andamentos_reload">
+				<%- include('tabela_andamentos_only'); %>
 			</div>
-			
-			<div class="col s12">
-				<div class="card white padding-a-15">
-					<table id="tabela_andamentos" class="cell-border">
-						<thead>
-							<tr>
-								<th>Data</th>
-								<th>Descrição</th>
-								<th>Usuário</th>
-								<th>Tipo do Andamento</th>
-								<th>Data Cadastro</th>
-							</tr>
-						</thead>							
-						<tbody>		
 
-							<%
-								for (var k = data.andamentos.length - 1; k >= 0; k--){
-									%>
-									<tr>
-										<td><%= data.andamentos[k].data %></td>
-										<td><%= data.andamentos[k].descricao %></td>
-										<td><%= data.andamentos[k].usuario %></td>
-										<td>
-											
-											<% switch(data.andamentos[k].tipo){
-												case 0:%>
-												Juridico
-												<% break;
-												case 1:%>
-												Administrativo
-												<%break;
-												case 2:%>
-												Financeiro
-												<%break;
-												case 3:%>
-												Outro
-												<%break;}%>
-
-										</td>
-										<td><%= data.andamentos[k].data_cadastro %></td>
-									</tr>			
-
-									<%}%>
-								</tbody>
-							</table>
-						</div>
-					</div>
+		</div>

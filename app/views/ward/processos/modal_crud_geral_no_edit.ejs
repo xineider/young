@@ -12,6 +12,12 @@
       <th>
         Descrição Geral
       </th>
+      <% if(data.nome_campo_extra_header != undefined){%>
+      <th>
+        <%= data.nome_campo_extra_header %>
+      </th>
+      <%}%>
+
     </tr>
   </thead>
   <tbody>
@@ -24,9 +30,13 @@
           <a class="btn bordo selecionar-item-modal" data-id="<%= data.dados[i].id%>" data-anchorId="" data-descricao="<%= data.dados[i].descricao %>">Selecionar</a>
         </td>
         <td><%= data.dados[i].descricao %></td>
-     </tr>
+        <% if(data.nome_campo_extra_header != undefined){%>
+        <td><%= data.dados[i].oab%></td>
+        <%}%>
 
-     <%}}else{ %>
-     <tr>Não há Dados</tr>
+      </tr>
 
-     <% } %>
+      <%}}else{ %>
+      <tr>Não há Dados</tr>
+
+      <% } %>

@@ -642,7 +642,7 @@ router.post('/cadastrar_compromisso', function(req, res, next) {
 
 	data_insert = {id_usuario: req.session.usuario.id,
 		id_processo:POST.id,id_advogado_setor: POST.id_advogado_setor,
-		id_advogado_compromisso:POST.id_advogado_compromisso, tipo:POST.tipo,
+		id_advogado_compromisso:POST.id_advogado_compromisso,tipo_compromisso:POST.tipo_compromisso, tipo:POST.tipo,
 		nome:POST.nome_compromisso,data_inicial:POST.data_inicial_compromisso,
 		hora_inicial: POST.hora_inicial_compromisso, data_final:POST.data_final_compromisso,
 		hora_final: POST.hora_final_compromisso,local: POST.local_compromisso, 
@@ -943,7 +943,11 @@ router.get('/selecionar-todos-adversos-outros/:id/:idProcesso', function(req, re
 router.get('/selecionar-todos-advogados', function(req, res, next) {
 	model.SelecioneTodosAdvogados().then(data_dados =>{
 		data.dados = data_dados;
+		console.log('------------- data todos advogados ----------');
+		console.log(data);
+		console.log('---------------------------------------------');
 		data.nome_relatorio = 'Advogados';
+		data.nome_campo_extra_header = 'Oab';
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 	});
 });
@@ -1162,13 +1166,27 @@ router.post('/cadastrar', function(req, res, next) {
 router.post('/andamentos_cadastrar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
-	data_insert = {id_processo: POST.id, id_usuario:1, descricao:POST.andamento_descricao, data: POST.andamento_data};
-	console.log('<<<<<<<<<<<<<<<<<<<< ANDAMENTOS CADASTRAR <<<<<<<<<<<<<<<<<<<<<<<<<');
-	console.log(POST);
-	console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-	model.CadastrarAndamento(data_insert).then(data => {
-		res.send({result:'redirect',url:'/sistema/processos/abrir/'+POST.id});
-	});
+
+	if(POST.andamento_descricao != ''){
+		data_insert = {id_processo: POST.id, id_usuario:req.session.usuario.id, descricao:POST.andamento_descricao, data: POST.andamento_data};
+		console.log('<<<<<<<<<<<<<<<<<<<< ANDAMENTOS CADASTRAR <<<<<<<<<<<<<<<<<<<<<<<<<');
+		console.log(data_insert);
+		console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+		model.CadastrarAndamento(data_insert).then(data_insert_and => {
+			model.SelecioneAndamentosDoProcesso(POST.id).then(data_andamento_processo =>{
+				data.andamentos = data_andamento_processo;
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_andamentos_only', data: data, usuario: req.session.usuario});
+
+			});
+
+			// res.send({result:'redirect',url:'/sistema/processos/abrir/'+POST.id});
+		});
+	}else{
+		model.SelecioneAndamentosDoProcesso(POST.id).then(data_andamento_processo =>{
+			data.andamentos = data_andamento_processo;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_andamentos_only', data: data, usuario: req.session.usuario});
+		});
+	}
 });
 
 router.post('/adicionar-outros-envolvidos',function(req, res, next) {

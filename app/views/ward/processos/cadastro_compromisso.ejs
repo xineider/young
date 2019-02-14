@@ -6,11 +6,20 @@
 	</div>
 
 	<div class="input-field input-group-control col s12 m4">
-		<label for="nome_compromisso">Nome</label>
+		<label for="nome_compromisso">Descrição</label>
 		<input class="validate" type="text" name="nome_compromisso">
 	</div>
-	
+
 	<div class="select-field input-group-control col s12 m4">
+		<label>Categoria do Compromisso</label>
+		<select class="browser-default validate" name="tipo_compromisso">
+			<option value="0" selected>Pauta de Compromissos</option>
+			<option value="1">Controle de Distribuição</option>
+			<option value="2">Pauta de Julgamentos</option>
+		</select>
+	</div>
+	
+	<div class="select-field input-group-control col s12 m4" id="select_tipo_compromisso">
 		<label>Tipo do Compromisso</label>
 		<select class="browser-default validate" name='tipo'>
           <option value='0' selected>Audiência</option>         
