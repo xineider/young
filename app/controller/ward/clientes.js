@@ -207,6 +207,12 @@ router.post('/cadastrar', function(req, res, next) {
 		cep: POST.cep, rua: POST.rua, bairro:POST.bairro, numero: POST.numero, 
 		cidade: POST.cidade, estado:POST.estado};
 
+		console.log('DDDDDDDDD DADOS CLIENTES DDDDDDDD');
+		console.log(dadosCliente);
+		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+
+
+
 
 		var dadosAdverso = {nome:POST.nome_adverso, tipo:POST.tipo_adverso,
 			cpf_cnpj: POST.cpf_cnpj_adverso, tel:POST.tel_adverso, email:POST.email_adverso, 
@@ -214,8 +220,22 @@ router.post('/cadastrar', function(req, res, next) {
 			bairro:POST.bairro_adverso, cep:POST.cep_adverso, cidade:POST.cidade_adverso, 
 			estado:POST.estado_adverso, numero: POST.numero_adverso };
 
+			console.log('jjjjjjjjjjjjjjjjjj DADOS ADVERSOS jjjjjjjjjjjjjjjjjj');
+			console.log(dadosAdverso);
+			console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+
+			console.log('PPPPPPPPPPPPPPPPPPPP POST IDDDDDDDDDDDDDDDDDDDD');
+			console.log(POST.id);
+			console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+			console.log(req.session.usuario.id);
+
 			var dadosDocumentos = {id_usuario:req.session.usuario.id,arquivo:POST.numero_processo,
 				tipo:1,onde:2};
+
+				console.log('MMMMMMMMMMMMMMMMMMMMMMMMMM DOCUMENTOS MMMMMMMMMMMMMMMMMMM');
+				console.log(dadosDocumentos);
+				console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM');
 
 
 				/*quer dizer que foi selecionado um cliente*/
@@ -244,6 +264,10 @@ router.post('/cadastrar', function(req, res, next) {
 								var dadosProcesso = {id_usuario: req.session.usuario.id, 
 									id_cliente:POST.id, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
 									id_adverso: POST.id_adverso, numero: POST.numero_processo};
+
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DADOS PROCESSO DDDDDDDDDDDDDDDDD');
+									console.log(dadosProcesso);
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
 
 									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
 										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
@@ -301,6 +325,10 @@ router.post('/cadastrar', function(req, res, next) {
 									id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente, 
 									id_adverso: POST.id_adverso, numero: POST.numero_processo};
 
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DADOS PROCESSO DDDDDDDDDDDDDDDDD');
+									console.log(dadosProcesso);
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+
 
 									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
 										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
@@ -317,6 +345,10 @@ router.post('/cadastrar', function(req, res, next) {
 								var dadosProcesso = {id_usuario: req.session.usuario.id, 
 									id_cliente:id_cliente_cad, id_posicao_cliente: POST.id_posicao_cadastro_cliente,
 									id_adverso: id_adverso_cad, numero: POST.numero_processo};
+
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DADOS PROCESSO DDDDDDDDDDDDDDDDD');
+									console.log(dadosProcesso);
+									console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
 
 									model.CadastrarProcesso(dadosProcesso).then(id_processo_cad =>{
 										model.CadastrarPasta(dadosDocumentos).then(id_documento =>{
