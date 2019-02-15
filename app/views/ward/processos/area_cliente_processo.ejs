@@ -9,7 +9,7 @@
 <div class="col s12 m5">
 	<div class="select-field input-group-control col s12">
 		<label>Posição</label>		
-		<select class="browser-default">
+		<select class="browser-default" name="id_posicao_cliente">
 			<option value="1" <% if(data.detalhes_processo[0].id_posicao_cliente == "1"){ %>selected <%}%>>Autor</option>
 			<option value="2" <% if(data.detalhes_processo[0].id_posicao_cliente == "2"){ %> selected <%}%>>Réu</option>
 			<option value="3" <% if(data.detalhes_processo[0].id_posicao_cliente == "3"){ %> selected <%} %>> Terceiro</option>

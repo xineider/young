@@ -1546,7 +1546,7 @@ router.post('/atualizar/', function(req, res, next) {
 	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
 
-	data_insert = {id:POST.id,id_usuario:req.session.usuario.id, 
+	data_insert = {id:POST.id,id_usuario:req.session.usuario.id,id_posicao_cliente:POST.id_posicao_cliente, 
 		numero:POST.numero, distribuicao: POST.distribuicao, citacao: POST.cituacao, 
 		status: POST.status, id_tipo_causa: POST.id_tipo_causa, id_assunto:POST.id_assunto, 
 		id_comarca:POST.id_comarca, id_tipo_acao_rito: POST.id_tipo_acao_rito, 
