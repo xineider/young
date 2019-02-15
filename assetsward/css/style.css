@@ -249,8 +249,30 @@ input[type="number"] {
 .tabbs .tab{
   height: initial;
   line-height: inherit;
-
 }
+
+.tabbs .tab a.active .tab-more-details{
+  background: #7d3a44;
+  color: rgb(254, 253, 252);
+  border: 1px solid #7d3a44;
+}
+
+.tabbs .tab .tab-more-details{
+ background: #fdf5ea;
+ color: #7d3a44;
+ border: 1px solid #d4c5b0;
+ border-bottom: 0;
+}
+
+
+.tabbs.tabs .tab a, 
+.tabbs.tabs .tab a{
+  background: none!important;
+}
+
+
+
+
 
 .pointer{
   cursor: pointer;

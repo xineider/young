@@ -174,9 +174,11 @@ $(document).on('ready', function () {
 		e.preventDefault();
 		var modal = $(this).data('modal');
 		var link = $(this).data('link');
+		console.log('mmmmmmmmm modal create mmmmmmmm');
+		console.log(modal);
+		console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
 
 		MountModal(modal, link);
-		console.log('aqui');
 	});
 
 
@@ -1447,17 +1449,13 @@ function ActiveMaterializeInput(focus) {
 }
 
 function FocusInputModal(modal) {
-	$(modal).find('textarea:not(disabled):not([type="hidden"]').each(function () {
+	$(modal).find('textarea:not(disabled)').each(function () {
 		if ($(this).val() == '') {
 			$(this).focus();
 		}
 	});
-
-
-	$(modal).find('input:not(disabled):not([type="hidden"])').each(function () {
-		console.log('ffffffffffffff input focus ffffffffffffffff');
-		console.log($(this));
-		console.log($(this).val());
+	
+	$(modal).find('input:not(disabled)').each(function () {
 		if ($(this).val() == '') {
 			$(this).focus();
 			$(modal).find('input:not([disabled]):not([type="hidden"])').first().focus();

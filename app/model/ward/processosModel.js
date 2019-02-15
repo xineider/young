@@ -60,7 +60,7 @@ class ProcessosModel {
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario\
-				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data ASC', [0,id]).then(data => {					
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY data_cadastro ASC', [0,id]).then(data => {					
 					resolve(data);
 				});
 			});

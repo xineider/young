@@ -1021,6 +1021,7 @@ router.get('/selecionar-todos-adversos-outros/:id/:idProcesso', function(req, re
 		data.id_adverso = idAdverso;
 		data.id_processo = idProcesso;
 		data.container = '.container_adverso_load';
+		data.nome_relatorio = 'AdversosOutros';
 		console.log('hhhhhhhhhhhhhhhhhhhhhhh Selecionar Adversos outros hhhhhhhhhhhhhhhhh');
 		console.log(data);
 		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
@@ -1049,6 +1050,7 @@ router.post('/cadastrar-adverso-simples', function(req, res, next) {
 				data.id_adverso = idAdverso;
 				data.id_processo = idProcesso;
 				data.container = '.container_adverso_load';
+				data.nome_relatorio = 'AdversosOutros';
 				console.log('hhhhhhhhhhhhhhhhhhhhhhh Selecionar Adversos outros hhhhhhhhhhhhhhhhh');
 				console.log(data);
 				console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
@@ -1288,7 +1290,7 @@ router.post('/andamentos_cadastrar', function(req, res, next) {
 	console.log('qqqqqqqqqqqqqqqqqqqqqq');
 
 	if(POST.andamento_descricao != ''){
-		data_insert = {id_processo: POST.id, id_usuario:req.session.usuario.id, descricao:POST.andamento_descricao, data: POST.andamento_data};
+		data_insert = {id_processo: POST.id, id_usuario:req.session.usuario.id, descricao:POST.andamento_descricao, data: POST.andamento_data, tipo:POST.andamento_tipo};
 		console.log('<<<<<<<<<<<<<<<<<<<< ANDAMENTOS CADASTRAR <<<<<<<<<<<<<<<<<<<<<<<<<');
 		console.log(data_insert);
 		console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
@@ -1343,6 +1345,7 @@ router.post('/adicionar-descricao-generico/:tipo',function(req, res, next) {
 	console.log(POST);
 	console.log('::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::');
 	model.CadastrarDescricaoGenerico(POST).then(data => {
+
 		res.json(data);
 	});
 });
