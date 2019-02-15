@@ -1545,7 +1545,6 @@ function MountModalAnchor(modal, link, ancoras) {
 			console.log(link);
 			console.log(data);
 			console.log(ancoras);
-			console.log(modal);
 			$(modal).find('.modal-content').html(data);
 			$(modal).modal('open');
 
