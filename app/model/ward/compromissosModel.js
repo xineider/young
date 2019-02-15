@@ -20,8 +20,8 @@ class CompromissosModel {
 			// 
 			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial,\
-				DATE_FORMAT(a.data_inicial,'%H:%m') as hora_inicial, \
-				DATE_FORMAT(a.data_final,'%H:%m') as hora_final,\
+				DATE_FORMAT(a.data_inicial,'%H:%i') as hora_inicial, \
+				DATE_FORMAT(a.data_final,'%H:%i') as hora_final,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final\
 				FROM compromissos as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
 					console.log('############# Dados do SelecionarEvento(id) ###################');
@@ -41,8 +41,8 @@ class CompromissosModel {
 				(SELECT nome FROM usuarios as c WHERE c.id = a.id_advogado_setor) as nome_advogado_setor,\
 				(SELECT nome FROM usuarios as d WHERE d.id = a.id_advogado_compromisso) as nome_advogado_compromisso,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial,\
-				DATE_FORMAT(a.data_inicial,'%H:%m') as hora_inicial, \
-				DATE_FORMAT(a.data_final,'%H:%m') as hora_final,\
+				DATE_FORMAT(a.data_inicial,'%H:%i') as hora_inicial, \
+				DATE_FORMAT(a.data_final,'%H:%i') as hora_final,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final\
 				FROM compromissos as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
 					console.log('############# Dados do SelecionarEvento(id) ###################');
@@ -73,8 +73,8 @@ class CompromissosModel {
 	SelecionarEventosPauta(){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT nome FROM usuarios as b WHERE a.id_advogado = b.id AND b.cargo = ?) as advogado,\
 				(SELECT numero FROM processos as c WHERE a.id_processo = c.id) as numero\
 				FROM compromissos as a WHERE a.deletado = ?", [1,0]).then(data => {
@@ -109,8 +109,8 @@ class CompromissosModel {
 	SelecionarEventosPorTipoCompromisso(tipo){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT nome FROM usuarios as b WHERE a.id_advogado_setor = b.id AND b.cargo = ?) as advogado_responsavel_setor,\
 				(SELECT nome FROM usuarios as c WHERE a.id_advogado_compromisso = c.id AND c.cargo = ?) as advogado_compromisso,\
 				(SELECT numero FROM processos as d WHERE a.id_processo = d.id) as numero\

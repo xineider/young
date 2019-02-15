@@ -2,7 +2,7 @@
 
       <h5 class="center">Cadastrar Andamento</h5>
 
-        <input type="hidden" name="id" value="<%= data.id_processo %>" id="id_processo">
+      <input type="hidden" name="id" value="<%= data.id_processo %>" id="id_processo">
       
       <div class="col s12 valign-wrapper">
         <div class="input-field input-group-control col s12 m6">
@@ -23,8 +23,9 @@
           <textarea name="andamento_descricao" class="validate"></textarea>
         </div>        
       </div>
-
-      <button data-href="/sistema/processos/andamentos_cadastrar" class="btn waves-effect waves-light bordo ajax-submit-container-reload right" data-container="#container_tabela_more_andamentos_reload">Cadastrar Novo Andamento</button>
+      <div class="col s12">
+        <button data-href="/sistema/processos/andamentos_cadastrar" class="btn waves-effect waves-light bordo ajax-submit-container-reload right" data-container="#container_tabela_more_andamentos_reload">Cadastrar Novo Andamento</button>
+      </div>
 
     </form>
 

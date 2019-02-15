@@ -104,8 +104,8 @@ class ProcessosModel {
 	SelecioneTodosCompromissosDoApensoDoProcesso(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
 				(SELECT c.numero FROM apenso as c WHERE c.id = a.id_apenso)as numero \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_apenso != ? ORDER BY a.data_inicial ASC", [1,0,id,0]).then(data => {
@@ -117,8 +117,8 @@ class ProcessosModel {
 	SelecioneTodosCompromissosDoRecursoDoProcesso(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
 				(SELECT c.numero FROM recurso as c WHERE c.id = a.id_recurso)as numero \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? AND a.id_recurso != ? ORDER BY a.data_inicial ASC", [1,0,id,0]).then(data => {
@@ -158,8 +158,8 @@ class ProcessosModel {
 	SelecioneCompromissosDoProcesso(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_setor AND b.cargo = ?)as advogado, \
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado_compromisso \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_inicial ASC", [1,1,0,id]).then(data => {
@@ -178,8 +178,8 @@ class ProcessosModel {
 				(SELECT nome FROM usuarios as c WHERE c.id = a.id_advogado_setor) as nome_advogado_setor,\
 				(SELECT nome FROM usuarios as d WHERE d.id = a.id_advogado_compromisso) as nome_advogado_compromisso,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial,\
-				DATE_FORMAT(a.data_inicial,'%H:%m') as hora_inicial, \
-				DATE_FORMAT(a.data_final,'%H:%m') as hora_final,\
+				DATE_FORMAT(a.data_inicial,'%H:%i') as hora_inicial, \
+				DATE_FORMAT(a.data_final,'%H:%i') as hora_final,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final\
 				FROM compromissos as a WHERE a.id = ? AND a.deletado = ?", [id, 0]).then(data => {
 					console.log('############# Dados do SelecionarEvento(id) ###################');
@@ -195,8 +195,8 @@ class ProcessosModel {
 	SelecionarCompromissosDoApenso(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_apenso = ? ORDER BY a.data_inicial ASC", [1,0,id]).then(data => {
 					resolve(data);
@@ -207,8 +207,8 @@ class ProcessosModel {
 	SelecionarCompromissosDoRecurso(id){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.id_processo,  a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
-				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%m') as data_inicial,\
-				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%m') as data_final,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado \
 				FROM compromissos as a WHERE a.deletado = ? AND a.id_recurso = ? ORDER BY a.data_inicial ASC", [1,0,id]).then(data => {
 					resolve(data);
