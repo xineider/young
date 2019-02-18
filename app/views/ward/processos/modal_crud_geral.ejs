@@ -1,6 +1,6 @@
 <% if(data.adicionar_link!=undefined){%>
 
-<a class="btn bordo modal-mount" data-link="<%= data.adicionar_link %>" data-href="#modalinfo2">Adicionar Novo Registro</a>
+<a class="btn bordo lighten-1 modal-mount" data-link="<%= data.adicionar_link %>" data-href="#modalinfo2">Adicionar Novo Registro</a>
 <%}%>
 <a class="btn waves-effect waves-light golden darken-2 bordo-text gerar-relatorio" data-nome-provisorio="<%= data.nome_relatorio%>" data-container-relatorio="#tabela_interna">
   <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
@@ -32,8 +32,8 @@
         </td>
         <td><%= data.dados[i].descricao %></td>
         <td>     
-          <a class="modal-mount" data-link="/processos/editar-descricao-generico/<%= data.dados[i].id %>"  title="Editar Registro" data-href="#modalinfo2">
-           <i class="fa fa-pencil yellow-text text-darken-3" aria-hidden="true"></i>
+          <a class="modal-mount-anchor-id-reload pointer" data-link="/processos/editar-descricao-generico/<%= data.dados[i].id %>" title="Editar Registro" data-href="#modalinfo2">
+           <i class="fa fa-pencil bordo-text" aria-hidden="true"></i>
          </a>
          <a href="">
            <i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data.dados[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.dados[i].descricao %>'? " data-to="/sistema/processos/desativar-descricao-generico" data-back="/sistema/processos" aria-hidden="true" title="Excluir Registro"></i>

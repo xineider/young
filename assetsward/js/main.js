@@ -158,6 +158,7 @@ $(document).on('ready', function () {
 		console.log('aqui');
 	});
 
+
 	$(document).on('click', '.modal-mount-anchor-id', function (e) {
 		e.preventDefault();
 		var modal = $(this).data('href');
@@ -169,6 +170,19 @@ $(document).on('ready', function () {
 		var ancoras = {anchorId:anchor_id,anchorDesc:anchor_desc};
 		MountModalAnchor(modal, link,ancoras);
 	});
+
+		$(document).on('click', '.modal-mount-anchor-id-reload', function (e) {
+		e.preventDefault();
+		var modal = $(this).data('href');
+		var link = $(this).data('link');
+		var anchor_id = $(this).data('anchorid');
+		var anchor_desc = $(this).data('anchordesc');
+		console.log(anchor_id);
+		console.log(anchor_desc);
+		var ancoras = {anchorId:anchor_id,anchorDesc:anchor_desc};
+		MountModalAnchor(modal, link,ancoras);
+	});
+
 
 	$(document).on('click', '.modal-mount-create', function (e) {
 		e.preventDefault();
@@ -359,13 +373,31 @@ $(document).on('ready', function () {
 		var form = $(this).parents('form');
 		var post = form.serializeArray();
 		var link = $(this).data('href');
-		var back = undefined;
 		var metodo = $(this).data('method');
 		var method = (metodo != undefined && metodo != '') ? metodo : 'POST';
 		console.log('no-back');
 		if (VerificarForm(form) == true) {
 			console.log('está correto');
 			SubmitAjaxNoBack(post, link, method);
+		}
+	});
+
+
+	$(document).on('click', '.ajax-submit-reload-anchor-id', function(e) {
+		e.preventDefault();
+		var form = $(this).parents('form');
+		var post = form.serializeArray();
+		var link = $(this).data('href');
+		var modal = $(this).data('modal');
+		var anchor_id = $(this).data('anchorid');
+		var anchor_desc = $(this).data('anchordesc');
+		var ancoras = {anchorId:anchor_id,anchorDesc:anchor_desc};
+		console.log('ajax-submit-reload-anchor-id');
+		console.log(ancoras);
+
+
+		if (VerificarForm(form) == true) {
+			SubmitAjaxReloadMountAnchorId(post, link,modal,ancoras)
 		}
 	});
 
@@ -447,7 +479,7 @@ $(document).on('ready', function () {
 				<div class='input-field input-group-control-with-search col s12'>\
 				<label for='nome_cliente' class='bordo-text'>Cliente</label>\
 				<input disabled required='true' type='text' name='nome_cliente' id='nome_cliente'>\
-				<a id='selecionar_cliente' class='btn bordo modal-mount-anchor-id' data-link='/clientes/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_cliente' data-anchor-descricao='#nome_cliente'>\
+				<a id='selecionar_cliente' class='btn bordo lighten-1 modal-mount-anchor-id' data-link='/clientes/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_cliente' data-anchor-descricao='#nome_cliente'>\
 				<i class='fa fa-search'></i>\
 				</a>\
 				<input type='hidden' name='id_cliente' id='id_cliente'>\
@@ -455,7 +487,7 @@ $(document).on('ready', function () {
 				<div class='input-field input-group-control-with-search col s12'>\
 				<label for='nome_adverso' class='bordo-text'>Adverso</label>\
 				<input disabled required='true' type='text' name='nome_adverso' id='nome_adverso'>\
-				<a id='selecionar_adverso' class='btn bordo modal-mount-anchor-id' data-link='/adversos/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_adverso' data-anchor-descricao='#nome_adverso' >\
+				<a id='selecionar_adverso' class='btn bordo lighten-1 modal-mount-anchor-id' data-link='/adversos/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_adverso' data-anchor-descricao='#nome_adverso' >\
 				<i class='fa fa-search'></i>\
 				</a>\
 				<input type='hidden' name='id_adverso' id='id_adverso'>\
@@ -478,7 +510,7 @@ $(document).on('ready', function () {
 				<div class='input-field input-group-control-with-search col s12'>\
 				<label for='nome_cliente' class='bordo-text'>Autor</label>\
 				<input disabled required='true' type='text' name='nome_cliente' id='nome_cliente'>\
-				<a id='selecionar_reu' class='btn bordo modal-mount-anchor-id' data-link='/clientes/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_cliente' data-anchor-descricao='#nome_cliente'>\
+				<a id='selecionar_reu' class='btn bordo lighten-1 modal-mount-anchor-id' data-link='/clientes/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_cliente' data-anchor-descricao='#nome_cliente'>\
 				<i class='fa fa-search'></i>\
 				</a>\
 				<input type='hidden' name='id_cliente' id='id_cliente'>\
@@ -486,7 +518,7 @@ $(document).on('ready', function () {
 				<div class='input-field input-group-control-with-search col s12'>\
 				<label for='nome_adverso' class='bordo-text'>Réu</label>\
 				<input disabled required='true' type='text' name='nome_adverso' id='nome_adverso'>\
-				<a id='selecionar_adverso' class='btn bordo modal-mount-anchor-id' data-link='/adversos/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_adverso' data-anchor-descricao='#nome_adverso' >\
+				<a id='selecionar_adverso' class='btn bordo lighten-1 modal-mount-anchor-id' data-link='/adversos/selecionar-todos-modal' data-href='#modalinfo' data-anchor-id='#id_adverso' data-anchor-descricao='#nome_adverso' >\
 				<i class='fa fa-search'></i>\
 				</a>\
 				<input type='hidden' name='id_adverso' id='id_adverso'>\
@@ -1322,7 +1354,6 @@ function SubmitAjax(post, link, back, method) {
 }
 
 function SubmitAjaxNoBack(post, link, method) {
-	var id_processo;
 	$.ajax({
 		method: 'POST',
 		async: true,
@@ -1349,6 +1380,52 @@ function SubmitAjaxNoBack(post, link, method) {
     }
   });
 }
+
+
+/*dar reload em modal-mount-anchor-id*/
+function SubmitAjaxReloadMountAnchorId(post, link,modal,ancoras) {
+	var id_processo;
+	$.ajax({
+		method: 'POST',
+		async: true,
+		data: post,
+		url: link,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			$(modal).find('.modal-content').html(data);
+			$(modal).modal('open');
+
+			$.each(ancoras,function(key,value){
+				//Coloco dentro do botão selecionar o nome dos objetos + os valores que
+				// são recebidos por quem chama
+				$(modal).find('.selecionar-item-modal').attr('data-'+key,value);
+				$(modal).find('.selecionar-todos-dados-adverso').attr('data-'+key,value);
+				$(modal).find('.selecionar-advogados-setor-compromisso').attr('data-'+key,value);
+			});
+
+			// $(modal).find('.selecionar-item-modal').attr("data-anchorId",anchorId);
+			// $(modal).find('.selecionar-item-modal').attr("data-anchorDesc",anchorDesc);
+
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    	console.log(xhr.statusText);
+    },
+    complete: function(data) {
+    	removerLoader();
+    	$('.material-tooltip').remove();
+    	$('.tooltipped').tooltip({delay: 50});
+    	FormatInputs();
+    	
+    }
+  });
+}
+
 
 
 function SubmitAjaxContainerReload(post, link, container) {
@@ -1543,17 +1620,20 @@ function MountModalAnchor(modal, link, ancoras) {
 		},
 		success: function(data) {
 			console.log(link);
-			console.log(data);
 			console.log(ancoras);
 			$(modal).find('.modal-content').html(data);
 			$(modal).modal('open');
 
 			$.each(ancoras,function(key,value){
+				console.log(key);
+				console.log(value);
 				//Coloco dentro do botão selecionar o nome dos objetos + os valores que
 				// são recebidos por quem chama
 				$(modal).find('.selecionar-item-modal').attr('data-'+key,value);
 				$(modal).find('.selecionar-todos-dados-adverso').attr('data-'+key,value);
 				$(modal).find('.selecionar-advogados-setor-compromisso').attr('data-'+key,value);
+				$(modal).find('.modal-mount-anchor-id-reload').attr('data-'+key,value);
+				$(modal).find('.ajax-submit-reload-anchor-id').attr('data-'+key,value);
 			});
 
 			// $(modal).find('.selecionar-item-modal').attr("data-anchorId",anchorId);
@@ -1570,18 +1650,6 @@ function MountModalAnchor(modal, link, ancoras) {
     }
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // function MountModalAnchor(modal, link,anchorId,anchorDesc) {

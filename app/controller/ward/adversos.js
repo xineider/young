@@ -48,7 +48,7 @@ router.get('/selecionar-todos-modal', function(req, res, next) {
 		console.log('************************** Dentro do Adverso Modal **************************');
 		console.log(data);
 		console.log('**************************************************************************');
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 	});
 });
 

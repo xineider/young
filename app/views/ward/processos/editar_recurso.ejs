@@ -45,7 +45,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_advogado_recurso">Advogado Responsável</label>
 				<input value="<%= data.detalhes_processo[0].advogado %>" id="desc_advogado_recurso" type="text">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-advogados" data-href="#modalinfo" data-anchor-id="#id_advogado_recurso" data-anchor-descricao="#desc_advogado_recurso">
+				<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-advogados" data-href="#modalinfo" data-anchor-id="#id_advogado_recurso" data-anchor-descricao="#desc_advogado_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_advogado_recurso" id="id_advogado_recurso" value="<%= data.detalhes_processo[0].id_advogado %>">
@@ -55,7 +55,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_relator_recurso">Relator</label>
 				<input id="desc_relator_recurso" type="text" value="<%= data.recurso[0].relator %>">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-relator-recurso" data-href="#modalinfo" data-anchor-id="#id_relator_recurso" data-anchor-descricao="#desc_relator_recurso">
+				<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-relator-recurso" data-href="#modalinfo" data-anchor-id="#id_relator_recurso" data-anchor-descricao="#desc_relator_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_relator_recurso" id="id_relator_recurso">
@@ -67,7 +67,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_tipo_recurso">Tipo do Recurso</label>
 				<input id="desc_tipo_recurso" type="text" value="<%= data.recurso[0].tipo_recurso %>">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-tipo-recurso" data-href="#modalinfo" data-anchor-id="#id_tipo_recurso" data-anchor-descricao="#desc_tipo_recurso">
+				<a class="btn lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-tipo-recurso" data-href="#modalinfo" data-anchor-id="#id_tipo_recurso" data-anchor-descricao="#desc_tipo_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_tipo_recurso" id="id_tipo_recurso">
@@ -77,7 +77,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_posicao_cliente_recurso">Posição do Cliente</label>
 				<input type="text" id="desc_posicao_cliente_recurso" value="<%= data.recurso[0].posicao_cliente %>">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-posicao-cliente" data-href="#modalinfo" data-anchor-id="#id_posicao_cliente_recurso" data-anchor-descricao="#desc_posicao_cliente_recurso">
+				<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-posicao-cliente" data-href="#modalinfo" data-anchor-id="#id_posicao_cliente_recurso" data-anchor-descricao="#desc_posicao_cliente_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_posicao_cliente_recurso" id="id_posicao_cliente_recurso">
@@ -86,7 +86,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_tribunal_recurso">Tribunal</label>
 				<input id="desc_tribunal_recurso" type="text" value="<%= data.recurso[0].tribunal %>">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-tribunal-recurso" data-href="#modalinfo" data-anchor-id="#id_tribunal_recurso" data-anchor-descricao="#desc_tribunal_recurso">
+				<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-tribunal-recurso" data-href="#modalinfo" data-anchor-id="#id_tribunal_recurso" data-anchor-descricao="#desc_tribunal_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_tribunal_recurso" id="id_tribunal_recurso">					
@@ -95,7 +95,7 @@
 			<div class="input-field input-group-control-with-search col s12 m4">
 				<label for="desc_turma_camara_recurso">Turma ou Câmara</label>
 				<input id="desc_turma_camara_recurso" type="text" value="<%= data.recurso[0].turma_camara %>">
-				<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-turma-camara-recurso" data-href="#modalinfo" data-anchor-id="#id_turma_camara_recurso" data-anchor-descricao="#desc_turma_camara_recurso">
+				<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-turma-camara-recurso" data-href="#modalinfo" data-anchor-id="#id_turma_camara_recurso" data-anchor-descricao="#desc_turma_camara_recurso">
 					<i class="fa fa-search"></i>
 				</a>
 				<input type="hidden" name="id_turma_camara_recurso" id="id_turma_camara_recurso">					
@@ -162,7 +162,7 @@
 
 				<div class="col s12 margin-b-1rem center">
 
-					<a class="btn waves-effect waves-light bordo tooltipped load_especifico_to_container" data-position="top" data-tooltip="Adicionar Compromisso ao Recurso" data-link="/sistema/processos/adicionar-compromisso-recurso/" data-container="container_adicionar_compromisso_recurso_load">
+					<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-position="top" data-tooltip="Adicionar Compromisso ao Recurso" data-link="/sistema/processos/adicionar-compromisso-recurso/" data-container="container_adicionar_compromisso_recurso_load">
 						Adicionar Compromisso ao Recurso<i class="fa fa-plus" aria-hidden="true"></i>
 					</a>
 
@@ -221,7 +221,7 @@
 						</table>
 
 						<div class="col s12 margin-b-1rem center">
-							<a class="btn waves-effect waves-light bordo tooltipped load_especifico_to_container" data-position="top" data-tooltip="Adicionar Compromisso ao Recurso" data-link="/sistema/processos/adicionar-andamento-recurso/" data-container="container_adicionar_andamento_recurso_load">
+							<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-position="top" data-tooltip="Adicionar Compromisso ao Recurso" data-link="/sistema/processos/adicionar-andamento-recurso/" data-container="container_adicionar_andamento_recurso_load">
 								Adicionar Andamentos ao Recurso<i class="fa fa-plus" aria-hidden="true"></i>
 							</a>
 
@@ -237,7 +237,7 @@
 
 
 					<div class="col s12 margin-b-1rem">
-						<button data-href="/sistema/processos/editar-recurso/" class="btn waves-effect waves-light golden darken-2 ajax-submit bordo-text" data-action="/sistema/processos/abrir/<%= data.detalhes_processo[0].id %>">
+						<button data-href="/sistema/processos/editar-recurso/" class="btn waves-effect waves-light bordo ajax-submit " data-action="/sistema/processos/abrir/<%= data.detalhes_processo[0].id %>">
 							Salvar Recurso 
 						</button>
 					</div>

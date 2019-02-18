@@ -43,7 +43,7 @@
 	<div class="input-field input-group-control-with-search col s12 m4">
 		<label for="desc_advogado_setor_recurso">Advogado Responsável do Setor</label>
 		<input disabled value="<%= data.detalhes_processo[0].advogado %>" id="desc_advogado_setor_recurso" type="text">
-		<a class="btn cocoa modal-mount-anchor-advogado-setor-compromisso" data-link="/processos/selecionar-todos-advogados-do-setor-compromisso" data-modal="#modalinfo" data-anchor-id="#id_advogado_setor_recurso" data-anchor-descricao="#desc_advogado_setor_recurso" data-anchor-advogado-compromisso="#desc_advogado_compromisso" data-anchor-id-advogado-compromisso="#id_advogado_compromisso_recurso">
+		<a class="btn bordo lighten-1 modal-mount-anchor-advogado-setor-compromisso" data-link="/processos/selecionar-todos-advogados-do-setor-compromisso" data-modal="#modalinfo" data-anchor-id="#id_advogado_setor_recurso" data-anchor-descricao="#desc_advogado_setor_recurso" data-anchor-advogado-compromisso="#desc_advogado_compromisso" data-anchor-id-advogado-compromisso="#id_advogado_compromisso_recurso">
 			<i class="fa fa-search"></i>
 		</a>
 		<input type="hidden" name="id_advogado_setor_recurso" id="id_advogado_setor_recurso" value="<%= data.detalhes_processo[0].id_advogado %>">
@@ -52,7 +52,7 @@
 	<div class="input-field input-group-control-with-search col s12 m4">
 		<label for="desc_advogado_compromisso">Advogado do Compromisso</label>
 		<input disabled value="<%= data.detalhes_processo[0].advogado %>" id="desc_advogado_compromisso" type="text">
-		<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-advogados" data-href="#modalinfo" data-anchor-id="#id_advogado_compromisso_recurso" data-anchor-descricao="#desc_advogado_compromisso">
+		<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-advogados" data-href="#modalinfo" data-anchor-id="#id_advogado_compromisso_recurso" data-anchor-descricao="#desc_advogado_compromisso">
 			<i class="fa fa-search"></i>
 		</a>
 		<input type="hidden" name="id_advogado_compromisso_recurso" id="id_advogado_compromisso_recurso" value="<%= data.detalhes_processo[0].id_advogado %>">
@@ -61,7 +61,7 @@
 	<div class="input-field input-group-control-with-search col s12 m4">
 		<label for="desc_comarca_compromisso_recurso">Comarca</label>
 		<input disabled value="" type="text" id="desc_comarca_compromisso_recurso">
-		<a class="btn cocoa modal-mount-anchor-id" data-link="/processos/selecionar-todos-comarca" data-href="#modalinfo" data-anchor-id="#id_comarca_compromisso_recurso" data-anchor-descricao="#desc_comarca_compromisso_recurso">
+		<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-comarca" data-href="#modalinfo" data-anchor-id="#id_comarca_compromisso_recurso" data-anchor-descricao="#desc_comarca_compromisso_recurso">
 			<i class="fa fa-search"></i>
 		</a>
 		<input type="hidden" name="id_comarca_compromisso_recurso" id="id_comarca_compromisso_recurso">

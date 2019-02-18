@@ -24,6 +24,20 @@ router.get('/criar', function(req, res, next) {
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/clientes_criar', data: data, usuario: req.session.usuario});
 	});
 });
+router.get('/criar-simples/:idCliente/:idProcesso', function(req, res, next) {	
+	var idCliente = req.params.idCliente;
+	var idProcesso = req.params.idProcesso;	
+	data.idClienteNaoEnvolvido = idCliente;
+	data.idProcesso = idProcesso;
+	model.SelecioneGrupos().then(data_grupos => {
+		data.grupos = data_grupos;
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/cliente_criar_simples', data: data, usuario: req.session.usuario});
+	});
+});
+
+
+
+
 router.get('/criar/grupo', function(req, res, next) {
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/grupos_criar', data: data, usuario: req.session.usuario});
 });
@@ -64,26 +78,6 @@ router.get('/ver_cadastro/:id',function(req, res, next){
 	});
 
 });
-
-router.get('/outros_envolvidos/:id',function(req, res, next){
-	var idProcesso = req.params.id;
-	model.SelecionarClientePorProcesso(idProcesso).then(id_cliente =>{
-		data.id_processo = idProcesso;
-		data.id_cliente = id_cliente;
-		model.SelecionarEnvolvidosCliente(idProcesso).then(data_envolvidos =>{
-			data.outros = data_envolvidos;
-			model.SelecionarTiposOutrosEnvolvidos().then(data_tipos_posicoes =>{
-				data.outros_posicoes = data_tipos_posicoes;			
-				console.log('--------------------- DETALHES ENVOLVIDOS ----------------------');
-				console.log(data);
-				console.log('----------------------------------------------------------------');
-				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/outros_envolvidos', data: data, usuario: req.session.usuario});
-			});
-		});
-	});
-});
-
-
 
 router.get('/listar_todos_processos/:id',function(req, res, next){
 	var idCliente = req.params.id;

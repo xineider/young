@@ -46,6 +46,38 @@ body.row{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d1114', endColorstr='#2d1114',GradientType=0 );
 }
 
+.btn.bordo:not(.btn-floating){
+  border:2px solid rgb(66,25,31); 
+}
+
+.btn.bordo.lighten-1:not(.btn-floating){
+  border:2px solid #893e4a; 
+}
+
+
+.btn.bordo:hover:not(.disabled), 
+.btn.bordo:focus:not(.disabled){
+  color: rgb(66,25,31);
+  background: #fff;
+  border-color:rgb(66,25,31);
+}
+
+.btn.bordo.disabled{
+  background: #a2937e;
+  color:#fff;  
+}
+
+.btn.bordo.lighten-1:hover:not(.disabled), 
+.btn.bordo.lighten-1:focus:not(.disable){
+  color:rgb(140,64,76);
+  background: #fff;
+  border-color:rgb(140,64,76);
+}
+
+
+
+
+
 
 .bordo-line{
   height: 2px;
@@ -101,18 +133,6 @@ body.row{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd83f', endColorstr='#ffd83f',GradientType=0 );
 }
 
-
-
-.btn.bordo:hover:not(.disabled), .btn.bordo:focus:not(.disabled){
-  color: rgb(66,25,31);
-  background: #fff;
-  border: 2px inset rgb(66,25,31);
-}
-
-.btn.bordo.disabled{
-  background: #a2937e;
-  color:#fff;  
-}
 
 .ruby.darken-2{
   background-color:#562a31;
@@ -701,6 +721,7 @@ main {
   border:1px solid #4a3214!important;
   background:#fff;
   width:calc(100% - 100px);
+  height: 45px;
   border-radius: 5px;
   padding:0 50px 0 10px;
 }
@@ -710,10 +731,14 @@ main {
   height: 47px;
   vertical-align: top;
   padding: 0;
-  border:1px solid #000;
+  border:2px solid #000;
   border-radius:0 5px 5px 0;
   margin-left: -50px;
   box-shadow:none;
+}
+
+.input-field.input-group-control-with-search input + .btn.bordo.lighten-1{
+  border:2px solid #893e4a;
 }
 
 .input-field.input-group-control-with-search input + .btn i{

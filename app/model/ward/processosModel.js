@@ -242,6 +242,15 @@ class ProcessosModel {
 			});
 	}
 
+	SelecionarClientePorProcesso(idProcesso){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT id_cliente \
+				FROM processos as a WHERE id = ? LIMIT 1", [idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
 	SelecionarAdversoPorProcesso(idProcesso){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT id_adverso \
@@ -250,6 +259,9 @@ class ProcessosModel {
 				});
 			});
 	}
+
+
+
 
 	SelecionarTiposOutrosEnvolvidos(){
 		return new Promise(function(resolve, reject) {
@@ -285,6 +297,30 @@ class ProcessosModel {
 				});
 			});
 	}
+
+
+
+
+
+
+
+
+
+
+	CadastrarCliente(POST) {
+		return new Promise(function(resolve, reject) {
+			POST = helper.PrepareDates(POST, ['nascimento']);
+			helper.Insert('clientes', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+
+
+
 
 	CadastrarAdverso(POST) {
 		return new Promise(function(resolve, reject) {
@@ -528,6 +564,16 @@ class ProcessosModel {
 		});
 	}
 
+	SelecionarTipoDoGenericoPorId(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT tipo	FROM descricao_generico as a WHERE deletado = ? AND id = ?", [0,id]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
 
 	VerificarSeOutroAdvogadoFoiAtribuidoAoProcesso(id_advogado,id_processo){
 		console.log('id processo ikkkkkkkkkkkk');
@@ -619,7 +665,6 @@ class ProcessosModel {
 			});
 		});
 	}
-
 
 	SelecioneTodosAssuntos(){
 		return new Promise(function(resolve, reject) {
@@ -1226,7 +1271,7 @@ class ProcessosModel {
 
 
 
-	CadastrarOutrosEnvolvidos(POST){
+	CadastrarOutrosEnvolvidosCliente(POST){
 		return new Promise(function(resolve, reject) {
 			console.log('88888888888888888 CADASTRAR OUTROS ENVOLVIDOS DO PROCESSO MODEL 8888888888888888888888');
 			console.log(POST);
@@ -1302,7 +1347,7 @@ class ProcessosModel {
 	}
 
 
-	AtualizarOutroEnvolvido(data) {
+	AtualizarOutroEnvolvidoCliente(data) {
 		return new Promise(function(resolve, reject) {
 			helper.Update('outros_envolvidos_cliente_processo', data).then(data => {
 				resolve(data);
@@ -1394,6 +1439,15 @@ class ProcessosModel {
 	DesativarOutrosEnvolvidosAdverso(data){
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('outros_envolvidos_adverso_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+	DesativarOutrosEnvolvidosCliente(data){
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('outros_envolvidos_cliente_processo', data).then(data => {
 				resolve(data);
 			});
 		});
