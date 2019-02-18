@@ -180,7 +180,7 @@ $(document).on('ready', function () {
 		console.log(anchor_id);
 		console.log(anchor_desc);
 		var ancoras = {anchorId:anchor_id,anchorDesc:anchor_desc};
-		MountModalAnchor(modal, link,ancoras);
+		MountModalAnchorFocus(modal, link,ancoras);
 	});
 
 
@@ -1647,6 +1647,52 @@ function MountModalAnchor(modal, link, ancoras) {
     	$('.material-tooltip').remove();
     	$('.tooltipped').tooltip({delay: 50});
     	FormatInputs();
+    }
+  });
+}
+
+
+function MountModalAnchorFocus(modal, link, ancoras) {
+	$.ajax({
+		method: "GET",
+		async: true,
+		url: '/sistema'+link,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			console.log(link);
+			console.log(ancoras);
+			$(modal).find('.modal-content').html(data);
+			$(modal).modal('open');
+
+			$.each(ancoras,function(key,value){
+				console.log(key);
+				console.log(value);
+				//Coloco dentro do botão selecionar o nome dos objetos + os valores que
+				// são recebidos por quem chama
+				$(modal).find('.selecionar-item-modal').attr('data-'+key,value);
+				$(modal).find('.selecionar-todos-dados-adverso').attr('data-'+key,value);
+				$(modal).find('.selecionar-advogados-setor-compromisso').attr('data-'+key,value);
+				$(modal).find('.modal-mount-anchor-id-reload').attr('data-'+key,value);
+				$(modal).find('.ajax-submit-reload-anchor-id').attr('data-'+key,value);
+			});
+
+			// $(modal).find('.selecionar-item-modal').attr("data-anchorId",anchorId);
+			// $(modal).find('.selecionar-item-modal').attr("data-anchorDesc",anchorDesc);
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    },
+    complete: function() {
+    	removerLoader();
+    	$('.material-tooltip').remove();
+    	$('.tooltipped').tooltip({delay: 50});
+    	FormatInputs();
+    	FocusInputModal(modal);
     }
   });
 }

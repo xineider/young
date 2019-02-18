@@ -306,7 +306,7 @@ router.get('/cruzamento', function(req, res, next) {
 router.get('/selecionar-todos-clientes', function(req, res, next) {
 	model.SelecioneTodosClientes().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 	});
 });
 
@@ -336,7 +336,7 @@ router.get('/pesquisar-todos-clientes-por-categoria-autocomplete/:pesquisa', fun
 router.get('/selecionar-todos-adversos', function(req, res, next) {
 	model.SelecioneTodosAdversos().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 	});
 });
 
@@ -1501,11 +1501,210 @@ router.post('/adicionar-descricao-generico/:tipo',function(req, res, next) {
 	console.log(':::::::::::::::::::::::::: DADOS DO CADASTRAR GENERICO :::::::::::::::::::');
 	console.log(POST);
 	console.log('::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::');
-	model.CadastrarDescricaoGenerico(POST).then(data => {
 
-		res.json(data);
+
+	model.CadastrarDescricaoGenerico(POST).then(data_d => {
+		model.SelecioneTodosDescricaoGenerica(POST.tipo).then(data_dados =>{
+			data.dados = data_dados;
+			switch(POST.tipo){
+				case 0:
+				data.adicionar_link = '/processos/adicionar-assunto';
+				data.nome_relatorio = 'Assunto';
+				break;
+				case 1:
+				data.adicionar_link = '/processos/adicionar-categorias';
+				data.nome_relatorio = 'Categorias';
+				break;
+				case 2:
+				break;
+				case 3:
+				data.adicionar_link = '/processos/adicionar-fase';
+				data.nome_relatorio = 'Fase';
+				break;
+				case 4:
+				data.adicionar_link = '/processos/adicionar-foro';
+				data.nome_relatorio = 'Foro';
+				break;
+				case 5:
+				data.adicionar_link = '/processos/adicionar-origem-captacao';
+				data.nome_relatorio = 'OrigemCaptacao';
+				break;
+				case 6:
+				break;
+				case 7:
+				data.adicionar_link = '/processos/adicionar-posicao-apenso';
+				data.nome_relatorio = 'PosicaoApenso';
+				break;
+				case 8:
+				break;
+				case 9:
+				data.adicionar_link = '/processos/adicionar-posicao-cliente';
+				data.nome_relatorio = 'PosicaoCliente';
+				break;
+				case 10:
+				data.adicionar_link = '/processos/adicionar-relator-recurso';
+				data.nome_relatorio = 'RelatorRecurso';
+				break;
+				case 11:
+				data.adicionar_link = '/processos/adicionar-situacao-apenso';
+				data.nome_relatorio = 'SituacaoApenso';
+				break;
+				case 12:
+				data.adicionar_link = '/processos/adicionar-tipo-acao-rito';
+				data.nome_relatorio = 'TipoAcaoRito';
+				break;
+				case 13:
+				data.adicionar_link = '/processos/adicionar-tipo-causa';
+				data.nome_relatorio = 'TipoCausa';
+				break;
+				case 14:
+				data.adicionar_link = '/processos/adicionar-tipo-causa-apenso';
+				data.nome_relatorio = 'TipoCausaApenso';
+				break;
+				case 15:
+				data.adicionar_link = '/processos/adicionar-tipo-recurso';
+				data.nome_relatorio = 'TipoRecurso';
+				break;
+				case 16:
+				data.adicionar_link = '/processos/adicionar-tribunal';
+				data.nome_relatorio = 'Tribunal';
+				break;
+				case 17:
+				data.adicionar_link = '/processos/adicionar-turma-camara-recurso';
+				data.nome_relatorio = 'TurmaCamaraRecurso';
+				break;
+				case 18:
+				data.adicionar_link = '/processos/adicionar-vara';
+				data.nome_relatorio = 'Vara';
+				break;
+				case 19:
+				data.adicionar_link = '/processos/adicionar-comarca';
+				data.nome_relatorio = 'Comarca';
+				break;
+			}
+			console.log('CCCCCCCCCCCCCCCCCC DATA FINAL CADASTRAR CCCCCCCCCCCCCCCCCCC');
+			console.log(data);
+			console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC');
+
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+		});
 	});
 });
+
+
+
+// router.post('/editar-descricao-generico/', function(req, res, next) {
+// 	POST = req.body;
+// 	console.log('RRRRRRRRRRRRRRRR EDITAR DESCRICAO GENERICO RRRRRRRRRRRRRRRRRRRRRRRR');
+// 	console.log(POST);
+// 	console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
+
+
+// 	model.AtualizarDescricaoGenerico(POST).then(data => {
+// 		model.SelecionarTipoDoGenericoPorId(POST.id).then(data_tipo => {
+// 			console.log('TTTTTTTTTTTTTTTIPPPPPPPPPPPOOOOOOOOOO');
+// 			console.log(data_tipo[0].tipo);
+// 			console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+
+// 			model.SelecioneTodosDescricaoGenerica(data_tipo[0].tipo).then(data_dados =>{
+// 				data.dados = data_dados;
+
+// 				switch(data_tipo[0].tipo){
+// 					case 0:
+// 					data.adicionar_link = '/processos/adicionar-assunto';
+// 					data.nome_relatorio = 'Assunto';
+// 					break;
+// 					case 1:
+// 					data.adicionar_link = '/processos/adicionar-categorias';
+// 					data.nome_relatorio = 'Categorias';
+// 					break;
+// 					case 2:
+// 					break;
+// 					case 3:
+// 					data.adicionar_link = '/processos/adicionar-fase';
+// 					data.nome_relatorio = 'Fase';
+// 					break;
+// 					case 4:
+// 					data.adicionar_link = '/processos/adicionar-foro';
+// 					data.nome_relatorio = 'Foro';
+// 					break;
+// 					case 5:
+// 					data.adicionar_link = '/processos/adicionar-origem-captacao';
+// 					data.nome_relatorio = 'OrigemCaptacao';
+// 					break;
+// 					case 6:
+// 					break;
+// 					case 7:
+// 					data.adicionar_link = '/processos/adicionar-posicao-apenso';
+// 					data.nome_relatorio = 'PosicaoApenso';
+// 					break;
+// 					case 8:
+// 					break;
+// 					case 9:
+// 					data.adicionar_link = '/processos/adicionar-posicao-cliente';
+// 					data.nome_relatorio = 'PosicaoCliente';
+// 					break;
+// 					case 10:
+// 					data.adicionar_link = '/processos/adicionar-relator-recurso';
+// 					data.nome_relatorio = 'RelatorRecurso';
+// 					break;
+// 					case 11:
+// 					data.adicionar_link = '/processos/adicionar-situacao-apenso';
+// 					data.nome_relatorio = 'SituacaoApenso';
+// 					break;
+// 					case 12:
+// 					data.adicionar_link = '/processos/adicionar-tipo-acao-rito';
+// 					data.nome_relatorio = 'TipoAcaoRito';
+// 					break;
+// 					case 13:
+// 					data.adicionar_link = '/processos/adicionar-tipo-causa';
+// 					data.nome_relatorio = 'TipoCausa';
+// 					break;
+// 					case 14:
+// 					data.adicionar_link = '/processos/adicionar-tipo-causa-apenso';
+// 					data.nome_relatorio = 'TipoCausaApenso';
+// 					break;
+// 					case 15:
+// 					data.adicionar_link = '/processos/adicionar-tipo-recurso';
+// 					data.nome_relatorio = 'TipoRecurso';
+// 					break;
+// 					case 16:
+// 					data.adicionar_link = '/processos/adicionar-tribunal';
+// 					data.nome_relatorio = 'Tribunal';
+// 					break;
+// 					case 17:
+// 					data.adicionar_link = '/processos/adicionar-turma-camara-recurso';
+// 					data.nome_relatorio = 'TurmaCamaraRecurso';
+// 					break;
+// 					case 18:
+// 					data.adicionar_link = '/processos/adicionar-vara';
+// 					data.nome_relatorio = 'Vara';
+// 					break;
+// 					case 19:
+// 					data.adicionar_link = '/processos/adicionar-comarca';
+// 					data.nome_relatorio = 'Comarca';
+// 					break;
+// 				}
+
+// 				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+// 			});
+// 		});
+// 	});
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.post('/captacao_cadastrar',function(req, res, next) {
