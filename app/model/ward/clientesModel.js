@@ -23,6 +23,15 @@ class ClientesModel {
 		});
 	}
 
+	SelecioneClientesCpfCnpjExtra() {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT cpf_cnpj as extra FROM clientes WHERE deletado = ?", [0]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
 	SelecionarEnvolvidosCliente(idProcesso) {
 		return new Promise(function(resolve, reject) {
 			// Adicione a query com scape(?) e os respectivos valores em um array simples

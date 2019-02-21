@@ -44,11 +44,14 @@ router.get('/editar/:id', function(req, res, next) {
 router.get('/selecionar-todos-modal', function(req, res, next) {
 	model.SelecioneAdversosDescricao().then(data_adversos =>{
 		data.dados = data_adversos;
-		data.adicionar_link = '/adversos/adicionar-simples';
-		console.log('************************** Dentro do Adverso Modal **************************');
-		console.log(data);
-		console.log('**************************************************************************');
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		model.SelecionAdversosCpfCnpjExtra().then(data_cpf_cnpj =>{
+			data.nome_campo_extra = 'CPF/CNPJ';
+			data.campo_extra = data_cpf_cnpj;
+			console.log('************************** Dentro do Adverso Modal **************************');
+			console.log(data);
+			console.log('**************************************************************************');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 

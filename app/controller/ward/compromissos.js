@@ -182,12 +182,12 @@ router.post('/cadastrar', function(req, res, next) {
 						console.log(data_notificacao);
 						console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN');
 
-			model.CadastrarNotificacao(data_notificacao).then(data_not=>{
-				model.CadastrarCompromisso(POST).then(data => {
-					res.json(data);
-				});
-			});
-		});
+						model.CadastrarNotificacao(data_notificacao).then(data_not=>{
+							model.CadastrarCompromisso(POST).then(data => {
+								res.json(data);
+							});
+						});
+					});
 
 router.post('/atualizar/', function(req, res, next) {
 		// Recebendo o valor do post
@@ -196,43 +196,52 @@ router.post('/atualizar/', function(req, res, next) {
 		console.log(POST);
 		console.log('=============================================');
 
-		model.VerificarSeOutroAdvogadoNoCompromisso(POST.id_advogado_compromisso,POST.id).then(data_novo_advogado => {
-			console.log('---------- DATA_ADVOGADO ------------------');
-			console.log(data_novo_advogado);
-			console.log('-------------------------------------------');
-			if(data_novo_advogado == '' || data_novo_advogado == undefined){
-				var texto_notf = 'Adicionado Compromisso "' + POST.nome+'"';
-				data_notificacao = {id_usuario_criador:req.session.usuario.id, id_usuario: POST.id_advogado_compromisso,
-					texto:texto_notf};
+		/*para postagens próprias onde não há advogado do compromisso*/
+		if(POST.id_advogado_compromisso != undefined){
+			model.VerificarSeOutroAdvogadoNoCompromisso(POST.id_advogado_compromisso,POST.id).then(data_novo_advogado => {
+				console.log('---------- DATA_ADVOGADO ------------------');
+				console.log(data_novo_advogado);
+				console.log('-------------------------------------------');
+				if(data_novo_advogado == '' || data_novo_advogado == undefined){
+					var texto_notf = 'Adicionado Compromisso "' + POST.nome+'"';
+					data_notificacao = {id_usuario_criador:req.session.usuario.id, id_usuario: POST.id_advogado_compromisso,
+						texto:texto_notf};
 
-					if(POST.tipo_compromisso == 1){
-						data_notificacao['link'] = '/compromissos/controle_distribuicao';
-					}else if(POST.tipo_compromisso == 2){
-						data_notificacao['link'] = '/compromissos/pauta_julgamento';
-					}else if(POST.tipo_compromisso == 0){
-						data_notificacao['link'] = '/compromissos/pauta_compromisso';
+						if(POST.tipo_compromisso == 1){
+							data_notificacao['link'] = '/compromissos/controle_distribuicao';
+						}else if(POST.tipo_compromisso == 2){
+							data_notificacao['link'] = '/compromissos/pauta_julgamento';
+						}else if(POST.tipo_compromisso == 0){
+							data_notificacao['link'] = '/compromissos/pauta_compromisso';
+						}else{
+							data_notificacao['link'] = '/compromissos/';
+						}
+
+						model.CadastrarNotificacao(data_notificacao).then(data_not=>{
+							model.AtualizarCompromisso(POST).then(data => {
+								res.json(data);
+							});
+						});
+
 					}else{
-						data_notificacao['link'] = '/compromissos/';
-					}
+						console.log('EEEEEEEE CAI NO ELSE EEEEEEEEEEEEEEEEEEE');
+						console.log(POST);
+						console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
 
-					model.CadastrarNotificacao(data_notificacao).then(data_not=>{
 						model.AtualizarCompromisso(POST).then(data => {
 							res.json(data);
 						});
-					});
+					}
+				});
+		}else{
+			console.log('9999999999999999999999999999 else 9999999999999999999999999');
+			console.log(POST);
+			console.log('99999999999999999999999999999999999999999999999999999999999');
 
-				}else{
-					console.log('EEEEEEEE CAI NO ELSE EEEEEEEEEEEEEEEEEEE');
-					console.log(POST);
-					console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
-
-					model.AtualizarCompromisso(POST).then(data => {
-						res.json(data);
-					});
-				}
-
-
+			model.AtualizarCompromisso(POST).then(data => {
+				res.json(data);
 			});
+		}
 	});
 
 router.post('/desativar', function(req, res, next) {

@@ -26,7 +26,7 @@ $(document).on('ready', function () {
 		$('ul.tabs').tabs();
 
 		validarDataTable($('.tabela_filtrada'))
-		validarDataTable($('#tabela_andamentos'));
+		validarDataTableNoSort($('#tabela_andamentos'));
 		validarDataTable($('#tabela_andamentos_more_details'));
 		validarDataTable($('#tabela_todos_clientes'));
 		validarDataTable($('#pauta_compromisso'));
@@ -43,7 +43,7 @@ $(document).on('ready', function () {
 		validarDataTable($('#tabela_interna_cliente'));
 		validarDataTable($('#tabela_interna_adverso'));
 		validarDataTable($('#tabela_interna_contato'));
-		validarDataTable($('#tabela_interna_processo'));
+		validarDataTableNoSort($('#tabela_interna_processo'));
 		validarDataTable($('#tabela_interna_notificacoes'));
 
 		
@@ -171,7 +171,7 @@ $(document).on('ready', function () {
 		MountModalAnchor(modal, link,ancoras);
 	});
 
-		$(document).on('click', '.modal-mount-anchor-id-reload', function (e) {
+	$(document).on('click', '.modal-mount-anchor-id-reload', function (e) {
 		e.preventDefault();
 		var modal = $(this).data('href');
 		var link = $(this).data('link');
@@ -553,9 +553,20 @@ $(document).on("click","input[name='id_posicao_cadastro_cliente']",function(e){
 $(document).on('click','.load_especifico_to_container',function(e){
 	e.preventDefault();
 	var containerFinal = "." + $(this).data('container');
-	$(containerFinal).empty();
-	var link = $(this).data('link');
-	loadEspecificoPagina(link,$(containerFinal));
+	console.log($(this).data('idload'));
+	console.log($(containerFinal).data('idload'));
+	var id_load = $(this).data('idload');
+	var id_container = $(containerFinal).data('idload');
+	if(id_container == id_load){
+		$(containerFinal).empty();
+		$(containerFinal).removeData('idload');
+	}else{
+		console.log('cai no else');
+		$(containerFinal).empty();
+		$(containerFinal).data('idload',id_load);
+		var link = $(this).data('link');
+		loadEspecificoPagina(link,$(containerFinal));
+	}
 });
 
 	// $(document).on('click','.abrir_pessoas_cliente',function(e){
@@ -621,42 +632,16 @@ $(document).on('click','.load_especifico_to_container',function(e){
 
 
 	$(document).on('change', 'select[name="tipo_compromisso"]', function (e) {
-		console.log($(this).val());
-		var tipo = $('#select_tipo_compromisso');
-		console.log(tipo);
-		tipo.empty();
-		if($(this).val() == 0) {
-			tipo.append("\
-				<label>Tipo do Compromisso</label>\
-				<select class='browser-default validate' name='tipo'>\
-				<option value='0' selected>Audiência</option>\
-				<option value='1'>Reunião</option>\
-				<option value='2'>Perícia</option>\
-				</select>");
-
-		}else if($(this).val() == 1){
-			tipo.append("\
-				<label>Tipo do Compromisso</label>\
-				<select class='browser-default validate' name='tipo'>\
-				<option value='0' selected>Acórdão/Sentença</option>\
-				<option value='1'>Despacho/Decisões</option>\
-				<option value='2'>Petições Diversas</option>\
-				<option value='3'>Quesitos</option>\
-				<option value='4'>Manif de Docs</option>\
-				<option value='5'>Prazos Processos Físicos</option>\
-				<option value='6'>Perito</option>\
-				<option value='7'>Providência</option>\
-				</select>");
-		}else if($(this).val() == 2){
-			tipo.append("\
-				<label>Tipo do Compromisso</label>\
-				<select class='browser-default validate' name='tipo'>\
-				<option value='0' selected>Julgamento</option>\
-				</select>");
-		}
+		changeTipoCompromissoPorCategoriaCompromisso($(this),$('#select_tipo_compromisso'),'tipo');
 	});
 
+	$(document).on('change', 'select[name="tipo_compromisso_apenso"]', function (e) {
+		changeTipoCompromissoPorCategoriaCompromisso($(this),$('#select_tipo_compromisso_apenso'),'tipo_apenso');
+	});
 
+	$(document).on('change', 'select[name="tipo_compromisso_recurso"]', function (e) {
+		changeTipoCompromissoPorCategoriaCompromisso($(this),$('#select_tipo_compromisso_recurso'),'tipo_recurso');
+	});
 
 
 	$(document).on('change', 'select[name="id_doc_pai"]', function (e) {
@@ -1314,6 +1299,7 @@ function SubmitAjax(post, link, back, method) {
 			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
 			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
 			adicionarLoader();
+			console.log('beforeSend SubmitAjax');
 		},
 		success: function(data) {
 			console.log('TTTTTTTTTTTTTT DATA DO RES.JSON DO AJAX-SUBMIT TTTTTTTTTTTTT');
@@ -1603,7 +1589,35 @@ function filtrarTabelaDataTablePt(tabela){
 	});
 }
 
-
+function filtrarTabelaDataTablePtNoSort(tabela){
+	$(tabela).DataTable({			
+		"paging":   false,
+		"aaSorting": [],
+		language:{
+			"emptyTable":     "Nenhum registro encontrado",
+			"info":           "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+			"infoEmpty":      "Mostrando de 0 até 0 de 0 registros",
+			"infoFiltered":   "(Filtrados de _MAX_ registros)",
+			"infoPostFix":    "",
+			"thousands":      ".",
+			"lengthMenu":     "_MENU_ resultados por página",
+			"loadingRecords": "Carregando...",
+			"processing":     "Processando...",
+			"search":         "Pesquisar:",
+			"zeroRecords":    "Nenhum registro encontrado",
+			"paginate": {
+				"first":      "Primeiro",
+				"last":       "Último",
+				"next":       "Próximo",
+				"previous":   "Anterior"
+			},
+			"aria": {
+				"sortAscending":  ": Ordenar colunas de forma ascendente",
+				"sortDescending": ": Ordenar colunas de forma descendente"
+			}
+		}	
+	});
+}
 
 
 
@@ -1920,6 +1934,16 @@ function validarDataTable(elemento){
 		if($.fn.dataTable.isDataTable(elemento)){
 		}else{
 			filtrarTabelaDataTablePt(elemento);	
+		}
+	}
+}
+
+function validarDataTableNoSort(elemento){
+	if($(elemento).length>0){
+		/*Já existe a tabela então não há necessidade de criá-la(senão dá problema)*/
+		if($.fn.dataTable.isDataTable(elemento)){
+		}else{
+			filtrarTabelaDataTablePtNoSort(elemento);	
 		}
 	}
 }
@@ -2259,7 +2283,7 @@ function calendarioCompromissos(){
 				request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
 			}
 		},
-		timezone:'UTC-3',
+		timezone:'local',
 		editable:true,
 		eventClick: function(event, jsEvent, view) {
 			$.ajax({
@@ -2289,7 +2313,7 @@ function calendarioCompromissos(){
 			$.ajax({
 				method: "POST",
 				async: true,
-				data: {id: event.id, data_inicial: event.start.format('DD/MM/Y'),hora_inicial:event.start.format('HH:MM'),data_final:event.end.format('DD/MM/Y'),hora_final:event.end.format('HH:MM')},
+				data: {id: event.id, data_inicial: event.start.format('DD/MM/Y'),hora_inicial:event.start.format('HH:mm'),data_final:event.end.format('DD/MM/Y'),hora_final:event.end.format('HH:mm')},
 				url: '/sistema/compromissos/atualizar/',
 				beforeSend: function(request) {
 					request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
@@ -2507,8 +2531,41 @@ function autoCompleteId(element,url,idSetar){
 }
 
 
+function changeTipoCompromissoPorCategoriaCompromisso(categoria,tipo,name){
+	console.log($(categoria).val());
+	console.log(tipo);
+	console.log(categoria);
+	tipo.empty();
+	if($(categoria).val() == 0) {
+		tipo.append("\
+			<label>Tipo do Compromisso</label>\
+			<select class='browser-default validate' name='"+name+"'>\
+			<option value='0' selected>Audiência</option>\
+			<option value='1'>Reunião</option>\
+			<option value='2'>Perícia</option>\
+			</select>");
 
-
+	}else if($(categoria).val() == 1){
+		tipo.append("\
+			<label>Tipo do Compromisso</label>\
+			<select class='browser-default validate' name='"+name+"'>\
+			<option value='0' selected>Acórdão/Sentença</option>\
+			<option value='1'>Despacho/Decisões</option>\
+			<option value='2'>Petições Diversas</option>\
+			<option value='3'>Quesitos</option>\
+			<option value='4'>Manif de Docs</option>\
+			<option value='5'>Prazos Processos Físicos</option>\
+			<option value='6'>Perito</option>\
+			<option value='7'>Providência</option>\
+			</select>");
+	}else if($(categoria).val() == 2){
+		tipo.append("\
+			<label>Tipo do Compromisso</label>\
+			<select class='browser-default validate' name='"+name+"'>\
+			<option value='0' selected>Julgamento</option>\
+			</select>");
+	}
+}
 
 
 

@@ -35,6 +35,18 @@ class AdversosModel {
 		});
 	}
 
+		SelecionAdversosCpfCnpjExtra() {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT cpf_cnpj as extra FROM adversos WHERE deletado = ?", [0]).then(data => {
+				console.log('6666666666666666 DENTRO DO MODEL 666666666666666666666666');
+				console.log(data);
+				console.log('666666666666666666666666666666666666666666666666666666666');
+				resolve(data);
+			});
+		});
+	}
+
 	SelecionarTodosProcessosDoAdverso(idAdverso){
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*, \

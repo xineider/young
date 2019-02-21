@@ -62,19 +62,26 @@ body.row{
   border-color:rgb(66,25,31);
 }
 
+.btn-floating.bordo:hover:not(.disabled),
+.btn-floating.bordo:focus:not(.disabled){
+  background: rgb(56,11,16);
+  background: -moz-linear-gradient(top, rgba(56,11,16,1) 0%, rgba(102,28,38,1) 50%, rgba(56,11,16,1) 100%);
+  background: -webkit-linear-gradient(top, rgba(56,11,16,1) 0%,rgba(102,28,38,1) 50%,rgba(56,11,16,1) 100%);
+  background: linear-gradient(to bottom, rgba(56,11,16,1) 0%,rgba(102,28,38,1) 50%,rgba(56,11,16,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#380b10', endColorstr='#380b10',GradientType=0 );
+}
+
 .btn.bordo.disabled{
   background: #a2937e;
   color:#fff;  
 }
 
 .btn.bordo.lighten-1:hover:not(.disabled), 
-.btn.bordo.lighten-1:focus:not(.disable){
+.btn.bordo.lighten-1:focus:not(.disabled){
   color:rgb(140,64,76);
   background: #fff;
   border-color:rgb(140,64,76);
 }
-
-
 
 
 
@@ -126,12 +133,46 @@ body.row{
 
 
 .golden.darken-2{
-  background: rgb(255,216,63);
+ /* background: rgb(255,216,63);
   background: -moz-linear-gradient(top, rgba(255,216,63,1) 0%, rgba(255,234,158,1) 50%, rgba(255,216,63,1) 100%);
   background: -webkit-linear-gradient(top, rgba(255,216,63,1) 0%,rgba(255,234,158,1) 50%,rgba(255,216,63,1) 100%);
   background: linear-gradient(to bottom, rgba(255,216,63,1) 0%,rgba(255,234,158,1) 50%,rgba(255,216,63,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd83f', endColorstr='#ffd83f',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd83f', endColorstr='#ffd83f',GradientType=0 );*/
+  background: rgb(255,192,19);
+  background: -moz-linear-gradient(-45deg, rgba(255,192,19,1) 0%, rgba(249,212,45,1) 32%, rgba(249,212,45,1) 62%, rgba(255,186,12,1) 100%);
+  background: -webkit-linear-gradient(-45deg, rgba(255,192,19,1) 0%,rgba(249,212,45,1) 32%,rgba(249,212,45,1) 62%,rgba(255,186,12,1) 100%);
+  background: linear-gradient(135deg, rgba(255,192,19,1) 0%,rgba(249,212,45,1) 32%,rgba(249,212,45,1) 62%,rgba(255,186,12,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc013', endColorstr='#ffba0c',GradientType=1 );
 }
+
+.golden.darken-2:hover:not(.disabled),
+.golden.darken-2:focus:not(.disabled){
+  background: rgb(255,178,0);
+  background: -moz-linear-gradient(-45deg, rgba(255,178,0,1) 0%, rgba(244,199,19,1) 32%, rgba(244,199,19,1) 62%, rgba(255,165,0,1) 100%);
+  background: -webkit-linear-gradient(-45deg, rgba(255,178,0,1) 0%,rgba(244,199,19,1) 32%,rgba(244,199,19,1) 62%,rgba(255,165,0,1) 100%);
+  background: linear-gradient(135deg, rgba(255,178,0,1) 0%,rgba(244,199,19,1) 32%,rgba(244,199,19,1) 62%,rgba(255,165,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb200', endColorstr='#ffa500',GradientType=1 );
+}
+
+
+.btn-floating.golden.darken-2{
+ background: rgb(249,212,45);
+ background: -moz-radial-gradient(center, ellipse cover, rgba(249,212,45,1) 27%, rgba(255,186,12,1) 61%);
+ background: -webkit-radial-gradient(center, ellipse cover, rgba(249,212,45,1) 27%,rgba(255,186,12,1) 61%);
+ background: radial-gradient(ellipse at center, rgba(249,212,45,1) 27%,rgba(255,186,12,1) 61%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9d42d', endColorstr='#ffba0c',GradientType=1 );
+}
+
+
+.btn-floating.golden.darken-2:hover:not(.disabled),
+.btn-floating.golden.darken-2:focus:not(.disabled){
+  background: rgb(249,212,45);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(249,212,45,1) 21%, rgba(255,178,0,1) 43%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(249,212,45,1) 21%,rgba(255,178,0,1) 43%);
+  background: radial-gradient(ellipse at center, rgba(249,212,45,1) 21%,rgba(255,178,0,1) 43%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9d42d', endColorstr='#ffb200',GradientType=1 );
+}
+
 
 
 .ruby.darken-2{
@@ -405,6 +446,10 @@ textarea.materialize-textarea:focus:not([readonly]){
   border-color: rgb(79, 33, 40);
 }
 
+.fc-unthemed td.fc-today{
+  background:rgb(249,212,45)
+}
+
 .tabela_filtrada,
 #tabela_andamentos,
 #tabela_todos_clientes,
@@ -428,6 +473,10 @@ textarea.materialize-textarea:focus:not([readonly]){
 .container_cliente_load,
 .tabela-uppercase{
   text-transform: uppercase;
+}
+
+.overflow-auto{
+  overflow: auto;
 }
 
 

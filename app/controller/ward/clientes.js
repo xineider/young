@@ -138,10 +138,14 @@ router.get('/pesquisar-cliente-por-cpf-cnpj-autocomplete/:cpf_cnpj', function(re
 router.get('/selecionar-todos-modal', function(req, res, next) {
 	model.SelecioneClientesDescricao().then(data_clientes =>{
 		data.dados = data_clientes;
+		model.SelecioneClientesCpfCnpjExtra().then(data_cpf_cnpj =>{
+		data.nome_campo_extra = 'CPF/CNPJ';
+		data.campo_extra = data_cpf_cnpj;
 		console.log('************************** Dentro do Clientes Modal **************************');
 		console.log(data);
 		console.log('**************************************************************************');
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 

@@ -19,7 +19,7 @@
 							<td><%= data.recursos[i].numero %></td>
 							<td><%= data.recursos[i].tipo_da_causa %></td>
 							<td>
-								<a style="font-size: 1.4em;cursor: pointer;" data-link="/sistema/processos/editar-recurso/<%= data.recursos[i].id %>" class="load_especifico_to_container" data-container="container_adicionar_recurso_load">
+								<a style="font-size: 1.4em;cursor: pointer;" data-link="/sistema/processos/editar-recurso/<%= data.recursos[i].id %>" class="load_especifico_to_container" data-idload="2" data-container="container_adicionar_recurso_load">
 									<i class="fa fa-pencil bordo-text" aria-hidden="true"></i>
 								</a>
 
@@ -41,7 +41,7 @@
 
 		<div class="col s12 center">
 
-			<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-href="#modalinfo" data-position="top" data-tooltip="Adicionar Recurso" data-link="/sistema/processos/adicionar-recurso-simples/<%= data.detalhes_processo[0].id %>" data-container="container_adicionar_recurso_load">
+			<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="1" data-href="#modalinfo" data-position="top" data-tooltip="Adicionar Recurso" data-link="/sistema/processos/adicionar-recurso-simples/<%= data.detalhes_processo[0].id %>" data-container="container_adicionar_recurso_load">
 				Adicionar Recurso
 			</a>
 
@@ -77,8 +77,16 @@
 						%>
 						<tr>
 							<td><%= data.compromissos_recursos[i].numero %></td>
-							<td>
+								<td>
+								<%if(data.compromissos_recursos[i].tipo_compromisso == 0){%>
 								<%if(data.compromissos_recursos[i].tipo==0){%>
+								Audiência
+								<%}else if(data.compromissos_recursos[i].tipo==1){%>
+								Reunião
+								<%}else if(data.compromissos_recursos[i].tipo==2){%>
+								Perícia
+								<%}}else if(data.compromissos_recursos[i].tipo_compromisso == 1){%>
+								<%if(data.compromissos_recursos[i].tipo==0) {%>
 								Acordão/Sentença
 								<%}else if(data.compromissos_recursos[i].tipo==1){%>
 								Despacho/Decisões
@@ -92,8 +100,13 @@
 								Prazos Processos Físicos
 								<%}else if(data.compromissos_recursos[i].tipo==6){%>
 								Perito
-								<%}else {%>
-								Não há
+								<%}else if(data.compromissos_recursos[i].tipo==7){%>
+								Providência
+								<%}}else if(data.compromissos_recursos[i].tipo_compromisso == 2){%>
+								<%if(data.compromissos_recursos[i].tipo==0) {%>
+								Julgamento
+								<%}}else{%>
+								Não Há
 								<%}%>
 							</td>
 							<td><%= data.compromissos_recursos[i].nome %></td>

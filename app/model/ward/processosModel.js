@@ -60,7 +60,7 @@ class ProcessosModel {
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT a.id_processo,a.tipo , a.descricao,DATE_FORMAT(a.data,"%d/%m/%y") as data,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as usuario\
-				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY data_cadastro ASC', [0,id]).then(data => {					
+				FROM andamentos_processo as a WHERE a.deletado = ? AND a.id_processo = ? ORDER BY a.data_cadastro ASC', [0,id]).then(data => {					
 					resolve(data);
 				});
 			});
@@ -103,7 +103,7 @@ class ProcessosModel {
 
 	SelecioneTodosCompromissosDoApensoDoProcesso(id){
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+			helper.Query("SELECT a.id_processo, a.local,a.tipo_compromisso, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
@@ -116,7 +116,7 @@ class ProcessosModel {
 
 	SelecioneTodosCompromissosDoRecursoDoProcesso(id){
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id_processo, a.local, a.tipo,a.nome,a.data_inicial,a.data_final,\
+			helper.Query("SELECT a.id_processo, a.local, a.tipo_compromisso, a.tipo,a.nome,a.data_inicial,a.data_final,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_advogado_compromisso AND b.cargo = ?)as advogado, \
@@ -702,6 +702,19 @@ class ProcessosModel {
 		});
 	}
 
+	SelecioneCpfCnpjExtraTodosClientes(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT cpf_cnpj as extra FROM clientes WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
+
+
 	SelecioneTodosAdversos(){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT *, nome as descricao FROM adversos WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
@@ -712,6 +725,19 @@ class ProcessosModel {
 			});
 		});
 	}
+
+
+	SelecioneCpfCnpjExtraTodosAdversos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT cpf_cnpj as extra FROM adversos WHERE deletado = ? ORDER BY descricao DESC', [0]).then(data => {
+				console.log('HHHHHHHHHHHHHHHHHHHHHHH MODEL SELECIONETODOSCLIENTES HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				console.log(data);
+				console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+				resolve(data);
+			});
+		});
+	}
+
 
 	SelecioneTodosClientesPorCategoria() {
 		return new Promise(function(resolve, reject) {
@@ -793,6 +819,14 @@ class ProcessosModel {
 		});
 	}
 
+	SelecioneOabExtraTodosAdvogados(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT oab as extra FROM usuarios WHERE deletado = ? AND cargo = ? ORDER BY nome DESC', [0,1]).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
 	SelecioneTodosAdvogadosExtra(){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT *, nome as descricao FROM usuarios WHERE deletado = ? AND cargo = ? ORDER BY nome DESC', [0,1]).then(data => {
@@ -821,6 +855,19 @@ class ProcessosModel {
 	SelecioneTodosProcessos(){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT *, numero as descricao FROM processos WHERE deletado = ?', [0]).then(data => {
+				console.log('000000000000000000000000000 TODOS PROCESSOS COMPROMISSO 000000000000000000000000000');
+				console.log(data);
+				console.log('00000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+				resolve(data);
+			});
+		});
+	}
+
+	SelecioneNomeClienteExtraTodosProcessos(){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.id_cliente,\
+			(SELECT nome FROM clientes as b WHERE a.id_cliente = b.id) as extra \
+			FROM processos as a WHERE a.deletado = ?', [0]).then(data => {
 				console.log('000000000000000000000000000 TODOS PROCESSOS COMPROMISSO 000000000000000000000000000');
 				console.log(data);
 				console.log('00000000000000000000000000000000000000000000000000000000000000000000000000000000000');

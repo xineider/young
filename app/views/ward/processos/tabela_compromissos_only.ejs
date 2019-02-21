@@ -60,7 +60,7 @@
         <td><%= data.compromissos[i].advogado_compromisso %></td>
         <td>
           <%if(data.compromissos[i].id_usuario == usuario.id || data.compromissos[i].id_advogado_setor == usuario.id || usuario.nivel == 1) {%>
-          <a data-link="/sistema/processos/editar-compromisso/<%= data.compromissos[i].id %>" class="load_especifico_to_container pointer" data-container="container_adicionar_compromisso_load">
+          <a data-link="/sistema/processos/editar-compromisso/<%= data.compromissos[i].id %>" class="load_especifico_to_container pointer" data-idload="<%=i%>" data-container="container_adicionar_compromisso_load">
             <i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i>
           </a>
           <i class="fa fa-times-circle red-text modal-remover-mount-reload pointer" data-href="#modaldeletar_reload" data-id="<%= data.compromissos[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data.compromissos[i].nome %>'? " data-to="/sistema/processos/desativar-compromisso/<%= data.detalhes_processo[0].id%>" data-container="#container_tabela_compromissos_reload" aria-hidden="true"></i>

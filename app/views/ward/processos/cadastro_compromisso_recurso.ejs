@@ -6,19 +6,29 @@
 	</div>
 
 	<div class="input-field input-group-control col s12 m4">
-		<label for="nome_compromisso_recurso">Nome</label>
+		<label for="nome_compromisso_recurso">Descrição</label>
 		<input class="validate" type="text" name="nome_compromisso_recurso">
 	</div>
 
-	<div class="select-field input-group-control col s12 m4">
-		<label>Tipo do Compromisso</label>
-		<select class="browser-default validate" name='tipo_compromisso_recurso'>
-          <option value='0' selected>Audiência</option>         
-          <option value='1'>Reunião</option>
-          <option value='2'>Perícia</option>
-		</select>
 
+	<div class="select-field input-group-control col s12 m4">
+		<label>Categoria do Compromisso</label>
+		<select class="browser-default validate" name="tipo_compromisso_recurso">
+			<option value="0" selected>Pauta de Compromissos</option>
+			<option value="1">Controle de Distribuição</option>
+			<option value="2">Pauta de Julgamentos</option>
+		</select>
 	</div>
+
+	<div class="select-field input-group-control col s12 m4" id="select_tipo_compromisso_recurso">
+		<label>Tipo do Compromisso</label>
+		<select class="browser-default validate" name='tipo_recurso'>
+			<option value='0' selected>Audiência</option>         
+			<option value='1'>Reunião</option>
+			<option value='2'>Perícia</option>
+		</select>
+	</div>
+
 
 	<div class="input-field input-group-control col s12 m4">
 		<label>Data Inicial do Compromisso</label>
@@ -56,15 +66,6 @@
 			<i class="fa fa-search"></i>
 		</a>
 		<input type="hidden" name="id_advogado_compromisso_recurso" id="id_advogado_compromisso_recurso" value="<%= data.detalhes_processo[0].id_advogado %>">
-	</div>
-
-	<div class="input-field input-group-control-with-search col s12 m4">
-		<label for="desc_comarca_compromisso_recurso">Comarca</label>
-		<input disabled value="" type="text" id="desc_comarca_compromisso_recurso">
-		<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-comarca" data-href="#modalinfo" data-anchor-id="#id_comarca_compromisso_recurso" data-anchor-descricao="#desc_comarca_compromisso_recurso">
-			<i class="fa fa-search"></i>
-		</a>
-		<input type="hidden" name="id_comarca_compromisso_recurso" id="id_comarca_compromisso_recurso">
 	</div>
 
 

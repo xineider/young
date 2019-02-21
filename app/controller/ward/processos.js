@@ -306,9 +306,15 @@ router.get('/cruzamento', function(req, res, next) {
 router.get('/selecionar-todos-clientes', function(req, res, next) {
 	model.SelecioneTodosClientes().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		model.SelecioneCpfCnpjExtraTodosClientes().then(data_cpf_cnpj=>{
+			data.nome_campo_extra = 'CPF/CNPJ';
+			data.campo_extra = data_cpf_cnpj;
+			data.mensagem = '';
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
+
 
 router.get('/pesquisar-todos-clientes-autocomplete/:pesquisa', function(req, res, next) {
 	pesquisa = req.params.pesquisa;
@@ -336,7 +342,12 @@ router.get('/pesquisar-todos-clientes-por-categoria-autocomplete/:pesquisa', fun
 router.get('/selecionar-todos-adversos', function(req, res, next) {
 	model.SelecioneTodosAdversos().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		model.SelecioneCpfCnpjExtraTodosAdversos().then(data_cpf_cnpj=>{
+			data.nome_campo_extra = 'CPF/CNPJ';
+			data.campo_extra = data_cpf_cnpj;
+			data.mensagem = '';
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 
@@ -346,10 +357,6 @@ router.get('/pesquisar-todos-adversos-autocomplete/:pesquisa', function(req, res
 		res.json(data);
 	});
 });
-
-
-
-
 
 
 router.get('/selecionar-todos-tipo-causa', function(req, res, next) {
@@ -507,7 +514,12 @@ router.get('/pesquisar-todos-origem-captacao-autocomplete/:pesquisa', function(r
 router.get('/selecionar-todos-processos', function(req, res, next) {
 	model.SelecioneTodosProcessos().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		model.SelecioneNomeClienteExtraTodosProcessos().then(data_nome =>{
+			data.nome_campo_extra = 'Nome';
+			data.campo_extra = data_nome;
+			data.mensagem = '';
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 
@@ -742,8 +754,8 @@ router.post('/cadastrar_compromisso_apenso', function(req, res, next) {
 
 	data_insert = {id_usuario: req.session.usuario.id, id_processo:POST.id,
 		id_apenso: POST.id_apenso, id_advogado_setor: POST.id_advogado_setor_apenso,
-		id_advogado_compromisso:POST.id_advogado_compromisso_apenso,tipo:POST.tipo_compromisso_apenso, 
-		nome:POST.nome_compromisso_apenso, data_inicial:POST.data_inicial_compromisso_apenso,
+		id_advogado_compromisso:POST.id_advogado_compromisso_apenso,tipo_compromisso:POST.tipo_compromisso_apenso,
+		tipo:POST.tipo_apenso,nome:POST.nome_compromisso_apenso, data_inicial:POST.data_inicial_compromisso_apenso,
 		hora_inicial: POST.hora_inicial_compromisso_apenso,data_final:POST.data_final_compromisso_apenso, 
 		hora_final: POST.hora_final_compromisso_apenso, local: POST.local_compromisso_apenso, 
 		complemento:POST.complemento_compromisso_apenso};
@@ -766,8 +778,8 @@ router.post('/cadastrar_compromisso_recurso', function(req, res, next) {
 
 	data_insert = {id_usuario: req.session.usuario.id, id_processo:POST.id,
 		id_recurso: POST.id_recurso, id_advogado_setor: POST.id_advogado_setor_recurso,
-		id_advogado_compromisso:POST.id_advogado_compromisso_recurso,tipo:POST.tipo_compromisso_recurso, 
-		nome:POST.nome_compromisso_recurso, data_inicial:POST.data_inicial_compromisso_recurso,
+		id_advogado_compromisso:POST.id_advogado_compromisso_recurso,tipo_compromisso:POST.tipo_compromisso_recurso, 
+		tipo:POST.tipo_recurso,nome:POST.nome_compromisso_recurso, data_inicial:POST.data_inicial_compromisso_recurso,
 		hora_inicial: POST.hora_inicial_compromisso_recurso,data_final:POST.data_final_compromisso_recurso, 
 		hora_final: POST.hora_final_compromisso_recurso, local: POST.local_compromisso_recurso, 
 		complemento:POST.complemento_compromisso_recurso};
@@ -1223,15 +1235,18 @@ router.post('/cadastrar-cliente-simples', function(req, res, next) {
 router.get('/selecionar-todos-advogados', function(req, res, next) {
 	model.SelecioneTodosAdvogados().then(data_dados =>{
 		data.dados = data_dados;
-		console.log('------------- data todos advogados ----------');
-		console.log(data);
-		console.log('---------------------------------------------');
-		data.nome_relatorio = 'Advogados';
-		data.nome_campo_extra_header = 'Oab';
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		model.SelecioneOabExtraTodosAdvogados().then(data_oab=>{
+			data.nome_relatorio = 'Advogados';
+			data.nome_campo_extra = 'Oab';
+			data.campo_extra = data_oab;
+			data.mensagem = "*Se o Advogado Não estiver na lista por-favor pedir ao administrador para adicionar!*";
+			console.log('------------- data todos advogados ----------');
+			console.log(data);
+			console.log('---------------------------------------------');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+		});
 	});
 });
-
 
 router.get('/pesquisar-todos-advogados-autocomplete/:pesquisa', function(req, res, next) {
 	pesquisa = req.params.pesquisa;
@@ -1249,7 +1264,14 @@ router.get('/pesquisar-todos-advogados-autocomplete/:pesquisa', function(req, re
 router.get('/selecionar-todos-advogados-do-setor-compromisso', function(req, res, next) {
 	model.SelecioneTodosAdvogados().then(data_dados =>{
 		data.dados = data_dados;
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_advogados_setor_compromisso', data: data, usuario: req.session.usuario});
+		model.SelecioneOabExtraTodosAdvogados().then(data_oab=>{
+			data.nome_relatorio = 'Advogados';
+			data.nome_campo_extra = 'Oab';
+			data.campo_extra = data_oab;
+			data.nome_campo_extra_oab = 'Oab';
+			data.mensagem = "*Se o Advogado Não estiver na lista por-favor pedir ao administrador para adicionar!*";
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_advogados_setor_compromisso', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 

@@ -33,7 +33,7 @@ class CompromissosModel {
 	}
 
 
-		SelecionarEventoEspecifico(id) {
+	SelecionarEventoEspecifico(id) {
 		return new Promise(function(resolve, reject) {
 			// 
 			helper.Query("SELECT a.*,\
@@ -55,6 +55,20 @@ class CompromissosModel {
 
 
 
+
+	// SelecionarEventos(id_usuario){
+	// 	return new Promise(function(resolve, reject) {
+	// 		helper.Query("SELECT a.id, a.nome as title,\
+	// 			CONVERT_TZ(a.data_inicial,'+00:00',@@global.time_zone) as start,\
+	// 			CONVERT_TZ(a.data_final,'+00:00',@@global.time_zone) as end\
+	// 			FROM compromissos as a WHERE a.deletado = ? AND (a.id_advogado_setor = ? OR a.id_advogado_compromisso = ? OR (tipo_compromisso = ? AND id_usuario = ?)) ", [0,id_usuario,id_usuario,3,id_usuario]).then(data => {
+	// 				console.log('@@@@@@@@@@@@@ Dados Eventos do Model @@@@@@@@@@@@@');
+	// 				console.log(data);
+	// 				console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+	// 				resolve(data);
+	// 			});
+	// 		});
+	// }
 
 	SelecionarEventos(id_usuario){
 		return new Promise(function(resolve, reject) {
@@ -151,9 +165,9 @@ class CompromissosModel {
 	SelecionarTempo(){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT DATE_FORMAT(NOW(),"%d/%m/%Y") as hoje').then(data => {					
-					resolve(data);
-				});
+				resolve(data);
 			});
+		});
 	}
 
 	CadastrarNotificacao(POST){
