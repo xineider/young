@@ -26,13 +26,19 @@ router.get('/', function(req, res, next) {
 						//id_ultimo_processo[0].id - retorna o último processo que não está deletado
 						model.SelecioneMaisDetalhesDoProcesso(id_ultimo_processo[0].id).then(data_mais_processos =>{
 							data.detalhes_processo = data_mais_processos;
-							model.SelecioneAndamentosDoProcesso(id_ultimo_processo[0].id).then(data_andamento_processo =>{
-								data.andamentos = data_andamento_processo;
-								model.SelecionarTempo().then(data_tempo=>{
-									data.tempo = data_tempo;
-									model.SelecioneCompromissosDoProcesso(id_ultimo_processo[0].id).then(data_compromisso_processo =>{
-										data.compromissos = data_compromisso_processo;
-										res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
+							model.SelecionarEnvolvidosCliente(id_ultimo_processo[0].id).then(data_envolvidos_processo =>{
+								data.envolvidos_cliente = data_envolvidos_processo;
+								model.SelecionarEnvolvidosAdverso(id_ultimo_processo[0].id).then(data_envolvidos_adverso =>{
+									data.envolvidos_adverso = data_envolvidos_adverso;
+									model.SelecioneAndamentosDoProcesso(id_ultimo_processo[0].id).then(data_andamento_processo =>{
+										data.andamentos = data_andamento_processo;
+										model.SelecionarTempo().then(data_tempo=>{
+											data.tempo = data_tempo;
+											model.SelecioneCompromissosDoProcesso(id_ultimo_processo[0].id).then(data_compromisso_processo =>{
+												data.compromissos = data_compromisso_processo;
+												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
+											});
+										});
 									});
 								});
 							});
