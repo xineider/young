@@ -29,7 +29,7 @@
   <div class="card" style="max-height: 50%">
     <div class="pane" style="padding-top:10px;">
 
-      <table class="centered highlight responsive-table cell-border" id="tabela_interna_adverso" style="width:100%;">
+      <table class="centered highlight responsive-table cell-border" id="tabela_interna_usuario" style="width:100%;">
         <thead>
           <tr>
             <th>Login</th>
@@ -46,7 +46,7 @@
           if (typeof data != 'undefined' && data.length > 0) {
             for (var i = data.length - 1; i >= 0; i--) {
               %>
-              <tr class="row_processo_interno">
+              <tr>
                 <td>
                   <%= data[i].login %>
                 </td>
@@ -78,7 +78,13 @@
                   </td>
                   
                   <td>
+
+                    <a class="modal-mount" data-href="#modalinfo" data-link="/usuarios/alterarSenha/<%= data[i].id %>">
+                      <i class="fa fa-key yellow-text text-darken-2"></i>
+                    </a>
+
                     <a href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load"><i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i></a>
+
                     <i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data[i].nome %>'? " data-to="/sistema/usuarios/desativar" data-back="/sistema/usuarios" aria-hidden="true"></i>
                   </td>
 

@@ -45,6 +45,7 @@ $(document).on('ready', function () {
 		validarDataTable($('#tabela_interna_contato'));
 		validarDataTableNoSort($('#tabela_interna_processo'));
 		validarDataTable($('#tabela_interna_notificacoes'));
+		validarDataTable($('#tabela_interna_usuario'));
 
 		
 
@@ -349,6 +350,22 @@ $(document).on('ready', function () {
 	});
 
 
+	$(document).on('click', '.ajax-submit-cadastrar-usuario', function(e) {
+		e.preventDefault();
+		var form = $(this).parents('form');
+		var post = form.serializeArray();
+		var link = $(this).data('href');
+		var back = $(this).data('action');
+		var metodo = $(this).data('method');
+		var method = (metodo != undefined && metodo != '') ? metodo : 'POST';
+		if (VerificarForm(form) == true) {
+			SubmitAjaxCadastrarUsuario(post, link, back, method);
+		}
+	});
+
+
+
+
 	$(document).on('click', '.alterar-senha-botao', function(e) {
 		e.preventDefault();
 		var form = $(this).parents('form');
@@ -641,6 +658,19 @@ $(document).on('click','.load_especifico_to_container',function(e){
 
 	$(document).on('change', 'select[name="tipo_compromisso_recurso"]', function (e) {
 		changeTipoCompromissoPorCategoriaCompromisso($(this),$('#select_tipo_compromisso_recurso'),'tipo_recurso');
+	});
+
+
+	$(document).on('change', '#cargo_usuario', function (e) {
+		console.log('change do cargo usuario');
+		console.log($(this).val());
+		console.log($('.container_campo_extra_usuario'));
+		if($(this).val() == 1){
+			$('.container_campo_extra_usuario').append('<label>Oab</label>\
+				<input class="validate" type="text" name="oab">');
+		}else{
+			$('.container_campo_extra_usuario').empty();
+		}
 	});
 
 
@@ -1309,7 +1339,8 @@ function SubmitAjax(post, link, back, method) {
 				window.location.replace('/sistema/configuracoes');
 			}
 			if (typeof data != undefined && data > 0) {
-				M.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
+				M.toast({html:'<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 
+					displayLength:5000, classes:'rounded'});
 			}
 			console.log(back);
 
@@ -1328,6 +1359,45 @@ function SubmitAjax(post, link, back, method) {
 				$('.grupo').prepend('<option value="'+data.id+'">'+data.nome+'</option>').find('option:first-child').prop('selected', true);
 				$('.modal').modal('close');
 			}
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    	console.log(xhr.statusText);
+    },
+    complete: function() {
+    	removerLoader();
+    }
+  });
+}
+
+
+function SubmitAjaxCadastrarUsuario(post, link, back, method) {
+	$.ajax({
+		method: 'POST',
+		async: true,
+		data: post,
+		url: link,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+			console.log('beforeSend SubmitAjax');
+		},
+		success: function(data) {
+			console.log('TTTTTTTTTTTTTT DATA DO RES.JSON DO AJAX-SUBMIT TTTTTTTTTTTTT');
+			console.log(data);
+			console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+			console.log(back);
+			if(data == "possui_login"){
+				$('.erro_container_cadastro_usuario').removeClass('hide');
+				$('.erro_container_cadastro_usuario').find('.error_cadastro_usuario_mensagem').html('Já existe alguém com este Login de usuário!');
+
+			}else{
+				M.toast({html:'<div class="center-align" style="width:100%;">Usuário cadastrado com sucesso</div>', 
+					displayLength:5000, classes:'rounded'});
+				GoTo(back, true);
+			}	
 		},
     error: function(xhr) { // if error occured
     	removerLoader();
@@ -1469,7 +1539,8 @@ function SubmitComentario(post, link, back, method) {
 				window.location.replace('/sistema/configuracoes');
 			}
 			if (typeof data != undefined && data > 0) {
-				M.toast('<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>', 5000, 'rounded');
+				M.toast({html:'<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>',
+				displayLength:5000, classes: 'rounded'});
 			}
 			if(data=='novo_comentario'){
 				$('.novos-comentarios').prepend('<p><b>Comentario:</b>'+ '&nbsp;'+$('#texto_comentario').val()+'</p>');
@@ -1529,6 +1600,35 @@ function FocusInputModal(modal) {
 
 
 function MountModal(modal, link) {
+	$.ajax({
+		method: "GET",
+		async: true,
+		url: '/sistema'+link,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			console.log(link);
+			$(modal).find('.modal-content').html(data);
+			$(modal).modal('open');
+		},
+    error: function(xhr) { // if error occured
+    	removerLoader();
+    },
+    complete: function() {
+    	removerLoader();
+    	$('.material-tooltip').remove();
+    	$('.tooltipped').tooltip({delay: 50});
+    	FormatInputs();
+    	FocusInputModal(modal);
+    }
+  });
+}
+
+function MountModalOneItem(modal, link) {
 	$.ajax({
 		method: "GET",
 		async: true,

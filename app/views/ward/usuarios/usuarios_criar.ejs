@@ -20,7 +20,7 @@
 
         <div class="right valign-wrapper">
           <div class="black-text margin-r-5">Salvar Usuário</div>
-          <button data-href="/sistema/usuarios/cadastrar/" class="btn-floating btn-large waves-effect waves-light bordo ajax-submit-no-back">
+          <button data-href="/sistema/usuarios/cadastrar/" class="btn-floating btn-large waves-effect waves-light bordo ajax-submit" data-action="/sistema/usuarios/">
             <i class="fa fa-floppy-o" aria-hidden="true"></i>          
           </button>
 
@@ -29,23 +29,26 @@
       </div>
 
       <div class="row">
-        <div class="input-field input-group-control col s12 m6">
+        <div class="input-field input-group-control col s12 m6 full-width">
           <label for="nome">Login</label>
           <input required="true" class="validate" type="text" name="login">
+          <div class="erro_container_cadastro_usuario hide red">
+            <div class="error_cadastro_usuario_mensagem white-text center"></div>
+          </div> 
         </div>
-        <div class="input-field input-group-control col s12 m6">
+        <div class="input-field input-group-control col s12 m6 full-width">
           <label for="nome">Nome</label>
           <input required="true" class="validate" type="text" name="nome">
         </div>
-        <div class="input-field input-group-control col s12 m6">
+        <div class="input-field input-group-control col s12 m6 full-width">
           <label for="email">Email</label>
           <input required="true" class="validate" type="text" name="email">
         </div>
-        <div class="input-field input-group-control col s12 m6">
+        <div class="input-field input-group-control col s12 m6 full-width">
           <label for="telefone">Telefone</label>
-          <input required="true" class="validate" type="tel" name="telefone">
+          <input required="true" class="validate tel" type="tel" name="telefone">
         </div>
-        <div class="col s12 m6 select-field input-group-control">
+        <div class="col s12 m6 select-field input-group-control full-width">
           <label>Nível</label>
           <select required="true" class="browser-default" name="nivel">
             <option value="" disabled selected>Selecione</option>
@@ -54,7 +57,7 @@
             <option value="3">Funcionário</option>
           </select>
         </div>
-        <div class="col s12 m6 select-field input-group-control">
+        <div class="col s12 m6 select-field input-group-control full-width">
           <label>Setor</label>
           <select required="true" class="browser-default" name="id_setor">
             <option value="" disabled selected>Selecione</option>
@@ -69,15 +72,27 @@
             %>
           </select>
         </div>
+
+        <div class="col s12 m6 select-field input-group-control full-width">
+          <label>Cargo</label>
+          <select required="true" class="browser-default" name="cargo" id="cargo_usuario">
+            <option value="0" selected>Nenhum</option>
+            <option value="1">Advogado</option>
+          </select>
+        </div>
+
+        <div class="input-field input-group-control col s12 m6 full-width container_campo_extra_usuario">
+        </div>
       </div>
+
       <div class="right-align">
-        <button data-href="/sistema/usuarios/cadastrar/" data-action="/sistema/usuarios/" class="btn waves-effect waves-light bordo">
+        <button data-href="/sistema/usuarios/cadastrar/" data-action="/sistema/usuarios/" class="btn waves-effect waves-light bordo ajax-submit-cadastrar-usuario">
           Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
       </div>
     </form>
   </div>
-  
+
   <%}else{%>
   <div class="card cream archive">
     <p>Sinto Muito, você não possuí autoridade para visualizar esta página</p>

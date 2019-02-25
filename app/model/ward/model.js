@@ -15,19 +15,19 @@ var crypto = require('crypto');
 // 						    "database" : "sistema_juridico"
 // 					  	};
 
-// var config = {
-// 					"host"     : "us-cdbr-iron-east-04.cleardb.net",
-// 					"user"     : "bf4496a051147d",
-// 					"password" : "756200a0",
-// 					"database" : "heroku_f7df11955c8ff5d"
-// 					  	};
-
 var config = {
-	"host"     : "mysql785.umbler.com",
-	"user"     : "admin-young-adv",
-	"password" : "6O(ayS4?{q{Ci",
-	"database" : "young-adv"
-};
+					"host"     : "us-cdbr-iron-east-04.cleardb.net",
+					"user"     : "bf4496a051147d",
+					"password" : "756200a0",
+					"database" : "heroku_f7df11955c8ff5d"
+					  	};
+
+// var config = {
+// 	"host"     : "mysql785.umbler.com",
+// 	"user"     : "admin-young-adv",
+// 	"password" : "6O(ayS4?{q{Ci",
+// 	"database" : "young-adv"
+// };
 
 // // CONEXÃO MYSQL
 var mysql      = require('mysql');

@@ -391,6 +391,25 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 
 
+input:not([type]):focus.valid ~ label, 
+input[type=text]:not(.browser-default):focus.valid ~ label, 
+input[type=password]:not(.browser-default):focus.valid ~ label, 
+input[type=email]:not(.browser-default):focus.valid ~ label, 
+input[type=url]:not(.browser-default):focus.valid ~ label, 
+input[type=time]:not(.browser-default):focus.valid ~ label, 
+input[type=date]:not(.browser-default):focus.valid ~ label, 
+input[type=datetime]:not(.browser-default):focus.valid ~ label, 
+input[type=datetime-local]:not(.browser-default):focus.valid ~ label, 
+input[type=tel]:not(.browser-default):focus.valid ~ label, 
+input[type=number]:not(.browser-default):focus.valid ~ label, 
+input[type=search]:not(.browser-default):focus.valid ~ label, 
+textarea.materialize-textarea:focus.valid ~ label{
+  color: rgb(79, 33, 40)!important;
+}
+
+
+
+
 
 .datepicker-date-display,.timepicker-digital-display,.fc-event, .fc-event-dot{
   background-color: rgb(66,25,31);
@@ -1094,6 +1113,11 @@ box-shadow: 0 1px 0 0 #fff;*/
   border-radius: 0 5px 0 0;
 }
 
+.erro_container_cadastro_usuario{
+  position: absolute;
+  padding: 3px 0;
+  width: 100%;
+}
 
 .card{
   background: #faf2e3; /* Old browsers */
@@ -1544,6 +1568,14 @@ box-shadow: 0 1px 0 0 #fff;*/
     background-color: #ececec;
     margin: 10px;
     border-radius: 35px 0 35px  35px;
+  }
+
+  .chat-conteudo .no-conversation{
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 35px;
   }
   .enviar-mensagem {
     position: absolute;

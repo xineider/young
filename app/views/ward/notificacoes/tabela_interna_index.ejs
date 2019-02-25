@@ -13,7 +13,7 @@
         <%
         for (var i = data.length - 1; i >= 0; i--) {
           %>
-          <tr class="row_processo_interno <%= data[i].visto == 0 ? "bold": ""%>">
+          <tr class="<%= data[i].visto == 0 ? "bold": ""%>">
             <td>
               <%= data[i].nome_criador %>
             </td>

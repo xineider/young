@@ -1,6 +1,6 @@
 
 <div class="titulo" style="box-shadow: 0px -1px 5px black;padding-top: 5px;">
-  <div class="row">
+  <div class="row" style="margin-bottom: 0;">
     <div class="col s4 center-align">
       <img src="/assetsward/imgs/user-padrao.jpg" alt="" class="circle" style="width: 64px;height: 64px;">
     </div>
@@ -38,7 +38,7 @@
       }
     }
   }else{ %>
-  <div class="center">
+  <div class="no-conversation">
     Você não possui conversas com <%= data.usuario[0].nome %> !
   </div>
 
@@ -53,7 +53,7 @@
 <style type="text/css">
 .chat-conteudo {
   /*overflow: auto;*/
-  height: 90%;
+  height: 100%;
 }
 .enviar-mensagem {
   background-color: white;
@@ -68,7 +68,8 @@
 padding-bottom: 15px;*/
 overflow: auto;
 height: calc(100% - 125px);
-
+padding-top: 20px;
+background: url(/assetsward/imgs/textura-gold.jpg);
 
 }
 .titulo {
