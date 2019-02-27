@@ -978,9 +978,18 @@ $(document).on('click','.load_especifico_to_container',function(e){
 	$(document).on('click', '.load-mensagens', function() {
 		MensagensChat($(this).data('id'));
 	});
+	$(document).on('click', '.load-mensagens-grupo', function() {
+		MensagensChatGrupo($(this).data('id_chat_grupo'));
+	});
 	$(document).on('click', '#enviar-msg', function() {
 		EnviarMensagem($(this).data('id'));
 	});
+
+	$(document).on('click', '#enviar-msg-grupo', function() {
+		EnviarMensagemGrupo($(this).data('id_grupo_chat'));
+	});
+
+
 	$(document).keypress(function(e) {
 		if(e.which == 13 && $("#mensagem-texto").is(":focus")) {
 			EnviarMensagem($('#enviar-msg').data('id'));
@@ -1540,7 +1549,7 @@ function SubmitComentario(post, link, back, method) {
 			}
 			if (typeof data != undefined && data > 0) {
 				M.toast({html:'<div class="center-align" style="width:100%;">Cadastrado com sucesso</div>',
-				displayLength:5000, classes: 'rounded'});
+					displayLength:5000, classes: 'rounded'});
 			}
 			if(data=='novo_comentario'){
 				$('.novos-comentarios').prepend('<p><b>Comentario:</b>'+ '&nbsp;'+$('#texto_comentario').val()+'</p>');
@@ -2167,6 +2176,31 @@ function MensagensChat(id) {
 		}
 	});
 }
+
+function MensagensChatGrupo(id_chat_grupo) {
+	var id_usuario_sessao = $('input[name="id_usuario_sessao"]').val();
+	$.ajax({
+		method: "POST",
+		async: true,
+		data: {id_chat_grupo: id_chat_grupo, id_usuario: id_usuario_sessao},
+		url: '/sistema/chats/mensagensGrupo/',
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			$('.chat-conteudo').html(data);
+		},
+		error: function(xhr) { // if error occured
+			removerLoader();
+		},
+		complete: function() {
+			removerLoader();
+		}
+	});
+}
 function AddInputDel(isso) {
 	var id = isso.data('id');
 	console.log(id);
@@ -2197,6 +2231,33 @@ function EnviarMensagem(id) {
 		}
 	});
 }
+
+function EnviarMensagemGrupo(id_chat_grupo) {
+	var id_usuario_sessao = $('input[name="id_usuario_sessao"]').val();
+	$.ajax({
+		method: "POST",
+		async: true,
+		data: {id_chat_grupo: id_chat_grupo, id_usuario: id_usuario_sessao, texto: $('#mensagem-texto-grupo').val()},
+		url: '/sistema/chats/enviarmensagemgrupo/',
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function(data) {
+			$('.chat-conteudo').html(data);
+		},
+		error: function(xhr) { // if error occured
+			removerLoader();
+		},
+		complete: function() {
+			removerLoader();
+		}
+	});
+}
+
+
 function LoadArquivos(id, isso) {
 	$.ajax({
 		method: "GET",

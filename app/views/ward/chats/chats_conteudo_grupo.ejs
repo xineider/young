@@ -6,7 +6,7 @@
     </div>
     <div class="col s8">
       <p id="nome">
-        <%= data.usuario[0].nome %>
+        <%= data.grupo_chat[0].nome %>
       </p>
     </div>
   </div>
@@ -20,9 +20,12 @@
         if (i == 0) {
           id = "final"
         }
-        if (id_para == data.mensagens[i].id_usuario) {
+        if (data.mensagens[i].id_usuario != usuario.id) {
           %>
           <div class="voce" id="<%= id %>">
+            <div class="nome_outro_chat">
+              <small><%=data.mensagens[i].nome%></small>   
+            </div>
             <%= data.mensagens[i].texto %>
           </div>
           <%
@@ -39,7 +42,7 @@
     }
   }else{ %>
   <div class="no-conversation">
-    Você não possui conversas com <%= data.usuario[0].nome %> !
+    Esse Grupo não possui conversas!
   </div>
 
   <%
@@ -47,8 +50,8 @@
 %>
 </div>
 <div class="enviar-mensagem">
-  <input type="text" id="mensagem-texto" placeholder="Escreva sua mensagem...">
-  <i class="fa fa-paper-plane bordo" id="enviar-msg" aria-hidden="true" data-id="<%= id_para %>"></i>
+  <input type="text" id="mensagem-texto-grupo" placeholder="Escreva sua mensagem...">
+  <i class="fa fa-paper-plane bordo" id="enviar-msg-grupo" aria-hidden="true" data-id_grupo_chat="<%= data.grupo_chat[0].id %>"></i>
 </div>
 
 <script type="text/javascript">
