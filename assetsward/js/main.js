@@ -994,6 +994,9 @@ $(document).on('click','.load_especifico_to_container',function(e){
 		if(e.which == 13 && $("#mensagem-texto").is(":focus")) {
 			EnviarMensagem($('#enviar-msg').data('id'));
 		}
+		if(e.which == 13 && $("#mensagem-texto-grupo").is(":focus")) {
+			EnviarMensagemGrupo($('#enviar-msg-grupo').data('id_grupo_chat'));
+		}
 	});
 });
 // Eventos Após DOM

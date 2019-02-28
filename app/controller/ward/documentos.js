@@ -50,6 +50,10 @@ router.post('/pesquisar', function(req, res, next) {
 router.post('/cadastrar', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
+	console.log(']]]]]]]]]]]]]]]]]]]]]]]]]]]]] CADASTRAR DOCUMENTO ]]]]]]]]]]]]]]]]]]]]]]]]]]');
+	console.log(POST);
+	console.log(']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
+
 	model.CadastrarDocumento(POST).then(data => {
 		res.json(data);
 	});
@@ -74,7 +78,7 @@ router.post('/uploadarquivo', function(req, res, next) {
   var nome = control.DateTimeForFile()+'_'+sampleFile.name;
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('./assets/uploads/'+nome, function(err) {
+  sampleFile.mv('./assetsward/uploads/'+nome, function(err) {
     if (err) {
       return res.status(500).send(err);
     }
