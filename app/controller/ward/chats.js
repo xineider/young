@@ -11,7 +11,8 @@ app.use(require('express-is-ajax-request'));
 
 /* GET pagina de login. */
 router.get('/', function(req, res, next) {
-	model.SelecioneChats(req.session.usuario.id).then(data => {
+	if(req.session.usuario.nivel)
+	model.SelecioneChats(req.session.usuario.id,req.session.usuario.nivel).then(data => {
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/chats/index', data: data, usuario: req.session.usuario});
 	});
 });

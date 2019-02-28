@@ -6,12 +6,22 @@ var helper = new Helper;
 
 class ChatsModel {
 
-	SelecioneChats(id_usuario) {
+	SelecioneChats(id_usuario,nivel) {
 		var data = {};
 		return new Promise(function(resolve, reject) {
+			var values = [0];
+			var where_add = '';
+
+			if(nivel != 1){
+				where_add = 'AND b.id_usuario = ?';
+				values = [0,id_usuario];
+			}else{
+				where_add = 'GROUP BY a.nome'
+			}
+
 			helper.Query('SELECT a.* FROM chats_grupo as a \
 				INNER JOIN chats_participantes_grupo as b ON a.id = b.id_chat_grupo \
-				WHERE a.deletado = ? AND b.id_usuario = ?', [0, id_usuario]).then(data_participantes => {
+				WHERE a.deletado = ? '+where_add, values).then(data_participantes => {
 					data['grupos'] = data_participantes;
 					helper.Query('SELECT *,\
 						(SELECT texto FROM chats_mensagens as b WHERE ( a.id = b.id_usuario AND b.id_usuario_enviado = ?)\

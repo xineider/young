@@ -36,26 +36,27 @@
         </div>
         <div class="row">
           <input type="hidden" value="<%= data.usuario[i2].id %>" name="id">
-          <div class="input-field col s12 m6">
-            <input required="true" class="validate" type="text" name="login" value="<%= data.usuario[i2].login %>">
+
+          <div class="input-field input-group-control col s12 m6 full-width">
             <label for="nome">Login</label>
+            <input required="true" class="validate" type="text" name="login" value="<%= data.usuario[i2].login %>">
             <div class="erro_container_cadastro_usuario hide red">
               <div class="error_cadastro_usuario_mensagem white-text center"></div>
             </div> 
           </div>
-          <div class="input-field col s12 m6">
-            <input required="true" class="validate" type="text" name="nome" value="<%= data.usuario[i2].nome %>">
+          <div class="input-field input-group-control col s12 m6 full-width">
             <label for="nome">Nome</label>
+            <input required="true" class="validate" type="text" name="nome" value="<%= data.usuario[i2].nome %>">
           </div>
-          <div class="input-field col s12 m6">
-            <input required="true" class="validate" type="text" name="email" value="<%= data.usuario[i2].email %>">
+          <div class="input-field input-group-control col s12 m6 full-width">
             <label for="email">Email</label>
+            <input required="true" class="validate" type="text" name="email" value="<%= data.usuario[i2].email %>">
           </div>
-          <div class="input-field col s12 m6">
-            <input required="true" class="validate" type="tel" name="telefone" value="<%= data.usuario[i2].telefone %>">
+          <div class="input-field input-group-control col s12 m6 full-width">
             <label for="telefone">Telefone</label>
+            <input required="true" class="validate tel" type="tel" name="telefone" value="<%= data.usuario[i2].telefone %>">
           </div>
-          <div class="col s12 m6">
+          <div class="col s12 m6 select-field input-group-control full-width">
             <label>Nível</label>
             <select required="true" class="browser-default" name="nivel">
               <option value="" disabled selected>Selecione</option>
@@ -64,7 +65,7 @@
               <option value="3" <%= 3 == data.usuario[i2].nivel ? 'selected="true"' : '' %>>Funcionário</option>
             </select>
           </div>
-          <div class="col s12 m6">
+          <div class="col s12 m6 select-field input-group-control full-width">
             <label>Setor</label>
             <select required="true" class="browser-default" name="id_setor">
               <option value="" disabled selected>Selecione</option>
@@ -80,7 +81,7 @@
             </select>
           </div>
 
-          <div class="col s12 m6">
+         <div class="col s12 m6 select-field input-group-control full-width">
             <label>Cargo</label>
             <select required="true" class="browser-default" name="cargo" id="cargo_usuario">
               <option value="0" <%= data.usuario[i2].cargo == 0 ? 'selected="true"' : '' %>>Nenhum</option>
@@ -90,12 +91,15 @@
 
           <% if(data.usuario[i2].cargo == 1){ %>
 
-          <div class="col s12 m6">
+          <div class="input-field input-group-control col s12 m6 full-width">
             <label>Oab</label>
             <input class="validate" type="text" name="oab" value="<%= data.usuario[i2].oab %>">
           </div>
 
           <%}%>
+
+          <div class="input-field input-group-control col s12 m6 full-width container_campo_extra_usuario">
+          </div>
 
 
         </div>
