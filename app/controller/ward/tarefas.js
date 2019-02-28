@@ -113,7 +113,7 @@ router.post('/uploadarquivo', function(req, res, next) {
 
 	model.CadastraArquivo(id, nome).then(data => {
 		  // Use the mv() method to place the file somewhere on your server
-		  sampleFile.mv('./assets/uploads/'+nome, function(err) {
+		  sampleFile.mv('./assetsward/uploads/'+nome, function(err) {
 		  	if (err) {
 		  		return res.status(500).send(err);
 		  	}
