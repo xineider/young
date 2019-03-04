@@ -14,7 +14,8 @@
 
 	<div class="card cream archive">
 		<form method="POST" action="" enctype="multipart/form-data">
-			<div class="right-align">
+			<div class="right-align row">
+
 				<a href="/sistema/tarefas/" class="ajax-load">
 					<div class="left valign-wrapper">
 						<div class="btn-floating btn-large waves-effect waves-light bordo ">
@@ -23,40 +24,45 @@
 						<div class="black-text margin-l-5">Editar Tarefas</div>  
 					</div>
 				</a>
-				<button data-href="/sistema/tarefas/cadastrar/" data-action="/sistema/tarefas/" class="btn-floating btn-large waves-effect waves-light bordo ajax-submit">
-					<i class="fa fa-floppy-o" aria-hidden="true"></i>
-				</button>
+
+				<div class="right valign-wrapper">
+					<div class="black-text margin-r-5">Salvar Tarefa</div>
+					<button data-href="/sistema/tarefas/cadastrar/" data-action="/sistema/tarefas/" class="btn-floating btn-large waves-effect waves-light bordo ajax-submit">
+						<i class="fa fa-floppy-o" aria-hidden="true"></i>
+					</button>
+				</div>
+				
 			</div>
 			<div class="row">
 				<h5>
 					Informações sobre a tarefa
 				</h5>
 				<div class="input-field input-group-control col s12">
-					<label for="nome">Nome</label>
+					<b><label for="nome">Nome * </label></b>
 					<input required="true" class="validate" type="text" name="tarefa[nome]]">
 				</div>
 				<div class="col s12 m6 input-field input-group-control">
-					<label for="data_inicio" class="active">Data Prevista</label>
+					<b><label for="data_inicio" class="active">Data Prevista *</label></b>
 					<input required="true" class="datepicker" type="tel" name="tarefa[data_prevista]">
 				</div>
 				<div class="col s12 m6 input-field input-group-control">
 					<label for="tempo_previsto" class="active">Tempo Previsto</label>
-					<input required="true" class="time" type="tel" name="tarefa[tempo_previsto]">
+					<input class="time" type="tel" name="tarefa[tempo_previsto]">
 				</div>
 				<div class="col s12 m6 input-field input-group-control">
 					<label for="data_inicio" class="active">Data Inicial</label>
-					<input required="true" class="datepicker" type="tel" name="tarefa[data_inicio]">
+					<input  class="datepicker" type="tel" name="tarefa[data_inicio]">
 				</div>
 				<div class="col s12 m6 input-field input-group-control">
 					<label for="data_final" class="active">Data Final</label>
-					<input required="true" class="datepicker" type="tel" name="tarefa[data_final]">
+					<input class="datepicker" type="tel" name="tarefa[data_final]">
 				</div>
 				<div class="input-field col s12 input-group-control">
 					<label for="descricao">Descrição</label>
-					<textarea required="true" name="tarefa[descricao]" class="materialize-textarea"></textarea>
+					<textarea name="tarefa[descricao]" class="materialize-textarea"></textarea>
 				</div>
 				<div class="col s12 m6 select-field input-group-control">
-					<label>Usuário Responsável</label>
+					<b><label>Usuário Responsável *</label></b>
 					<select required="true" class="browser-default" name="tarefa[id_usuario]">
 						
 						<% if(usuario.nivel != 3){%>
@@ -78,7 +84,7 @@
 				</select>
 			</div>
 			<div class="col s12 m6 select-field input-group-control">
-				<label>Gerente Responsavel</label>
+				<b><label>Gerente Responsavel *</label></b>
 				<select required="true" class="browser-default" name="tarefa[id_responsavel]">
 					<option value="" disabled selected>Selecione</option>
 					<%

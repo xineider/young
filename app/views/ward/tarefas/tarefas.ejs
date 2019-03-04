@@ -13,22 +13,25 @@
 
 
 <div class="card cream archive">
-  <div class="header row">
+  <div class="right-align row">
 
    <a href="/sistema/tarefas/sac" class="ajax-load">
      <div class="left valign-wrapper">
-      <div class="btn-floating btn-large waves-effect waves-light bordo ">
+      <div class="btn-floating btn-large waves-effect waves-light bordo lighten-1">
         <i class="fa fa-columns" aria-hidden="true"></i>            
       </div>
       <div class="black-text margin-l-5">Sac</div>  
     </div>
   </a>
 
-  <div class="right-align">
-    <a class="btn-floating btn-large waves-effect waves-light bordo right ajax-load" href="/sistema/tarefas/criar">
+  <div class="right valign-wrapper">
+    <div class="black-text margin-r-5">Criar Tarefa</div>
+    <a class="btn-floating btn-large waves-effect waves-light bordo lighten-1 right ajax-load" href="/sistema/tarefas/criar">
       <i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
+
   </div>
+
   <ul class="collapsible popout" data-collapsible="accordion, expandable">
     <%
     if (typeof data != 'undefined' && data.length > 0) {

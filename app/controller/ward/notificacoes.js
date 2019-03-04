@@ -5,7 +5,7 @@ var Control = require('./control.js');
 var control = new Control;
 var NotificacoesModel = require('../../model/ward/notificacoesModel.js');
 var model = new NotificacoesModel;
-var data = '';
+var data = {};
 var app = express();
 app.use(require('express-is-ajax-request'));
 
@@ -30,6 +30,43 @@ router.get('/remover_visto/:id', function(req, res, next) {
 	});
 });
 
+
+router.post('/marcarTodosVistos', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP marcarTodosVistos PPPPPPPPPPPPPPPPPPPPPPPP');
+	console.log(POST);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+	model.GetTodasNotificacoesNaoVistas(req.session.usuario.id).then(data_id_nao_visto=>{
+		console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC DATA_ID_NAO VISTO CCCCCCCCCCCCCCCCCC');
+		console.log(data_id_nao_visto);
+		console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC');
+		console.log(data_id_nao_visto.length);
+
+		if(data_id_nao_visto != ''){
+
+			/*Crio um array com todos os id e depois coloco dentro de um objeto data.lista*/
+			var arrayApoio = [];
+			for(i=0; i < data_id_nao_visto.length; i++){
+				arrayApoio.push(data_id_nao_visto[i].id);			
+			}
+
+			console.log(arrayApoio);
+			data.lista = {id:arrayApoio};
+			console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+			console.log(data);
+			console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+
+			model.AtualizarTodasNaoVistas(data).then(data_final=>{
+				res.json(data);
+			});
+		}else{
+			console.log('entrei no else');
+			res.json('');
+		}
+
+	});
+});
 
 
 

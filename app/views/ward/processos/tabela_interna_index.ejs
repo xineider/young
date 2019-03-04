@@ -16,7 +16,7 @@
         <%
         for (var i = data.processos.length - 1; i >= 0; i--) {
           %>
-          <tr class="<%= data.processos[i].deletado == 1 ? "grey darken-1": ""%>">
+          <tr class="row_processo_interno <%= data.processos[i].deletado == 1 ? "grey darken-1": ""%>">
             <td class="numero_processo">
               <%= data.processos[i].numero %>
             </td>

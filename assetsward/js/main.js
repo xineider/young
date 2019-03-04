@@ -77,6 +77,7 @@ $(document).on('ready', function () {
     	monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
     	weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
     	weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    	weekdaysAbbrev: ['D','S','T','Q','Q','S','S'],
     	cancel:'Cancelar',
     	clear:'Limpar',
     	done:'Pronto'
@@ -91,6 +92,35 @@ $(document).on('ready', function () {
     format: 'dd/mm/yyyy',
     autoClose: true, // Close upon selecting a date,
     defaultTime: 'now'
+  });
+		$('.datepicker_container_input').datepicker({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 190, // Creates a dropdown of 15 years to control year,
+    i18n: {
+    	months:['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    	monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    	weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+    	weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    	weekdaysAbbrev: ['D','S','T','Q','Q','S','S'],
+    	cancel:'Cancelar',
+    	clear:'Limpar',
+    	done:'Pronto'
+    },    
+    today: 'Hoje',
+    clear: 'Limpar',
+    close: 'Pronto',
+    labelMonthNext: 'Próximo mês',
+    labelMonthPrev: 'Mês anterior',
+    labelMonthSelect: 'Selecione um mês',
+    labelYearSelect: 'Selecione um ano',
+    format: 'dd/mm/yyyy',
+    autoClose: true, // Close upon selecting a date,
+    defaultTime: 'now',
+    onSelect:function(data_entregada){
+    	let mes = (1 + data_entregada.getMonth()).toString().padStart(2, '0');
+    	var valorData = data_entregada.getDate()+'/' + mes + '/' + data_entregada.getFullYear();
+    	$('#data_final_compromisso').val(valorData);
+    }
   });
 
 		$('.timepicker').timepicker({
@@ -322,6 +352,7 @@ $(document).on('ready', function () {
 	$(document).on('click', '.row_processo_interno', function () {
 		/*Removido a classe selecionado independente de quem seja*/
 		console.log('estou clicando na row!');
+		console.log($('.tabela_loc_processos').find('.row_processo_interno.selecionado'));
 		$('.tabela_loc_processos').find('.row_processo_interno.selecionado').removeClass('selecionado');
 		var id = $(this).find('.id_processo_interno').val();
 		const numero_processo = $(this).find('.numero_processo').text();
@@ -377,9 +408,9 @@ $(document).on('ready', function () {
 		if (VerificarForm(form) == true) {
 			SubmitAjax(post, link, back, method);
 		}
-		$('input[name="senha_atual"').val('');
-		$('#alterar_senha').val('');
-		$('#confirmar_alterar_senha').val('');
+		// $('input[name="senha_atual"').val('');
+		// $('#alterar_senha').val('');
+		// $('#confirmar_alterar_senha').val('');
 		$('.erro-alterar-senha').hide();
 
 	});
@@ -942,11 +973,16 @@ $(document).on('click','.load_especifico_to_container',function(e){
 	$(document).on('click','.close_container_load',function(e){
 		e.preventDefault();
 		console.log('pppppppppppppppp parent ppppppppppppppppppppppppppppppppp');
-		console.log($(this).parent());
+		console.log($(this).parent().parent());
 		console.log('ppppppppppppppppppppppppppppppppppppppppppppppppppppppppp');
+		console.log($(this).parent().parent().data('idload'));
 		$(this).parent().parent().empty();
-
+		$(this).parent().parent().removeData('idload');
+	
 	});
+
+
+
 
 
 	$(document).click(function(e){
@@ -1044,6 +1080,7 @@ function GoTo(link, state) {
     	$('.material-tooltip').remove();
     	$('.tooltipped').tooltip({delay: 50});
     	$('.modal').modal('close');
+    	$('#search_header').val('');
     	$("html, body").animate({ scrollTop: 0 }, "slow");
     	ActiveMaterializeInput();
     	FormatInputs();
@@ -1243,6 +1280,7 @@ function FormatInputs(focus) {
     	monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
     	weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
     	weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    	weekdaysAbbrev: ['D','S','T','Q','Q','S','S'],
     	cancel:'Cancelar',
     	clear:'Limpar',
     	done:'Pronto'
@@ -1258,6 +1296,40 @@ function FormatInputs(focus) {
     autoClose: true, // Close upon selecting a date,
     defaultTime: 'now'
   });
+
+	$('.datepicker_container_input').datepicker({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 190, // Creates a dropdown of 15 years to control year,
+    i18n: {
+    	months:['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    	monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    	weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+    	weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    	weekdaysAbbrev: ['D','S','T','Q','Q','S','S'],
+    	cancel:'Cancelar',
+    	clear:'Limpar',
+    	done:'Pronto'
+    },    
+    today: 'Hoje',
+    clear: 'Limpar',
+    close: 'Pronto',
+    labelMonthNext: 'Próximo mês',
+    labelMonthPrev: 'Mês anterior',
+    labelMonthSelect: 'Selecione um mês',
+    labelYearSelect: 'Selecione um ano',
+    format: 'dd/mm/yyyy',
+    autoClose: true, // Close upon selecting a date,
+    defaultTime: 'now',
+    onSelect:function(data_entregada){
+    	let mes = (1 + data_entregada.getMonth()).toString().padStart(2, '0');
+    	var valorData = data_entregada.getDate()+'/' + mes + '/' + data_entregada.getFullYear();
+    	$('#data_final_compromisso').val(valorData);
+    }
+  });
+
+
+
+
 	$('.timepicker').timepicker({
     defaultTime: 'now', // Set default time: 'now', '1:30AM', '16:30'
     twelveHour: false, // Use AM/PM or 24-hour format
@@ -1685,7 +1757,8 @@ function filtrarTabelaDataTablePt(tabela){
 			"lengthMenu":     "_MENU_ resultados por página",
 			"loadingRecords": "Carregando...",
 			"processing":     "Processando...",
-			"search":         "Pesquisar:",
+			"search":         "Pesquisar: <i class='fa fa-search'></i> ",
+			"searchPlaceholder":"Pesquisar",
 			"zeroRecords":    "Nenhum registro encontrado",
 			"paginate": {
 				"first":      "Primeiro",
@@ -1715,7 +1788,8 @@ function filtrarTabelaDataTablePtNoSort(tabela){
 			"lengthMenu":     "_MENU_ resultados por página",
 			"loadingRecords": "Carregando...",
 			"processing":     "Processando...",
-			"search":         "Pesquisar:",
+			"search":         "Pesquisar: <i class='fa fa-search'></i> ",
+			"searchPlaceholder":"Pesquisar",
 			"zeroRecords":    "Nenhum registro encontrado",
 			"paginate": {
 				"first":      "Primeiro",
@@ -1856,36 +1930,49 @@ function MountModalAnchorFocus(modal, link, ancoras) {
 //   });
 // }
 
-
 function VerificarForm(form) {
-	var error = false;
 	$('.error').remove();
+	var qtdErros = 0;
+
 	form.find('input:enabled:not([type="hidden"])[required="true"]').each(function(){
 		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
+			qtdErros++;
 		};
 		if($('#alterar_senha').val() != $('#confirmar_alterar_senha').val())
 		{
-			AddError($('#confirmar_alterar_senha'),'Senhas são diferentes');
-			error = true;
-			return false;
+			AddErrorTexto($('#confirmar_alterar_senha'),'Senhas são diferentes');
+			qtdErros++;
+			console.log('CAI AQUI DENTRO DO DIFERENTE');
 		}
 	});
+
 	form.find('textarea:enabled[required="true"]').each(function(){
 		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
+			qtdErros++;
+			// error = true;
+			// return false;
 		};
 	});
-	form.find('select:enabled[required="true"]').each(function(){
 
+	form.find('select:enabled[required="true"]').each(function(){
 		if(VerificaItem($(this)) == true) {
-			error = true;
-			return false;
+			qtdErros++;
 		};
 	});
-	if (error == false) {
+
+	// if (error == false) {
+	// 	console.log('cai aqui! no error == false');
+	// 	return true;
+	// }
+	// if (error == true){
+	// 	return false;
+	// }
+	console.log('QQQQQQQQQQQ QTD ERROS!!!!!!! QQQQQQQQQQQQQQQQQQQ');
+	console.log(qtdErros);
+	console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ');
+	if(qtdErros > 0){
+		return false;
+	}else if(qtdErros <= 0){
 		return true;
 	}
 }
@@ -1897,8 +1984,10 @@ function VerificaItem(isso) {
 	}
 }
 function AddError(isso) {
-	console.log(isso);
 	isso.focus().addClass('observe-post').parent().append('<div class="error">Complete corretamente</div>');
+}
+function AddErrorTexto(isso,texto) {
+	isso.focus().addClass('observe-post').parent().append('<div class="error">'+texto+'</div>');
 }
 function AddErrorAjax() {
 	$('.error_ajax').fadeIn();
@@ -2647,8 +2736,13 @@ function autoCompleteLink(element,url,linkabrir){
 			console.log('uuuuuuuuuuuuuuuuuuuuuu ui uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu');
 			console.log(ui);
 			console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu');
+			
+			console.log('eeeeeeeeeeeeeee elemento eeeeeeeeeeeeeeeeeeeeeeeeeeee');
+			console.log($(element));
+			console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+			console.log($(element).val());
 
-			GoTo(linkabrir + ui.item.id, true); 
+			GoTo(linkabrir + ui.item.id, true);
 		}
 
 	});

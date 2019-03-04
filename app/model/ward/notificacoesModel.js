@@ -76,6 +76,26 @@ class NotificacoesModel {
 		});
 	}
 
+	GetTodasNotificacoesNaoVistas(id_usuario){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT id FROM notificacoes WHERE id_usuario = ? AND visto = ? AND deletado = ?', [id_usuario, 0, 0]).then(data_id_nao_visto => {
+				resolve(data_id_nao_visto);
+			});
+		});
+	}
+
+	AtualizarTodasNaoVistas(POST){
+		POST.lista = helper.PrepareMultiple(POST.lista, 'visto', 1);
+		console.log('AAAAAAAAAAA POST ATUALIZARTODASNAOVISTAS AAAAAAAAAAAAAAAAAAAAAA');
+		console.log(POST);
+		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+		return new Promise(function(resolve, reject) {
+			helper.UpdateMultiple('notificacoes', POST.lista).then(id_notificacoes_visto => {
+				resolve(id_notificacoes_visto);
+			});
+		});
+	}
+
 
 
 

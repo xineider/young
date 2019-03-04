@@ -72,7 +72,22 @@ class CompromissosModel {
 
 	SelecionarEventos(id_usuario){
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.id, a.nome as title,\
+			helper.Query("SELECT a.id, \
+				CASE \
+				WHEN (a.tipo_compromisso = 0 AND a.tipo = 0) THEN 'Audiência'\
+				WHEN (a.tipo_compromisso = 0 AND a.tipo = 1) THEN 'Reunião'\
+				WHEN (a.tipo_compromisso = 0 AND a.tipo = 2) THEN 'Perícia'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 0) THEN 'Acórdão/Setença'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 1) THEN 'Despacho/Decisões'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 2) THEN 'Petições Diversas'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 3) THEN 'Quesitos'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 4) THEN 'Manifestação de Documentos'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 5) THEN 'Prazos Processos Físicos'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 6) THEN 'Perito'\
+				WHEN (a.tipo_compromisso = 1 AND a.tipo = 7) THEN 'Providência'\
+				WHEN (a.tipo_compromisso = 2 AND a.tipo = 0) THEN 'Julgamento'\
+				ELSE a.nome\
+				END as title,\
 				CONVERT_TZ(a.data_inicial,'+00:00',@@global.time_zone) as start,\
 				CONVERT_TZ(a.data_final,'+00:00',@@global.time_zone) as end\
 				FROM compromissos as a WHERE a.deletado = ? AND (a.id_advogado_setor = ? OR a.id_advogado_compromisso = ? OR (tipo_compromisso = ? AND id_usuario = ?)) ", [0,id_usuario,id_usuario,3,id_usuario]).then(data => {
@@ -83,6 +98,20 @@ class CompromissosModel {
 				});
 			});
 	}
+
+	// SelecionarEventos(id_usuario){
+	// 	return new Promise(function(resolve, reject) {
+	// 		helper.Query("SELECT a.id, a.nome as title,\
+	// 			CONVERT_TZ(a.data_inicial,'+00:00',@@global.time_zone) as start,\
+	// 			CONVERT_TZ(a.data_final,'+00:00',@@global.time_zone) as end\
+	// 			FROM compromissos as a WHERE a.deletado = ? AND (a.id_advogado_setor = ? OR a.id_advogado_compromisso = ? OR (tipo_compromisso = ? AND id_usuario = ?)) ", [0,id_usuario,id_usuario,3,id_usuario]).then(data => {
+	// 				console.log('@@@@@@@@@@@@@ Dados Eventos do Model @@@@@@@@@@@@@');
+	// 				console.log(data);
+	// 				console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+	// 				resolve(data);
+	// 			});
+	// 		});
+	// }
 
 	SelecionarEventosPauta(){
 		return new Promise(function(resolve, reject) {

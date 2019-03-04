@@ -91,11 +91,11 @@
   <label>Estado Civil</label>
   <select class="browser-default" name="estado_civil" value="<%= data[0].estado_civil %>">
     <option value="" disabled selected>Selecione</option>
-    <option value="1" <%= data[0].id_grupo == 1 ? 'selected="true"' : '' %>>Solteiro</option>
-    <option value="2" <%= data[0].id_grupo == 2 ? 'selected="true"' : '' %>>Casado</option>
-    <option value="3" <%= data[0].id_grupo == 3 ? 'selected="true"' : '' %>>Separado</option>
-    <option value="4" <%= data[0].id_grupo == 4 ? 'selected="true"' : '' %>>Divorciado</option>
-    <option value="5" <%= data[0].id_grupo == 5 ? 'selected="true"' : '' %>>Viúvo</option>
+    <option value="1" <%= data[0].estado_civil == 1 ? 'selected="true"' : '' %>>Solteiro</option>
+    <option value="2" <%= data[0].estado_civil == 2 ? 'selected="true"' : '' %>>Casado</option>
+    <option value="3" <%= data[0].estado_civil == 3 ? 'selected="true"' : '' %>>Separado</option>
+    <option value="4" <%= data[0].estado_civil == 4 ? 'selected="true"' : '' %>>Divorciado</option>
+    <option value="5" <%= data[0].estado_civil == 5 ? 'selected="true"' : '' %>>Viúvo</option>
   </select>
 </div>
 <div class="input-field input-group-control col s12 m4">

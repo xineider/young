@@ -11,10 +11,8 @@
 
           <div class="input-field input-group-control col s12">
             <label for="nome">Descrição</label>
-            <input required="true" class="validate" type="text" name="nome" value="<%= data[i].nome %>">
+            <input class="validate" type="text" name="nome" value="<%= data[i].nome %>">
           </div>
-
-          
 
           <div class="col s12 select-field input-group-control">
             <label for="tipo">Tipo do Compromisso</label>
@@ -25,22 +23,22 @@
 
           <div class="input-field input-group-control col s12">
             <label>Data Inicial do Compromisso</label>
-            <input required="true" type="text" class="datepicker" name="data_inicial" value="<%= data[i].data_inicial %>">
+            <input required="true" type="text" class="datepicker_container_input" name="data_inicial" value="<%= data[i].data_inicial %>">
           </div>
 
           <div class="input-field input-group-control col s12">
             <label>Horário Inicial do Compromisso(Não Obrigatório)</label>
-            <input required="true" type="text" class="timepicker" name="hora_inicial" value="<%= data[i].hora_inicial %>">
+            <input type="text" class="timepicker" name="hora_inicial" value="<%= data[i].hora_inicial %>">
           </div>
 
           <div class="input-field input-group-control col s12">
             <label>Data Final do Compromisso</label>
-            <input required="true" type="text" class="datepicker" name="data_final" value="<%= data[i].data_final %>">
+            <input type="text" class="datepicker" name="data_final" id="data_final_compromisso value="<%= data[i].data_final %>">
           </div>
 
           <div class="input-field input-group-control col s12">
             <label>Horário Final do Compromisso(Não Obrigatório</label>
-            <input required="true" type="text" class="timepicker" name="hora_final" value="<%= data[i].hora_final %>">
+            <input type="text" class="timepicker" name="hora_final" value="<%= data[i].hora_final %>">
           </div>
 
           <div class="input-field input-group-control-with-search col s12">
@@ -68,7 +66,7 @@
 
           <div class="input-field input-group-control col s12">
             <label for="local">Local</label>
-            <input required="true" type="text" name="local" value="<%= data[i].local %>">
+            <input type="text" name="local" value="<%= data[i].local %>">
           </div>
 
           <div class="input-field input-group-control col s12">

@@ -13,8 +13,8 @@
         <%
         for (var i = data.length - 1; i >= 0; i--) {
           %>
-          <tr class="<%= data[i].visto == 0 ? "bold": ""%>">
-            <td>
+          <tr class="<%= data[i].visto == 0 ? "bold": ""%> notificacao_ver ajax-load pointer"data-id="<%= data[i].id %>" href="/sistema<%= data[i].link%>">
+            <td >
               <%= data[i].nome_criador %>
             </td>
             <td>

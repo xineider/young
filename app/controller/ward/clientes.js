@@ -66,6 +66,17 @@ router.get('/selecionar/:id',function(req, res, next){
 	});
 });
 
+router.get('/editar_dentro_processo/:id', function(req, res, next) {
+	var id = req.params.id;
+	model.SelecioneGrupos().then(data_grupos => {
+		data.gruposCliente = data_grupos;
+		model.SelecionarCliente(id).then(data_cliente => {
+			data.clientesCad = data_cliente;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/cliente_editar_no_processo', data: data, usuario: req.session.usuario});
+		});
+	});
+});
+
 
 router.get('/ver_cadastro/:id',function(req, res, next){
 	var id = req.params.id;
@@ -139,12 +150,12 @@ router.get('/selecionar-todos-modal', function(req, res, next) {
 	model.SelecioneClientesDescricao().then(data_clientes =>{
 		data.dados = data_clientes;
 		model.SelecioneClientesCpfCnpjExtra().then(data_cpf_cnpj =>{
-		data.nome_campo_extra = 'CPF/CNPJ';
-		data.campo_extra = data_cpf_cnpj;
-		console.log('************************** Dentro do Clientes Modal **************************');
-		console.log(data);
-		console.log('**************************************************************************');
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
+			data.nome_campo_extra = 'CPF/CNPJ';
+			data.campo_extra = data_cpf_cnpj;
+			console.log('************************** Dentro do Clientes Modal **************************');
+			console.log(data);
+			console.log('**************************************************************************');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_no_edit', data: data, usuario: req.session.usuario});
 		});
 	});
 });
@@ -412,6 +423,44 @@ router.post('/cadastrar/grupo', function(req, res, next) {
 		res.json(data);
 	});
 });
+
+router.post('/atualizar_cliente_no_processo/', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSS POST DO ATUALIZAR CLIENTES NO PROCESSO SSSSSSSSSSSSS');
+	console.log(POST);
+	console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
+
+	data_insert = {id:POST.cliente_ver_cad_id,nome:POST.cliente_ver_cad_nome, 
+		tipo:POST.cliente_ver_cad_tipo, tipo_cliente: POST.cliente_ver_cad_tipo_cliente, 
+		id_grupo: POST.cliente_ver_cad_id_grupo, cpf_cnpj: POST.cliente_ver_cad_cpf_cnpj, 
+		email:POST.cliente_ver_cad_email, rg: POST.cliente_ver_cad_rg,
+		ctps: POST.cliente_ver_cad_ctps, serie: POST.cliente_ver_cad_serie, 
+		n_pis: POST.cliente_ver_cad_n_pis, n_beneficio: POST.cliente_ver_cad_n_beneficio,
+		estado_civil:POST.cliente_ver_cad_estado_civil,profissao:POST.cliente_ver_cad_profissao,
+		nascimento:POST.cliente_ver_cad_nascimento,inscricao_estadual:POST.cliente_ver_cad_inscricao_estadual,
+		tel_pessoal:POST.cliente_ver_cad_tel_pessoal,tel_trabalho:POST.cliente_ver_cad_tel_trabalho,
+		tel_contato:POST.cliente_ver_cad_tel_contato,tel_outro:POST.cliente_ver_cad_tel_outro,
+		observacoes:POST.cliente_ver_cad_observacoes,banco:POST.cliente_ver_cad_banco,
+		agencia:POST.cliente_ver_cad_agencia,n_conta_corrente:POST.cliente_ver_cad_n_conta_corrente,
+		cep:POST.cliente_ver_cad_cep,bairro:POST.cliente_ver_cad_bairro,
+		rua:POST.cliente_ver_cad_rua,numero:POST.cliente_ver_cad_numero,
+		cidade:POST.cliente_ver_cad_cidade,estado:POST.cliente_ver_cad_estado};
+
+		console.log('??????? DATA INSERT DO ATUALIZAR DENTRO DO PROCESSO ????????????');
+		console.log(data_insert);
+		console.log('?????????????????????????????????????????????????????????????????');
+
+		model.AtualizarCliente(data_insert).then(data_update => {
+			model.SelecioneGrupos().then(data_grupos => {
+				data.gruposCliente = data_grupos;
+				model.SelecionarCliente(POST.cliente_ver_cad_id).then(data_cliente => {
+					data.clientesCad = data_cliente;
+					res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/clientes/cliente_editar_no_processo', data: data, usuario: req.session.usuario});
+				});
+			});
+		});
+	});
 
 
 router.post('/atualizar/', function(req, res, next) {

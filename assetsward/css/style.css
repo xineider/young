@@ -84,6 +84,9 @@ body.row{
 }
 
 
+.bordo.soft{
+  background: rgb(218, 142, 153);
+}
 
 
 .bordo-line{
@@ -173,6 +176,13 @@ body.row{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9d42d', endColorstr='#ffb200',GradientType=1 );
 }
 
+.golden.soft{
+  background: rgb(249, 226, 125);
+}
+
+.golden.soft:hover{
+  background: rgb(249, 213, 59);
+}
 
 
 .ruby.darken-2{
@@ -408,6 +418,11 @@ textarea.materialize-textarea:focus.valid ~ label{
 }
 
 
+table.highlight>tbody>tr:hover{
+  background-color: rgb(216, 216, 216);
+}
+
+
 
 
 
@@ -508,7 +523,18 @@ textarea.materialize-textarea:focus.valid ~ label{
   border: 1px solid #ccc;
   background: #fff;
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 0 20px 0 10px;
+}
+
+.dataTables_wrapper .dataTables_filter label{
+  position: relative;
+}
+
+.dataTables_wrapper .dataTables_filter .fa-search{
+  position: absolute;
+  top: -3px;
+  right: 8px;
+  font-size: 13pt;
 }
 
 
@@ -1383,6 +1409,10 @@ ul > li:hover > ul.sub-menu > li > a:hover {
 .modal-mount {
   cursor: pointer;
 }
+
+
+
+
 .dropdown-content {
   overflow: hidden;
   min-width: 195px;

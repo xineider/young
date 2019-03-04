@@ -2,7 +2,7 @@
 if (typeof data.grupos != 'undefined' && data.grupos.length > 0) {
   for (var i = data.grupos.length - 1; i >= 0; i--) {
     %>
-    <li class="collection-item avatar load-mensagens-grupo" data-id_chat_grupo="<%= data.grupos[i].id %>" data-id="">
+    <li class="collection-item avatar load-mensagens-grupo golden soft" data-id_chat_grupo="<%= data.grupos[i].id %>" data-id="">
       <img src="<%= data.grupos[i].imagem != '' && data.grupos[i].imagem != null && data.grupos[i].imagem != undefined ? data.grupos[i].imagem : '/assetsward/imgs/user-padrao.jpg' %>" alt="" class="circle">
       <span class="title black-text"><b><%= data.grupos[i].nome %></b></span>
       <p class="black-text">

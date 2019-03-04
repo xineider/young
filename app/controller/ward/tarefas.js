@@ -75,6 +75,9 @@ router.get('/ver/topico/:id', function(req, res, next) {
 				data.uploads = data_uploads;
 				model.SelecioneComentarios(id).then(data_comentarios => {
 					data.comentarios = data_comentarios;
+					console.log('ttttttttttttttttt topico ttttttttttttttttttttttttttttttttt');
+					console.log(data);
+					console.log('tttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
 					res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/tarefas/tarefas_topicos_index', id_tarefa: id, data: data, usuario: req.session.usuario});
 				});
 			});

@@ -9,13 +9,15 @@ if (typeof data.detalhes_processo != 'undefined' && data.detalhes_processo.lengt
 			<input disabled value="<%= data.detalhes_processo[0].cliente %>" id="cliente_nome" type="text">
 		</div>
 
-		<div class="select-field input-group-control col s12 m4">
+		<div class="input-field input-group-control col s12 m4">
 			<label>Tipo do Cliente</label>
-			<select disabled class="browser-default" name="id_posicao_cliente">
-				<option value="1" <%= data.detalhes_processo[0].id_posicao_cliente == 1 ? 'selected="true"' : '' %>>Autor</option>
-				<option value="2" <%= data.detalhes_processo[0].id_posicao_cliente == 2 ? 'selected="true"' : '' %>>Réu</option>
-				<option value="2" <%= data.detalhes_processo[0].id_posicao_cliente == 3 ? 'selected="true"' : '' %>>Terceiro</option>
-			</select>
+			<input disabled value="<% switch(data.detalhes_processo[0].id_posicao_cliente){ 
+			case 1: %>Autor
+			<%break;
+			case 2:%>Réu
+			<%break;
+			case 3:%>Terceiro
+			<%break;}%> ">
 		</div>
 
 		<%if(typeof data.envolvidos_cliente != 'undefined' && data.envolvidos_cliente.length >0){

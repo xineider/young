@@ -7,6 +7,18 @@ var helper = new Helper;
 class TarefasModel {
 	CadastrarTarefa(data) {
 		return new Promise(function(resolve, reject) {
+			if(data.tarefa.data_inicio == ''){
+				data.tarefa.data_inicio = data.tarefa.data_prevista;
+				console.log(':::::::::::::::: data_inicio :::::::::::::::::::::::::');
+				console.log(data.tarefa);
+				console.log('::::::::::::::::::::::::::::::::::::::::::::::::::::::');
+			}
+			if(data.tarefa.data_final == ''){
+				data.tarefa.data_final = data.tarefa.data_prevista;
+			}
+			console.log('ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
+			console.log(data);
+			console.log('ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
 			data.tarefa = helper.PrepareDates(data.tarefa, ['data_prevista','data_inicio','data_final']);
 			helper.Insert('tarefas', data.tarefa).then(id_tarefa => {
 				data.tarefa_topico = helper.PrepareMultiple(data.tarefa_topico, 'id_tarefa', id_tarefa);

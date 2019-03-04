@@ -1980,25 +1980,15 @@ router.post('/atualizar/', function(req, res, next) {
 			});			
 		}
 
-
-
-
-
-
-
-
-
-
-
 	});
 
 router.post('/desativar', function(req, res, next) {
-		// Recebendo o valor do post
-		POST = req.body;
-		model.DesativarProcesso(POST).then(data=> {
-			res.json(data);
-		});
+	// Recebendo o valor do post
+	POST = req.body;
+	model.DesativarProcesso(POST).then(data=> {
+		res.json(data);
 	});
+});
 
 router.post('/desativar-apenso', function(req, res, next) {
 	// Recebendo o valor do post

@@ -41,6 +41,17 @@ router.get('/editar/:id', function(req, res, next) {
 });
 
 
+router.get('/editar_dentro_processo/:id', function(req, res, next) {
+	var id = req.params.id;
+	model.SelecionarAdverso(id).then(data_adverso => {
+		data.adversoCad = data_adverso;
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/adversos_editar_no_processo', data: data, usuario: req.session.usuario});
+	});
+});
+
+
+
+
 router.get('/selecionar-todos-modal', function(req, res, next) {
 	model.SelecioneAdversosDescricao().then(data_adversos =>{
 		data.dados = data_adversos;
@@ -160,6 +171,38 @@ router.post('/atualizar/', function(req, res, next) {
 		res.json(data);
 	});
 });
+
+
+router.post('/atualizar_adverso_no_processo/', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('AAAAAAAAAAAA ATUALIZAR ADVERSO AAAAAAAAAAAAAAAA');
+	console.log(POST);
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+
+	data_insert = {id:POST.adverso_ver_cad_id,nome:POST.adverso_ver_cad_nome, 
+		tipo:POST.adverso_ver_cad_tipo, cpf_cnpj: POST.adverso_ver_cad_cpf_cnpj, 
+		tel:POST.adverso_ver_cad_tel, email: POST.adverso_ver_cad_email,
+		contato: POST.adverso_ver_cad_contato, cep:POST.adverso_ver_cad_cep,
+		bairro:POST.adverso_ver_cad_bairro,	rua:POST.adverso_ver_cad_rua,
+		numero:POST.adverso_ver_cad_numero, cidade:POST.adverso_ver_cad_cidade,
+		estado:POST.adverso_ver_cad_estado,advogado:POST.adverso_ver_cad_advogado};
+
+		console.log('TTTTTTTTTTTTTTTTTT DATA INSERT TTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+		console.log(data_insert);
+		console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+
+		model.AtualizarAdverso(data_insert).then(data_update => {
+			model.SelecionarAdverso(POST.adverso_ver_cad_id).then(data_adverso => {
+				data.adversoCad = data_adverso;
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/adversos_editar_no_processo', data: data, usuario: req.session.usuario});
+			});
+		});
+	});
+
+
+
+
 
 router.post('/desativar', function(req, res, next) {
 	// Recebendo o valor do post

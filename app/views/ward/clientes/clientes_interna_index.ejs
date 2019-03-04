@@ -14,14 +14,14 @@
         if (typeof data.clientes != 'undefined' && data.clientes.length > 0) {
           for (var i = data.clientes.length - 1; i >= 0; i--) {
             %>
-            <tr class="<%= data.clientes[i].tipo_cliente == 2 ? "yellow darken-2": ""%>">
-              <td>
+            <tr class="<%= data.clientes[i].tipo_cliente == 2 ? "yellow darken-2": ""%>"  >
+              <td class="ajax-load pointer" href="/sistema/clientes/editar/<%= data.clientes[i].id %>">
                 <%= data.clientes[i].nome %>
               </td>
-              <td>
+              <td class="ajax-load pointer" href="/sistema/clientes/editar/<%= data.clientes[i].id %>">
                 <%= data.clientes[i].cpf_cnpj %>
               </td>
-              <td>
+              <td class="ajax-load pointer" href="/sistema/clientes/editar/<%= data.clientes[i].id %>">
                 <%= data.clientes[i].email %>
               </td>
 

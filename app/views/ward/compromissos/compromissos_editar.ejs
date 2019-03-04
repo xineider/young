@@ -10,7 +10,7 @@
         <div class="row">
           <div class="input-field input-group-control col s12">
             <label for="nome">Descrição</label>
-            <input required="true" class="validate" type="text" name="nome" value="<%= data[i].nome %>">
+            <input class="validate" type="text" name="nome" value="<%= data[i].nome %>">
           </div>
           <% if(data[i].tipo_compromisso != 3){%>
           <div class="col s12 select-field input-group-control">
@@ -76,7 +76,7 @@
 
           <div class="input-field input-group-control col s12">
             <label>Data Final do Compromisso</label>
-            <input required="true" type="text" class="datepicker" name="data_final" value="<%= data[i].data_final %>">
+            <input type="text" class="datepicker" name="data_final" value="<%= data[i].data_final %>">
           </div>
 
           <div class="input-field input-group-control col s12">
