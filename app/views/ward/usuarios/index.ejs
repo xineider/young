@@ -47,19 +47,19 @@
             for (var i = data.length - 1; i >= 0; i--) {
               %>
               <tr>
-                <td>
+                <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">
                   <%= data[i].login %>
                 </td>
-                <td>
+                <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">
                   <%= data[i].nome %>
                 </td>
-                <td>
+                <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">
                   <%= data[i].email %>
                 </td>
-                <td>
+                <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">
                   <%= data[i].telefone %>
                 </td>
-                <td>     
+                <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">     
 
                   <% switch(data[i].nivel){
                     case 1:%>
@@ -73,7 +73,7 @@
                     <%break;}%>
 
                   </td>
-                  <td>
+                  <td href="/sistema/usuarios/editar/<%= data[i].id %>" class="ajax-load pointer">
                     <%= data[i].setor %>                        
                   </td>
                   

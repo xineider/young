@@ -136,6 +136,19 @@ $(document).on('ready', function () {
 
   });
 
+		var imagem_usuario_perfil = $('#imagem-usuario-config');
+
+		if(typeof imagem_usuario_perfil != undefined){
+
+			console.log('iiiiiiiiiiiiiiiiii imagem_usuario_perfil iiiiiiiiiiiiiiiii');
+			console.log(imagem_usuario_perfil);
+			console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+
+			$(imagem_usuario_perfil).cropper({
+				aspectRatio: 1 / 1
+			});
+		}
+
 
 	});
 
@@ -273,6 +286,60 @@ $(document).on('ready', function () {
 		autoTablePdf(container_relatorio,nomeProvisorio);
 	});
 
+	$(document).on('click', '.crop-image-servidor', function(e) {
+		e.preventDefault();
+
+		var cropper = $('#imagem-usuario-config').data('cropper');
+		console.log('croppper');
+		console.log(cropper);
+		var back = $(this).data('action');
+		console.log(back);
+
+		cropper.getCroppedCanvas().toBlob((blob) => {
+			var formData = new FormData();
+			formData.append('arquivo', blob);
+			console.log(formData);
+
+			$.ajax({
+				url: '/sistema/configuracoes/cropImagemPerfil',
+				type: 'POST',
+				data: formData,
+				dataType: 'json',
+				processData: false,
+				contentType: false,
+				beforeSend: function(request) {
+					request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+					request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+					request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+					adicionarLoader();
+				},
+				success: function (data) {
+					console.log('---------- sucesso cropp -----------------');
+					console.log(data);
+					console.log(typeof data != undefined);
+					console.log(data > 0);
+
+					if (typeof data != undefined) {
+						M.toast({html:'<div class="center-align" style="width:100%;">Imagem Alterada com sucesso</div>', 
+							displayLength:5000, classes:'green rounded'});
+					}
+					console.log(back);
+
+					if (typeof back != 'undefined' && back != 'add_name') {
+						console.log('estou caindo no goTo do :D');
+						GoTo(back, true);
+					}
+				},
+				error: function (xhr, e, t) {
+					console.debug((xhr.responseText));
+				},
+				complete: function() {
+					removerLoader();
+				}
+			});
+		});
+
+	});
 
 	$(document).on('change', '#numero_processo_npadrao', function(e) {
 		const numero_processo = $('#numero_processo');
@@ -501,6 +568,8 @@ $(document).on('ready', function () {
 		SubmitAjaxContainerReload(post,link,container)
 	});
 
+
+
 	$(document).on("click","input[name='id_posicao_cliente']",function(e){
 		$('#input-group-cadastro-container').empty();
 		$('.cadastro-processo-titulo').css('margin-top',0);
@@ -723,10 +792,23 @@ $(document).on('click','.load_especifico_to_container',function(e){
 			MountModal(modal, link);
 		}
 	});
-	$(document).on('change', 'input[type="file"]', function () {
+	$(document).on('change', 'input[type="file"]:not(#upload_imagem_perfil)', function () {
+		console.log('change do input[type=file]');
 		if($(this).val() != '') {
 			UploadFile($(this));
 		}
+	});
+
+	$(document).on('change', '#upload_imagem_perfil', function () {
+		console.log('estou alterando o upload_imagem_perfil');
+		console.log($(this).val());
+		console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQ');
+
+		if($(this).val() != '') {
+			UploadImagemPerfil($(this));
+		}
+
+
 	});
 
 	$(document).on('submit', 'form', function(e) {
@@ -978,7 +1060,7 @@ $(document).on('click','.load_especifico_to_container',function(e){
 		console.log($(this).parent().parent().data('idload'));
 		$(this).parent().parent().empty();
 		$(this).parent().parent().removeData('idload');
-	
+
 	});
 
 
@@ -996,8 +1078,6 @@ $(document).on('click','.load_especifico_to_container',function(e){
 			$('.user-dropdown i').addClass('fa-angle-down');
 			$('.user-dropdown i').removeClass('fa-angle-up');
 		}
-
-
 	});
 
 	$(document).on('click', '.chats li', function () {
@@ -1324,7 +1404,7 @@ function FormatInputs(focus) {
     	let mes = (1 + data_entregada.getMonth()).toString().padStart(2, '0');
     	var valorData = data_entregada.getDate()+'/' + mes + '/' + data_entregada.getFullYear();
     	$('#data_final_compromisso').val(valorData);
-    }
+    } 
   });
 
 
@@ -1363,6 +1443,20 @@ function FormatInputs(focus) {
 	autoCompleteLink('#search_header','/sistema/processos/pesquisar-processo-por-numero-autocomplete/','/sistema/processos/abrir/');
 
 	allAutoCompletes();
+
+
+	var imagem_usuario_perfil = $('#imagem-usuario-config');
+
+	if(typeof imagem_usuario_perfil != undefined){
+
+		console.log('iiiiiiiiiiiiiiiiii imagem_usuario_perfil iiiiiiiiiiiiiiiii');
+		console.log(imagem_usuario_perfil);
+		console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+
+		$(imagem_usuario_perfil).cropper({
+			aspectRatio: 1 / 1
+		});
+	}
 }
 
 function GetEndereco(cep, pai) {
@@ -2152,6 +2246,8 @@ function validarDataTableNoSort(elemento){
 
 function UploadFile(isso) {
 	var link = isso.data('href');
+	console.log('FILE UPLOAD');
+	console.log(isso[0].files[0]);
 	var formData = new FormData();
 	formData.append('arquivo', isso[0].files[0]);
 
@@ -2189,6 +2285,44 @@ function UploadFile(isso) {
 		}
 	});
 }
+
+
+function UploadImagemPerfil(isso) {
+	var link = isso.data('href');
+	console.log('FILE UPLOAD');
+	console.log(isso[0].files[0]);
+	var formData = new FormData();
+	formData.append('arquivo', isso[0].files[0]);
+
+	$.ajax({
+		method: 'POST',
+		async: true,
+		data: formData,
+		url: link,
+		processData: false,
+		contentType: false,
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+			adicionarLoader();
+		},
+		success: function (data) {
+			$("#modalinfo").find('.modal-content').html(data);
+			$("#modalinfo").modal('open');
+		},
+		error: function (xhr, e, t) {
+			console.debug((xhr.responseText));
+			removerLoader();
+		},
+		complete: function() {
+			removerLoader();
+		}
+	});
+}
+
+
+
 function InitChat() {
 	$.ajax({
 		method: "GET",
@@ -2218,6 +2352,7 @@ function InitChat() {
 		}
 	});
 }
+
 function NovidadesChat() {
 	$.ajax({
 		method: "GET",
@@ -2244,6 +2379,7 @@ function NovidadesChat() {
 		}
 	});
 }
+
 function MensagensChat(id) {
 	var id_usuario_sessao = $('input[name="id_usuario_sessao"]').val();
 	$.ajax({
@@ -2293,12 +2429,15 @@ function MensagensChatGrupo(id_chat_grupo) {
 		}
 	});
 }
+
+
 function AddInputDel(isso) {
 	var id = isso.data('id');
 	console.log(id);
 	isso.closest('form').prepend('<input type="hidden" name="remover[id][]" value="'+id+'">');
 	isso.closest('.pai').remove();
 }
+
 function EnviarMensagem(id) {
 	var id_usuario_sessao = $('input[name="id_usuario_sessao"]').val();
 	$.ajax({

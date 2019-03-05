@@ -44,8 +44,6 @@ class ConfiguracoesModel {
 	// 	});
 	// }
 
-
-
 	GetConfiguracoes(id_usuario) {
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT * FROM usuarios WHERE id = ?', [id_usuario]).then(data => {

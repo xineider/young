@@ -52,6 +52,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+
  
 // Verifica usuario se esta logado ou não
 // app.use(function (req, res, next) {

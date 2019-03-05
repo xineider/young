@@ -15,6 +15,7 @@
     "express-fileupload": "^0.3.0",
     "express-is-ajax-request": "^1.1.0",
     "express-session": "^1.15.6",
+    "file-saver": "^2.0.1",
     "formidable": "^1.1.1",
     "fs": "0.0.1-security",
     "install": "^0.10.1",

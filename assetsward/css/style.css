@@ -540,6 +540,21 @@ table.highlight>tbody>tr:hover{
 
 /*------------------------ Fim Data Tables Tabelas Filtradas -----------------------*/
 
+/*---------------------------Início Cropper-----------------------------------------*/
+
+.cropper-view-box{
+  outline-color:rgb(66,25,31);
+  outline:1px solid rgb(66,25,31);
+}
+
+.cropper-point{
+  background:rgb(66,25,31);
+}
+
+.cropper-line{
+  background:rgb(66,25,31);
+}
+/*---------------------------Fim Cropper--------------------------------------------*/
 
 /* ----------------------- Início Estilos Cabeçalho e Menu ----------------------- */
 nav {
@@ -1572,6 +1587,11 @@ table td {
 
 /*CHAT*/
 
+.chats .sidenav{
+  border-top:2px solid rgb(66,25,31);
+  border-left:2px solid rgb(66,25,31);
+}
+
 .chats .sidenav .collection{
   overflow: auto;
 }
@@ -1616,7 +1636,7 @@ table td {
   overflow: auto;
   height: calc(100% - 125px);
   padding-top: 20px;
-  background: url(/assetsward/imgs/textura-gold.jpg);
+  background: url(/assetsward/imgs/textura-chat.jpg);
 }
 
 
@@ -1917,6 +1937,10 @@ background-color: #262626;
 /* line 42, ../sass/main.scss */
 #dashboard p {
   margin: 0;
+}
+
+.configuracao-image-container img{
+  max-width: 100%;
 }
 
 /* MEDIA QUERY */

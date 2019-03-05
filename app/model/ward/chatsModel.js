@@ -33,6 +33,7 @@ class ChatsModel {
 					});
 			});
 	}
+	
 	SelecioneMensagens(POST) {
 		var data = {};
 		return new Promise(function(resolve, reject) {
