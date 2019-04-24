@@ -1695,3 +1695,7 @@ footer.page-footer .mapas .row {
     background-color: #388e3c;
     font-weight: bold;
   }
+
+  .modal-parcelamento-ilegal{
+    margin-top: 5%;
+  }

@@ -487,6 +487,13 @@ $(document).on('ready', function () {
 $(window).on('load', function (e) {
 	removerLoader();
 	FormatInputs();
+
+	console.log('-MODAL PARCELAMENTO ILEGAL LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+	console.log($('.modal-parcelamento-ilegal'));
+	console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+
+	$('.modal-parcelamento-ilegal').modal('open');
+
 });
 
 
