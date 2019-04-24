@@ -1,6 +1,7 @@
 // Eventos DOM
 $(document).on('ready', function () {
 	// NovidadesChat();
+	// UltimasNotificacoesUsuario();
 
 	$(document).ready(function(){
 		$('.modal').modal();
@@ -2379,6 +2380,47 @@ function NovidadesChat() {
 		}
 	});
 }
+
+
+function UltimasNotificacoesUsuario() {
+	$.ajax({
+		method: "GET",
+		async: true,
+		url: '/sistema/notificacoes/ultimasNotificacoes',
+		beforeSend: function(request) {
+			request.setRequestHeader("Authority-Optima-hash", $('input[name="hash_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-nivel", $('input[name="nivel_usuario_sessao"]').val());
+			request.setRequestHeader("Authority-Optima-id", $('input[name="id_usuario_sessao"]').val());
+		},
+		success: function(data) {
+			console.log('---------- ULTIMAS NOTIFICACOES -------------');
+			console.log(data);
+			console.log('---------------------------------------------');
+
+
+			// if (data.nova_mensagem == true) {
+			// 	$('.tem_mensagem').fadeIn();
+			// 	$('#slide-out ul').css('right', '0');
+			// } else {
+			// 	$('.tem_mensagem').fadeOut();
+			// }
+		},
+		error: function(xhr) { // if error occured
+			removerLoader();
+		},
+		complete: function() {
+			setTimeout(function(){ UltimasNotificacoesUsuario(); }, 10000);
+		}
+	});
+}
+
+
+
+
+
+
+
+
 
 function MensagensChat(id) {
 	var id_usuario_sessao = $('input[name="id_usuario_sessao"]').val();

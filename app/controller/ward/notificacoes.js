@@ -18,6 +18,17 @@ router.get('/', function(req, res, next) {
 
 
 
+router.get('/ultimasNotificacoes/', function(req, res, next) {
+	model.GetUltimasNotificacoes(req.session.usuario.id).then(data=>{
+		console.log('----------------- GetUltimasNotificacoes -----------------------');
+		console.log(data);
+		console.log('----------------------------------------------------------------');
+		res.json(data);
+	});
+});
+
+
+
 
 router.get('/remover_visto/:id', function(req, res, next) {
 	var id = req.params.id;
