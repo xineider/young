@@ -287,6 +287,13 @@ $(document).on('ready', function () {
 		autoTablePdf(container_relatorio,nomeProvisorio);
 	});
 
+	$(document).on('click', '.gerar-relatorio-html', function(e) {
+		e.preventDefault();
+		var nomeProvisorio = $(this).data('nome-provisorio');
+		var container_relatorio = $(this).data('container-relatorio');
+		demoFromHTML(container_relatorio);
+	});
+
 	$(document).on('click', '.crop-image-servidor', function(e) {
 		e.preventDefault();
 
@@ -3021,40 +3028,46 @@ function demoFromHTML(elemento) {
 	console.log('pppppppppppppppppppppppppppppppppppppppppppppppppppppp');
   // source can be HTML-formatted string, or a reference
   // to an actual DOM element from which the text will be scraped.
-  source = $(elemento)[0];
+  pdf.text('Hello world!', 10, 10)
+  pdf.save('a4.pdf')
 
-  // we support special element handlers. Register them with jQuery-style 
-  // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-  // There is no support for any other type of selectors 
-  // (class, of compound) at this time.
-  specialElementHandlers = {
-	  // element with id of "bypass" - jQuery style selector
-	  '#bypassme': function(element, renderer) {
-			// true = "handled elsewhere, bypass text extraction"
-			return true
-		}
-	};
-	margins = {
-		top: 80,
-		bottom: 60,
-		left: 40,
-		width: 522
-	};
-	// all coords and widths are in jsPDF instance's declared units
-	// 'inches' in this case
-	pdf.fromHTML(
-	  source, // HTML string or DOM elem ref.
-	  margins.left, // x coord
-	  margins.top, {// y coord
-	    'width': margins.width, // max width of content on PDF
-	    'elementHandlers': specialElementHandlers
-	},
-	function(dispose) {
-		  // dispose: object with X, Y of the last line add to the PDF 
-		  //          this allow the insertion of new lines after html
-		  pdf.save('Test2.pdf');
-		}
-		, margins);
+
+
+
+ //  source = $(elemento)[0];
+
+ //  // we support special element handlers. Register them with jQuery-style 
+ //  // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+ //  // There is no support for any other type of selectors 
+ //  // (class, of compound) at this time.
+ //  specialElementHandlers = {
+	//   // element with id of "bypass" - jQuery style selector
+	//   '#bypassme': function(element, renderer) {
+	// 		// true = "handled elsewhere, bypass text extraction"
+	// 		return true
+	// 	}
+	// };
+	// margins = {
+	// 	top: 80,
+	// 	bottom: 60,
+	// 	left: 40,
+	// 	width: 522
+	// };
+	// // all coords and widths are in jsPDF instance's declared units
+	// // 'inches' in this case
+	// pdf.fromHTML(
+	//   source, // HTML string or DOM elem ref.
+	//   margins.left, // x coord
+	//   margins.top, {// y coord
+	//     'width': margins.width, // max width of content on PDF
+	//     'elementHandlers': specialElementHandlers
+	// },
+	// function(dispose) {
+	// 	  // dispose: object with X, Y of the last line add to the PDF 
+	// 	  //          this allow the insertion of new lines after html
+	// 	  pdf.save('Test2.pdf');
+	// 	}
+	// 	, margins);
 }
 
 function autoTablePdf(element,nomeProvisorio){
