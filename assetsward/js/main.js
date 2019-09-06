@@ -30,7 +30,7 @@ $(document).on('ready', function () {
 		validarDataTableNoSort($('#tabela_andamentos'));
 		validarDataTable($('#tabela_andamentos_more_details'));
 		validarDataTable($('#tabela_todos_clientes'));
-		validarDataTable($('#pauta_compromisso'));
+		validarDataTable($('#tabela_interna_compromisso'));
 		validarDataTable($('#tabela_todos_apensos'));
 		validarDataTable($('#tabela_todos_recursos'));
 		validarDataTable($('#tabela_todos_compromissos_dos_apensos'));
@@ -93,7 +93,7 @@ $(document).on('ready', function () {
     format: 'dd/mm/yyyy',
     autoClose: true, // Close upon selecting a date,
     defaultTime: 'now'
-  });
+});
 		$('.datepicker_container_input').datepicker({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 190, // Creates a dropdown of 15 years to control year,
@@ -122,7 +122,7 @@ $(document).on('ready', function () {
     	var valorData = data_entregada.getDate()+'/' + mes + '/' + data_entregada.getFullYear();
     	$('#data_final_compromisso').val(valorData);
     }
-  });
+});
 
 		$('.timepicker').timepicker({
     defaultTime: 'now', // Set default time: 'now', '1:30AM', '16:30'
@@ -135,7 +135,7 @@ $(document).on('ready', function () {
     },
     autoClose: true, // automatic close timepicker
 
-  });
+});
 
 		var imagem_usuario_perfil = $('#imagem-usuario-config');
 
@@ -829,7 +829,7 @@ $(document).on('click','.load_especifico_to_container',function(e){
 	// ESPECIFICO
 
 	$(document).on('keyup change', '.pesquisa', function () {
-		Pesquisar($(this));
+		Pesquisar($(this),$(this).data('container'));
 	});
 
 	$(document).on('change paste keyup','.pesquisa-input',function(){
@@ -1166,7 +1166,7 @@ function GoTo(link, state) {
     	ActiveMaterializeInput();
     	FormatInputs();
     }
-  });
+});
 	if (state == true) {
 		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
 	}
@@ -1204,7 +1204,7 @@ function GoToOpenCollapsible(link, state,id) {
     	$("html, body").animate({ scrollTop: 0 }, "slow");
     	FormatInputs();
     }
-  });
+});
 	if (state == true) {
 		window.history.pushState('Sistema Quorp', 'Sistema Quorp', link);
 	}
@@ -1237,7 +1237,7 @@ function LoadTo(link, to) {
     	$('.modal').modal('close');
     	FormatInputs();
     }
-  });
+});
 }
 function AddTo(link, to) {
 	$.ajax({
@@ -1263,7 +1263,7 @@ function AddTo(link, to) {
     	$('.modal').modal('close');
     	FormatInputs();
     }
-  });
+});
 }
 function RemoverVistoNotificacao(id) {
 	$.ajax({
@@ -1376,7 +1376,7 @@ function FormatInputs(focus) {
     format: 'dd/mm/yyyy',
     autoClose: true, // Close upon selecting a date,
     defaultTime: 'now'
-  });
+});
 
 	$('.datepicker_container_input').datepicker({
     selectMonths: true, // Creates a dropdown to control month
@@ -1406,7 +1406,7 @@ function FormatInputs(focus) {
     	var valorData = data_entregada.getDate()+'/' + mes + '/' + data_entregada.getFullYear();
     	$('#data_final_compromisso').val(valorData);
     } 
-  });
+});
 
 
 
@@ -1422,7 +1422,7 @@ function FormatInputs(focus) {
     },
     autoClose: true // automatic close timepicker
 
-  });
+});
 	/*Adicionar numero do processo para o input de numero de processos ao criar o cliente*/
 	var numeroProcesso = Math.floor((Math.random() * 90000) + 10000);
 	var digito = Math.floor((Math.random() * 90) + 10);
@@ -1495,7 +1495,7 @@ function GetEndereco(cep, pai) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 function SubmitAjax(post, link, back, method) {
 	$.ajax({
@@ -1546,7 +1546,7 @@ function SubmitAjax(post, link, back, method) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 
 
@@ -1585,7 +1585,7 @@ function SubmitAjaxCadastrarUsuario(post, link, back, method) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 
 function SubmitAjaxNoBack(post, link, method) {
@@ -1613,7 +1613,7 @@ function SubmitAjaxNoBack(post, link, method) {
     	removerLoader();
     	
     }
-  });
+});
 }
 
 
@@ -1658,7 +1658,7 @@ function SubmitAjaxReloadMountAnchorId(post, link,modal,ancoras) {
     	FormatInputs();
     	
     }
-  });
+});
 }
 
 
@@ -1691,7 +1691,7 @@ function SubmitAjaxContainerReload(post, link, container) {
     	removerLoader();
     	
     }
-  });
+});
 }
 
 
@@ -1732,7 +1732,7 @@ function SubmitComentario(post, link, back, method) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 function Reestruturar(str) {
 	var i = 1;
@@ -1804,7 +1804,7 @@ function MountModal(modal, link) {
     	FormatInputs();
     	FocusInputModal(modal);
     }
-  });
+});
 }
 
 function MountModalOneItem(modal, link) {
@@ -1833,7 +1833,7 @@ function MountModalOneItem(modal, link) {
     	FormatInputs();
     	FocusInputModal(modal);
     }
-  });
+});
 }
 
 FormatInputs();
@@ -1943,7 +1943,7 @@ function MountModalAnchor(modal, link, ancoras) {
     	$('.tooltipped').tooltip({delay: 50});
     	FormatInputs();
     }
-  });
+});
 }
 
 
@@ -1989,7 +1989,7 @@ function MountModalAnchorFocus(modal, link, ancoras) {
     	FormatInputs();
     	FocusInputModal(modal);
     }
-  });
+});
 }
 
 
@@ -2147,7 +2147,7 @@ function LoadTopicos(id, isso) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 function LoadContatos(id) {
 	$.ajax({
@@ -2169,7 +2169,7 @@ function LoadContatos(id) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 function LoadTarefas(id) {
 	$.ajax({
@@ -2191,7 +2191,7 @@ function LoadTarefas(id) {
     complete: function() {
     	removerLoader();
     }
-  });
+});
 }
 function MudaStatusTopico(id, status, isso) {
 	$.ajax({
@@ -2348,8 +2348,8 @@ function InitChat() {
 		      edge: 'right', // Choose the horizontal origin
 		      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
 		      draggable: true, // Choose whether you can drag to open on touch screens,
-		    }
-		    );
+		  }
+		  );
 		}
 	});
 }
@@ -2602,13 +2602,15 @@ function Contagem(tempo_fixo, id) {
 function DesbloquearSenha(id, senha) {
 	$('#senha-'+id).text(senha);
 }
-function Pesquisar(isso) {
+function Pesquisar(isso,container) {
 	var form = isso.closest('form');
 	var post = form.serializeArray();
 	var link = form.data('link');
 	console.log('llllllink');
 	console.log(link);
 	console.log('llllllink');
+	console.log('container');
+	console.log(container);
 	// console.log(link);
 	$.ajax({
 		method: "POST",
@@ -2622,11 +2624,8 @@ function Pesquisar(isso) {
 		},
 		success: function(data) {
 			console.log(data);
-			$('#tabela_interna_processo').html(data);
-			$('#tabela_interna_adverso').html(data);
-			$('#tabela_interna_cliente').html(data);
-			$('#tabela_interna_contato').html(data);
-			$('#documento').html(data);
+			console.log('container:' + container);
+			$(container).html(data);
 		},
 		error: function(xhr) { // if error occured
 			removerLoader();
@@ -2791,7 +2790,7 @@ function loadEspecificoPagina(url,lugar){
     	allAutoCompletes();
     	FormatInputs();
     }
-  });
+});
 }
 
 function autoCompleteLoadEspecifico(element,url,container,linkload){
@@ -3049,8 +3048,8 @@ function demoFromHTML(elemento) {
 	  margins.top, {// y coord
 	    'width': margins.width, // max width of content on PDF
 	    'elementHandlers': specialElementHandlers
-	  },
-	  function(dispose) {
+	},
+	function(dispose) {
 		  // dispose: object with X, Y of the last line add to the PDF 
 		  //          this allow the insertion of new lines after html
 		  pdf.save('Test2.pdf');
@@ -3060,26 +3059,33 @@ function demoFromHTML(elemento) {
 
 function autoTablePdf(element,nomeProvisorio){
 	var doc = new jsPDF();
-  // You can use html:
-  // doc.autoTable({html: element});
+	// You can use html:
+	// doc.autoTable({html: element});
 
-  doc.autoTable({
-  	html:element,
-  	headStyles:{
-  		fillColor:[79, 33, 40],
-  		textColor:[255,255,255]
-  	}
-  })
+	console.log('♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣ Relatorio Elemento ♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣');
+	console.log(element);
+	console.log('♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣');
+
+	console.log('nomeProvisorio:'+nomeProvisorio);
 
 
-  /*só para gerar um nome único*/
-  var relatorioText = 'relatorio';
-  var numeroAleatorio = Math.floor((Math.random() * 900000) + 100000);
-  var diaHoje = new Date();
-  var mes = diaHoje.getMonth() + 1;
-  var dia = diaHoje.getDate();
+	doc.autoTable({
+		html:element,
+		headStyles:{
+			fillColor:[79, 33, 40],
+			textColor:[255,255,255]
+		}
+	});
 
-  var pdf_nome = relatorioText +' - '+ nomeProvisorio + ' - ' + dia + '-' + mes + ' - ' + numeroAleatorio + '.pdf';
 
-  doc.save(pdf_nome);
+	/*só para gerar um nome único*/
+	var relatorioText = 'relatorio';
+	var numeroAleatorio = Math.floor((Math.random() * 900000) + 100000);
+	var diaHoje = new Date();
+	var mes = diaHoje.getMonth() + 1;
+	var dia = diaHoje.getDate();
+
+	var pdf_nome = relatorioText +' - '+ nomeProvisorio + ' - ' + dia + '-' + mes + ' - ' + numeroAleatorio + '.pdf';
+
+	doc.save(pdf_nome);
 }

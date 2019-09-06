@@ -56,58 +56,7 @@
  	</div> -->
 
  	<div id="pauta_compromisso_pdf_g" class="overflow-auto">
- 		<table id="pauta_compromisso" class="centered responsive-table cell-border">
- 			<thead>
- 				<tr>
- 					<th>Número do Processo</th>
- 					<th>Tipo</th>
- 					<th>Descrição</th>
- 					<th>Data e Hora de Início</th>
- 					<th>Data e Hora Final</th>
- 					<th>Local</th>
- 					<th>Advogado Responsável do Setor</th>
- 					<th>Advogado do Compromisso</th>
- 					<th>Ações</th>
- 				</tr>
- 			</thead>
- 			<tbody>
- 				<%
- 				for (var i = data.length - 1; i >= 0; i--) {
- 					%>
- 					<tr>
- 						<td><%= data[i].numero %></td>
- 						<td>
- 							<%if(data[i].tipo==0){%>
- 							Audiência
- 							<%}else if(data[i].tipo==1){%>
- 							Reunião
- 							<%}else if(data[i].tipo==2){%>
- 							Perícia
- 							<%}else {%>
- 							Não há
- 							<%}%>
- 						</td>
- 						<td><%= data[i].nome %></td>
- 						<td><%= data[i].data_inicial %></td>
- 						<td><%= data[i].data_final %></td>
- 						<td><%= data[i].local %></td>
- 						<td><%= data[i].advogado_responsavel_setor %></td>
- 						<td><%= data[i].advogado_compromisso %></td>
- 						<td>
- 						<%if(data[i].id_usuario == usuario.id || data[i].id_advogado_setor == usuario.id || usuario.nivel == 1) {%>
- 						<a data-link="/compromissos/editar_pauta_compromisso/<%= data[i].id %>" class="modal-mount" data-href="#modalinfo"><i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i></a>
- 						<i class="fa fa-times-circle red-text modal-remover-mount" data-href="#modaldeletar" data-id="<%= data[i].id %>" data-texto="Você tem certeza que quer deletar '<%= data[i].nome %>'? " data-to="/sistema/compromissos/desativar" data-back="/sistema/compromissos/pauta_compromisso" aria-hidden="true"></i>
- 						<% }%>
- 					</td>
-
- 					</tr>
-
- 					<%}%>
- 				</tbody>
-
-
-
- 			</table>
+ 		<%- include('tabela_interna_only');%>
  		</div>
  	</div>
 

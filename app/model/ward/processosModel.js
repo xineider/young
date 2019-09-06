@@ -866,14 +866,14 @@ class ProcessosModel {
 	SelecioneNomeClienteExtraTodosProcessos(){
 		return new Promise(function(resolve, reject) {
 			helper.Query('SELECT a.id_cliente,\
-			(SELECT nome FROM clientes as b WHERE a.id_cliente = b.id) as extra \
-			FROM processos as a WHERE a.deletado = ?', [0]).then(data => {
-				console.log('000000000000000000000000000 TODOS PROCESSOS COMPROMISSO 000000000000000000000000000');
-				console.log(data);
-				console.log('00000000000000000000000000000000000000000000000000000000000000000000000000000000000');
-				resolve(data);
+				(SELECT nome FROM clientes as b WHERE a.id_cliente = b.id) as extra \
+				FROM processos as a WHERE a.deletado = ?', [0]).then(data => {
+					console.log('000000000000000000000000000 TODOS PROCESSOS COMPROMISSO 000000000000000000000000000');
+					console.log(data);
+					console.log('00000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+					resolve(data);
+				});
 			});
-		});
 	}
 
 	// ProcurarProcesso(POST) {
@@ -920,7 +920,7 @@ class ProcessosModel {
 	ProcurarProcesso(POST) {
 		return new Promise(function(resolve, reject) {
 			var where = '';
-			var array = [];
+			var array = [5];
 			// console.log('000000000000000 POST 00000000000000000000');
 			// console.log(POST);
 			// console.log('00000000000000000000000000000000000000000');
@@ -935,13 +935,20 @@ class ProcessosModel {
 					console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
 
 					if(key == 'cnpj'){
-						where += 'AND c.cpf_cnpj LIKE ?'
 						console.log('no if');
+						where += 'AND c.cpf_cnpj LIKE ?';
+						array.push('%'+POST[key]+'%');
+						/*uso a função substring para ver se é um id (o padrão é id_usuario, id_qualquercoisa) 
+						se for um id o mesmo deve ser igual a chave*/
+					}else if(key.substring(0,3) == 'id_'){
+						where += 'AND a.' + key + ' = ? ';
+						array.push(POST[key]);
 					}else{
 						where += 'AND a.' + key + ' LIKE ? ';
+						array.push('%'+POST[key]+'%');
 						console.log('no else');
 					}
-					array.push('%'+POST[key]+'%');
+
 				}
 			}
 
@@ -963,7 +970,7 @@ class ProcessosModel {
 				(SELECT e.cpf_cnpj FROM clientes as e WHERE e.id = a.id_cliente) as cpf_cnpj \
 				FROM processos as a \
 				LEFT JOIN clientes as c ON a.id_cliente = c.id \
-				WHERE a.deletado != ? "+ where,[5,array]).then(dataProcessoPorNumero => {
+				WHERE a.deletado != ? "+ where,array).then(dataProcessoPorNumero => {
 					// console.log(dataProcessoPorNumero);
 					resolve(dataProcessoPorNumero);
 					

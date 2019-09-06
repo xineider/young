@@ -21,7 +21,7 @@ var config = {
 						    "host"     : "localhost",
 						    "user"     : "root",
 						    "password" : "root",
-						    "database" : "young"
+						    "database" : "sistema_juridico"
 					  	};
 
 // // CONEXÃO MYSQL

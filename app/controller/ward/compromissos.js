@@ -128,20 +128,38 @@ router.get('/eventos', function(req, res, next) {
 });
 
 router.get('/pauta_compromisso', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(0).then(data => {
+	model.SelecionarEventosPorTipoCompromisso(0).then(data_compromisso => {
+		data.compromisso = data_compromisso;
+		data.link_editar = 'editar_pauta_compromisso';
+		data.back = 'pauta_compromisso';
+		console.log('====== data pauta compromisso =============');
+		console.log(data);
+		console.log('===========================================');
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_compromisso', data: data, usuario: req.session.usuario});
 	});
 });
 
 
 router.get('/controle_distribuicao', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(1).then(data => {
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/controle_distribuicao', data: data, usuario: req.session.usuario});
+	model.SelecionarEventosPorTipoCompromisso(1).then(data_compromisso => {
+		data.compromisso = data_compromisso;
+		model.SelecionarEventosRelatorioPorTipoCompromisso(1).then(data_relatorio => {
+			data.relatorio = data_relatorio;
+			data.link_editar = 'editar_controle_distribuicao';
+			data.back = 'controle_distribuicao';
+			console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼ DATA COMPROMISSO ‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
+			console.log(data);
+			console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/controle_distribuicao', data: data, usuario: req.session.usuario});
+		});
 	});
 });
 
 router.get('/pauta_julgamento', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(2).then(data => {
+	model.SelecionarEventosPorTipoCompromisso(2).then(data_compromisso => {
+		data.compromisso = data_compromisso;
+		data.link_editar='editar_pauta_julgamento';
+		data.back = 'pauta_julgamento';
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_julgamento', data: data, usuario: req.session.usuario});
 	});
 });
@@ -254,5 +272,24 @@ router.post('/desativar', function(req, res, next) {
 			res.json(data);
 		});
 	});
+
+
+router.post('/controle_distribuicao/pesquisar', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺ Pesquisar ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	console.log(POST);
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	model.ProcurarCompromisso(POST,1).then(data_compromisso => {
+		console.log('┤┤┤┤┤┤┤┤ data_compromisso ┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		console.log(data_compromisso);
+		console.log('┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		data.compromisso = data_compromisso;
+		data.link_editar = 'editar_controle_distribuicao';
+		data.back='controle_distribuicao';
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/compromissos/tabela_interna_only', data: data, usuario: req.session.usuario});
+	});
+});
+
 
 module.exports = router;

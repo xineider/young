@@ -148,16 +148,118 @@ class CompromissosModel {
 
 
 
-
-	SelecionarEventosPorTipoCompromisso(tipo){
+	ProcurarCompromisso(POST,tipo_compromisso) {
 		return new Promise(function(resolve, reject) {
+			var where = '';
+			var array = [1,1,0,tipo_compromisso];
+			// console.log('000000000000000 POST 00000000000000000000');
+			// console.log(POST);
+			// console.log('00000000000000000000000000000000000000000');
+			
+			for (var key in POST) {
+				if (typeof POST[key] != 'undefined' && POST[key] != '') {
+					console.log('------------------- CHAVE ---------------');
+					console.log(key);
+					console.log('-----------------------------------------');
+					console.log('PPPPPPPPPPPPPPPPPP POST[key] PPPPPPPPPPPPPPPPPPPPPPPP');
+					console.log(POST[key]);
+					console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+					if(key == 'data_inicial'){
+						console.log('na data inicial');
+						where += 'AND a.' + key + ' >= ? ';
+						POST = helper.PrepareDates(POST, ['data_inicial']);
+						array.push(POST[key]);
+
+					}else if(key == 'data_final' ){
+						console.log('na data_final');
+						where += 'AND a.' + key + ' <= ? ';
+						POST = helper.PrepareDates(POST, ['data_final']);
+						array.push(POST[key]);
+					}else{
+						where += 'AND a.' + key + ' LIKE ? ';
+						console.log('no else');
+						array.push('%'+POST[key]+'%');
+					}
+
+					
+				}
+			}
+
+			console.log('----------------- ARRAY --------------------');
+			console.log(array);
+			console.log('--------------------------------------------');
+			console.log('============== WHERE =======================');
+			console.log(where);
+			console.log('============================================');
+
+
 			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
 				(SELECT nome FROM usuarios as b WHERE a.id_advogado_setor = b.id AND b.cargo = ?) as advogado_responsavel_setor,\
 				(SELECT nome FROM usuarios as c WHERE a.id_advogado_compromisso = c.id AND c.cargo = ?) as advogado_compromisso,\
 				(SELECT numero FROM processos as d WHERE a.id_processo = d.id) as numero\
-				FROM compromissos as a WHERE a.deletado = ? AND tipo_compromisso = ?", [1,1,0,tipo]).then(data => {
+				FROM compromissos as a WHERE a.deletado = ? AND a.tipo_compromisso = ? "+ where,array).then(dataCompromisso => {
+					resolve(dataCompromisso);
+					
+				});
+			});
+	}
+
+
+
+
+
+
+	SelecionarEventosPorTipoCompromisso(tipo){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_inicial, '%Y%m%d %H:%i') as data_inicial_table_filtro,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
+				DATE_FORMAT(a.data_final, '%Y%m%d %H:%i') as data_final_table_filtro,\
+				(SELECT b.nome FROM usuarios as b WHERE a.id_advogado_setor = b.id AND b.cargo = ?) as advogado_responsavel_setor,\
+				(SELECT c.nome FROM usuarios as c WHERE a.id_advogado_compromisso = c.id AND c.cargo = ?) as advogado_compromisso,\
+				(SELECT d.numero FROM processos as d WHERE a.id_processo = d.id) as numero\
+				FROM compromissos as a WHERE a.deletado = ? AND a.tipo_compromisso = ?", [1,1,0,tipo]).then(data => {
+					console.log('@@@@@@@@@@@@@ Dados Eventos da pauta @@@@@@@@@@@@@');
+					console.log(data);
+					console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+					resolve(data);
+				});
+			});
+	}
+
+	SelecionarEventosRelatorioPorTipoCompromisso(tipo){
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_inicial, '%Y%m%d %H:%i') as data_inicial_table_filtro,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
+				DATE_FORMAT(a.data_final, '%Y%m%d %H:%i') as data_final_table_filtro,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial_relatorio,\
+				(CASE WEEKDAY(a.data_inicial) \
+				WHEN 0 THEN 'Segunda-feira'\
+				WHEN 1 THEN 'Terça-feira'\
+				WHEN 2 THEN 'Quarta-feira'\
+				WHEN 3 THEN 'Quinta-feira'\
+				WHEN 4 THEN 'Sexta-feira'\
+				WHEN 5 THEN 'Sábado'\
+				WHEN 6 THEN 'Domingo'\
+				END) AS dia_semana_relatorio,\
+				(SELECT b.nome FROM usuarios as b WHERE a.id_advogado_setor = b.id AND b.cargo = ?) as advogado_responsavel_setor,\
+				(SELECT c.nome FROM usuarios as c WHERE a.id_advogado_compromisso = c.id AND c.cargo = ?) as advogado_compromisso,\
+				m.numero,\
+				(SELECT e.nome FROM clientes as e WHERE e.id IN (SELECT f.id_cliente FROM processos as f WHERE f.id = a.id_processo AND f.deletado = ?)) as cliente,\
+				(SELECT g.nome FROM adversos as g WHERE g.id IN (SELECT h.id_adverso FROM processos as h WHERE h.id = a.id_processo AND h.deletado = ?)) as adverso,\
+				com.descricao as comarca,\
+				(SELECT k.descricao FROM descricao_generico as k WHERE k.id IN (SELECT l.id_vara FROM processos as l WHERE l.id = a.id_processo AND l.deletado = ?)) as vara\
+				FROM compromissos as a \
+				LEFT JOIN processos as m ON m.id = a.id_processo\
+				LEFT JOIN descricao_generico as com ON com.id = m.id_comarca\
+				WHERE a.deletado = ? AND a.tipo_compromisso = ?\
+				ORDER BY a.data_inicial ASC, com.descricao ASC", [1,1,0,0,0,0,tipo]).then(data => {
 					console.log('@@@@@@@@@@@@@ Dados Eventos da pauta @@@@@@@@@@@@@');
 					console.log(data);
 					console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
