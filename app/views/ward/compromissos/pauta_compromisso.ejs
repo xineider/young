@@ -55,48 +55,35 @@
  		</label> 		
  	</div> -->
 
- 	<div id="pauta_compromisso_pdf_g" class="overflow-auto">
- 		<%- include('tabela_interna_only');%>
+ 	<div class="row">
+ 		<div class="card white">
+ 			<div class="row center">
+ 				<div class="col s12 f20 bold">Filtro Avançado</div>
+ 			</div>
+ 			<div class="row">
+ 				<%- include('compromissos_pesquisa');%>
+ 			</div>
+
+ 			<div class="row padding-b-10">
+ 				<div class="col s6 offset-s5">
+ 					<div class="center valign-wrapper">
+ 						<a class="btn waves-effect waves-light bordo gerar-relatorio-no-header" data-nome-provisorio="Pcom_per" data-container-relatorio="#relatorio_generator">
+ 							Gerar Relatório Personalizado
+ 							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+ 						</a>
+ 					</div>
+ 				</div>
+ 			</div>
+
  		</div>
  	</div>
 
- 	<script>
-
- 		$(document).on('click', '#filtro_audiencia', function (e) {
- 			if($('#filtro_audiencia').prop('checked')){
- 				console.log('estou checkado');
- 			}else{
-
- 				var table = $('#pauta_compromisso2').DataTable();
-
- 				var filteredData = table
- 				.column( 1 )
- 				.data()
- 				.filter( function ( value, index ) {
- 					console.log('EEEEEEEEEEEEE VALUEEEEEEEEEEEEEEEEE EEEEEEEEEE');
- 					console.log(value);
- 					console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
- 					console.log(index);
- 					return value > 2 ? true : false;
- 				} );
 
 
- 				console.log('------- TABELA PAUTA COMPROMISSO ---------');
- 				console.log(table);
- 				console.log('------------------------------------------');
+ 	<div id="tabela_compromisso_e_relatorio">
+ 		<%- include('tabela_interna_e_relatorio');%>
+ 	</div>
 
+ 	
+ </div>
 
- 					// var filteredData = table.column(1).data().filter(function(value,index){
- 					// 	return value == 0 ? true : false;
- 					// })
-
- 					console.log('================ FILTERED DATA ========================');
- 					console.log(filteredData);
- 					console.log('=======================================================');
-
- 					console.log('NÃO CHECKADO');
- 				}
-
- 			});
-
- 		</script>

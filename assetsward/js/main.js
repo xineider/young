@@ -287,11 +287,11 @@ $(document).on('ready', function () {
 		autoTablePdf(container_relatorio,nomeProvisorio);
 	});
 
-	$(document).on('click', '.gerar-relatorio-html', function(e) {
+	$(document).on('click', '.gerar-relatorio-no-header', function(e) {
 		e.preventDefault();
 		var nomeProvisorio = $(this).data('nome-provisorio');
 		var container_relatorio = $(this).data('container-relatorio');
-		demoFromHTML(container_relatorio);
+		autoTablePdfnoHeader(container_relatorio,nomeProvisorio);
 	});
 
 	$(document).on('click', '.crop-image-servidor', function(e) {
@@ -839,8 +839,21 @@ $(document).on('click','.load_especifico_to_container',function(e){
 		Pesquisar($(this),$(this).data('container'));
 	});
 
+	$(document).on('keyup change', '.pesquisa-remove-empty', function () {
+		console.log('value:' + $(this).val());
+		if($(this).val().length == 0 ){
+			var elemento = $(this).data('removempty');
+			console.log('elemento:' +elemento);
+			$(elemento).val('');
+			/*faço o trigger para simular um change serve para a voltar a tabela original*/
+			$(elemento).trigger('change');
+		}else{
+			Pesquisar($(this),$(this).data('container'));
+		}
+	});
+
 	$(document).on('change paste keyup','.pesquisa-input',function(){
-		Pesquisar($(this));
+		Pesquisar($(this),$(this).data('container'));
 	});
 	$(document).on('click', '.DesbloquearSenha', function () {
 		$(this).find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
@@ -883,12 +896,12 @@ $(document).on('click','.load_especifico_to_container',function(e){
 		if($('main').find(anchorId).length>0){
 			$('main').find(anchorId).val(id);
 			/*faço o trigger para simular um change serve para a pesquisa de cruzamento funcionar*/
-			$('main').find(anchorId).trigger('change');
 			$('main').find(anchorDescricao).val(descricao);
+			$('main').find(anchorId).trigger('change');
 		}else{
 			$('#modalinfo').find(anchorId).val(id);
-			$('#modalinfo').find(anchorId).trigger('change');
 			$('#modalinfo').find(anchorDescricao).val(descricao);
+			$('#modalinfo').find(anchorId).trigger('change');
 		}
 
 		/*Testo para saber se estou na tela de cadastro de novo processo e se o primeiro input
@@ -3018,18 +3031,120 @@ function changeTipoCompromissoPorCategoriaCompromisso(categoria,tipo,name){
 
 
 
+// function novaFuncao(){
+// 	console.log('estou dentro da novaFuncao');
+// 	var pdf = new jsPDF('p', 'pt', 'letter');
+
+// 	var element = document.getElementById('relatorio_generator');
+// 	console.log('element relatorio_generator');
+// 	console.log(element);
+
+
+// 	// var worker = html2pdf().from(element).save();
+
+// 	html2pdf(document.getElementById('relatorio_generator'), pdf,function(pdf) {
+		
+// 		console.log(pdf);
+// 		console.log('pdf');
+// 		pdf.save('test.pdf');
+// 	}
+// 	);
+// }
 
 
 
 function demoFromHTML(elemento) {
-	var pdf = new jsPDF('l', 'pt');
-	console.log('pppppppppppppppppp pdf ppppppppppppppppppppppppppppppp');
-	console.log(pdf);
-	console.log('pppppppppppppppppppppppppppppppppppppppppppppppppppppp');
-  // source can be HTML-formatted string, or a reference
-  // to an actual DOM element from which the text will be scraped.
-  pdf.text('Hello world!', 10, 10)
-  pdf.save('a4.pdf')
+	// var pdf = new jsPDF();
+	// window.html2canvas = html2canvas;
+	// console.log('pppppppppppppppppp pdf ppppppppppppppppppppppppppppppp');
+	// console.log(pdf);
+	// console.log('pppppppppppppppppppppppppppppppppppppppppppppppppppppp');
+	// console.log("elemento:"+elemento);
+	// window.html2canvas = html2canvas;
+	// var doc = new jsPDF();
+
+	// console.log('mais um teste');
+	// var doc = new jsPDF();
+
+	// doc.fromHTML($('#relatorio_generator').get(0), 15, 15, {
+	// 	'width': 170
+	// });
+
+	console.log('TESTE 300');
+
+
+	// html2canvas(document.body,{
+	// 	onrendered:function(canvas){
+
+	// 		var img=canvas.toDataURL("image/png");
+	// 		var doc = new jsPDF();
+	// 		doc.addImage(img,'JPEG',20,20);
+	// 		doc.save('test.pdf');
+	// 	}
+
+	// });
+
+	// var doc = new jsPDF('landscape', 'pt', 'a4');
+	// doc.addHTML($('#relatorio_generator')[0], function() {
+	// 	doc.save("teste.pdf");
+	// });
+
+
+	// var doc = new jsPDF();
+	// doc.fromHTML($('#relatorio_generator').get(0), 20,20,{
+	// 	'width':500
+	// });
+
+	// doc.save('teste.pdf');
+
+
+	// var pdf = new jsPDF('p', 'pt', 'letter');
+	// console.log('♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫ PDF ♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫');
+	// console.log(pdf);
+	// console.log('♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫♫');
+	// pdf.addHTML($('#relatorio_generator')[0], function () {
+	// 	console.log('estou dentro do ADDHTML');
+	// 	console.log($(this));
+	// 	pdf.save('Test.pdf');
+	// });
+
+
+
+
+	// var element = document.getElementById('relatorio_generator');
+	// var worker = html2pdf().from($('#relatorio_generator')).save();
+
+	var pdf = new jsPDF('p', 'pt', 'letter');
+	var canvas = pdf.canvas;
+	canvas.height = 72 * 11;
+	canvas.width=72 * 8.5;;
+       // var width = 400;
+
+       html2pdf(document.body, pdf,function(pdf) {
+       	var iframe = document.createElement('iframe');
+       	console.log(iframe);
+       	console.log('iframe');
+       	iframe.setAttribute('style','position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+       	document.body.appendChild(iframe);
+       	iframe.src = pdf.output('datauristring');
+
+
+               //var div = document.createElement('pre');
+               //div.innerText=pdf.output();
+               //document.body.appendChild(div);
+           }
+           );
+
+
+
+
+	// doc.html(elemento, {
+	// 	callback: function (doc) {
+	// 		doc.save();
+	// 	}
+	// });
+  // pdf.text('Hello world!', 10, 10)
+  // pdf.save('a4.pdf')
 
 
 
@@ -3088,6 +3203,45 @@ function autoTablePdf(element,nomeProvisorio){
 			fillColor:[79, 33, 40],
 			textColor:[255,255,255]
 		}
+	});
+
+
+	/*só para gerar um nome único*/
+	var relatorioText = 'relatorio';
+	var numeroAleatorio = Math.floor((Math.random() * 900000) + 100000);
+	var diaHoje = new Date();
+	var mes = diaHoje.getMonth() + 1;
+	var dia = diaHoje.getDate();
+
+	var pdf_nome = relatorioText +' - '+ nomeProvisorio + ' - ' + dia + '-' + mes + ' - ' + numeroAleatorio + '.pdf';
+
+	doc.save(pdf_nome);
+}
+
+
+
+
+function autoTablePdfnoHeader(element,nomeProvisorio){
+	var doc = new jsPDF();
+	// You can use html:
+	// doc.autoTable({html: element});
+
+	console.log('♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣ Relatorio Elemento ♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣');
+	console.log(element);
+	console.log('♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣♣');
+
+	console.log('nomeProvisorio:'+nomeProvisorio);
+
+
+	doc.autoTable({
+		html:element,
+		headStyles:{
+			fillColor:[255, 255, 255],
+			textColor:[255,255,255]
+		},
+		useCss: true,
+		theme:'plain',
+		showHead:false
 	});
 
 

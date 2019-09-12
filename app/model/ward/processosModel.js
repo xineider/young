@@ -982,7 +982,7 @@ class ProcessosModel {
 	ProcurarProcessoCruzamento(POST) {
 		return new Promise(function(resolve, reject) {
 			var where = '';
-			var array = [];
+			var array = [5];
 			// console.log('000000000000000 POST 00000000000000000000');
 			// console.log(POST);
 			// console.log('00000000000000000000000000000000000000000');
@@ -997,13 +997,20 @@ class ProcessosModel {
 					console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
 
 					if(key == 'cnpj'){
-						where += 'AND c.cpf_cnpj LIKE "%"?"%"'
+						where += ' AND c.cpf_cnpj LIKE "%"?"%" ';
 						console.log('no if');
 					}else if(key == 'numero'){
-						where += 'AND a.numero LIKE "%"?"%"'
+						where += ' AND a.numero LIKE "%"?"%" ';
+						console.log('no segundo if');
+						/*colquei tudo sub para indicar os joins left e os wheres */
+					}else if(key.substring(0,3) == 'sub'){
+						var split = key.split('_');
+						console.log('split: '+split);
+
+						where += 'AND '+split[1]+'.'+split[2]+' LIKE "%"?"%" ';
 					}else{
 						where += 'AND a.' + key + ' = ? ';
-						console.log('no else');
+						console.log('cai no else ÊêêÊ');
 					}
 					array.push(POST[key]);
 				}
@@ -1023,14 +1030,25 @@ class ProcessosModel {
 			helper.Query("SELECT a.*, \
 				DATE_FORMAT(a.data_cadastro, '%d/%m/%Y %H:%i') as data_processo,\
 				DATE_FORMAT(a.data_cadastro, '%Y%m%d %H:%i') as data_table_filtro,\
-				(SELECT b.nome FROM usuarios as b WHERE b.id = a.id_usuario) as responsavel,\
-				(SELECT c.nome FROM clientes as c WHERE c.id = a.id_cliente) as cliente,\
-				(SELECT d.nome FROM adversos as d WHERE d.id = a.id_adverso) as adverso,\
-				(SELECT e.cpf_cnpj FROM clientes as e WHERE e.id = a.id_cliente) as cpf_cnpj \
+				u.nome as responsavel,\
+				c.nome as cliente,\
+				adve.nome as adverso,\
+				c.cpf_cnpj \
 				FROM processos as a \
-				LEFT JOIN clientes as c ON a.id_cliente = c.id \
-				WHERE a.deletado != ? "+ where,[5,array]).then(dataProcessoPorNumero => {
-					// console.log(dataProcessoPorNumero);
+				LEFT JOIN clientes as c ON a.id_cliente = c.id\
+                LEFT JOIN adversos as adve ON a.id_adverso = adve.id\
+                LEFT JOIN descricao_generico as tc ON a.id_tipo_causa = tc.id\
+                LEFT JOIN descricao_generico as assu ON a.id_assunto = assu.id\
+                LEFT JOIN descricao_generico as com ON a.id_comarca = com.id\
+                LEFT JOIN descricao_generico as tar ON a.id_tipo_acao_rito = tar.id\
+                LEFT JOIN descricao_generico as var ON a.id_vara = var.id\
+                LEFT JOIN descricao_generico as cat ON a.id_categoria = cat.id\
+                LEFT JOIN descricao_generico as fas ON a.id_fase = fas.id\
+                LEFT JOIN usuarios as u ON a.id_advogado = u.id\
+				WHERE a.deletado != ? "+ where,array).then(dataProcessoPorNumero => {
+					console.log('♦♦♦♦♦♦♦♦♦♦♦♦ dataProcessoPorNumero ♦♦♦♦♦♦');
+					console.log(dataProcessoPorNumero);
+					console.log('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦');
 					resolve(dataProcessoPorNumero);
 					
 				});

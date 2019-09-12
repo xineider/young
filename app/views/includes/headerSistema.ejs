@@ -5,7 +5,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+	<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script> -->
 	<script src="/assetsward/js/jquery.min.js"></script>
 	<script src="/assetsward/js/jquery.mask.js"></script>
 	<script src="/assetsward/js/cropper.min.js"></script>
@@ -14,8 +14,13 @@
 	<script src="/assetsward/js/fullcalendar.min.js"></script>
 	<script src='/assetsward/js/locale/pt-br.js'></script>
 	<script src="/assetsward/js/jquery-ui.min.js"></script>
+	<!-- <script src="/assetsward/js/jspdf.min.js"></script> -->
 	<script src="/assetsward/js/jspdf.debug.js"></script>
+	<!-- <script src="/assetsward/js/html2canvas.min.js"></script> -->
+	<!-- <script src="/assetsward/js/html2pdf.js"></script> -->
+	<!-- <script src="/assetsward/js/jspdf/addhtml.js"></script> -->
 	<script src="/assetsward/js/jspdf.plugin.autotable.js"></script>
+	<!-- <script src="/assetsward/js/jspdf/from_html.js"></script> -->
 	<script src="/assetsward/js/main.js"></script>
 	<script src="/assetsward/js/datatables.min.js"></script>
 	
@@ -114,16 +119,16 @@
 		<!-- <span class="sr-only">Loading...</span> -->
 	</div>
 	<style type="text/css">
-	<%
-	if (typeof usuario.config != 'undefined') {
-		%>
-		.nav-wrapper #big-nav > ul > li a {
-			background-image: linear-gradient(to right, <%= typeof usuario.config != 'undefined' ? usuario.config.cor_padrao : '' %> 50%, #fff 50%) !important;
-		}
 		<%
-	}
-	%>
-</style>
+		if (typeof usuario.config != 'undefined') {
+			%>
+			.nav-wrapper #big-nav > ul > li a {
+				background-image: linear-gradient(to right, <%= typeof usuario.config != 'undefined' ? usuario.config.cor_padrao : '' %> 50%, #fff 50%) !important;
+			}
+			<%
+		}
+		%>
+	</style>
 <!-- 		<header style="overflow: hidden;z-index: 3;" class="container">
 	    <div class="nav-wrapper">
 	    	<div class="logo-wrapper">
@@ -261,39 +266,39 @@
 </div>
 
 <style type="text/css">
-/*.logo-wrapper {margin-left: -15px; width: 300px; height: 50px; text-align: center; background-color: #6e4f28;}*/
-.logo-wrapper {padding: 5px 0 !important; width: 300px; height: 50px; margin: 0 0 0 -15px; text-align: center; background-color: #6e4f28;}
-.logo-wrapper img {max-width: 100%; max-height: 40px;}
-#nav-links, #nav-links li a i {
-	line-height: 50px !important;
-	max-height: 50px !important;
-	font-size: 35px !important;
-}
-#nav-links li a {
-	max-width: 70px;
-	max-height: 50px;
-	margin: 0;
-	padding: 3 10px;
-}
-#nav-links li .head-icon {
-	max-width: 44px;
-}
-#nav-links li .img-user {
-	height: 42px;
-	width: 42px;
-	margin: 4px;
-	margin-left: 20px;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	overflow: hidden;
-	/*		background: url('/assetsward/imgs/user-padrao.jpg') no-repeat center;*/
-	background-size: cover;
-}
+	/*.logo-wrapper {margin-left: -15px; width: 300px; height: 50px; text-align: center; background-color: #6e4f28;}*/
+	.logo-wrapper {padding: 5px 0 !important; width: 300px; height: 50px; margin: 0 0 0 -15px; text-align: center; background-color: #6e4f28;}
+	.logo-wrapper img {max-width: 100%; max-height: 40px;}
+	#nav-links, #nav-links li a i {
+		line-height: 50px !important;
+		max-height: 50px !important;
+		font-size: 35px !important;
+	}
+	#nav-links li a {
+		max-width: 70px;
+		max-height: 50px;
+		margin: 0;
+		padding: 3 10px;
+	}
+	#nav-links li .head-icon {
+		max-width: 44px;
+	}
+	#nav-links li .img-user {
+		height: 42px;
+		width: 42px;
+		margin: 4px;
+		margin-left: 20px;
+		border: 1px solid #fff;
+		border-radius: 50%;
+		overflow: hidden;
+		/*		background: url('/assetsward/imgs/user-padrao.jpg') no-repeat center;*/
+		background-size: cover;
+	}
 
-#nav-links li .img-user img{
-	height:100%;
-	width: 100%;
-}
+	#nav-links li .img-user img{
+		height:100%;
+		width: 100%;
+	}
 /*  		#nav-links li .img-user img {
   			max-width: 100%;
   			}*/

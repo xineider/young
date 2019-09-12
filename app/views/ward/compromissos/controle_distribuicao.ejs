@@ -31,38 +31,25 @@
  	</div>
 
 
- 	<div class="row" id="filtro_teste_relatorio">
+ 	<div class="row">
  		<div class="card white">
  			<div class="row center">
- 				<div class="col s12">Filtro</div>
+ 				<div class="col s12 f20 bold">Filtro Avançado</div>
  			</div>
  			<div class="row">
- 				<form method="POST" action="" data-link="/sistema/compromissos/controle_distribuicao/pesquisar/">
-
- 					<div class="input-field input-group-control col s12 m6">
- 						<label for="data_inicial">Data de Início</label>          
- 						<input id="data_inicial" type="text" class="datepicker pesquisa" name="data_inicial" data-container="#tabela_interna_compromisso">
- 					</div>
-
- 					<div class="input-field input-group-control col s12 m6">
- 						<label for="data_final">Data de Fim</label>          
- 						<input id="data_final" type="text" class="datepicker pesquisa" name="data_final" data-container="#tabela_interna_compromisso">
- 					</div>
- 				</form>
+ 				<%- include('compromissos_pesquisa');%>
  			</div>
 
  			<div class="row padding-b-10">
  				<div class="col s6 offset-s5">
- 				<div class="center valign-wrapper">
- 					<a class="btn-floating btn-large waves-effect waves-light golden darken-2 gerar-relatorio-html" data-nome-provisorio="Distribuicao" data-container-relatorio="#tabela_interna_compromisso">
- 						<i class="fa fa-file-pdf-o bordo-text" aria-hidden="true"></i>
- 					</a>
- 					<div class="black-text margin-l-5">Gerar Relatório Personalizado</div>
-
- 				</div>
+ 					<div class="center valign-wrapper">
+ 						<a class="btn waves-effect waves-light bordo gerar-relatorio-no-header" data-nome-provisorio="Dist_per" data-container-relatorio="#relatorio_generator">
+ 							Gerar Relatório Personalizado
+ 							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+ 						</a>
+ 					</div>
  				</div>
  			</div>
-
 
  		</div>
  	</div>
@@ -103,11 +90,10 @@
 
  	</div> -->
 
- 	<div class="overflow-auto">
- 		<%- include('tabela_interna_only');%>
+ 	<div id="tabela_compromisso_e_relatorio">
+ 		<%- include('tabela_interna_e_relatorio');%>
  	</div>
+ 	
 
- 	<div id="relatorio_generator" class="row">
- 		<%- include('relatorio_generator');%>
- 	</div>
+ 	
  </div>

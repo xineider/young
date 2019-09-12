@@ -128,39 +128,86 @@ router.get('/eventos', function(req, res, next) {
 });
 
 router.get('/pauta_compromisso', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(0).then(data_compromisso => {
-		data.compromisso = data_compromisso;
-		data.link_editar = 'editar_pauta_compromisso';
-		data.back = 'pauta_compromisso';
-		console.log('====== data pauta compromisso =============');
-		console.log(data);
-		console.log('===========================================');
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_compromisso', data: data, usuario: req.session.usuario});
+	model.SelecioneClientes().then(data_clientes => {
+		data.clientes = data_clientes;
+		model.SelecioneAdversos().then(data_adversos => {
+			data.adversos = data_adversos;
+			model.SelecioneComarcas().then(data_comarcas => {
+				data.comarcas = data_comarcas;
+				model.SelecionarAdvogados().then(data_advogados => {
+					data.advogados = data_advogados;
+					model.SelecionarEventosPorTipoCompromisso(0).then(data_compromisso => {
+						data.compromisso = data_compromisso;
+						model.SelecionarEventosRelatorioPorTipoCompromisso(0).then(data_relatorio => {
+							data.relatorio = data_relatorio;
+							data.link_editar = 'editar_pauta_compromisso';
+							data.back = 'pauta_compromisso';
+							data.link_pesquisar = 'pauta_compromisso/pesquisar/';
+							console.log('====== data pauta compromisso =============');
+							console.log(data);
+							console.log('===========================================');
+							res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_compromisso', data: data, usuario: req.session.usuario});
+						});
+					});
+				});
+			});
+		});
 	});
 });
 
 
 router.get('/controle_distribuicao', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(1).then(data_compromisso => {
-		data.compromisso = data_compromisso;
-		model.SelecionarEventosRelatorioPorTipoCompromisso(1).then(data_relatorio => {
-			data.relatorio = data_relatorio;
-			data.link_editar = 'editar_controle_distribuicao';
-			data.back = 'controle_distribuicao';
-			console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼ DATA COMPROMISSO ‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
-			console.log(data);
-			console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/controle_distribuicao', data: data, usuario: req.session.usuario});
+	model.SelecioneClientes().then(data_clientes => {
+		data.clientes = data_clientes;
+		model.SelecioneAdversos().then(data_adversos => {
+			data.adversos = data_adversos;
+			model.SelecioneComarcas().then(data_comarcas => {
+				data.comarcas = data_comarcas;
+				model.SelecionarAdvogados().then(data_advogados => {
+					data.advogados = data_advogados;
+					model.SelecionarEventosPorTipoCompromisso(1).then(data_compromisso => {
+						data.compromisso = data_compromisso;
+						model.SelecionarEventosRelatorioPorTipoCompromisso(1).then(data_relatorio => {
+							data.relatorio = data_relatorio;
+							data.link_editar = 'editar_controle_distribuicao';
+							data.back = 'controle_distribuicao';
+							data.link_pesquisar = 'controle_distribuicao/pesquisar/';
+
+							console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼ DATA COMPROMISSO ‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
+							console.log(data);
+							console.log('‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼‼');
+							res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/controle_distribuicao', data: data, usuario: req.session.usuario});
+						});
+					});
+				});
+			});
 		});
 	});
 });
 
+
 router.get('/pauta_julgamento', function(req, res, next) {
-	model.SelecionarEventosPorTipoCompromisso(2).then(data_compromisso => {
-		data.compromisso = data_compromisso;
-		data.link_editar='editar_pauta_julgamento';
-		data.back = 'pauta_julgamento';
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_julgamento', data: data, usuario: req.session.usuario});
+	model.SelecioneClientes().then(data_clientes => {
+		data.clientes = data_clientes;
+		model.SelecioneAdversos().then(data_adversos => {
+			data.adversos = data_adversos;
+			model.SelecioneComarcas().then(data_comarcas => {
+				data.comarcas = data_comarcas;
+				model.SelecionarAdvogados().then(data_advogados => {
+					data.advogados = data_advogados;
+					model.SelecionarEventosPorTipoCompromisso(2).then(data_compromisso => {
+						data.compromisso = data_compromisso;
+						model.SelecionarEventosRelatorioPorTipoCompromisso(2).then(data_relatorio => {
+							data.relatorio = data_relatorio;
+							data.link_editar='editar_pauta_julgamento';
+							data.back = 'pauta_julgamento';
+							data.link_pesquisar = 'pauta_julgamento/pesquisar/';
+							res.render(req.isAjaxRequest() == true ? 'api' : 'montador', {html: 'ward/compromissos/pauta_julgamento', data: data, usuario: req.session.usuario});
+						});
+					});
+				});
+			});
+		});
 	});
 });
 
@@ -263,15 +310,39 @@ router.post('/atualizar/', function(req, res, next) {
 	});
 
 router.post('/desativar', function(req, res, next) {
-		// Recebendo o valor do post
-		POST = req.body;
-		console.log('---------------- Desativar ------------------------');
-		console.log(POST);
-		console.log('---------------------------------------------------');
-		model.DesativarCompromisso(POST).then(data=> {
-			res.json(data);
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('---------------- Desativar ------------------------');
+	console.log(POST);
+	console.log('---------------------------------------------------');
+	model.DesativarCompromisso(POST).then(data=> {
+		res.json(data);
+	});
+});
+
+
+router.post('/pauta_compromisso/pesquisar', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺ Pesquisar ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	console.log(POST);
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	model.ProcurarCompromisso(POST,0).then(data_compromisso => {
+		console.log('┤┤┤┤┤┤┤┤ data_compromisso ┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		console.log(data_compromisso);
+		console.log('┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		data.compromisso = data_compromisso;
+		model.ProcurarCompromissoRelatorio(POST,0).then(data_relatorio => {
+			data.relatorio = data_relatorio;
+			data.link_editar = 'editar_pauta_compromisso';
+			data.back = 'pauta_compromisso';
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪ DATA ♪♪♪♪♪♪♪♪');
+			console.log(data_relatorio);
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/compromissos/tabela_interna_e_relatorio', data: data, usuario: req.session.usuario});
 		});
 	});
+});
 
 
 router.post('/controle_distribuicao/pesquisar', function(req, res, next) {
@@ -285,11 +356,42 @@ router.post('/controle_distribuicao/pesquisar', function(req, res, next) {
 		console.log(data_compromisso);
 		console.log('┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
 		data.compromisso = data_compromisso;
-		data.link_editar = 'editar_controle_distribuicao';
-		data.back='controle_distribuicao';
-		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/compromissos/tabela_interna_only', data: data, usuario: req.session.usuario});
+		model.ProcurarCompromissoRelatorio(POST,1).then(data_relatorio => {
+			data.relatorio = data_relatorio;
+			data.link_editar = 'editar_controle_distribuicao';
+			data.back='controle_distribuicao';
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪ DATA ♪♪♪♪♪♪♪♪');
+			console.log(data_relatorio);
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/compromissos/tabela_interna_e_relatorio', data: data, usuario: req.session.usuario});
+		});
 	});
 });
+
+router.post('/pauta_julgamento/pesquisar', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺ Pesquisar ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	console.log(POST);
+	console.log('☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺');
+	model.ProcurarCompromisso(POST,2).then(data_compromisso => {
+		console.log('┤┤┤┤┤┤┤┤ data_compromisso ┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		console.log(data_compromisso);
+		console.log('┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤┤');
+		data.compromisso = data_compromisso;
+		model.ProcurarCompromissoRelatorio(POST,2).then(data_relatorio => {
+			data.relatorio = data_relatorio;
+			data.link_editar='editar_pauta_julgamento';
+			data.back = 'pauta_julgamento';
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪ DATA ♪♪♪♪♪♪♪♪');
+			console.log(data_relatorio);
+			console.log('♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪♪');
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/compromissos/tabela_interna_e_relatorio', data: data, usuario: req.session.usuario});
+		});
+	});
+});
+
+
 
 
 module.exports = router;

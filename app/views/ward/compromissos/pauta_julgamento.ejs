@@ -51,7 +51,30 @@
 	<label for='filtro_prazosfisico'>Prazos Processos Físicos</label>
 </div> -->
 
-<div class="overflow-auto">
-<%- include('tabela_interna_only');%>
-	</div>
+<div class="row">
+ 		<div class="card white">
+ 			<div class="row center">
+ 				<div class="col s12 f20 bold">Filtro Avançado</div>
+ 			</div>
+ 			<div class="row">
+ 				<%- include('compromissos_pesquisa');%>
+ 			</div>
+
+ 			<div class="row padding-b-10">
+ 				<div class="col s6 offset-s5">
+ 					<div class="center valign-wrapper">
+ 						<a class="btn waves-effect waves-light bordo gerar-relatorio-no-header" data-nome-provisorio="Pjul_per" data-container-relatorio="#relatorio_generator">
+ 							Gerar Relatório Personalizado
+ 							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+ 						</a>
+ 					</div>
+ 				</div>
+ 			</div>
+
+ 		</div>
+ 	</div>
+
+<div id="tabela_compromisso_e_relatorio">
+ 		<%- include('tabela_interna_e_relatorio');%>
+ 	</div>
 </div>
