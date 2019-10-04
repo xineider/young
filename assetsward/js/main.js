@@ -367,6 +367,17 @@ $(document).on('ready', function () {
 
 
 
+	$(document).on('change', "select[name='andamento_tipo']", function(e) {
+		console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{')
+		console.log('estou trocando o valor do select name="andamento_tipo"');
+		console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{');
+
+		
+
+	});
+
+
+
 	$(document).on('click', '.ajax-load', function(e) {
 		e.preventDefault();
 		var link = $(this).attr('href');
@@ -3043,7 +3054,7 @@ function changeTipoCompromissoPorCategoriaCompromisso(categoria,tipo,name){
 // 	// var worker = html2pdf().from(element).save();
 
 // 	html2pdf(document.getElementById('relatorio_generator'), pdf,function(pdf) {
-		
+
 // 		console.log(pdf);
 // 		console.log('pdf');
 // 		pdf.save('test.pdf');

@@ -6,7 +6,7 @@
 					<label for="andamento_data">Data</label>
 					<input class="data_sem_hora data_hoje" type="text" name="andamento_data" maxlength="10" value="<%= data.tempo[0].hoje%>">
 				</div>
-				<div class="select-field input-group-control col s12 m6">
+				<div class="select-field input-group-control col s12 m6" data-href="#modalinfo" data-link="/processos/andamento_financeiro_dados_para_calculo/<%= data.detalhes_processo[0].id%>">
 					<label>Tipo do Andamento</label>
 					<select class="browser-default" name="andamento_tipo">
 						<option value="0">Jurídico</option>

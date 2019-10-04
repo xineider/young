@@ -138,7 +138,7 @@ router.get('/abrir/:id', function(req, res, next) {
 											model.SelecioneTodosAndamentosDoRecursoDoProcesso(id).then(data_andamentos_recurso =>{
 												data.andamentos_recursos = data_andamentos_recurso;
 												console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
-												console.log(data.compromissos);
+												console.log(data);
 												console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
 												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
 											});
