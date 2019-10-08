@@ -9,7 +9,7 @@ var data = {};
 var app = express();
 app.use(require('express-is-ajax-request'));
 
-/* GET pagina de login. */
+
 router.get('/', function(req, res, next) {
 	model.SelecioneAdversos().then(data => {
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/adversos/index', data: data, usuario: req.session.usuario});
