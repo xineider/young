@@ -4,7 +4,7 @@ var crypto = require('crypto');
 // FAZER LEITURA DAS CONFIGURAÇÕES
 
 // var config = {
-// 					    "host"     : "mysql785.umbler.com",
+// 					    "host"     : "mysql669.umbler.com",
 // 					    "user"     : "admin-young-adv",
 // 					    "password" : "6O(ayS4?{q{Ci",
 // 					    "database" : "young-adv"

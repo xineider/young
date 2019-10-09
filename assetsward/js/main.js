@@ -367,17 +367,6 @@ $(document).on('ready', function () {
 
 
 
-	$(document).on('change', "select[name='andamento_tipo']", function(e) {
-		console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{')
-		console.log('estou trocando o valor do select name="andamento_tipo"');
-		console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{');
-
-		
-
-	});
-
-
-
 	$(document).on('click', '.ajax-load', function(e) {
 		e.preventDefault();
 		var link = $(this).attr('href');
@@ -704,6 +693,32 @@ $(document).on('click','.load_especifico_to_container',function(e){
 		loadEspecificoPagina(link,$(containerFinal));
 	}
 });
+
+
+$(document).on('change','.load_especifico_to_container_andamento_financeiro',function(e){
+	e.preventDefault();
+	var containerFinal = "." + $(this).data('container');
+	console.log($(this).data('idload'));
+	console.log($(containerFinal).data('idload'));
+	var id_load = $(this).data('idload');
+	var id_container = $(containerFinal).data('idload');
+
+
+	if($(this).val() == 2){
+		if(id_container == id_load){
+			$(containerFinal).empty();
+			$(containerFinal).removeData('idload');
+		}else{
+			console.log('cai no else');
+			$(containerFinal).empty();
+			$(containerFinal).data('idload',id_load);
+			var link = $(this).data('link');
+			loadEspecificoPagina(link,$(containerFinal));
+		}
+	}
+});
+
+
 
 	// $(document).on('click','.abrir_pessoas_cliente',function(e){
 	// 	$('.partes_container_criacao').empty();

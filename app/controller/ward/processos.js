@@ -137,10 +137,13 @@ router.get('/abrir/:id', function(req, res, next) {
 											data.andamentos_apensos = data_andamentos_apenso;
 											model.SelecioneTodosAndamentosDoRecursoDoProcesso(id).then(data_andamentos_recurso =>{
 												data.andamentos_recursos = data_andamentos_recurso;
-												console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
-												console.log(data);
-												console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
-												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
+												model.SelecioneCalculosFinanceirosDoProcesso(id).then(data_calculos_financeiros =>{
+													data.calculos_financeiro = data_calculos_financeiros;
+													console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
+													console.log(data);
+													console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
+													res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
+												});
 											});
 										});
 									});
@@ -679,6 +682,14 @@ router.get('/pesquisar-todos-fase-autocomplete/:pesquisa', function(req, res, ne
 	model.PesquisarDescricaoGenericaAutocomplete(pesquisa,3).then(data =>{
 		res.json(data);
 	});
+});
+
+
+router.get('/andamento_financeiro_cadastro_dados_para_calculo/:idProcesso',function(req, res, next){
+	var idProcesso = req.params.idProcesso;
+	console.log('999999 cai no andamento_financeiro_dados_para_calculo 9999999');
+	console.log('9999999999999999999999999999999999999999999999999999999999999');
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_dados_para_calculo', data: data, usuario: req.session.usuario});
 });
 
 
@@ -1841,47 +1852,76 @@ router.post('/cadastrar-envolvido-adverso',function(req, res, next){
 });
 
 
-router.post('/atualizar_envolvido_cliente/:iterador', function(req, res, next) {
-		// Recebendo o valor do post
-		var i = req.params.iterador;
-		// var idProcesso = req.params.idProcesso;
-		console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ITERADOR IIIIIIIIIIIIIIIIIIII');
-		console.log(i);
-		console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
-		POST = req.body;
+router.post('/cadastrar_dados_para_calculo_processo/', function(req, res, next) {
 
-		console.log('GGGGGGGGGGGGGGGGGGGGGGGGG ID CLIENTE OUTROS GGGGGGGGGGGGGGG');
-		console.log(POST.id_outros[i]);
+	
+	POST = req.body;
 
-		console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+	console.log('ååååååå POST ååååååååååååååååååååååååååååååå');
+	console.log(POST);
+	console.log('åååååååååååååååååååååååååååååååååååååååååååå');
 
-		console.log('SEM ITTTTTTTTTTTTTTTTTTTTTTTTTTT');
-		console.log(POST.id_outros);
-		console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+	//vhe=valor_honorario_escritorio,vhp = valor_honorario_perito, vir = valor_imposto_renda
+	var vhe = POST.porc_honorario_escritorio;
+	var vhp = POST.porc_honorario_perito;
+	var vir = POST.porc_imposto_renda;
 
-		
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAA ENVOLVIDO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-		console.log(POST);
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-		console.log('TIPO PPPPPPPPPPPPPPPPPPPPP');
-		console.log(POST.id_outros_tipo[i]);
-		console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP');
+	data_insert = {id_processo:POST.id, data_sentenca_acordo: POST.data_sentenca_acordo, 
+		porc_honorario_escritorio:vhe,
+		porc_honorario_perito:vhp,
+		porc_imposto_renda:vir};
 
-		if(Array.isArray(POST.id_outros)){
-			data_insert = {id:POST.id_outros[i], id_outros_tipo:POST.id_outros_tipo[i]};
-		}else{
-			data_insert = {id:POST.id_outros, id_outros_tipo:POST.id_outros_tipo};
-		}
-
-
-		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DATA INSERT DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+		console.log('╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚ data insert ╚╚╚╚╚╚╚╚╚╚╚╚');
 		console.log(data_insert);
-		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+		console.log('╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚');
 
-		model.AtualizarOutroEnvolvidoCliente(data_insert).then(data =>{
+		model.CadastrarDadosParaCalculoFinanceiroProcesso(data_insert).then(data =>{
 			res.json(data);
 		});
+
 	});
+
+router.post('/atualizar_envolvido_cliente/:iterador', function(req, res, next) {
+	// Recebendo o valor do post
+	var i = req.params.iterador;
+	// var idProcesso = req.params.idProcesso;
+	console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ITERADOR IIIIIIIIIIIIIIIIIIII');
+	console.log(i);
+	console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
+	POST = req.body;
+
+	console.log('GGGGGGGGGGGGGGGGGGGGGGGGG ID CLIENTE OUTROS GGGGGGGGGGGGGGG');
+	console.log(POST.id_outros[i]);
+
+	console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+
+	console.log('SEM ITTTTTTTTTTTTTTTTTTTTTTTTTTT');
+	console.log(POST.id_outros);
+	console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+
+
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAA ENVOLVIDO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	console.log(POST);
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	console.log('TIPO PPPPPPPPPPPPPPPPPPPPP');
+	console.log(POST.id_outros_tipo[i]);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+	if(Array.isArray(POST.id_outros)){
+		data_insert = {id:POST.id_outros[i], id_outros_tipo:POST.id_outros_tipo[i]};
+	}else{
+		data_insert = {id:POST.id_outros, id_outros_tipo:POST.id_outros_tipo};
+	}
+
+
+	console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DATA INSERT DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+	console.log(data_insert);
+	console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+
+	model.AtualizarOutroEnvolvidoCliente(data_insert).then(data =>{
+		res.json(data);
+	});
+});
 
 
 

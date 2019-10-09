@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 19-Ago-2019 às 02:52
--- Versão do servidor: 5.7.14
--- PHP Version: 5.6.25
+-- Host: 127.0.0.1:3306
+-- Generation Time: 09-Out-2019 às 18:44
+-- Versão do servidor: 5.7.19
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,8 +28,9 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `adversos`
 --
 
-CREATE TABLE `adversos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `adversos`;
+CREATE TABLE IF NOT EXISTS `adversos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `cpf_cnpj` varchar(25) NOT NULL,
   `rua` varchar(150) NOT NULL,
@@ -42,8 +45,9 @@ CREATE TABLE `adversos` (
   `contato` varchar(150) DEFAULT NULL,
   `tipo` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1= PF, 2=PJ',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `adversos`
@@ -62,16 +66,18 @@ INSERT INTO `adversos` (`id`, `nome`, `cpf_cnpj`, `rua`, `bairro`, `numero`, `ci
 -- Estrutura da tabela `advogados`
 --
 
-CREATE TABLE `advogados` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `advogados`;
+CREATE TABLE IF NOT EXISTS `advogados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `oab` varchar(20) NOT NULL,
   `nome` varchar(150) NOT NULL,
   `cpf` varchar(11) NOT NULL,
   `rg` varchar(18) NOT NULL,
   `celular` varchar(50) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `advogados`
@@ -87,8 +93,9 @@ INSERT INTO `advogados` (`id`, `oab`, `nome`, `cpf`, `rg`, `celular`, `deletado`
 -- Estrutura da tabela `andamentos_processo`
 --
 
-CREATE TABLE `andamentos_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `andamentos_processo`;
+CREATE TABLE IF NOT EXISTS `andamentos_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_processo` int(11) NOT NULL,
   `id_recurso` int(11) DEFAULT '0',
   `id_apenso` int(11) DEFAULT '0',
@@ -97,8 +104,11 @@ CREATE TABLE `andamentos_processo` (
   `data` date NOT NULL,
   `tipo` smallint(6) NOT NULL DEFAULT '0' COMMENT '0 - Juridico, 1 - Administrativo, 2 - Extra Especial',
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_processo` (`id_processo`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `andamentos_processo`
@@ -118,8 +128,9 @@ INSERT INTO `andamentos_processo` (`id`, `id_processo`, `id_recurso`, `id_apenso
 -- Estrutura da tabela `apenso`
 --
 
-CREATE TABLE `apenso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `apenso`;
+CREATE TABLE IF NOT EXISTS `apenso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_processo` int(11) DEFAULT NULL,
   `id_advogado` int(11) DEFAULT NULL,
@@ -135,7 +146,8 @@ CREATE TABLE `apenso` (
   `citacao` date DEFAULT NULL,
   `sentenca` date DEFAULT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -144,12 +156,14 @@ CREATE TABLE `apenso` (
 -- Estrutura da tabela `assunto_processo`
 --
 
-CREATE TABLE `assunto_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `assunto_processo`;
+CREATE TABLE IF NOT EXISTS `assunto_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `assunto_processo`
@@ -173,16 +187,45 @@ INSERT INTO `assunto_processo` (`id`, `descricao`, `deletado`, `data_cadastro`) 
 -- Estrutura da tabela `busca_area`
 --
 
-CREATE TABLE `busca_area` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `busca_area`;
+CREATE TABLE IF NOT EXISTS `busca_area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `descricao` text NOT NULL,
   `antes` text NOT NULL,
   `depois` text NOT NULL,
   `icone` varchar(50) NOT NULL,
   `cor` varchar(50) NOT NULL,
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `calculo_processo_financeiro`
+--
+
+DROP TABLE IF EXISTS `calculo_processo_financeiro`;
+CREATE TABLE IF NOT EXISTS `calculo_processo_financeiro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_processo` int(11) NOT NULL,
+  `data_sentenca_acordo` date NOT NULL,
+  `porc_honorario_escritorio` double NOT NULL,
+  `porc_honorario_perito` double NOT NULL DEFAULT '0',
+  `porc_imposto_renda` double NOT NULL DEFAULT '0',
+  `deletado` tinyint(4) NOT NULL DEFAULT '0',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_processo` (`id_processo`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `calculo_processo_financeiro`
+--
+
+INSERT INTO `calculo_processo_financeiro` (`id`, `id_processo`, `data_sentenca_acordo`, `porc_honorario_escritorio`, `porc_honorario_perito`, `porc_imposto_renda`, `deletado`, `data_cadastro`) VALUES
+(1, 24, '2019-10-01', 7, 7, 7, 0, '2019-10-08 22:13:30');
 
 -- --------------------------------------------------------
 
@@ -190,16 +233,18 @@ CREATE TABLE `busca_area` (
 -- Estrutura da tabela `captacao_processo`
 --
 
-CREATE TABLE `captacao_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `captacao_processo`;
+CREATE TABLE IF NOT EXISTS `captacao_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_processo` int(11) NOT NULL,
   `id_captador` int(11) NOT NULL,
   `id_origem` int(11) NOT NULL,
   `observacoes` text NOT NULL,
   `data` date NOT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `captacao_processo`
@@ -215,12 +260,14 @@ INSERT INTO `captacao_processo` (`id`, `id_processo`, `id_captador`, `id_origem`
 -- Estrutura da tabela `captador_processo`
 --
 
-CREATE TABLE `captador_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `captador_processo`;
+CREATE TABLE IF NOT EXISTS `captador_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `captador_processo`
@@ -237,12 +284,14 @@ INSERT INTO `captador_processo` (`id`, `descricao`, `deletado`, `data_cadastro`)
 -- Estrutura da tabela `categoria_processo`
 --
 
-CREATE TABLE `categoria_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `categoria_processo`;
+CREATE TABLE IF NOT EXISTS `categoria_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `categoria_processo`
@@ -257,15 +306,18 @@ INSERT INTO `categoria_processo` (`id`, `descricao`, `deletado`, `data_cadastro`
 -- Estrutura da tabela `chats_grupo`
 --
 
-CREATE TABLE `chats_grupo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `chats_grupo`;
+CREATE TABLE IF NOT EXISTS `chats_grupo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_setor` int(11) NOT NULL DEFAULT '0',
   `nome` varchar(150) NOT NULL,
   `imagem` varchar(150) DEFAULT NULL,
   `tipo` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Grupo, 2 = Privado',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_setor` (`id_setor`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `chats_grupo`
@@ -282,14 +334,16 @@ INSERT INTO `chats_grupo` (`id`, `id_setor`, `nome`, `imagem`, `tipo`, `deletado
 -- Estrutura da tabela `chats_mensagens`
 --
 
-CREATE TABLE `chats_mensagens` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `chats_mensagens`;
+CREATE TABLE IF NOT EXISTS `chats_mensagens` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_usuario_enviado` int(11) DEFAULT '0',
   `id_chat_grupo` int(11) DEFAULT '0',
   `texto` text NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -298,13 +352,15 @@ CREATE TABLE `chats_mensagens` (
 -- Estrutura da tabela `chats_mensagens_novidades`
 --
 
-CREATE TABLE `chats_mensagens_novidades` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `chats_mensagens_novidades`;
+CREATE TABLE IF NOT EXISTS `chats_mensagens_novidades` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_usuario_enviado` int(11) NOT NULL,
   `id_chat_grupo` int(11) DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `chats_mensagens_novidades`
@@ -343,13 +399,17 @@ INSERT INTO `chats_mensagens_novidades` (`id`, `id_usuario`, `id_usuario_enviado
 -- Estrutura da tabela `chats_participantes_grupo`
 --
 
-CREATE TABLE `chats_participantes_grupo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `chats_participantes_grupo`;
+CREATE TABLE IF NOT EXISTS `chats_participantes_grupo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_chat_grupo` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_chat` (`id_chat_grupo`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `chats_participantes_grupo`
@@ -396,8 +456,9 @@ INSERT INTO `chats_participantes_grupo` (`id`, `id_chat_grupo`, `id_usuario`, `d
 -- Estrutura da tabela `clientes`
 --
 
-CREATE TABLE `clientes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `clientes`;
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_grupo` int(11) NOT NULL DEFAULT '0',
   `nome` varchar(150) NOT NULL,
   `tipo_cliente` tinyint(1) NOT NULL DEFAULT '0',
@@ -430,8 +491,9 @@ CREATE TABLE `clientes` (
   `atualizacao` varchar(50) DEFAULT NULL,
   `tipo` tinyint(1) NOT NULL COMMENT '1 = PJ, 2 = PF',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `clientes`
@@ -457,12 +519,14 @@ INSERT INTO `clientes` (`id`, `id_grupo`, `nome`, `tipo_cliente`, `perfil`, `obs
 -- Estrutura da tabela `comarca`
 --
 
-CREATE TABLE `comarca` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `comarca`;
+CREATE TABLE IF NOT EXISTS `comarca` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `comarca`
@@ -478,8 +542,9 @@ INSERT INTO `comarca` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `compromissos`
 --
 
-CREATE TABLE `compromissos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `compromissos`;
+CREATE TABLE IF NOT EXISTS `compromissos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_processo` int(11) NOT NULL,
   `id_recurso` int(11) DEFAULT '0',
@@ -494,17 +559,18 @@ CREATE TABLE `compromissos` (
   `local` text,
   `complemento` text,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `compromissos`
 --
 
 INSERT INTO `compromissos` (`id`, `id_usuario`, `id_processo`, `id_recurso`, `id_apenso`, `id_advogado_setor`, `id_advogado_compromisso`, `tipo_compromisso`, `tipo`, `nome`, `data_inicial`, `data_final`, `local`, `complemento`, `deletado`, `data_cadastro`) VALUES
-(1, 6, 1, 0, 0, 6, 9, 0, 0, '', '2019-02-21 15:20:00', '0000-00-00 00:00:00', '20ª vara do trabalho poa', '', 0, '2019-02-13 19:28:08'),
+(1, 6, 1, 0, 0, 6, 9, 0, 0, '', '2019-02-21 15:20:00', '0000-00-00 00:00:00', '20ª vara do trabalho poa', '', 1, '2019-02-13 19:28:08'),
 (2, 6, 1, 0, 0, 6, 9, 0, 2, 'técnica', '2019-02-19 13:44:00', '2019-02-19 15:29:00', 'porto alegre', '', 0, '2019-02-13 19:44:43'),
-(3, 6, 1, 0, 0, 9, 9, 1, 0, 'Acórdão', '2019-02-13 00:00:00', '2019-02-19 00:00:00', '', '', 0, '2019-02-13 19:59:40'),
+(3, 6, 1, 0, 0, 9, 9, 1, 0, 'Acórdão', '2019-02-13 09:00:00', '2019-02-19 00:00:00', '', 'IR NA PRAÇA PEGAR OS ITENS', 0, '2019-02-13 19:59:40'),
 (4, 1, 4, 0, 0, 6, 6, 0, 0, 'teste', '2019-02-15 21:50:00', '2019-02-16 21:50:00', '', '', 1, '2019-02-14 23:50:56'),
 (8, 1, 1, 0, 0, 9, 9, 1, 0, 'teste', '2019-02-15 11:00:00', '2019-02-13 00:00:00', '', '', 1, '2019-02-15 13:51:53'),
 (9, 9, 12, 0, 0, 9, 9, 1, 3, 'X', '2019-02-28 00:00:00', '2019-03-07 00:00:00', '', '', 0, '2019-02-28 17:53:13'),
@@ -514,11 +580,21 @@ INSERT INTO `compromissos` (`id`, `id_usuario`, `id_processo`, `id_recurso`, `id
 (13, 6, 13, 0, 0, 36, 36, 0, 0, 'Inicial ', '2019-04-09 08:25:00', '0000-00-00 00:00:00', '29° Vara do trabalho de porto alegre ', '', 0, '2019-03-29 18:05:00'),
 (14, 6, 14, 0, 0, 36, 36, 0, 0, 'inicial ', '2019-04-16 08:55:00', '0000-00-00 00:00:00', '6° vara do trabalho de porto alegre ', '', 0, '2019-03-29 18:33:01'),
 (15, 6, 15, 0, 0, 36, 36, 0, 0, 'Inicial ', '2019-05-06 14:20:00', '0000-00-00 00:00:00', '1° vara do trabalho de são leopoldo', '', 0, '2019-03-29 19:05:37'),
-(16, 6, 16, 0, 0, 36, 36, 0, 0, 'inicial', '2019-08-07 13:50:00', '0000-00-00 00:00:00', '26° vara do trabalho de são leopoldo', '', 0, '2019-03-29 19:18:36'),
+(16, 6, 16, 0, 0, 36, 36, 0, 0, 'inicial', '2019-08-07 13:50:00', '0000-00-00 00:00:00', '26° vara do trabalho de são leopoldo', '', 1, '2019-03-29 19:18:36'),
 (17, 6, 17, 0, 0, 36, 36, 0, 0, 'inicial ', '2019-05-27 14:00:00', '0000-00-00 00:00:00', '16° vara do trabalho de porto alegre ', '', 0, '2019-03-29 19:29:57'),
 (18, 6, 19, 0, 0, 36, 36, 0, 0, 'inicial', '2019-05-02 09:00:00', '0000-00-00 00:00:00', '2° vara do trabalho de canoas', '', 0, '2019-03-29 20:04:25'),
 (19, 6, 20, 0, 0, 36, 36, 0, 0, 'inicial', '2019-05-07 14:00:00', '0000-00-00 00:00:00', '7° vara do trabalho de porto alegre ', '', 0, '2019-03-29 20:17:59'),
-(20, 6, 21, 0, 0, 36, 36, 0, 0, 'inical', '2019-06-13 09:10:00', '0000-00-00 00:00:00', '17° vara do trabalho de porto alegre ', '', 0, '2019-03-29 20:30:00');
+(20, 6, 21, 0, 0, 36, 36, 0, 0, 'inical', '2019-06-13 09:10:00', '0000-00-00 00:00:00', '17° vara do trabalho de porto alegre ', '', 0, '2019-03-29 20:30:00'),
+(21, 1, 21, 0, 0, 10, 10, 1, 0, '', '2019-09-02 19:00:00', '2019-09-02 00:00:00', '', 'NÃO ESQUECER DE PEGAR O PROCESSO', 0, '2019-09-04 21:46:05'),
+(22, 1, 20, 0, 0, 10, 10, 1, 0, '', '2019-09-03 11:00:00', '2019-09-03 10:00:00', '', '', 0, '2019-09-04 21:46:39'),
+(23, 1, 17, 0, 0, 10, 10, 1, 0, 'Teste mesma data', '2019-09-04 08:00:00', '2019-09-04 09:00:00', '', 'Comer Sushi', 0, '2019-09-04 21:47:24'),
+(24, 1, 17, 0, 0, 32, 32, 1, 0, 'quebe', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 1, '2019-09-04 21:48:08'),
+(25, 1, 21, 0, 0, 10, 10, 2, 0, 'Teste', '2019-09-24 00:00:00', '2019-09-24 00:00:00', '', '', 1, '2019-09-05 21:57:31'),
+(26, 1, 13, 0, 0, 9, 9, 1, 0, '', '2019-09-03 12:00:00', '2019-09-03 00:00:00', '', '', 0, '2019-09-06 17:13:56'),
+(27, 1, 24, 0, 0, 18, 18, 1, 0, '', '2019-09-03 00:00:00', '2019-09-03 00:00:00', '', '', 0, '2019-09-06 17:26:39'),
+(28, 1, 23, 0, 0, 40, 40, 1, 0, '', '2019-09-02 00:00:00', '2019-09-02 00:00:00', '', '', 0, '2019-09-06 17:27:16'),
+(29, 1, 13, 0, 0, 20, 20, 2, 0, '', '2019-09-09 18:59:00', '2019-09-09 19:11:00', '', '', 0, '2019-09-12 21:34:26'),
+(30, 1, 22, 0, 0, 9, 9, 2, 0, '', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 0, '2019-09-12 21:34:43');
 
 -- --------------------------------------------------------
 
@@ -526,12 +602,14 @@ INSERT INTO `compromissos` (`id`, `id_usuario`, `id_processo`, `id_recurso`, `id
 -- Estrutura da tabela `configuracoes`
 --
 
-CREATE TABLE `configuracoes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `configuracoes`;
+CREATE TABLE IF NOT EXISTS `configuracoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `cor_padrao` varchar(16) NOT NULL,
-  `deletado` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `deletado` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `configuracoes`
@@ -546,12 +624,14 @@ INSERT INTO `configuracoes` (`id`, `id_usuario`, `cor_padrao`, `deletado`) VALUE
 -- Estrutura da tabela `contatos`
 --
 
-CREATE TABLE `contatos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contatos`;
+CREATE TABLE IF NOT EXISTS `contatos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `contatos`
@@ -582,14 +662,16 @@ INSERT INTO `contatos` (`id`, `nome`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `contatos_lista`
 --
 
-CREATE TABLE `contatos_lista` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contatos_lista`;
+CREATE TABLE IF NOT EXISTS `contatos_lista` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_contato` int(11) NOT NULL,
   `contato` varchar(150) NOT NULL,
   `tipo` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = Não Informado, 1 = Telefone, 2 = E-mail, 3 = Site',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `contatos_lista`
@@ -620,14 +702,16 @@ INSERT INTO `contatos_lista` (`id`, `id_contato`, `contato`, `tipo`, `deletado`,
 -- Estrutura da tabela `contatos_young`
 --
 
-CREATE TABLE `contatos_young` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contatos_young`;
+CREATE TABLE IF NOT EXISTS `contatos_young` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `tipo` tinyint(1) NOT NULL COMMENT '1 - contato, 2 - ebook',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `contatos_young`
@@ -830,13 +914,15 @@ INSERT INTO `contatos_young` (`id`, `nome`, `email`, `tipo`, `deletado`, `data_c
 -- Estrutura da tabela `desativado-chats`
 --
 
-CREATE TABLE `desativado-chats` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `desativado-chats`;
+CREATE TABLE IF NOT EXISTS `desativado-chats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_setor` int(11) NOT NULL DEFAULT '0',
   `nome` varchar(150) DEFAULT NULL,
   `tipo` int(11) NOT NULL DEFAULT '2' COMMENT '1 = Grupo, 2 = Privado',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -845,11 +931,13 @@ CREATE TABLE `desativado-chats` (
 -- Estrutura da tabela `desativado-chats_participantes`
 --
 
-CREATE TABLE `desativado-chats_participantes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `desativado-chats_participantes`;
+CREATE TABLE IF NOT EXISTS `desativado-chats_participantes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_chat` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -858,13 +946,15 @@ CREATE TABLE `desativado-chats_participantes` (
 -- Estrutura da tabela `descricao_generico`
 --
 
-CREATE TABLE `descricao_generico` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `descricao_generico`;
+CREATE TABLE IF NOT EXISTS `descricao_generico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `tipo` int(11) NOT NULL COMMENT '0 - assunto_processo 1 - categoria_processo 2 - endereco_foro 3 - fase_processo 4 - foro 5 - origem_captacao_processo 6 - outros_envolvidos_tipo_processo 7 - posicao_apenso 8 - posicao_processo 9 - posicao_recurso 10 - relator 11 - situacao_apenso 12 - tipo_acao_rito_processo 13 - tipo_causa 14 - tipo_causa_apenso 15 - tipo_causa_recurso 16 - tribunal 17 - turma_camara 18 - vara_processo 19 - comarca',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `descricao_generico`
@@ -970,7 +1060,17 @@ INSERT INTO `descricao_generico` (`id`, `descricao`, `deletado`, `tipo`, `data_c
 (203, '16° vara do trabalho ', 0, 18, '2019-03-29 19:28:44'),
 (204, '2° vara do trabalho ', 0, 18, '2019-03-29 20:02:21'),
 (205, '7° vara do trabalho ', 0, 18, '2019-03-29 20:16:39'),
-(206, '17° vara do trabalho', 0, 18, '2019-03-29 20:28:44');
+(206, '17° vara do trabalho', 0, 18, '2019-03-29 20:28:44'),
+(207, 'Alvorada', 0, 19, '2019-09-06 17:14:17'),
+(208, 'Bagé', 0, 19, '2019-09-06 17:14:52'),
+(209, 'cachoeirinha do sul', 0, 19, '2019-09-06 17:15:09'),
+(210, 'caxias do sul', 0, 19, '2019-09-06 17:15:15'),
+(211, 'esteio', 0, 19, '2019-09-06 17:15:29'),
+(212, 'santa cruz do sul', 0, 19, '2019-09-06 17:15:48'),
+(213, 'itaquí', 0, 19, '2019-09-06 17:15:56'),
+(214, '005° vara do trabalho', 0, 18, '2019-09-06 17:16:22'),
+(215, '006° vara do trabalho', 0, 18, '2019-09-06 17:16:30'),
+(216, '007° vara do trabalho', 0, 18, '2019-09-06 17:16:39');
 
 -- --------------------------------------------------------
 
@@ -978,8 +1078,9 @@ INSERT INTO `descricao_generico` (`id`, `descricao`, `deletado`, `tipo`, `data_c
 -- Estrutura da tabela `documentos`
 --
 
-CREATE TABLE `documentos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `documentos`;
+CREATE TABLE IF NOT EXISTS `documentos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_doc_pai` int(11) DEFAULT '0',
   `arquivo` varchar(150) NOT NULL,
@@ -988,8 +1089,9 @@ CREATE TABLE `documentos` (
   `geral` tinyint(1) DEFAULT NULL COMMENT '0 - geral qualquer um pode acessar\n1 - pessoal',
   `pasta_processos` tinyint(1) DEFAULT NULL COMMENT 'Só tera uma pasta com os processos dentro',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `documentos`
@@ -1045,7 +1147,10 @@ INSERT INTO `documentos` (`id`, `id_usuario`, `id_doc_pai`, `arquivo`, `tipo`, `
 (59, 6, 1, '0020232-85.2019.5.04.0016', 1, 2, NULL, NULL, 0, '2019-03-29 19:38:48'),
 (60, 6, 1, '0020207-96.2019.5.04.0202', 1, 2, NULL, NULL, 0, '2019-03-29 19:59:44'),
 (61, 6, 1, '0020190-63.2019.5.04.0007', 1, 2, NULL, NULL, 0, '2019-03-29 20:15:35'),
-(62, 6, 1, '0020181-71.2019.5.04.0017', 1, 2, NULL, NULL, 0, '2019-03-29 20:27:43');
+(62, 6, 1, '0020181-71.2019.5.04.0017', 1, 2, NULL, NULL, 0, '2019-03-29 20:27:43'),
+(63, 1, 1, 'NA12953-21.2019.8.62.0000', 1, 2, NULL, NULL, 0, '2019-09-05 20:31:56'),
+(64, 1, 1, 'NA69046-95.2019.2.15.0000', 1, 2, NULL, NULL, 0, '2019-09-06 17:23:02'),
+(65, 1, 1, 'NA40256-95.2019.3.64.0000', 1, 2, NULL, NULL, 0, '2019-09-06 17:23:54');
 
 -- --------------------------------------------------------
 
@@ -1053,12 +1158,14 @@ INSERT INTO `documentos` (`id`, `id_usuario`, `id_doc_pai`, `arquivo`, `tipo`, `
 -- Estrutura da tabela `endereco_foro`
 --
 
-CREATE TABLE `endereco_foro` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `endereco_foro`;
+CREATE TABLE IF NOT EXISTS `endereco_foro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `endereco_foro`
@@ -1075,12 +1182,14 @@ INSERT INTO `endereco_foro` (`id`, `descricao`, `deletado`, `data_cadastro`) VAL
 -- Estrutura da tabela `fase_processo`
 --
 
-CREATE TABLE `fase_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `fase_processo`;
+CREATE TABLE IF NOT EXISTS `fase_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `fase_processo`
@@ -1095,16 +1204,18 @@ INSERT INTO `fase_processo` (`id`, `descricao`, `deletado`, `data_cadastro`) VAL
 -- Estrutura da tabela `ferramentas_senhas`
 --
 
-CREATE TABLE `ferramentas_senhas` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `ferramentas_senhas`;
+CREATE TABLE IF NOT EXISTS `ferramentas_senhas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `nome` varchar(150) NOT NULL,
   `link` varchar(150) DEFAULT NULL,
   `login` varchar(150) DEFAULT NULL,
   `senha` varchar(100) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `ferramentas_senhas`
@@ -1120,12 +1231,14 @@ INSERT INTO `ferramentas_senhas` (`id`, `id_usuario`, `nome`, `link`, `login`, `
 -- Estrutura da tabela `foro`
 --
 
-CREATE TABLE `foro` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `foro`;
+CREATE TABLE IF NOT EXISTS `foro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `foro`
@@ -1142,12 +1255,14 @@ INSERT INTO `foro` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `grupos`
 --
 
-CREATE TABLE `grupos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `grupos`;
+CREATE TABLE IF NOT EXISTS `grupos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `grupos`
@@ -1162,13 +1277,15 @@ INSERT INTO `grupos` (`id`, `nome`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `historico_requisicoes`
 --
 
-CREATE TABLE `historico_requisicoes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `historico_requisicoes`;
+CREATE TABLE IF NOT EXISTS `historico_requisicoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_requisicao` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `tipo_historico` int(11) NOT NULL COMMENT '0 - Requisição foi iniciada , 1 - Requisição foi acompanhada , 2 - requisicao foi movida, 3 - requisicao foi completada',
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1177,14 +1294,16 @@ CREATE TABLE `historico_requisicoes` (
 -- Estrutura da tabela `log`
 --
 
-CREATE TABLE `log` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE IF NOT EXISTS `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(50) NOT NULL,
   `method` varchar(50) NOT NULL,
   `rota` varchar(250) NOT NULL,
   `user_agent` text NOT NULL,
   `id_usuario` int(11) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1193,12 +1312,14 @@ CREATE TABLE `log` (
 -- Estrutura da tabela `node_categoria`
 --
 
-CREATE TABLE `node_categoria` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `node_categoria`;
+CREATE TABLE IF NOT EXISTS `node_categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `node_categoria`
@@ -1217,8 +1338,9 @@ INSERT INTO `node_categoria` (`id`, `nome`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `node_post`
 --
 
-CREATE TABLE `node_post` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `node_post`;
+CREATE TABLE IF NOT EXISTS `node_post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `escritor` varchar(150) NOT NULL,
   `data_post` datetime NOT NULL,
   `conteudo` text NOT NULL,
@@ -1228,17 +1350,18 @@ CREATE TABLE `node_post` (
   `data_post_alteracao` datetime NOT NULL,
   `link` varchar(250) NOT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `node_post`
 --
 
 INSERT INTO `node_post` (`id`, `escritor`, `data_post`, `conteudo`, `titulo`, `status`, `arquivo`, `data_post_alteracao`, `link`, `deletado`, `data_cadastro`) VALUES
-(1, 'Alex', '2018-03-11 00:00:00', '<div style="font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;"><h5 style="text-align: center;"><strong>RESPONSABILIDADE CIVIL – AÇÕES CONTRA PLANOS DE SAÚDE</strong></h5>\n\n<div class="row"><div class="col s12 lx10 offset-lx1"><img src="/assets/imgs/blog/imagem_01.jpg" style="\n    max-width: 100%;\n"></div></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Com a grande expansão dos planos particulares de saúde, muitos clientes perguntam com frequência <strong style="color: #532501;">como agir no caso de necessitar de um serviço contratado pelo plano e ver negado o atendimento por parte deste</strong>. A questão possui vários desdobramentos técnicos e que devem ser encaminhados por advogado de sua confiança, mas em linhas gerais,&nbsp; acaba resultando numa ação judicial na esfera cível com pedido liminar, para obter o amparo que foi negado pelo agente contratado, no caso o plano de saúde.</p>\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Em geral, são processos relativamente no que se refere ao atendimento do procedimento urgente. Isso se deve ao fato de que, geralmente, o advogado formula um pedido de tutela antecipada (“liminar”). Mas se você está se perguntando o que é uma liminar, sintetizarei para você: uma liminar é uma <strong style="color: #532501;">decisão de urgência</strong> concedida pelo Poder Judiciário desde que preenchidos certos requisitos legais. Tais pedidos são necessários pelo caráter iminente&nbsp; da questão que, quase sempre, envolve um risco a saúde do interessado. <strong style="color: #532501;">Se a questão for muito urgente, pode sair em questão de horas, ou no mesmo dia da distribuição do processo.</strong> Nos casos não tão urgentes, geralmente sai em 4 ou 5 dias.</p>\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Em uma pesquisa sobre os principais temas ou dúvidas das pessoas afetadas por alguma negativa de plano de saúde estão:</p>\n<ul style="\n    padding: 0 0 0 40px;\n"><li style="list-style: disc;">O plano negou minha cirurgia;</li>\n    <li style="list-style: disc;">Plano de saúde não autoriza cirurgia, o que fazer?</li>\n    <li style="list-style: disc;">Plano de saúde não cobre parto, o que fazer?</li>\n    <li style="list-style: disc;">O plano de saúde negou um procedimento;</li>\n    <li style="list-style: disc;">Plano de saúde nega exame;</li>\n    <li style="list-style: disc;">Plano de saúde nega atendimento;</li>\n    <li style="list-style: disc;">Plano de saúde nega Home care.</li>\n</ul>\n<p style="text-align: justify; text-indent: 35.4pt;">Normalmente as ações se referem a negação, por parte do plano de saúde, de diversos procedimentos, próteses, órteses, exames, materiais cirúrgicos, internações hospitalares e/ou reajustes abusivos de mensalidade. Em menor quantidade, há as ações envolvendo o cancelamento inesperado da apólice, a expulsão de idosos do plano, o descredenciamento de hospitais, entre outras. Para causas mais simples nesta área, é possível até mesmo valer-se do Juizado Especial Cível para processar o plano de saúde.</p>\n<p style="text-align: justify; text-indent: 35.4pt;">&nbsp;</p><p style="text-align: justify; text-indent: 35.4pt;">Algumas dúvidas muito frequentes dos cidadãos são:</p>\n<ul style="\n    padding: 0 0 0 40px;\n           ">\n    <li style="list-style: disc;">Posso processar o meu plano de saúde?</li>\n    <li style="list-style: disc;">Qual o risco de processar meu plano de saúde?</li>\n    <li style="list-style: disc;">Posso contratar um advogado para processar meu plano de saúde?</li>\n</ul>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Além das dúvidas supracitadas, outro temor muito comum do cidadão que se vê na necessidade de processar o seu plano de saúde é se, em caso de promover uma demanda judicial contra o plano de saúde, este pode promover retaliações. Neste caso devemos ser claros:&nbsp; <strong style="color: #532501;">não é necessário temer retaliações.</strong> <u>O acesso ao Poder Judiciário é um direito constitucional</u>. Assim, caso isso ocorra, a questão deverá ser objeto de ação na Justiça.</p>\n<p style="text-align: justify;">&nbsp;</p><div class="col s10 offset-s1 m5 l4" style="float:left"><img src="/assets/imgs/blog/imagem_02.jpg" style="\n    max-width: 100%;\n    height: auto;\n"></div><p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Infelizmente, tais empresas acabam negando procedimentos caros no momento em que o consumidor mais precisa. Mas <strong style="color: #532501;">deve-se ficar atento:</strong> mesmo que o plano de saúde alegue que não há o direito ao procedimento indicado pelo médico, ainda assim deve-se mover um processo contra o plano.&nbsp; Note-se que, ainda que o plano de saúde tenha negado a cobertura com base no contrato, é direito do consumidor questionar a validade da negativa na Justiça. <u>É comum que os contratos de planos de saúde contenham cláusulas abusivas. Nesse caso, as cláusulas são anuladas e<strong style="color: #532501;"> o procedimento é liberado pelo Poder Judiciário.</strong></u></p>\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; De outra parte, se o plano ficou caro demais com o passar do tempo, há que se analisar <strong style="color: #532501;">como baixar a mensalidade do plano de saúde</strong>. Hoje em dia é possível revisar os aumentos abusivos das mensalidades dos planos por ação judicial. Podem ser revisadas as mensalidades, também, de planos de saúde chamado&nbsp; “PME – Pequenas e Médias Empresas”, que tenham sido reajustados por alta taxa de sinistralidade. Normalmente são processos céleres, e a revisão pode ser concedida em caráter liminar. <u>Muitas pessoas conseguem, ainda, a devolução dos valores pagos em excesso nos últimos 5 anos.</u></p>\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Outra pergunta frequente é se o consumidor que realizou um procedimento com médico não credenciado ao plano de saúde e o reembolso foi pequeno, pode&nbsp; pedir na Justiça um valor maior de reembolso.&nbsp; A resposta é sim. Os valores de reembolso pelos planos de saúde costumam ser muito pequenos e, dependendo do caso, a Justiça determina até mesmo o reembolso integral das despesas. Com efeito, se o plano de saúde não quer cobrir, por exemplo a quimioterapia de uso oral; exame PET-CT; home care; material cirúrgico importado; cirurgia de obesidade mórbida; cirurgia plástica reparadora, também posso exigir na Justiça essas coberturas, e <u>as decisões mais recentes determinam que tais tratamentos e procedimentos sejam integralmente cobertos pelos planos de saúde, independente do que esteja previsto no rol da ANS.</u></p>\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><u>Outras perguntas muito frequentes: </u></strong></p>\n<p style="text-align: justify;"><strong style="color: #532501;">&nbsp;</strong></p>\n<strong>1) Meu plano de saúde alegou que, como meu contrato é antigo, não há cobertura de “Stent”, o que devo fazer? </strong>\n<div class="row" style="margin-top: 1em;margin-bottom: 1em;">\n    <div class="col s1" style="font-weight:bold;text-align:right;">R:</div>\n<div class="col s11" style="text-align: justify;">Embora o contrato de plano de saúde antigo exclua a cobertura, a Justiça entende em sentido contrário (posicionamento pacífico – Súmula 93), obrigando a cobertura de “Stent cardiológico”. O mesmo se aplica com relação a marca-passo, endopróteses cardíacas, e outros materiais cirúrgicos ligados ao ato cirúrgico, sem caráter estético.</div></div>\n\n<p style="text-align: justify;">&nbsp;</p>\n<strong>2) Trabalho há mais de 10 anos em uma empresa e vou me aposentar. Tenho direito a manter o plano de saúde? </strong>\n<div class="row" style="margin-top: 1em;margin-bottom: 1em;">\n    <div class="col s1" style="font-weight:bold;text-align:right;">R:</div>\n<div class="col s11" style="text-align: justify;">Caso o consumidor tenha laborado há 10 anos ou mais na mesma empresa, já esteja aposentado ou tenha direito a se aposentar, e verificado o desconto, em folha de pagamento, de uma cota-parte para pagamento do plano de saúde, é possível a manutenção do plano por prazo indeterminado para o mesmo e seus dependentes, desde que você assuma o pagamento integral do plano.</div>\n</div>\n<p style="text-align: justify;">&nbsp;</p>\n<strong>3) Fui demitido da empresa em que trabalhava, posso manter o plano de saúde? </strong>\n<div class="row" style="margin-top: 1em;margin-bottom: 1em;">\n    <div class="col s1" style="font-weight:bold;text-align:right;">R:</div>\n<div class="col s11" style="text-align: justify;">Sim, por algum tempo. Em casos de demissão, a lei obriga a manutenção do plano de saúde no prazo mínimo de 6 meses e máximo de 2 anos.</div>\n</div>\n<p style="text-align: justify;"><strong style="color: #532501;">&nbsp;</strong></p>\n<strong>4) Quais são os documentos que eu preciso ter em mãos para iniciar um processo contra o meu plano de saúde? </strong>\n<p style="text-align: justify;"><strong style="color: #532501;">&nbsp;</strong></p>\n<div class="row" style="\n    display: flex;\n"><div class="col s8 offset-s2 m4 l3"><img src="/assets/imgs/blog/ebook_v2.jpg" style="\n    max-width: 100%;\n"></div><div class="col s12 m8 l9 valign-wrapper" style="\n"><div><a class="abrir-formulario-ebook"><p style="text-align: justify;"><span style="color: #e8b61d;cursor:pointer;">CLIQUE AQUI E BAIXE UM E-Book. Preparamos um documento com a lista do que você precisa para isso. </span></p></a>\n<a id="btn-gerenciar" class="btn center waves-effect waves-light black-text abrir-formulario-ebook" style="position: relative;/* bottom: 125px; */left: 50%;/* margin-left: -25%; */transform: translate(-50%);margin-top: 40px;color: #000 !important;">Baixar</a></div></div></div>\n\n\n\n<p style="text-align: justify;">&nbsp;</p>\n<p style="text-align: justify;text-indent: 35.4pt;">Por fim recomendamos que procure se informar com um advogado acerca de detalhes particulares e mais específicos do caso.</p>\n\n<p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p><p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p><p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p>\n<p style="margin: 0 35.4pt;text-align: justify;color: #e8b61d;">Jeverton Alex de Oliveira Lima</p>\n<p style="margin: 0 35.4pt;text-align: justify;">Advogado da Young, Dias, Lauxen e Lima,&nbsp; escritório com sedes em São Leopoldo/RS e Porto Alegre/RS, FONE: (051)30855507.</p>\n<div style="clear:both;height:30px;"></div>\n                \n              \n<div style="clear:both;height:30px;"></div>\n</div>', 'RESPONSABILIDADE CIVIL – AÇÕES CONTRA PLANOS DE SAÚDE', 0, 'imagem_01.jpg', '2018-03-11 00:00:00', 'responsabilidade-civil-acoes-contra-planos-de-saude', 0, '2018-03-21 17:33:20'),
-(2, 'Alex', '2018-07-09 00:00:00', '<div style="font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;"><h5 style="text-align: center;"><strong>ATENÇÃO – ASSALTOS AOS TRABALHADORES DOS CORREIOS</strong></h5>\n<div class="row"><div class="col s12 lx10 offset-lx1"><img src="/assets/imgs/blog/imagem_03.jpg" style="\n    max-width: 100%;\n"></div></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trabalhador dos correios: estas notícias da imagem lhe soam familiar?<br>\nFique atento pois sua segurança deve ser prioridade no seu ambiente de trabalho.<br>\nSeparamos abaixo uma lista de notícias sobre este tipo de incidente.<br>\nSe você está passando por situações assim ou saiba de algum colega, procure a assessoria jurídica para esclarecer as suas dúvidas.</p><br>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Lista de Notícias:</b></p><br><br>\n\n<div class="row" style="margin-bottom: 50px;"><div class="col s12 lx10 offset-lx1 center"><img src="/assets/imgs/blog/imagem_04.jpg" style="\n    max-width: 90%; margin: 20px auto;\n"></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A Justiça do Trabalho condenou os Correios a pagar indenização de R$ 10 mil a cada trabalhador de Curitiba e Região Metropolitana que estava em agências assaltadas nos últimos cinco anos. A decisão é de...</p>\n<a id="btn-noticia-1" class="btn btn-golden waves-effect waves-light black-text center" style="position: relative; left: 50%; transform: translateX(-50%);">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class="row" style="margin-bottom: 50px;"><div class="col s12 lx10 offset-lx1 center"><img src="/assets/imgs/blog/imagem_05.jpg" style="\n    max-width: 90%; margin: 20px auto;\n"></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Um funcionário da Empresa Brasileira de Correios e Telégrafos (ECT) vai receber R$ 10 mil de indenização por causa dos dois assaltos que ele sofreu no ambiente de trabalho, em Presidente Médici (RO). A decisão foi da 2ª Turma do Tribunal...</p>\n<a id="btn-noticia-2" class="btn btn-golden waves-effect waves-light black-text center" style="position: relative; left: 50%; transform: translateX(-50%);">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class="row" style="margin-bottom: 50px;"><div class="col s12 lx10 offset-lx1 center"><img src="/assets/imgs/blog/imagem_08.jpg" style="\n    max-width: 90%; margin: 20px auto;\n"></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A 2ª Turma do Tribunal Regional do Trabalho da Paraíba (13ª Região) aumentou para R$ 30.888,03 (valores a atualizados) a indenização que a Empresa Brasileira dos Correios e Telégrafos deverá pagar a uma funcionária por danos morais.  A 4ª Vara do Trabalho...</p>\n<a id="btn-noticia-3" class="btn btn-golden waves-effect waves-light black-text center" style="position: relative; left: 50%; transform: translateX(-50%);">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class="row" style="margin-bottom: 50px;"><div class="col s12 lx10 offset-lx1 center"><img src="/assets/imgs/blog/imagem_06.jpg" style="\n    max-width: 90%; margin: 20px auto;\n"></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A juíza Christiane Bimbatti Amorim, do Tribunal Regional do Trabalho da 9ª Região, alega que as agências não estão adotando medidas suficientes para impedir a ação dos ladrões. “O fato de não ter sido adotado medidas suficientes a fim de evitar roubos e, via de consequência, abalo mental dos que lá trabalham já enseja em culpa”...</p>\n<a id="btn-noticia-4" class="btn btn-golden waves-effect waves-light black-text center" style="position: relative; left: 50%; transform: translateX(-50%);">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class="row" style="margin-bottom: 50px;"><div class="col s12 lx10 offset-lx1 center"><img src="/assets/imgs/blog/imagem_07.jpg" style="\n    max-width: 90%; margin: 20px auto;\n"></div>\n<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mais um trabalhador da Empresa Brasileira de Correios e Telégrafos (ECT) conseguiu na justiça o direito a indenização após ser vítima de assalto na agência em que trabalhava. O caso foi julgado procedente na 2º Vara do Trabalho...</p>\n<a id="btn-noticia-5" class="btn btn-golden waves-effect waves-light black-text center" style="position: relative; left: 50%; transform: translateX(-50%);">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n<p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p><p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p><p style="margin-left: 35.4pt; text-align: justify;">&nbsp;</p>\n<p style="margin: 0 35.4pt;text-align: justify;">Atenciosamente,</p>\n<p style="margin: 0 35.4pt;text-align: justify;color: #e8b61d;">Equipe YDLL</p>\n<p style="margin: 0 35.4pt;text-align: justify;">Advogado da Young, Dias, Lauxen e Lima,&nbsp; escritório com sedes em São Leopoldo/RS e Porto Alegre/RS, FONE: (051)30855507.</p>\n<div style="clear:both;height:30px;"></div>\n                \n              \n<div style="clear:both;height:30px;"></div>\n</div>', 'ATENÇÃO – ASSALTOS AOS TRABALHADORES DOS CORREIOS', 0, 'imagem_03.jpg', '2018-07-09 00:00:00', 'atencao-asstaltos-aos-trabalhadores-dos-correios', 0, '2018-07-11 18:56:50'),
-(3, 'Alex', '2018-08-03 00:00:00', '<div style="font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;">\n<h5 style="text-align: center;"><strong>SEMINÁRIO DE ORGANIZAÇÃO SINDICAL DO SINTRAJUFE/RS DIA 18 DE AGOSTO	</strong></h5>\n <div class="row">\n <div class="col s12 lx10 offset-lx1">\n <img src="/assets/imgs/blog/imagem_09.jpg" style="\n     max-width: 100%;\n "></div></div>\n<p class="justified">&nbsp;</p>\n<p class="justified">No dia 18 de Agosto, sábado, Jeverton Lima, advogado, sócio do escritório Young, Dias, Lauxen e Lima Advogados Associados e coordenador da assessoria jurídica do Sintrajufe/RS estará presente no Seminário de Organização Sindical do Sintrajufe/RS que ocorrerá no Salão Multicultural Alê Junqueira, no endereço Rua Marcílio Dias, 660, Bairro Menino Deus em Porto Alegre. O início será às 10 horas.</p>\n<p class="justified">&nbsp;</p>\n<p class="justified">Segundo dados do site do Sintrajufe/RS, o objetivo do seminário é iniciar o debate sobre a unificação da representação das categorias do Judiciário Federal e do Ministério Público da União no Sintrajufe/RS. O evento está aberto à participação dos servidores de ambas as categorias.</p>\n<p class="justified">&nbsp;</p>\n<div class="row"><img src="/assets/imgs/blog/imagem_10.jpeg" style="max-width: 100%;">\n<small>*Imagem retirada do site do Sintrajufe/RS.</small></div>\n<div class="row">\n<p class="center">Confira no <a href="https://www.sintrajufe.org.br/ultimas-noticias-detalhe/15846/sintrajufe-rs-promove-dia-18-seminario-de-organizacao-sindical-com-participacao-de-servidores-do-mpu" target="_blank">site do Sintrajufe/RS</a> a matéria e a programação completa.</p>\n</div>\n</div>', 'SEMINÁRIO DE ORGANIZAÇÃO SINDICAL DO SINTRAJUFE/RS DIA 18 DE AGOSTO', 0, 'imagem_09.jpg', '2018-08-03 00:00:00', 'seminario-de-organizacao-sindical-do-sintrajufe-rs-18-agosto', 0, '2018-08-03 17:26:19');
+(1, 'Alex', '2018-03-11 00:00:00', '<div style=\"font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;\"><h5 style=\"text-align: center;\"><strong>RESPONSABILIDADE CIVIL – AÇÕES CONTRA PLANOS DE SAÚDE</strong></h5>\n\n<div class=\"row\"><div class=\"col s12 lx10 offset-lx1\"><img src=\"/assets/imgs/blog/imagem_01.jpg\" style=\"\n    max-width: 100%;\n\"></div></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Com a grande expansão dos planos particulares de saúde, muitos clientes perguntam com frequência <strong style=\"color: #532501;\">como agir no caso de necessitar de um serviço contratado pelo plano e ver negado o atendimento por parte deste</strong>. A questão possui vários desdobramentos técnicos e que devem ser encaminhados por advogado de sua confiança, mas em linhas gerais,&nbsp; acaba resultando numa ação judicial na esfera cível com pedido liminar, para obter o amparo que foi negado pelo agente contratado, no caso o plano de saúde.</p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Em geral, são processos relativamente no que se refere ao atendimento do procedimento urgente. Isso se deve ao fato de que, geralmente, o advogado formula um pedido de tutela antecipada (“liminar”). Mas se você está se perguntando o que é uma liminar, sintetizarei para você: uma liminar é uma <strong style=\"color: #532501;\">decisão de urgência</strong> concedida pelo Poder Judiciário desde que preenchidos certos requisitos legais. Tais pedidos são necessários pelo caráter iminente&nbsp; da questão que, quase sempre, envolve um risco a saúde do interessado. <strong style=\"color: #532501;\">Se a questão for muito urgente, pode sair em questão de horas, ou no mesmo dia da distribuição do processo.</strong> Nos casos não tão urgentes, geralmente sai em 4 ou 5 dias.</p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Em uma pesquisa sobre os principais temas ou dúvidas das pessoas afetadas por alguma negativa de plano de saúde estão:</p>\n<ul style=\"\n    padding: 0 0 0 40px;\n\"><li style=\"list-style: disc;\">O plano negou minha cirurgia;</li>\n    <li style=\"list-style: disc;\">Plano de saúde não autoriza cirurgia, o que fazer?</li>\n    <li style=\"list-style: disc;\">Plano de saúde não cobre parto, o que fazer?</li>\n    <li style=\"list-style: disc;\">O plano de saúde negou um procedimento;</li>\n    <li style=\"list-style: disc;\">Plano de saúde nega exame;</li>\n    <li style=\"list-style: disc;\">Plano de saúde nega atendimento;</li>\n    <li style=\"list-style: disc;\">Plano de saúde nega Home care.</li>\n</ul>\n<p style=\"text-align: justify; text-indent: 35.4pt;\">Normalmente as ações se referem a negação, por parte do plano de saúde, de diversos procedimentos, próteses, órteses, exames, materiais cirúrgicos, internações hospitalares e/ou reajustes abusivos de mensalidade. Em menor quantidade, há as ações envolvendo o cancelamento inesperado da apólice, a expulsão de idosos do plano, o descredenciamento de hospitais, entre outras. Para causas mais simples nesta área, é possível até mesmo valer-se do Juizado Especial Cível para processar o plano de saúde.</p>\n<p style=\"text-align: justify; text-indent: 35.4pt;\">&nbsp;</p><p style=\"text-align: justify; text-indent: 35.4pt;\">Algumas dúvidas muito frequentes dos cidadãos são:</p>\n<ul style=\"\n    padding: 0 0 0 40px;\n           \">\n    <li style=\"list-style: disc;\">Posso processar o meu plano de saúde?</li>\n    <li style=\"list-style: disc;\">Qual o risco de processar meu plano de saúde?</li>\n    <li style=\"list-style: disc;\">Posso contratar um advogado para processar meu plano de saúde?</li>\n</ul>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Além das dúvidas supracitadas, outro temor muito comum do cidadão que se vê na necessidade de processar o seu plano de saúde é se, em caso de promover uma demanda judicial contra o plano de saúde, este pode promover retaliações. Neste caso devemos ser claros:&nbsp; <strong style=\"color: #532501;\">não é necessário temer retaliações.</strong> <u>O acesso ao Poder Judiciário é um direito constitucional</u>. Assim, caso isso ocorra, a questão deverá ser objeto de ação na Justiça.</p>\n<p style=\"text-align: justify;\">&nbsp;</p><div class=\"col s10 offset-s1 m5 l4\" style=\"float:left\"><img src=\"/assets/imgs/blog/imagem_02.jpg\" style=\"\n    max-width: 100%;\n    height: auto;\n\"></div><p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Infelizmente, tais empresas acabam negando procedimentos caros no momento em que o consumidor mais precisa. Mas <strong style=\"color: #532501;\">deve-se ficar atento:</strong> mesmo que o plano de saúde alegue que não há o direito ao procedimento indicado pelo médico, ainda assim deve-se mover um processo contra o plano.&nbsp; Note-se que, ainda que o plano de saúde tenha negado a cobertura com base no contrato, é direito do consumidor questionar a validade da negativa na Justiça. <u>É comum que os contratos de planos de saúde contenham cláusulas abusivas. Nesse caso, as cláusulas são anuladas e<strong style=\"color: #532501;\"> o procedimento é liberado pelo Poder Judiciário.</strong></u></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; De outra parte, se o plano ficou caro demais com o passar do tempo, há que se analisar <strong style=\"color: #532501;\">como baixar a mensalidade do plano de saúde</strong>. Hoje em dia é possível revisar os aumentos abusivos das mensalidades dos planos por ação judicial. Podem ser revisadas as mensalidades, também, de planos de saúde chamado&nbsp; “PME – Pequenas e Médias Empresas”, que tenham sido reajustados por alta taxa de sinistralidade. Normalmente são processos céleres, e a revisão pode ser concedida em caráter liminar. <u>Muitas pessoas conseguem, ainda, a devolução dos valores pagos em excesso nos últimos 5 anos.</u></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Outra pergunta frequente é se o consumidor que realizou um procedimento com médico não credenciado ao plano de saúde e o reembolso foi pequeno, pode&nbsp; pedir na Justiça um valor maior de reembolso.&nbsp; A resposta é sim. Os valores de reembolso pelos planos de saúde costumam ser muito pequenos e, dependendo do caso, a Justiça determina até mesmo o reembolso integral das despesas. Com efeito, se o plano de saúde não quer cobrir, por exemplo a quimioterapia de uso oral; exame PET-CT; home care; material cirúrgico importado; cirurgia de obesidade mórbida; cirurgia plástica reparadora, também posso exigir na Justiça essas coberturas, e <u>as decisões mais recentes determinam que tais tratamentos e procedimentos sejam integralmente cobertos pelos planos de saúde, independente do que esteja previsto no rol da ANS.</u></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><u>Outras perguntas muito frequentes: </u></strong></p>\n<p style=\"text-align: justify;\"><strong style=\"color: #532501;\">&nbsp;</strong></p>\n<strong>1) Meu plano de saúde alegou que, como meu contrato é antigo, não há cobertura de “Stent”, o que devo fazer? </strong>\n<div class=\"row\" style=\"margin-top: 1em;margin-bottom: 1em;\">\n    <div class=\"col s1\" style=\"font-weight:bold;text-align:right;\">R:</div>\n<div class=\"col s11\" style=\"text-align: justify;\">Embora o contrato de plano de saúde antigo exclua a cobertura, a Justiça entende em sentido contrário (posicionamento pacífico – Súmula 93), obrigando a cobertura de “Stent cardiológico”. O mesmo se aplica com relação a marca-passo, endopróteses cardíacas, e outros materiais cirúrgicos ligados ao ato cirúrgico, sem caráter estético.</div></div>\n\n<p style=\"text-align: justify;\">&nbsp;</p>\n<strong>2) Trabalho há mais de 10 anos em uma empresa e vou me aposentar. Tenho direito a manter o plano de saúde? </strong>\n<div class=\"row\" style=\"margin-top: 1em;margin-bottom: 1em;\">\n    <div class=\"col s1\" style=\"font-weight:bold;text-align:right;\">R:</div>\n<div class=\"col s11\" style=\"text-align: justify;\">Caso o consumidor tenha laborado há 10 anos ou mais na mesma empresa, já esteja aposentado ou tenha direito a se aposentar, e verificado o desconto, em folha de pagamento, de uma cota-parte para pagamento do plano de saúde, é possível a manutenção do plano por prazo indeterminado para o mesmo e seus dependentes, desde que você assuma o pagamento integral do plano.</div>\n</div>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<strong>3) Fui demitido da empresa em que trabalhava, posso manter o plano de saúde? </strong>\n<div class=\"row\" style=\"margin-top: 1em;margin-bottom: 1em;\">\n    <div class=\"col s1\" style=\"font-weight:bold;text-align:right;\">R:</div>\n<div class=\"col s11\" style=\"text-align: justify;\">Sim, por algum tempo. Em casos de demissão, a lei obriga a manutenção do plano de saúde no prazo mínimo de 6 meses e máximo de 2 anos.</div>\n</div>\n<p style=\"text-align: justify;\"><strong style=\"color: #532501;\">&nbsp;</strong></p>\n<strong>4) Quais são os documentos que eu preciso ter em mãos para iniciar um processo contra o meu plano de saúde? </strong>\n<p style=\"text-align: justify;\"><strong style=\"color: #532501;\">&nbsp;</strong></p>\n<div class=\"row\" style=\"\n    display: flex;\n\"><div class=\"col s8 offset-s2 m4 l3\"><img src=\"/assets/imgs/blog/ebook_v2.jpg\" style=\"\n    max-width: 100%;\n\"></div><div class=\"col s12 m8 l9 valign-wrapper\" style=\"\n\"><div><a class=\"abrir-formulario-ebook\"><p style=\"text-align: justify;\"><span style=\"color: #e8b61d;cursor:pointer;\">CLIQUE AQUI E BAIXE UM E-Book. Preparamos um documento com a lista do que você precisa para isso. </span></p></a>\n<a id=\"btn-gerenciar\" class=\"btn center waves-effect waves-light black-text abrir-formulario-ebook\" style=\"position: relative;/* bottom: 125px; */left: 50%;/* margin-left: -25%; */transform: translate(-50%);margin-top: 40px;color: #000 !important;\">Baixar</a></div></div></div>\n\n\n\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;text-indent: 35.4pt;\">Por fim recomendamos que procure se informar com um advogado acerca de detalhes particulares e mais específicos do caso.</p>\n\n<p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p><p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p><p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p>\n<p style=\"margin: 0 35.4pt;text-align: justify;color: #e8b61d;\">Jeverton Alex de Oliveira Lima</p>\n<p style=\"margin: 0 35.4pt;text-align: justify;\">Advogado da Young, Dias, Lauxen e Lima,&nbsp; escritório com sedes em São Leopoldo/RS e Porto Alegre/RS, FONE: (051)30855507.</p>\n<div style=\"clear:both;height:30px;\"></div>\n                \n              \n<div style=\"clear:both;height:30px;\"></div>\n</div>', 'RESPONSABILIDADE CIVIL – AÇÕES CONTRA PLANOS DE SAÚDE', 0, 'imagem_01.jpg', '2018-03-11 00:00:00', 'responsabilidade-civil-acoes-contra-planos-de-saude', 0, '2018-03-21 17:33:20'),
+(2, 'Alex', '2018-07-09 00:00:00', '<div style=\"font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;\"><h5 style=\"text-align: center;\"><strong>ATENÇÃO – ASSALTOS AOS TRABALHADORES DOS CORREIOS</strong></h5>\n<div class=\"row\"><div class=\"col s12 lx10 offset-lx1\"><img src=\"/assets/imgs/blog/imagem_03.jpg\" style=\"\n    max-width: 100%;\n\"></div></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trabalhador dos correios: estas notícias da imagem lhe soam familiar?<br>\nFique atento pois sua segurança deve ser prioridade no seu ambiente de trabalho.<br>\nSeparamos abaixo uma lista de notícias sobre este tipo de incidente.<br>\nSe você está passando por situações assim ou saiba de algum colega, procure a assessoria jurídica para esclarecer as suas dúvidas.</p><br>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Lista de Notícias:</b></p><br><br>\n\n<div class=\"row\" style=\"margin-bottom: 50px;\"><div class=\"col s12 lx10 offset-lx1 center\"><img src=\"/assets/imgs/blog/imagem_04.jpg\" style=\"\n    max-width: 90%; margin: 20px auto;\n\"></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A Justiça do Trabalho condenou os Correios a pagar indenização de R$ 10 mil a cada trabalhador de Curitiba e Região Metropolitana que estava em agências assaltadas nos últimos cinco anos. A decisão é de...</p>\n<a id=\"btn-noticia-1\" class=\"btn btn-golden waves-effect waves-light black-text center\" style=\"position: relative; left: 50%; transform: translateX(-50%);\">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class=\"row\" style=\"margin-bottom: 50px;\"><div class=\"col s12 lx10 offset-lx1 center\"><img src=\"/assets/imgs/blog/imagem_05.jpg\" style=\"\n    max-width: 90%; margin: 20px auto;\n\"></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Um funcionário da Empresa Brasileira de Correios e Telégrafos (ECT) vai receber R$ 10 mil de indenização por causa dos dois assaltos que ele sofreu no ambiente de trabalho, em Presidente Médici (RO). A decisão foi da 2ª Turma do Tribunal...</p>\n<a id=\"btn-noticia-2\" class=\"btn btn-golden waves-effect waves-light black-text center\" style=\"position: relative; left: 50%; transform: translateX(-50%);\">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class=\"row\" style=\"margin-bottom: 50px;\"><div class=\"col s12 lx10 offset-lx1 center\"><img src=\"/assets/imgs/blog/imagem_08.jpg\" style=\"\n    max-width: 90%; margin: 20px auto;\n\"></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A 2ª Turma do Tribunal Regional do Trabalho da Paraíba (13ª Região) aumentou para R$ 30.888,03 (valores a atualizados) a indenização que a Empresa Brasileira dos Correios e Telégrafos deverá pagar a uma funcionária por danos morais.  A 4ª Vara do Trabalho...</p>\n<a id=\"btn-noticia-3\" class=\"btn btn-golden waves-effect waves-light black-text center\" style=\"position: relative; left: 50%; transform: translateX(-50%);\">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class=\"row\" style=\"margin-bottom: 50px;\"><div class=\"col s12 lx10 offset-lx1 center\"><img src=\"/assets/imgs/blog/imagem_06.jpg\" style=\"\n    max-width: 90%; margin: 20px auto;\n\"></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A juíza Christiane Bimbatti Amorim, do Tribunal Regional do Trabalho da 9ª Região, alega que as agências não estão adotando medidas suficientes para impedir a ação dos ladrões. “O fato de não ter sido adotado medidas suficientes a fim de evitar roubos e, via de consequência, abalo mental dos que lá trabalham já enseja em culpa”...</p>\n<a id=\"btn-noticia-4\" class=\"btn btn-golden waves-effect waves-light black-text center\" style=\"position: relative; left: 50%; transform: translateX(-50%);\">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n\n<div class=\"row\" style=\"margin-bottom: 50px;\"><div class=\"col s12 lx10 offset-lx1 center\"><img src=\"/assets/imgs/blog/imagem_07.jpg\" style=\"\n    max-width: 90%; margin: 20px auto;\n\"></div>\n<p style=\"text-align: justify;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mais um trabalhador da Empresa Brasileira de Correios e Telégrafos (ECT) conseguiu na justiça o direito a indenização após ser vítima de assalto na agência em que trabalhava. O caso foi julgado procedente na 2º Vara do Trabalho...</p>\n<a id=\"btn-noticia-5\" class=\"btn btn-golden waves-effect waves-light black-text center\" style=\"position: relative; left: 50%; transform: translateX(-50%);\">LEIA A MATÉRIA NA ÍNTEGRA</a>\n</div>\n\n\n<p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p><p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p><p style=\"margin-left: 35.4pt; text-align: justify;\">&nbsp;</p>\n<p style=\"margin: 0 35.4pt;text-align: justify;\">Atenciosamente,</p>\n<p style=\"margin: 0 35.4pt;text-align: justify;color: #e8b61d;\">Equipe YDLL</p>\n<p style=\"margin: 0 35.4pt;text-align: justify;\">Advogado da Young, Dias, Lauxen e Lima,&nbsp; escritório com sedes em São Leopoldo/RS e Porto Alegre/RS, FONE: (051)30855507.</p>\n<div style=\"clear:both;height:30px;\"></div>\n                \n              \n<div style=\"clear:both;height:30px;\"></div>\n</div>', 'ATENÇÃO – ASSALTOS AOS TRABALHADORES DOS CORREIOS', 0, 'imagem_03.jpg', '2018-07-09 00:00:00', 'atencao-asstaltos-aos-trabalhadores-dos-correios', 0, '2018-07-11 18:56:50'),
+(3, 'Alex', '2018-08-03 00:00:00', '<div style=\"font-family: \'effra\', Verdana, Geneva, Tahoma, sans-serif;\">\n<h5 style=\"text-align: center;\"><strong>SEMINÁRIO DE ORGANIZAÇÃO SINDICAL DO SINTRAJUFE/RS DIA 18 DE AGOSTO	</strong></h5>\n <div class=\"row\">\n <div class=\"col s12 lx10 offset-lx1\">\n <img src=\"/assets/imgs/blog/imagem_09.jpg\" style=\"\n     max-width: 100%;\n \"></div></div>\n<p class=\"justified\">&nbsp;</p>\n<p class=\"justified\">No dia 18 de Agosto, sábado, Jeverton Lima, advogado, sócio do escritório Young, Dias, Lauxen e Lima Advogados Associados e coordenador da assessoria jurídica do Sintrajufe/RS estará presente no Seminário de Organização Sindical do Sintrajufe/RS que ocorrerá no Salão Multicultural Alê Junqueira, no endereço Rua Marcílio Dias, 660, Bairro Menino Deus em Porto Alegre. O início será às 10 horas.</p>\n<p class=\"justified\">&nbsp;</p>\n<p class=\"justified\">Segundo dados do site do Sintrajufe/RS, o objetivo do seminário é iniciar o debate sobre a unificação da representação das categorias do Judiciário Federal e do Ministério Público da União no Sintrajufe/RS. O evento está aberto à participação dos servidores de ambas as categorias.</p>\n<p class=\"justified\">&nbsp;</p>\n<div class=\"row\"><img src=\"/assets/imgs/blog/imagem_10.jpeg\" style=\"max-width: 100%;\">\n<small>*Imagem retirada do site do Sintrajufe/RS.</small></div>\n<div class=\"row\">\n<p class=\"center\">Confira no <a href=\"https://www.sintrajufe.org.br/ultimas-noticias-detalhe/15846/sintrajufe-rs-promove-dia-18-seminario-de-organizacao-sindical-com-participacao-de-servidores-do-mpu\" target=\"_blank\">site do Sintrajufe/RS</a> a matéria e a programação completa.</p>\n</div>\n</div>', 'SEMINÁRIO DE ORGANIZAÇÃO SINDICAL DO SINTRAJUFE/RS DIA 18 DE AGOSTO', 0, 'imagem_09.jpg', '2018-08-03 00:00:00', 'seminario-de-organizacao-sindical-do-sintrajufe-rs-18-agosto', 0, '2018-08-03 17:26:19');
 
 -- --------------------------------------------------------
 
@@ -1246,13 +1369,17 @@ INSERT INTO `node_post` (`id`, `escritor`, `data_post`, `conteudo`, `titulo`, `s
 -- Estrutura da tabela `node_post_categoria`
 --
 
-CREATE TABLE `node_post_categoria` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `node_post_categoria`;
+CREATE TABLE IF NOT EXISTS `node_post_categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_post` int(11) NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_post` (`id_post`),
+  KEY `id_categoria` (`id_categoria`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `node_post_categoria`
@@ -1268,83 +1395,95 @@ INSERT INTO `node_post_categoria` (`id`, `id_post`, `id_categoria`, `deletado`, 
 -- Estrutura da tabela `notificacoes`
 --
 
-CREATE TABLE `notificacoes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `notificacoes`;
+CREATE TABLE IF NOT EXISTS `notificacoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario_criador` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `texto` text NOT NULL,
   `link` varchar(250) NOT NULL,
   `visto` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - Não foi visto\n1 - Foi visto',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=457 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `notificacoes`
 --
 
 INSERT INTO `notificacoes` (`id`, `id_usuario_criador`, `id_usuario`, `texto`, `link`, `visto`, `deletado`, `data_cadastro`) VALUES
-(2, 1, 2, 'Adicionado Compromisso "teste"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 05:46:35'),
-(12, 1, 2, 'Adicionado Compromisso "Novo Compromisso vagabundo"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 07:37:02'),
-(22, 1, 2, 'Adicionado Compromisso "teste not"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 07:44:42'),
-(32, 1, 2, 'Atribuido Processo "0000226-16.2012.5.04.0303"', '/processos/abrir/1', 1, 0, '2019-02-10 08:35:22'),
-(42, 1, 2, 'Atribuido Processo "NA13830-38.2019.6.31.0000"', '/processos/abrir/103', 1, 0, '2019-02-10 08:35:49'),
-(52, 1, 2, 'Adicionado Compromisso "qqqqqqqq"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 19:59:59'),
-(62, 1, 2, 'Atribuido Processo "NA11262-68.2019.3.29.0000"', '/processos/abrir/63', 1, 0, '2019-02-10 20:50:07'),
-(72, 1, 6, 'Adicionado Compromisso "NOVO TESTE"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:02:18'),
-(82, 1, 6, 'Adicionado Compromisso "Apenso New"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:19:25'),
-(92, 1, 6, 'Adicionado Compromisso "apenso compromisso"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:20:23'),
-(102, 1, 9, 'Adicionado Compromisso "qqqqqqq"', '/compromissos/pauta_julgamento', 1, 0, '2019-02-10 22:27:17'),
-(112, 6, 1, 'Adicionado Compromisso "teste"', '/compromissos/pauta_julgamento', 1, 0, '2019-02-10 22:31:43'),
-(122, 1, 0, 'Adicionado Compromisso "teste"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:48:07'),
-(132, 1, 0, 'Adicionado Compromisso "123123"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-10 22:49:30'),
-(142, 1, 0, 'Adicionado Compromisso "12312312"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:49:56'),
-(152, 1, 0, 'Adicionado Compromisso "123123"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:51:10'),
-(162, 1, 6, 'Adicionado Compromisso "recurso"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-11 01:21:15'),
-(172, 1, 4, 'Adicionado Compromisso "teste"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 12:35:41'),
-(182, 1, 1, 'Adicionado Compromisso "pessoal"', '/compromissos', 1, 0, '2019-02-11 12:51:53'),
-(192, 1, 3, 'Adicionado Compromisso "julgamento"', '/compromissos/pauta_compromisso', 0, 0, '2019-02-11 13:05:47'),
-(202, 1, 2, 'Adicionado Compromisso "julgamento2"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 13:07:40'),
-(212, 1, 3, 'Adicionado Compromisso "pessoal"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 13:11:56'),
-(222, 1, 4, 'Adicionado Compromisso "pessoal"', '/compromissos/', 1, 0, '2019-02-11 13:13:54'),
-(232, 3, 9, 'Concluída Tarefa "Teste Nova tarefa"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:02:25'),
-(242, 3, 9, 'Concluída Tarefa 2 "Teste Nova tarefa"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:11:22'),
-(252, 3, 9, 'Concluída Tarefa 2 "Teste Nova tarefa"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:11:27'),
-(262, 3, 9, 'Concluída Tarefa 2 "Teste Nova tarefa"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:13:04'),
-(272, 3, 9, 'Concluída Tarefa "Teste Nova tarefa"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:14:16'),
-(282, 4, 9, 'Criada a Tarefa "teste"', '/tarefas/tarefas', 1, 0, '2019-02-11 18:18:21'),
-(292, 9, 4, 'Criada a Tarefa "qqqqqqq"', '/tarefas/tarefas', 0, 0, '2019-02-11 18:19:52'),
-(302, 6, 9, 'Criada a Tarefa "abc"', '/tarefas/tarefas', 1, 0, '2019-02-11 18:21:07'),
-(312, 6, 4, 'Criada a Tarefa "abc"', '/tarefas/tarefas', 0, 0, '2019-02-11 18:21:07'),
-(424, 1, 9, 'Adicionado Compromisso "teste"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-15 13:51:53'),
-(402, 1, 9, 'Adicionado Compromisso "qqqqqqq"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-12 00:07:26'),
-(412, 1, 0, 'Adicionado Compromisso "providencia"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-12 01:13:59'),
-(415, 1, 9, 'Atribuido Processo "NA74273-79.2019.7.59.0000"', '/processos/abrir/1', 0, 0, '2019-02-13 19:08:56'),
-(416, 6, 6, 'Atribuido Processo "NA74273-79.2019.7.59.0000"', '/processos/abrir/1', 1, 0, '2019-02-13 19:10:34'),
-(417, 6, 6, 'Adicionado Compromisso "técnica"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-13 19:44:43'),
-(418, 6, 9, 'Adicionado Compromisso "Acórdão"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-13 19:59:40'),
-(425, 9, 9, 'Adicionado Compromisso "X"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-28 17:53:13'),
-(426, 9, 0, 'Adicionado Compromisso "a"', '/compromissos/pauta_compromisso', 0, 0, '2019-02-28 17:56:42'),
-(427, 9, 9, 'Criada a Tarefa "LIGAR PARA CLIENTE"', '/tarefas/tarefas', 0, 0, '2019-02-28 18:09:29'),
-(428, 1, 9, 'Adicionado Compromisso ""', '/compromissos/pauta_compromisso', 0, 0, '2019-03-04 02:39:02'),
-(429, 1, 0, 'Adicionado Compromisso ""', '/compromissos/controle_distribuicao', 0, 0, '2019-03-04 14:35:02'),
-(430, 6, 36, 'Atribuido Processo "0020182-20.2019.5.04.0029"', '/processos/abrir/13', 0, 0, '2019-03-29 18:02:53'),
-(431, 6, 36, 'Adicionado Compromisso "Inicial "', '/processos/abrir/13', 0, 0, '2019-03-29 18:05:00'),
-(432, 6, 36, 'Atribuido Processo "0020201-95.2019.5.04.0006"', '/processos/abrir/14', 0, 0, '2019-03-29 18:26:44'),
-(433, 6, 36, 'Adicionado Compromisso "inicial "', '/processos/abrir/14', 0, 0, '2019-03-29 18:33:01'),
-(434, 6, 36, 'Atribuido Processo "0020237-35.2019.5.04.0331"', '/processos/abrir/15', 0, 0, '2019-03-29 19:04:39'),
-(435, 6, 36, 'Adicionado Compromisso "Inicial "', '/processos/abrir/15', 0, 0, '2019-03-29 19:05:37'),
-(436, 6, 36, 'Adicionado Compromisso "inicial"', '/processos/abrir/16', 0, 0, '2019-03-29 19:18:36'),
-(437, 6, 36, 'Atribuido Processo "0020192-73.2019.5.04.0026"', '/processos/abrir/16', 0, 0, '2019-03-29 19:18:41'),
-(438, 6, 36, 'Adicionado Compromisso "inicial "', '/processos/abrir/17', 0, 0, '2019-03-29 19:29:57'),
-(439, 6, 36, 'Atribuido Processo "0020128-93.2019.5.04.0016"', '/processos/abrir/17', 0, 0, '2019-03-29 19:29:59'),
-(440, 6, 36, 'Atribuido Processo "0020232-85.2019.5.04.0016"', '/processos/abrir/18', 0, 0, '2019-03-29 19:41:19'),
-(441, 6, 36, 'Adicionado Compromisso "inicial"', '/processos/abrir/19', 0, 0, '2019-03-29 20:04:25'),
-(442, 6, 36, 'Atribuido Processo "0020207-96.2019.5.04.0202"', '/processos/abrir/19', 0, 0, '2019-03-29 20:05:30'),
-(443, 6, 36, 'Adicionado Compromisso "inicial"', '/processos/abrir/20', 0, 0, '2019-03-29 20:17:59'),
-(444, 6, 36, 'Atribuido Processo "0020190-63.2019.5.04.0007"', '/processos/abrir/20', 0, 0, '2019-03-29 20:18:01'),
-(445, 6, 36, 'Adicionado Compromisso "inical"', '/processos/abrir/21', 0, 0, '2019-03-29 20:30:00'),
-(446, 6, 36, 'Atribuido Processo "0020181-71.2019.5.04.0017"', '/processos/abrir/21', 0, 0, '2019-03-29 20:30:01');
+(2, 1, 2, 'Adicionado Compromisso \"teste\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 05:46:35'),
+(12, 1, 2, 'Adicionado Compromisso \"Novo Compromisso vagabundo\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 07:37:02'),
+(22, 1, 2, 'Adicionado Compromisso \"teste not\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 07:44:42'),
+(32, 1, 2, 'Atribuido Processo \"0000226-16.2012.5.04.0303\"', '/processos/abrir/1', 1, 0, '2019-02-10 08:35:22'),
+(42, 1, 2, 'Atribuido Processo \"NA13830-38.2019.6.31.0000\"', '/processos/abrir/103', 1, 0, '2019-02-10 08:35:49'),
+(52, 1, 2, 'Adicionado Compromisso \"qqqqqqqq\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 19:59:59'),
+(62, 1, 2, 'Atribuido Processo \"NA11262-68.2019.3.29.0000\"', '/processos/abrir/63', 1, 0, '2019-02-10 20:50:07'),
+(72, 1, 6, 'Adicionado Compromisso \"NOVO TESTE\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:02:18'),
+(82, 1, 6, 'Adicionado Compromisso \"Apenso New\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:19:25'),
+(92, 1, 6, 'Adicionado Compromisso \"apenso compromisso\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-10 22:20:23'),
+(102, 1, 9, 'Adicionado Compromisso \"qqqqqqq\"', '/compromissos/pauta_julgamento', 1, 0, '2019-02-10 22:27:17'),
+(112, 6, 1, 'Adicionado Compromisso \"teste\"', '/compromissos/pauta_julgamento', 1, 0, '2019-02-10 22:31:43'),
+(122, 1, 0, 'Adicionado Compromisso \"teste\"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:48:07'),
+(132, 1, 0, 'Adicionado Compromisso \"123123\"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-10 22:49:30'),
+(142, 1, 0, 'Adicionado Compromisso \"12312312\"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:49:56'),
+(152, 1, 0, 'Adicionado Compromisso \"123123\"', '/compromissos/pauta_julgamento', 0, 0, '2019-02-10 22:51:10'),
+(162, 1, 6, 'Adicionado Compromisso \"recurso\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-11 01:21:15'),
+(172, 1, 4, 'Adicionado Compromisso \"teste\"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 12:35:41'),
+(182, 1, 1, 'Adicionado Compromisso \"pessoal\"', '/compromissos', 1, 0, '2019-02-11 12:51:53'),
+(192, 1, 3, 'Adicionado Compromisso \"julgamento\"', '/compromissos/pauta_compromisso', 0, 0, '2019-02-11 13:05:47'),
+(202, 1, 2, 'Adicionado Compromisso \"julgamento2\"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 13:07:40'),
+(212, 1, 3, 'Adicionado Compromisso \"pessoal\"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-11 13:11:56'),
+(222, 1, 4, 'Adicionado Compromisso \"pessoal\"', '/compromissos/', 1, 0, '2019-02-11 13:13:54'),
+(232, 3, 9, 'Concluída Tarefa \"Teste Nova tarefa\"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:02:25'),
+(242, 3, 9, 'Concluída Tarefa 2 \"Teste Nova tarefa\"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:11:22'),
+(252, 3, 9, 'Concluída Tarefa 2 \"Teste Nova tarefa\"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:11:27'),
+(262, 3, 9, 'Concluída Tarefa 2 \"Teste Nova tarefa\"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:13:04'),
+(272, 3, 9, 'Concluída Tarefa \"Teste Nova tarefa\"', '/tarefas/tarefas', 1, 0, '2019-02-11 17:14:16'),
+(282, 4, 9, 'Criada a Tarefa \"teste\"', '/tarefas/tarefas', 1, 0, '2019-02-11 18:18:21'),
+(292, 9, 4, 'Criada a Tarefa \"qqqqqqq\"', '/tarefas/tarefas', 0, 0, '2019-02-11 18:19:52'),
+(302, 6, 9, 'Criada a Tarefa \"abc\"', '/tarefas/tarefas', 1, 0, '2019-02-11 18:21:07'),
+(312, 6, 4, 'Criada a Tarefa \"abc\"', '/tarefas/tarefas', 0, 0, '2019-02-11 18:21:07'),
+(424, 1, 9, 'Adicionado Compromisso \"teste\"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-15 13:51:53'),
+(402, 1, 9, 'Adicionado Compromisso \"qqqqqqq\"', '/compromissos/controle_distribuicao', 1, 0, '2019-02-12 00:07:26'),
+(412, 1, 0, 'Adicionado Compromisso \"providencia\"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-12 01:13:59'),
+(415, 1, 9, 'Atribuido Processo \"NA74273-79.2019.7.59.0000\"', '/processos/abrir/1', 0, 0, '2019-02-13 19:08:56'),
+(416, 6, 6, 'Atribuido Processo \"NA74273-79.2019.7.59.0000\"', '/processos/abrir/1', 1, 0, '2019-02-13 19:10:34'),
+(417, 6, 6, 'Adicionado Compromisso \"técnica\"', '/compromissos/pauta_compromisso', 1, 0, '2019-02-13 19:44:43'),
+(418, 6, 9, 'Adicionado Compromisso \"Acórdão\"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-13 19:59:40'),
+(425, 9, 9, 'Adicionado Compromisso \"X\"', '/compromissos/controle_distribuicao', 0, 0, '2019-02-28 17:53:13'),
+(426, 9, 0, 'Adicionado Compromisso \"a\"', '/compromissos/pauta_compromisso', 0, 0, '2019-02-28 17:56:42'),
+(427, 9, 9, 'Criada a Tarefa \"LIGAR PARA CLIENTE\"', '/tarefas/tarefas', 0, 0, '2019-02-28 18:09:29'),
+(428, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/pauta_compromisso', 0, 0, '2019-03-04 02:39:02'),
+(429, 1, 0, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-03-04 14:35:02'),
+(430, 6, 36, 'Atribuido Processo \"0020182-20.2019.5.04.0029\"', '/processos/abrir/13', 0, 0, '2019-03-29 18:02:53'),
+(431, 6, 36, 'Adicionado Compromisso \"Inicial \"', '/processos/abrir/13', 0, 0, '2019-03-29 18:05:00'),
+(432, 6, 36, 'Atribuido Processo \"0020201-95.2019.5.04.0006\"', '/processos/abrir/14', 0, 0, '2019-03-29 18:26:44'),
+(433, 6, 36, 'Adicionado Compromisso \"inicial \"', '/processos/abrir/14', 0, 0, '2019-03-29 18:33:01'),
+(434, 6, 36, 'Atribuido Processo \"0020237-35.2019.5.04.0331\"', '/processos/abrir/15', 0, 0, '2019-03-29 19:04:39'),
+(435, 6, 36, 'Adicionado Compromisso \"Inicial \"', '/processos/abrir/15', 0, 0, '2019-03-29 19:05:37'),
+(436, 6, 36, 'Adicionado Compromisso \"inicial\"', '/processos/abrir/16', 0, 0, '2019-03-29 19:18:36'),
+(437, 6, 36, 'Atribuido Processo \"0020192-73.2019.5.04.0026\"', '/processos/abrir/16', 0, 0, '2019-03-29 19:18:41'),
+(438, 6, 36, 'Adicionado Compromisso \"inicial \"', '/processos/abrir/17', 0, 0, '2019-03-29 19:29:57'),
+(439, 6, 36, 'Atribuido Processo \"0020128-93.2019.5.04.0016\"', '/processos/abrir/17', 0, 0, '2019-03-29 19:29:59'),
+(440, 6, 36, 'Atribuido Processo \"0020232-85.2019.5.04.0016\"', '/processos/abrir/18', 0, 0, '2019-03-29 19:41:19'),
+(441, 6, 36, 'Adicionado Compromisso \"inicial\"', '/processos/abrir/19', 0, 0, '2019-03-29 20:04:25'),
+(442, 6, 36, 'Atribuido Processo \"0020207-96.2019.5.04.0202\"', '/processos/abrir/19', 0, 0, '2019-03-29 20:05:30'),
+(443, 6, 36, 'Adicionado Compromisso \"inicial\"', '/processos/abrir/20', 0, 0, '2019-03-29 20:17:59'),
+(444, 6, 36, 'Atribuido Processo \"0020190-63.2019.5.04.0007\"', '/processos/abrir/20', 0, 0, '2019-03-29 20:18:01'),
+(445, 6, 36, 'Adicionado Compromisso \"inical\"', '/processos/abrir/21', 0, 0, '2019-03-29 20:30:00'),
+(446, 6, 36, 'Atribuido Processo \"0020181-71.2019.5.04.0017\"', '/processos/abrir/21', 0, 0, '2019-03-29 20:30:01'),
+(447, 1, 10, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-04 21:46:05'),
+(448, 1, 10, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-04 21:46:39'),
+(449, 1, 10, 'Adicionado Compromisso \"Teste mesma data\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-04 21:47:24'),
+(450, 1, 32, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-04 21:48:08'),
+(451, 1, 10, 'Adicionado Compromisso \"Teste\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-05 21:57:31'),
+(452, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:13:56'),
+(453, 1, 18, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:26:39'),
+(454, 1, 40, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:27:16'),
+(455, 1, 20, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:26'),
+(456, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:43');
 
 -- --------------------------------------------------------
 
@@ -1352,12 +1491,14 @@ INSERT INTO `notificacoes` (`id`, `id_usuario_criador`, `id_usuario`, `texto`, `
 -- Estrutura da tabela `origem_captacao_processo`
 --
 
-CREATE TABLE `origem_captacao_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `origem_captacao_processo`;
+CREATE TABLE IF NOT EXISTS `origem_captacao_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `origem_captacao_processo`
@@ -1373,14 +1514,16 @@ INSERT INTO `origem_captacao_processo` (`id`, `descricao`, `deletado`, `data_cad
 -- Estrutura da tabela `outros_envolvidos_adverso_processo`
 --
 
-CREATE TABLE `outros_envolvidos_adverso_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `outros_envolvidos_adverso_processo`;
+CREATE TABLE IF NOT EXISTS `outros_envolvidos_adverso_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_processo` int(11) NOT NULL,
   `id_adverso` int(11) NOT NULL,
   `id_outros_tipo` int(11) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `outros_envolvidos_adverso_processo`
@@ -1400,21 +1543,24 @@ INSERT INTO `outros_envolvidos_adverso_processo` (`id`, `id_processo`, `id_adver
 -- Estrutura da tabela `outros_envolvidos_cliente_processo`
 --
 
-CREATE TABLE `outros_envolvidos_cliente_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `outros_envolvidos_cliente_processo`;
+CREATE TABLE IF NOT EXISTS `outros_envolvidos_cliente_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_processo` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_outros_tipo` int(11) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `outros_envolvidos_cliente_processo`
 --
 
 INSERT INTO `outros_envolvidos_cliente_processo` (`id`, `id_processo`, `id_cliente`, `id_outros_tipo`, `deletado`, `data_cadastro`) VALUES
-(1, 18, 16, 0, 1, '2019-08-16 15:01:45');
+(1, 21, 16, 0, 0, '2019-08-16 15:01:31'),
+(2, 24, 16, 0, 0, '2019-10-07 22:07:31');
 
 -- --------------------------------------------------------
 
@@ -1422,12 +1568,14 @@ INSERT INTO `outros_envolvidos_cliente_processo` (`id`, `id_processo`, `id_clien
 -- Estrutura da tabela `outros_envolvidos_tipo_processo`
 --
 
-CREATE TABLE `outros_envolvidos_tipo_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `outros_envolvidos_tipo_processo`;
+CREATE TABLE IF NOT EXISTS `outros_envolvidos_tipo_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `outros_envolvidos_tipo_processo`
@@ -1446,11 +1594,13 @@ INSERT INTO `outros_envolvidos_tipo_processo` (`id`, `descricao`, `deletado`, `d
 -- Estrutura da tabela `pasta_cliente`
 --
 
-CREATE TABLE `pasta_cliente` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `pasta_cliente`;
+CREATE TABLE IF NOT EXISTS `pasta_cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_cliente` int(11) NOT NULL,
   `deletado` int(11) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1459,16 +1609,18 @@ CREATE TABLE `pasta_cliente` (
 -- Estrutura da tabela `podcast`
 --
 
-CREATE TABLE `podcast` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `podcast`;
+CREATE TABLE IF NOT EXISTS `podcast` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(150) NOT NULL,
   `descricao` varchar(2000) NOT NULL,
   `imagem` varchar(150) DEFAULT NULL,
   `arquivo_mp3` varchar(150) NOT NULL,
   `arquivo_ogg` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `podcast`
@@ -1514,12 +1666,14 @@ INSERT INTO `podcast` (`id`, `titulo`, `descricao`, `imagem`, `arquivo_mp3`, `ar
 -- Estrutura da tabela `posicao_apenso`
 --
 
-CREATE TABLE `posicao_apenso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `posicao_apenso`;
+CREATE TABLE IF NOT EXISTS `posicao_apenso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `posicao_apenso`
@@ -1536,8 +1690,9 @@ INSERT INTO `posicao_apenso` (`id`, `descricao`, `deletado`, `data_cadastro`) VA
 -- Estrutura da tabela `postagens`
 --
 
-CREATE TABLE `postagens` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `postagens`;
+CREATE TABLE IF NOT EXISTS `postagens` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `titulo` varchar(150) NOT NULL,
@@ -1545,7 +1700,10 @@ CREATE TABLE `postagens` (
   `imagem` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `data_atualizado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `data_atualizado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_categoria` (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1554,13 +1712,16 @@ CREATE TABLE `postagens` (
 -- Estrutura da tabela `postagens_categorias`
 --
 
-CREATE TABLE `postagens_categorias` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `postagens_categorias`;
+CREATE TABLE IF NOT EXISTS `postagens_categorias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_postagem` int(11) NOT NULL,
   `nome` varchar(150) NOT NULL,
   `descricao` text NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_postagem` (`id_postagem`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1569,8 +1730,9 @@ CREATE TABLE `postagens_categorias` (
 -- Estrutura da tabela `processos`
 --
 
-CREATE TABLE `processos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `processos`;
+CREATE TABLE IF NOT EXISTS `processos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_posicao_cliente` int(11) NOT NULL,
@@ -1592,15 +1754,28 @@ CREATE TABLE `processos` (
   `vip` int(11) DEFAULT '0' COMMENT '0 = não, 1 = sim',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0 = Processo Interno, 1 = Em andamento, 2 =  Entrar em Contato com o Cliente, 3 = Ajuizado, 4 = Audiência Marcada',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_cliente` (`id_cliente`),
+  KEY `id_adverso` (`id_adverso`),
+  KEY `id_advogado` (`id_advogado`),
+  KEY `id_tipo` (`id_tipo_causa`),
+  KEY `id_assunto` (`id_assunto`),
+  KEY `id_comarca` (`id_comarca`),
+  KEY `id_tipo_acao_rito` (`id_tipo_acao_rito`),
+  KEY `id_vara` (`id_vara`),
+  KEY `id_categoria` (`id_categoria`),
+  KEY `id_fase` (`id_fase`),
+  KEY `id_posicao_cliente` (`id_posicao_cliente`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `processos`
 --
 
 INSERT INTO `processos` (`id`, `id_usuario`, `id_cliente`, `id_posicao_cliente`, `id_adverso`, `id_advogado`, `id_tipo_causa`, `id_assunto`, `id_comarca`, `id_tipo_acao_rito`, `id_vara`, `id_categoria`, `id_fase`, `numero`, `data`, `hora`, `valor_causa`, `distribuicao`, `citacao`, `vip`, `status`, `deletado`, `data_cadastro`) VALUES
-(1, 1, 1, 1, 1, 6, 40, 193, 76, 39, 194, 195, 196, '0020136-58.2019.5.04.0020', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-02-13 18:22:13'),
+(1, 1, 1, 1, 1, 1, 40, 193, 76, 39, 194, 195, 196, '0020136-58.2019.5.04.0020', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-02-13 18:22:13'),
 (12, 1, 11, 1, 1, NULL, 40, 193, 192, NULL, NULL, NULL, NULL, '0020197-04.2019.5.04.0024', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-02-28 17:37:51'),
 (13, 6, 12, 1, 1, 36, 40, 193, 192, 38, 199, 195, 196, '0020182-20.2019.5.04.0029', NULL, NULL, NULL, '0000-00-00', NULL, 0, 0, 0, '2019-03-29 17:55:04'),
 (14, 6, 13, 1, 1, 36, 40, 193, 192, 38, 200, 195, 196, '0020201-95.2019.5.04.0006', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 18:22:39'),
@@ -1610,7 +1785,10 @@ INSERT INTO `processos` (`id`, `id_usuario`, `id_cliente`, `id_posicao_cliente`,
 (18, 6, 17, 1, 1, 36, 40, 193, 192, 38, 203, 195, 196, '0020232-85.2019.5.04.0016', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 19:38:48'),
 (19, 6, 18, 1, 13, 36, 40, 193, 132, NULL, 204, 195, 196, '0020207-96.2019.5.04.0202', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 19:59:44'),
 (20, 6, 19, 1, 1, 36, 40, 193, 192, 38, 205, 195, 196, '0020190-63.2019.5.04.0007', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 20:15:35'),
-(21, 6, 20, 1, 1, 36, 40, 193, 192, 38, 206, 195, 196, '0020181-71.2019.5.04.0017', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 20:27:43');
+(21, 6, 20, 1, 1, 36, 40, 193, 192, 38, 206, 195, 196, '0020181-71.2019.5.04.0017', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 20:27:43'),
+(22, 1, 12, 1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'NA12953-21.2019.8.62.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-05 20:31:56'),
+(23, 1, 19, 1, 12, NULL, NULL, NULL, 207, NULL, 216, NULL, NULL, 'NANANA9-52.0192.1.50.000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-06 17:23:02'),
+(24, 1, 15, 1, 2, NULL, NULL, NULL, 208, NULL, 204, NULL, NULL, 'NA40256-95.2019.3.64.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-06 17:23:54');
 
 -- --------------------------------------------------------
 
@@ -1618,8 +1796,9 @@ INSERT INTO `processos` (`id`, `id_usuario`, `id_cliente`, `id_posicao_cliente`,
 -- Estrutura da tabela `recurso`
 --
 
-CREATE TABLE `recurso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `recurso`;
+CREATE TABLE IF NOT EXISTS `recurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_processo` int(11) DEFAULT NULL,
   `id_apenso` int(11) DEFAULT NULL,
@@ -1633,8 +1812,25 @@ CREATE TABLE `recurso` (
   `interposicao` date DEFAULT NULL,
   `ajuizado` date DEFAULT NULL,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_processo` (`id_processo`),
+  KEY `id_apenso` (`id_apenso`),
+  KEY `id_advogado` (`id_advogado`),
+  KEY `id_relator` (`id_relator`),
+  KEY `id_tipo_recurso` (`id_tipo_recurso`),
+  KEY `id_posicao_cliente` (`id_posicao_cliente`),
+  KEY `id_tribunal` (`id_tribunal`),
+  KEY `id_turma_camara` (`id_turma_camara`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `recurso`
+--
+
+INSERT INTO `recurso` (`id`, `id_usuario`, `id_processo`, `id_apenso`, `id_advogado`, `id_relator`, `id_tipo_recurso`, `id_posicao_cliente`, `id_tribunal`, `id_turma_camara`, `numero`, `interposicao`, `ajuizado`, `deletado`, `data_cadastro`) VALUES
+(1, 1, 24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'NA40256-95.2019.3.64.0000', NULL, NULL, 0, '2019-10-07 22:12:10');
 
 -- --------------------------------------------------------
 
@@ -1642,12 +1838,14 @@ CREATE TABLE `recurso` (
 -- Estrutura da tabela `relator`
 --
 
-CREATE TABLE `relator` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `relator`;
+CREATE TABLE IF NOT EXISTS `relator` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `relator`
@@ -1664,8 +1862,9 @@ INSERT INTO `relator` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `requisicoes`
 --
 
-CREATE TABLE `requisicoes` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `requisicoes`;
+CREATE TABLE IF NOT EXISTS `requisicoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `data` date NOT NULL,
   `nome` varchar(150) DEFAULT NULL,
@@ -1677,8 +1876,9 @@ CREATE TABLE `requisicoes` (
   `mensagem` text NOT NULL,
   `posicao` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 - Requisição foi iniciada , 1 - Requisição foi acompanhada , 2 - requisicao foi movida, 3 - requisicao foi completada',
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `requisicoes`
@@ -1693,12 +1893,14 @@ INSERT INTO `requisicoes` (`id`, `id_usuario`, `data`, `nome`, `numero_processo`
 -- Estrutura da tabela `setores`
 --
 
-CREATE TABLE `setores` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `setores`;
+CREATE TABLE IF NOT EXISTS `setores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `setores`
@@ -1718,12 +1920,14 @@ INSERT INTO `setores` (`id`, `nome`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `situacao_apenso`
 --
 
-CREATE TABLE `situacao_apenso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `situacao_apenso`;
+CREATE TABLE IF NOT EXISTS `situacao_apenso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `situacao_apenso`
@@ -1740,8 +1944,9 @@ INSERT INTO `situacao_apenso` (`id`, `descricao`, `deletado`, `data_cadastro`) V
 -- Estrutura da tabela `tarefas`
 --
 
-CREATE TABLE `tarefas` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tarefas`;
+CREATE TABLE IF NOT EXISTS `tarefas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_responsavel` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `nome` varchar(150) NOT NULL,
@@ -1753,8 +1958,11 @@ CREATE TABLE `tarefas` (
   `data_inicio` timestamp NULL DEFAULT NULL,
   `data_final` timestamp NULL DEFAULT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_gerente` (`id_responsavel`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tarefas`
@@ -1772,12 +1980,15 @@ INSERT INTO `tarefas` (`id`, `id_responsavel`, `id_usuario`, `nome`, `descricao`
 -- Estrutura da tabela `tarefas_arquivos`
 --
 
-CREATE TABLE `tarefas_arquivos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tarefas_arquivos`;
+CREATE TABLE IF NOT EXISTS `tarefas_arquivos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_tarefa` int(11) NOT NULL,
   `arquivo` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_tarefa` (`id_tarefa`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1786,14 +1997,17 @@ CREATE TABLE `tarefas_arquivos` (
 -- Estrutura da tabela `tarefas_comentarios`
 --
 
-CREATE TABLE `tarefas_comentarios` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tarefas_comentarios`;
+CREATE TABLE IF NOT EXISTS `tarefas_comentarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_tarefa` int(11) NOT NULL,
   `texto` text NOT NULL,
   `tipo` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1 = Usuario da Tarefa, 2 = Outro',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_tarefa` (`id_tarefa`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tarefas_comentarios`
@@ -1808,14 +2022,17 @@ INSERT INTO `tarefas_comentarios` (`id`, `id_tarefa`, `texto`, `tipo`, `deletado
 -- Estrutura da tabela `tarefas_topicos`
 --
 
-CREATE TABLE `tarefas_topicos` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tarefas_topicos`;
+CREATE TABLE IF NOT EXISTS `tarefas_topicos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_tarefa` int(11) NOT NULL,
   `texto` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = Não feito, 1 = Feito',
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_tarefa` (`id_tarefa`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tarefas_topicos`
@@ -1834,12 +2051,14 @@ INSERT INTO `tarefas_topicos` (`id`, `id_tarefa`, `texto`, `status`, `deletado`,
 -- Estrutura da tabela `tipo_acao_rito_processo`
 --
 
-CREATE TABLE `tipo_acao_rito_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tipo_acao_rito_processo`;
+CREATE TABLE IF NOT EXISTS `tipo_acao_rito_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tipo_acao_rito_processo`
@@ -1855,12 +2074,14 @@ INSERT INTO `tipo_acao_rito_processo` (`id`, `descricao`, `deletado`, `data_cada
 -- Estrutura da tabela `tipo_causa`
 --
 
-CREATE TABLE `tipo_causa` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tipo_causa`;
+CREATE TABLE IF NOT EXISTS `tipo_causa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tipo_causa`
@@ -1883,12 +2104,14 @@ INSERT INTO `tipo_causa` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `tipo_causa_apenso`
 --
 
-CREATE TABLE `tipo_causa_apenso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tipo_causa_apenso`;
+CREATE TABLE IF NOT EXISTS `tipo_causa_apenso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tipo_causa_apenso`
@@ -1911,12 +2134,14 @@ INSERT INTO `tipo_causa_apenso` (`id`, `descricao`, `deletado`, `data_cadastro`)
 -- Estrutura da tabela `tipo_causa_recurso`
 --
 
-CREATE TABLE `tipo_causa_recurso` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tipo_causa_recurso`;
+CREATE TABLE IF NOT EXISTS `tipo_causa_recurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tipo_causa_recurso`
@@ -1939,12 +2164,14 @@ INSERT INTO `tipo_causa_recurso` (`id`, `descricao`, `deletado`, `data_cadastro`
 -- Estrutura da tabela `tribunal`
 --
 
-CREATE TABLE `tribunal` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tribunal`;
+CREATE TABLE IF NOT EXISTS `tribunal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tribunal`
@@ -1961,12 +2188,14 @@ INSERT INTO `tribunal` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 -- Estrutura da tabela `turma_camara`
 --
 
-CREATE TABLE `turma_camara` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `turma_camara`;
+CREATE TABLE IF NOT EXISTS `turma_camara` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `turma_camara`
@@ -1983,8 +2212,9 @@ INSERT INTO `turma_camara` (`id`, `descricao`, `deletado`, `data_cadastro`) VALU
 -- Estrutura da tabela `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_setor` int(11) NOT NULL COMMENT 'PADRAO: 1 = Adminstrativo, 2 = Financeiro, 3 = T.I',
   `login` varchar(150) NOT NULL,
   `senha` varchar(150) NOT NULL,
@@ -1998,55 +2228,57 @@ CREATE TABLE `usuarios` (
   `cargo` varchar(45) DEFAULT NULL COMMENT '1 - advogado',
   `oab` varchar(20) DEFAULT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_setor` (`id_setor`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `id_setor`, `login`, `senha`, `imagem`, `nome`, `email`, `telefone`, `nivel`, `cpf`, `hash_login`, `cargo`, `oab`, `deletado`, `data_cadastro`) VALUES
-(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assetsward/imagem_perfil/05_05_2019_18_23_40_950_imagem_perfil.png', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, 'a36287453f4a649575808f0f8c76fb8d', '0', NULL, 0, '2017-11-30 18:49:14'),
-(2, 3, 'pablo', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Pablo', 'pablo@young.adv.br', '(12) 41241-2412', 3, '', 'd3d4b649ea9ac587edd74d887102397b', '1', '', 0, '2017-11-30 18:54:31'),
-(3, 3, 'taina', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Tainã', 'cleberson@cleber.com.br', '66 666 6666 99', 3, NULL, '18db9f39bfecde512023f4f1f73588b3', '1', NULL, 0, '2017-11-30 19:52:24'),
-(4, 2, 'elisandra', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Elisandra', 'teste@teste.com', '342423423', 3, NULL, '756aeb49fc6c6a20d1d447396c0ca6dd', '1', NULL, 0, '2017-12-06 16:39:39'),
-(5, 1, 'arthur', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Arthur Orlando Dias Filho', 'geren@geren.com', '12312341', 3, NULL, '', NULL, '040806', 0, '2017-12-06 17:57:00'),
-(6, 3, 'mariele', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Mariele', 'marquito@maquito.com', '1251251234124', 2, NULL, 'cc4051d48ab1ebda96c4447e96843109', '1', NULL, 0, '2018-01-17 11:38:04'),
-(7, 3, 'marilia', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Marília', 'marquito@maquito.com', '1251251234124', 3, NULL, NULL, NULL, NULL, 0, '2018-01-17 11:38:19'),
-(9, 2, 'fabio', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Fábio', 'teste@teste.com', '23423423', 2, NULL, '0f11340a9d53bafd0c54e40822a0e057', '1', NULL, 0, '2018-01-18 13:27:31'),
-(10, 4, 'aliny', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Aliny Marin', 'aliny@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:56:21'),
-(11, 4, 'ana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Ana Cristina Heerbach', 'ana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:56:56'),
-(12, 4, 'anderson', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Anderson Nunes da Silva', 'anderson@gmail.com', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:57:44'),
-(13, 4, 'ariane', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Ariane Gabriella Rocha', 'ariane@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:58:15'),
-(14, 4, 'caroline', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Caroline da Cássia Cadora', 'caroline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:58:53'),
-(15, 4, 'daniela', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Daniela Santos de Souza', 'daniela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:59:29'),
-(16, 4, 'diana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Diana Tem Caten Butzen', 'diana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:00:09'),
-(17, 4, 'dyandra', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Dyandra Sulzback Brasil', 'dyandra@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:00:59'),
-(18, 4, 'eduarda', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Eduarda Gonçalves Berbigier', 'eduarda@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:01:33'),
-(19, 4, 'francisco', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Francisco Alf de Carvalho', 'francisco@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:02:07'),
-(20, 4, 'gabriela', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Gabriela Pereira M. Correa', 'gabriela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:02:38'),
-(21, 4, 'heleonora', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Heleonora Desdema Busanello', 'heleonora@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:03:13'),
-(22, 4, 'iolanda', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Iolanda Navegantes Santos Prates', 'iolanda@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:03:41'),
-(23, 4, 'jessica', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Jéssica Dornelles Dymkovski', 'jessica@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:04:11'),
-(24, 4, 'karoline', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Karoline Gonçalves Bruno', 'karoline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:04:45'),
-(25, 4, 'leticia', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Letícia Kaiane de Paula Klipel', 'leticia@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:05:28'),
-(26, 4, 'lilian', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Lilian da Silva Rangel', 'lilian@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:06:06'),
-(27, 4, 'luiza', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Luiza da Mota Borges', 'luiza@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:06:32'),
-(28, 4, 'maicon', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Maicon Roberto Rivas', 'maicon@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:07:07'),
-(29, 4, 'pamela', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Pamela da Silva Ribeiro', 'pamela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:07:34'),
-(30, 4, 'rodrigo', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Rodrigo Spigolon Montano', 'rodrigo@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:07:57'),
-(31, 4, 'walter', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Walter Fabiano Barbosa Neto', 'walter@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:08:27'),
-(32, 5, 'ariel', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Ariel Giordano Vivan', 'ariel@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:15:45'),
-(33, 5, 'jaqueline', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Jaqueline Matiazzo de Carvalho', 'jaqueline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:16:17'),
-(34, 5, 'juliana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Juliana Ribeiro Dal Bosco', 'juliana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:16:52'),
-(35, 5, 'katia', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Katia Oliveira de Avila', 'katia@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:17:16'),
-(36, 5, 'mauricio', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Maurício Vieira da Silva', 'mauricio@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:17:43'),
-(37, 5, 'ohana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Ohana Cabelleira Lopes', 'ohana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:18:16'),
-(38, 5, 'rayssa', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Rayssa Gonçalves de Sant Helena', 'rayssa@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:18:42'),
-(39, 5, 'vera', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Vera Lucia Correa Oliveira', 'vera@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:19:10'),
-(40, 6, 'gabriel', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Gabriel Lemos Weber', 'gabriel@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:19:38'),
-(41, 6, 'ihana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Ihana dos Santos Guerra', 'ihana@teste.com.br', '(51) 99999-9999', 3, NULL, '7e4cef100971839538e61088563b0450', '1', '', 0, '2019-02-27 23:20:03'),
-(42, 6, 'luciana', '0ef219d1f0829be9f21ee5ce6633dac8', '/assets/imgs/user-padrao.jpg', 'Luciana Ruttscheidt da Cunha', 'luciana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:20:28');
+(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, '08f5ccb6c5020d20bafb080bf090bbbc', '0', NULL, 0, '2017-11-30 18:49:14'),
+(2, 3, 'pablo', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Pablo', 'pablo@young.adv.br', '(12) 41241-2412', 3, '', 'd3d4b649ea9ac587edd74d887102397b', '1', '', 0, '2017-11-30 18:54:31'),
+(3, 3, 'taina', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Tainã', 'cleberson@cleber.com.br', '66 666 6666 99', 3, NULL, '18db9f39bfecde512023f4f1f73588b3', '1', NULL, 0, '2017-11-30 19:52:24'),
+(4, 2, 'elisandra', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Elisandra', 'teste@teste.com', '342423423', 3, NULL, '756aeb49fc6c6a20d1d447396c0ca6dd', '1', NULL, 0, '2017-12-06 16:39:39'),
+(5, 1, 'arthur', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Arthur Orlando Dias Filho', 'geren@geren.com', '12312341', 3, NULL, '', NULL, '040806', 0, '2017-12-06 17:57:00'),
+(6, 3, 'mariele', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Mariele', 'marquito@maquito.com', '1251251234124', 2, NULL, 'b7af02ab35ee458e7e25724d68f96fb1', '1', NULL, 0, '2018-01-17 11:38:04'),
+(7, 3, 'marilia', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Marília', 'marquito@maquito.com', '1251251234124', 3, NULL, NULL, NULL, NULL, 0, '2018-01-17 11:38:19'),
+(9, 2, 'fabio', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Fábio', 'teste@teste.com', '23423423', 2, NULL, '0f11340a9d53bafd0c54e40822a0e057', '1', NULL, 0, '2018-01-18 13:27:31'),
+(10, 4, 'aliny', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Aliny Marin', 'aliny@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:56:21'),
+(11, 4, 'ana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Ana Cristina Heerbach', 'ana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:56:56'),
+(12, 4, 'anderson', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Anderson Nunes da Silva', 'anderson@gmail.com', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:57:44'),
+(13, 4, 'ariane', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Ariane Gabriella Rocha', 'ariane@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:58:15'),
+(14, 4, 'caroline', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Caroline da Cássia Cadora', 'caroline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 22:58:53'),
+(15, 4, 'daniela', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Daniela Santos de Souza', 'daniela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 22:59:29'),
+(16, 4, 'diana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Diana Tem Caten Butzen', 'diana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:00:09'),
+(17, 4, 'dyandra', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Dyandra Sulzback Brasil', 'dyandra@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:00:59'),
+(18, 4, 'eduarda', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Eduarda Gonçalves Berbigier', 'eduarda@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:01:33'),
+(19, 4, 'francisco', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Francisco Alf de Carvalho', 'francisco@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:02:07'),
+(20, 4, 'gabriela', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Gabriela Pereira M. Correa', 'gabriela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:02:38'),
+(21, 4, 'heleonora', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Heleonora Desdema Busanello', 'heleonora@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:03:13'),
+(22, 4, 'iolanda', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Iolanda Navegantes Santos Prates', 'iolanda@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:03:41'),
+(23, 4, 'jessica', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Jéssica Dornelles Dymkovski', 'jessica@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:04:11'),
+(24, 4, 'karoline', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Karoline Gonçalves Bruno', 'karoline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:04:45'),
+(25, 4, 'leticia', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Letícia Kaiane de Paula Klipel', 'leticia@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:05:28'),
+(26, 4, 'lilian', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Lilian da Silva Rangel', 'lilian@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:06:06'),
+(27, 4, 'luiza', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Luiza da Mota Borges', 'luiza@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:06:32'),
+(28, 4, 'maicon', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Maicon Roberto Rivas', 'maicon@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:07:07'),
+(29, 4, 'pamela', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Pamela da Silva Ribeiro', 'pamela@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:07:34'),
+(30, 4, 'rodrigo', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Rodrigo Spigolon Montano', 'rodrigo@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:07:57'),
+(31, 4, 'walter', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Walter Fabiano Barbosa Neto', 'walter@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:08:27'),
+(32, 5, 'ariel', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Ariel Giordano Vivan', 'ariel@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:15:45'),
+(33, 5, 'jaqueline', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Jaqueline Matiazzo de Carvalho', 'jaqueline@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:16:17'),
+(34, 5, 'juliana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Juliana Ribeiro Dal Bosco', 'juliana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:16:52'),
+(35, 5, 'katia', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Katia Oliveira de Avila', 'katia@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:17:16'),
+(36, 5, 'mauricio', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Maurício Vieira da Silva', 'mauricio@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:17:43'),
+(37, 5, 'ohana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Ohana Cabelleira Lopes', 'ohana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:18:16'),
+(38, 5, 'rayssa', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Rayssa Gonçalves de Sant Helena', 'rayssa@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:18:42'),
+(39, 5, 'vera', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Vera Lucia Correa Oliveira', 'vera@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '0', NULL, 0, '2019-02-27 23:19:10'),
+(40, 6, 'gabriel', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Gabriel Lemos Weber', 'gabriel@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:19:38'),
+(41, 6, 'ihana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Ihana dos Santos Guerra', 'ihana@teste.com.br', '(51) 99999-9999', 3, NULL, '7e4cef100971839538e61088563b0450', '1', '', 0, '2019-02-27 23:20:03'),
+(42, 6, 'luciana', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Luciana Ruttscheidt da Cunha', 'luciana@teste.com.br', '(51) 99999-9999', 3, NULL, NULL, '1', '', 0, '2019-02-27 23:20:28');
 
 -- --------------------------------------------------------
 
@@ -2054,12 +2286,14 @@ INSERT INTO `usuarios` (`id`, `id_setor`, `login`, `senha`, `imagem`, `nome`, `e
 -- Estrutura da tabela `vara_processo`
 --
 
-CREATE TABLE `vara_processo` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vara_processo`;
+CREATE TABLE IF NOT EXISTS `vara_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `vara_processo`
@@ -2068,734 +2302,8 @@ CREATE TABLE `vara_processo` (
 INSERT INTO `vara_processo` (`id`, `descricao`, `deletado`, `data_cadastro`) VALUES
 (1, '003° Vara do Trabalho', 0, '2018-05-29 17:07:00'),
 (2, '004° Vara do Trabalho', 0, '2018-05-29 17:07:14');
+COMMIT;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `adversos`
---
-ALTER TABLE `adversos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `advogados`
---
-ALTER TABLE `advogados`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `andamentos_processo`
---
-ALTER TABLE `andamentos_processo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_processo` (`id_processo`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Indexes for table `apenso`
---
-ALTER TABLE `apenso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `assunto_processo`
---
-ALTER TABLE `assunto_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `busca_area`
---
-ALTER TABLE `busca_area`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `captacao_processo`
---
-ALTER TABLE `captacao_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `captador_processo`
---
-ALTER TABLE `captador_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `categoria_processo`
---
-ALTER TABLE `categoria_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `chats_grupo`
---
-ALTER TABLE `chats_grupo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_setor` (`id_setor`);
-
---
--- Indexes for table `chats_mensagens`
---
-ALTER TABLE `chats_mensagens`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `chats_mensagens_novidades`
---
-ALTER TABLE `chats_mensagens_novidades`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `chats_participantes_grupo`
---
-ALTER TABLE `chats_participantes_grupo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_chat` (`id_chat_grupo`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Indexes for table `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `comarca`
---
-ALTER TABLE `comarca`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `compromissos`
---
-ALTER TABLE `compromissos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `configuracoes`
---
-ALTER TABLE `configuracoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contatos`
---
-ALTER TABLE `contatos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contatos_lista`
---
-ALTER TABLE `contatos_lista`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contatos_young`
---
-ALTER TABLE `contatos_young`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `desativado-chats`
---
-ALTER TABLE `desativado-chats`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `desativado-chats_participantes`
---
-ALTER TABLE `desativado-chats_participantes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `descricao_generico`
---
-ALTER TABLE `descricao_generico`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `documentos`
---
-ALTER TABLE `documentos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `endereco_foro`
---
-ALTER TABLE `endereco_foro`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `fase_processo`
---
-ALTER TABLE `fase_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ferramentas_senhas`
---
-ALTER TABLE `ferramentas_senhas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `foro`
---
-ALTER TABLE `foro`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `grupos`
---
-ALTER TABLE `grupos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `historico_requisicoes`
---
-ALTER TABLE `historico_requisicoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `log`
---
-ALTER TABLE `log`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `node_categoria`
---
-ALTER TABLE `node_categoria`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `node_post`
---
-ALTER TABLE `node_post`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `node_post_categoria`
---
-ALTER TABLE `node_post_categoria`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_post` (`id_post`),
-  ADD KEY `id_categoria` (`id_categoria`);
-
---
--- Indexes for table `notificacoes`
---
-ALTER TABLE `notificacoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `origem_captacao_processo`
---
-ALTER TABLE `origem_captacao_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `outros_envolvidos_adverso_processo`
---
-ALTER TABLE `outros_envolvidos_adverso_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `outros_envolvidos_cliente_processo`
---
-ALTER TABLE `outros_envolvidos_cliente_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `outros_envolvidos_tipo_processo`
---
-ALTER TABLE `outros_envolvidos_tipo_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pasta_cliente`
---
-ALTER TABLE `pasta_cliente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `podcast`
---
-ALTER TABLE `podcast`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `posicao_apenso`
---
-ALTER TABLE `posicao_apenso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `postagens`
---
-ALTER TABLE `postagens`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_categoria` (`id_categoria`);
-
---
--- Indexes for table `postagens_categorias`
---
-ALTER TABLE `postagens_categorias`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_postagem` (`id_postagem`);
-
---
--- Indexes for table `processos`
---
-ALTER TABLE `processos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_cliente` (`id_cliente`),
-  ADD KEY `id_adverso` (`id_adverso`),
-  ADD KEY `id_advogado` (`id_advogado`),
-  ADD KEY `id_tipo` (`id_tipo_causa`),
-  ADD KEY `id_assunto` (`id_assunto`),
-  ADD KEY `id_comarca` (`id_comarca`),
-  ADD KEY `id_tipo_acao_rito` (`id_tipo_acao_rito`),
-  ADD KEY `id_vara` (`id_vara`),
-  ADD KEY `id_categoria` (`id_categoria`),
-  ADD KEY `id_fase` (`id_fase`),
-  ADD KEY `id_posicao_cliente` (`id_posicao_cliente`);
-
---
--- Indexes for table `recurso`
---
-ALTER TABLE `recurso`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_processo` (`id_processo`),
-  ADD KEY `id_apenso` (`id_apenso`),
-  ADD KEY `id_advogado` (`id_advogado`),
-  ADD KEY `id_relator` (`id_relator`),
-  ADD KEY `id_tipo_recurso` (`id_tipo_recurso`),
-  ADD KEY `id_posicao_cliente` (`id_posicao_cliente`),
-  ADD KEY `id_tribunal` (`id_tribunal`),
-  ADD KEY `id_turma_camara` (`id_turma_camara`);
-
---
--- Indexes for table `relator`
---
-ALTER TABLE `relator`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `requisicoes`
---
-ALTER TABLE `requisicoes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `setores`
---
-ALTER TABLE `setores`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `situacao_apenso`
---
-ALTER TABLE `situacao_apenso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tarefas`
---
-ALTER TABLE `tarefas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_gerente` (`id_responsavel`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Indexes for table `tarefas_arquivos`
---
-ALTER TABLE `tarefas_arquivos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_tarefa` (`id_tarefa`);
-
---
--- Indexes for table `tarefas_comentarios`
---
-ALTER TABLE `tarefas_comentarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_tarefa` (`id_tarefa`);
-
---
--- Indexes for table `tarefas_topicos`
---
-ALTER TABLE `tarefas_topicos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_tarefa` (`id_tarefa`);
-
---
--- Indexes for table `tipo_acao_rito_processo`
---
-ALTER TABLE `tipo_acao_rito_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tipo_causa`
---
-ALTER TABLE `tipo_causa`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tipo_causa_apenso`
---
-ALTER TABLE `tipo_causa_apenso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tipo_causa_recurso`
---
-ALTER TABLE `tipo_causa_recurso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tribunal`
---
-ALTER TABLE `tribunal`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `turma_camara`
---
-ALTER TABLE `turma_camara`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_setor` (`id_setor`);
-
---
--- Indexes for table `vara_processo`
---
-ALTER TABLE `vara_processo`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `adversos`
---
-ALTER TABLE `adversos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `advogados`
---
-ALTER TABLE `advogados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `andamentos_processo`
---
-ALTER TABLE `andamentos_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `apenso`
---
-ALTER TABLE `apenso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `assunto_processo`
---
-ALTER TABLE `assunto_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `busca_area`
---
-ALTER TABLE `busca_area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `captacao_processo`
---
-ALTER TABLE `captacao_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `captador_processo`
---
-ALTER TABLE `captador_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `categoria_processo`
---
-ALTER TABLE `categoria_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `chats_grupo`
---
-ALTER TABLE `chats_grupo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT for table `chats_mensagens`
---
-ALTER TABLE `chats_mensagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `chats_mensagens_novidades`
---
-ALTER TABLE `chats_mensagens_novidades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT for table `chats_participantes_grupo`
---
-ALTER TABLE `chats_participantes_grupo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
---
--- AUTO_INCREMENT for table `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
---
--- AUTO_INCREMENT for table `comarca`
---
-ALTER TABLE `comarca`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `compromissos`
---
-ALTER TABLE `compromissos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
---
--- AUTO_INCREMENT for table `configuracoes`
---
-ALTER TABLE `configuracoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `contatos`
---
-ALTER TABLE `contatos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT for table `contatos_lista`
---
-ALTER TABLE `contatos_lista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT for table `contatos_young`
---
-ALTER TABLE `contatos_young`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
---
--- AUTO_INCREMENT for table `desativado-chats`
---
-ALTER TABLE `desativado-chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `desativado-chats_participantes`
---
-ALTER TABLE `desativado-chats_participantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `descricao_generico`
---
-ALTER TABLE `descricao_generico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
---
--- AUTO_INCREMENT for table `documentos`
---
-ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
---
--- AUTO_INCREMENT for table `endereco_foro`
---
-ALTER TABLE `endereco_foro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `fase_processo`
---
-ALTER TABLE `fase_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `ferramentas_senhas`
---
-ALTER TABLE `ferramentas_senhas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `foro`
---
-ALTER TABLE `foro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `grupos`
---
-ALTER TABLE `grupos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `historico_requisicoes`
---
-ALTER TABLE `historico_requisicoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `log`
---
-ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `node_categoria`
---
-ALTER TABLE `node_categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `node_post`
---
-ALTER TABLE `node_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `node_post_categoria`
---
-ALTER TABLE `node_post_categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `notificacoes`
---
-ALTER TABLE `notificacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=447;
---
--- AUTO_INCREMENT for table `origem_captacao_processo`
---
-ALTER TABLE `origem_captacao_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `outros_envolvidos_adverso_processo`
---
-ALTER TABLE `outros_envolvidos_adverso_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `outros_envolvidos_cliente_processo`
---
-ALTER TABLE `outros_envolvidos_cliente_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `outros_envolvidos_tipo_processo`
---
-ALTER TABLE `outros_envolvidos_tipo_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `pasta_cliente`
---
-ALTER TABLE `pasta_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `podcast`
---
-ALTER TABLE `podcast`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
---
--- AUTO_INCREMENT for table `posicao_apenso`
---
-ALTER TABLE `posicao_apenso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `postagens`
---
-ALTER TABLE `postagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `postagens_categorias`
---
-ALTER TABLE `postagens_categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `processos`
---
-ALTER TABLE `processos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
---
--- AUTO_INCREMENT for table `recurso`
---
-ALTER TABLE `recurso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `relator`
---
-ALTER TABLE `relator`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `requisicoes`
---
-ALTER TABLE `requisicoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `setores`
---
-ALTER TABLE `setores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `situacao_apenso`
---
-ALTER TABLE `situacao_apenso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `tarefas`
---
-ALTER TABLE `tarefas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tarefas_arquivos`
---
-ALTER TABLE `tarefas_arquivos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tarefas_comentarios`
---
-ALTER TABLE `tarefas_comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `tarefas_topicos`
---
-ALTER TABLE `tarefas_topicos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `tipo_acao_rito_processo`
---
-ALTER TABLE `tipo_acao_rito_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `tipo_causa`
---
-ALTER TABLE `tipo_causa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `tipo_causa_apenso`
---
-ALTER TABLE `tipo_causa_apenso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `tipo_causa_recurso`
---
-ALTER TABLE `tipo_causa_recurso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `tribunal`
---
-ALTER TABLE `tribunal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `turma_camara`
---
-ALTER TABLE `turma_camara`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
---
--- AUTO_INCREMENT for table `vara_processo`
---
-ALTER TABLE `vara_processo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
