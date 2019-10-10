@@ -1,0 +1,37 @@
+<div class="col s12 card white" style='margin-top:30px;'>
+	<div class="close_container_load">
+		<a class="btn btn-floating btn-medium grey darken-1 tooltipped" data-position="left" data-tooltip="Clique aqui para ocultar este bloco">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>	
+		</a>
+	</div>
+
+	<div class="row">
+
+		<div class="col s12 center margin-t-10">
+
+			<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_parcela" data-position="top" data-tooltip="Adicionar Parcela" data-link="/sistema/processos/adicionar-parcela/" data-container="container_adicionar_compromisso_load">
+				Adicionar Parcela <i class="fa fa-plus" aria-hidden="true"></i>
+			</a>
+
+				<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_dados_calculo" data-position="top" data-tooltip="Editar Dados para Cálculo" data-link="/sistema/processos/adicionar-compromisso/" data-container="container_adicionar_compromisso_load">
+					<i class="fa fa-pencil" aria-hidden="true"></i> Editar Dados para Cálculo
+			</a>
+
+		</div>
+		
+	</div>
+
+
+	<div class="container_parcelas_dados_load"></div>
+
+
+
+	<div class="col s12">
+
+		<%- include('tabela_parcelas_only')%>
+
+
+		
+
+		</div>
+	</div>

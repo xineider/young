@@ -311,10 +311,14 @@ class ProcessosModel {
 	}
 
 
-
-
-
-
+	SelecionarParcelasDoProcesso(idProcesso) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.* \
+				FROM parcela_processo as a WHERE a.deletado = ? AND a.id_processo = ?", [0,idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
 
 
 

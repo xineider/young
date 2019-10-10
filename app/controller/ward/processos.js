@@ -1177,6 +1177,23 @@ router.get('/selecionar-todos-adversos-outros/:id/:idProcesso', function(req, re
 	});
 });
 
+router.get('/parcelas/:id',function(req, res, next){
+	var idProcesso = req.params.id;
+	console.log('×××××××××××××× id processo ××××××××××××××');
+	console.log(idProcesso);
+	console.log('×××××××××××××××××××××××××××××××××××××××××');
+	
+	model.SelecionarParcelasDoProcesso(idProcesso).then(data_parcelas =>{
+		data.id_processo = idProcesso;
+		data.parcelas = data_parcelas;
+		console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ Parcelas do Processo ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+		console.log(data);	
+		console.log('↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓');
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/area_parcelas_processo', data: data, usuario: req.session.usuario});
+	});
+
+});
+
 
 router.post('/cadastrar-adverso-simples', function(req, res, next) {
 	POST = req.body;
@@ -1381,7 +1398,9 @@ router.get('/adicionar-fase',function(req, res, next) {
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar_descricao_generico', data: data, usuario: req.session.usuario});
 });
 
-
+router.get('/adicionar-parcela',function(req, res, next) {
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_parcela_financeiro', data: data, usuario: req.session.usuario});
+});
 
 
 
@@ -2112,6 +2131,26 @@ router.post('/desativar-compromisso/:idProcesso', function(req, res, next) {
 		model.SelecioneCompromissosDoProcesso(idProcesso).then(data_compromisso_processo =>{
 			data.compromissos = data_compromisso_processo;
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+		});
+	});
+});
+
+
+router.post('/desativar-parcela/:idProcesso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	var idProcesso = req.params.idProcesso;
+
+
+	console.log('PPPPPPPPPPPPPP POST DESATIVAR PARCELA PPPPPPPPPPPPP');
+	console.log(POST);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+
+	model.DesativarParcela(POST).then(datadeletado=> {
+		model.SelecionarParcelasDoProcesso(idProcesso).then(data_parcelas_processo =>{
+			data.parcelas = data_parcelas_processo;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_parcelas_only', data: data, usuario: req.session.usuario});
 		});
 	});
 });

@@ -28,6 +28,7 @@ $(document).on('ready', function () {
 
 		validarDataTable($('.tabela_filtrada'))
 		validarDataTableNoSort($('#tabela_andamentos'));
+		validarDataTable($('#tabela_parcelas'));
 		validarDataTable($('#tabela_andamentos_more_details'));
 		validarDataTable($('#tabela_todos_clientes'));
 		validarDataTable($('#tabela_interna_compromisso'));
