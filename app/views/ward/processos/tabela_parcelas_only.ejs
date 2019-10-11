@@ -24,7 +24,7 @@
           <a data-link="/sistema/processos/editar-parcela/<%= data.parcelas[i].id %>" class="load_especifico_to_container pointer" data-idload="<%=i%>" data-container="container_adicionar_compromisso_load">
             <i class="fa fa-pencil-square-o bordo-text" aria-hidden="true"></i>
           </a>
-          <i class="fa fa-times-circle red-text modal-remover-mount-reload pointer" data-href="#modaldeletar_reload" data-id="<%= data.parcelas[i].id %>" data-texto="Você tem certeza que quer deletar R$'<%= data.parcelas[i].valor %>'? " data-to="/sistema/processos/desativar-parcela/<%= data.detalhes_processo[0].id%>" data-container="#container_tabela_compromissos_reload" aria-hidden="true"></i>
+          <i class="fa fa-times-circle red-text modal-remover-mount-reload pointer" data-href="#modaldeletar_reload" data-id="<%= data.parcelas[i].id %>" data-texto="Você tem certeza que quer deletar a parcela no valor de R$<%= data.parcelas[i].valor %>? " data-to="/sistema/processos/desativar-parcela/<%= data.detalhes_processo[0].id%>" data-container="#container_tabela_parcelas_reload" aria-hidden="true"></i>
 
 
 

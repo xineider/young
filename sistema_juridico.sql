@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 09-Out-2019 às 18:44
+-- Generation Time: 11-Out-2019 às 17:28
 -- Versão do servidor: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -148,7 +148,14 @@ CREATE TABLE IF NOT EXISTS `apenso` (
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `apenso`
+--
+
+INSERT INTO `apenso` (`id`, `id_usuario`, `id_processo`, `id_advogado`, `id_tipo_causa_apenso`, `id_posicao_apenso`, `id_comarca`, `id_vara`, `id_foro`, `id_situacao_apenso`, `numero`, `valor_causa`, `distribuicao`, `citacao`, `sentenca`, `deletado`, `data_cadastro`) VALUES
+(1, 1, 24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21321', NULL, NULL, NULL, NULL, 0, '2019-10-11 16:46:02');
 
 -- --------------------------------------------------------
 
@@ -561,7 +568,7 @@ CREATE TABLE IF NOT EXISTS `compromissos` (
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `compromissos`
@@ -594,7 +601,8 @@ INSERT INTO `compromissos` (`id`, `id_usuario`, `id_processo`, `id_recurso`, `id
 (27, 1, 24, 0, 0, 18, 18, 1, 0, '', '2019-09-03 00:00:00', '2019-09-03 00:00:00', '', '', 0, '2019-09-06 17:26:39'),
 (28, 1, 23, 0, 0, 40, 40, 1, 0, '', '2019-09-02 00:00:00', '2019-09-02 00:00:00', '', '', 0, '2019-09-06 17:27:16'),
 (29, 1, 13, 0, 0, 20, 20, 2, 0, '', '2019-09-09 18:59:00', '2019-09-09 19:11:00', '', '', 0, '2019-09-12 21:34:26'),
-(30, 1, 22, 0, 0, 9, 9, 2, 0, '', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 0, '2019-09-12 21:34:43');
+(30, 1, 22, 0, 0, 9, 9, 2, 0, '', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 0, '2019-09-12 21:34:43'),
+(31, 1, 24, 0, 0, 10, 10, 0, 0, 'oie', '2019-10-15 18:45:00', '2019-10-16 23:00:00', '', '', 0, '2019-10-09 21:45:23');
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1414,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=457 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=458 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `notificacoes`
@@ -1483,7 +1491,8 @@ INSERT INTO `notificacoes` (`id`, `id_usuario_criador`, `id_usuario`, `texto`, `
 (453, 1, 18, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:26:39'),
 (454, 1, 40, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:27:16'),
 (455, 1, 20, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:26'),
-(456, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:43');
+(456, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:43'),
+(457, 1, 10, 'Adicionado Compromisso \"oie\"', '/processos/abrir/24', 0, 0, '2019-10-09 21:45:23');
 
 -- --------------------------------------------------------
 
@@ -1587,6 +1596,37 @@ INSERT INTO `outros_envolvidos_tipo_processo` (`id`, `descricao`, `deletado`, `d
 (3, 'Litisconsorte', 0, '2018-06-15 18:40:06'),
 (4, 'Réu', 0, '2018-06-15 18:40:06'),
 (5, 'Terceiro Interessado', 0, '2018-06-15 18:40:06');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `parcela_processo`
+--
+
+DROP TABLE IF EXISTS `parcela_processo`;
+CREATE TABLE IF NOT EXISTS `parcela_processo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_processo` int(11) NOT NULL,
+  `valor` double NOT NULL,
+  `data_vencimento` date DEFAULT NULL,
+  `data_recebimento_reclamada` date DEFAULT NULL,
+  `data_pago_reclamante` date DEFAULT NULL,
+  `acessor_juridico` double DEFAULT NULL,
+  `imposto_renda` double DEFAULT NULL,
+  `INSS` double DEFAULT NULL,
+  `outros_descontos` double DEFAULT NULL,
+  `deletado` tinyint(4) NOT NULL DEFAULT '0',
+  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_processo` (`id_processo`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `parcela_processo`
+--
+
+INSERT INTO `parcela_processo` (`id`, `id_processo`, `valor`, `data_vencimento`, `data_recebimento_reclamada`, `data_pago_reclamante`, `acessor_juridico`, `imposto_renda`, `INSS`, `outros_descontos`, `deletado`, `data_cadastro`) VALUES
+(1, 24, 500, '2019-10-10', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2019-10-10 23:08:25');
 
 -- --------------------------------------------------------
 
@@ -2238,7 +2278,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `id_setor`, `login`, `senha`, `imagem`, `nome`, `email`, `telefone`, `nivel`, `cpf`, `hash_login`, `cargo`, `oab`, `deletado`, `data_cadastro`) VALUES
-(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, '08f5ccb6c5020d20bafb080bf090bbbc', '0', NULL, 0, '2017-11-30 18:49:14'),
+(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, '10276c33603b8791c4ef4ecb2a49690c', '0', NULL, 0, '2017-11-30 18:49:14'),
 (2, 3, 'pablo', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Pablo', 'pablo@young.adv.br', '(12) 41241-2412', 3, '', 'd3d4b649ea9ac587edd74d887102397b', '1', '', 0, '2017-11-30 18:54:31'),
 (3, 3, 'taina', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Tainã', 'cleberson@cleber.com.br', '66 666 6666 99', 3, NULL, '18db9f39bfecde512023f4f1f73588b3', '1', NULL, 0, '2017-11-30 19:52:24'),
 (4, 2, 'elisandra', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Elisandra', 'teste@teste.com', '342423423', 3, NULL, '756aeb49fc6c6a20d1d447396c0ca6dd', '1', NULL, 0, '2017-12-06 16:39:39'),

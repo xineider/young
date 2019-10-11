@@ -9,11 +9,11 @@
 
 		<div class="col s12 center margin-t-10">
 
-			<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_parcela" data-position="top" data-tooltip="Adicionar Parcela" data-link="/sistema/processos/adicionar-parcela/" data-container="container_adicionar_compromisso_load">
+			<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_parcela" data-position="top" data-tooltip="Adicionar Parcela" data-link="/sistema/processos/adicionar-parcela/" data-container="container_parcelas_dados_load">
 				Adicionar Parcela <i class="fa fa-plus" aria-hidden="true"></i>
 			</a>
 
-				<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_dados_calculo" data-position="top" data-tooltip="Editar Dados para Cálculo" data-link="/sistema/processos/adicionar-compromisso/" data-container="container_adicionar_compromisso_load">
+				<a class="btn waves-effect waves-light bordo lighten-1 tooltipped load_especifico_to_container" data-idload="add_dados_calculo" data-position="top" data-tooltip="Editar Dados para Cálculo" data-link="/sistema/processos/editar-dados-para-calculo/<%= data.calculos_financeiro[0].id%>" data-container="container_parcelas_dados_load">
 					<i class="fa fa-pencil" aria-hidden="true"></i> Editar Dados para Cálculo
 			</a>
 
@@ -26,7 +26,7 @@
 
 
 
-	<div class="col s12">
+	<div class="col s12" id="container_tabela_parcelas_reload">
 
 		<%- include('tabela_parcelas_only')%>
 

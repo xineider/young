@@ -313,7 +313,9 @@ class ProcessosModel {
 
 	SelecionarParcelasDoProcesso(idProcesso) {
 		return new Promise(function(resolve, reject) {
-			helper.Query("SELECT a.* \
+			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
+				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante\
 				FROM parcela_processo as a WHERE a.deletado = ? AND a.id_processo = ?", [0,idProcesso]).then(data => {
 					resolve(data);
 				});
@@ -610,6 +612,17 @@ class ProcessosModel {
 				resolve(data);
 			});
 		});
+	}
+
+	SelecionarDadosParaCalculoPorId(id) {
+		return new Promise(function(resolve, reject) {
+			// Adicione a query com scape(?) e os respectivos valores em um array simples
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.data_sentenca_acordo, '%d/%m/%Y') as data_sentenca_acordo\
+				FROM calculo_processo_financeiro as a WHERE deletado = ? AND id = ?", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
 	}
 
 
@@ -1567,6 +1580,14 @@ class ProcessosModel {
 	DesativarCompromisso(data){
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('compromissos', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	DesativarParcela(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('parcela_processo', data).then(data => {
 				resolve(data);
 			});
 		});

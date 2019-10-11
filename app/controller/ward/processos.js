@@ -193,6 +193,18 @@ router.get('/editar-descricao-generico/:id',function(req, res, next) {
 });
 
 
+router.get('/editar-dados-para-calculo/:id',function(req, res, next) {
+	var id = req.params.id;
+	model.SelecionarDadosParaCalculoPorId(id).then(data_desc_gen=>{
+		data.descricao_generico = data_desc_gen;
+		console.log('EEEEEEEEEEEEEEE EDITAR DESCRICAO GENERICO EEEEEEEEEEEEEEEEEEEEEEE');
+		console.log(data);
+		console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_editar_descricao_generico', data: data, usuario: req.session.usuario});
+	});
+});
+
+
 
 
 
