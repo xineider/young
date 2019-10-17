@@ -318,7 +318,8 @@ class ProcessosModel {
 				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
 				DATE_FORMAT(a.data_recebimento_reclamada, '%Y%m%d') as data_recebimento_reclamada_filtro,\
 				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante,\
-				DATE_FORMAT(a.data_pago_reclamante, '%Y%m%d') as data_pago_reclamante_filtro\
+				DATE_FORMAT(a.data_pago_reclamante, '%Y%m%d') as data_pago_reclamante_filtro,\
+				(SELECT b.descricao FROM descricao_generico as b WHERE b.id=a.id_banco) as banco_nome\
 				FROM parcela_processo as a WHERE a.deletado = ? AND a.id_processo = ?", [0,idProcesso]).then(data => {
 					resolve(data);
 				});
@@ -1302,7 +1303,8 @@ class ProcessosModel {
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
 				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
-				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante,\
+				(SELECT b.descricao FROM descricao_generico as b WHERE b.id=a.id_banco) as banco_nome\
 				FROM parcela_processo as a WHERE a.deletado = ? AND a.id = ?", [0,id]).then(data => {
 					resolve(data);
 				});
@@ -1382,6 +1384,10 @@ class ProcessosModel {
 
 			if(POST.data_pago_reclamante == "" || POST.data_pago_reclamante == "undefined" || POST.data_pago_reclamante == undefined){
 				delete POST.data_pago_reclamante;
+			}
+
+			if(POST.id_banco == "" || POST.id_banco == "undefined" || POST.id_banco == undefined){
+				delete POST.id_banco;
 			}
 
 			POST = helper.PrepareDates(POST, ['data_vencimento']);
@@ -1601,6 +1607,10 @@ class ProcessosModel {
 
 			if(data.data_pago_reclamante == "" || data.data_pago_reclamante == "undefined" || data.data_pago_reclamante == undefined){
 				delete data.data_pago_reclamante;
+			}
+
+			if(data.id_banco == "" || data.id_banco == "undefined" || data.id_banco == undefined){
+				delete data.id_banco;
 			}
 
 			data = helper.PrepareDates(data, ['data_vencimento']);

@@ -52,6 +52,29 @@
 			<label for="observacoes_parcela">Observações da Parcela</label>
 			<textarea type="text" nmae="observacoes_parcela"><%= data.parcela[0].observacoes %></textarea>
 		</div>
+
+		<div class="col s12">
+			<div class="bordo-line"></div>
+		</div>
+
+		<div class="input-field input-group-control col s6 m4">
+			<label for="despesa_bancaria_parcela">Despesa Bancária</label>
+			<input value="0" name="despesa_bancaria_parcela" value="<%=data.parcela[0].outros_descontos%>">
+		</div>
+
+		<div class="input-field input-group-control col s6 m4">
+			<label for="numero_nota_fiscal_parcela">N° Nota Fiscal</label>
+			<input name="numero_nota_fiscal_parcela" value="<%=data.parcela[0].numero_nota_fiscal%>">
+		</div>
+
+		<div class="input-field input-group-control-with-search col s12 m4">
+			<label for="desc_banco" class="">Depositado no Banco</label>						
+			<input id="desc_banco" type="text" class="ui-autocomplete-input" autocomplete="off" value="<%=data.parcela[0].banco_nome%>">
+			<a class="btn bordo lighten-1 modal-mount-anchor-id" data-link="/processos/selecionar-todos-banco" data-href="#modalinfo" data-anchor-id="#id_banco" data-anchor-descricao="#desc_banco">
+				<i class="fa fa-search"></i>
+			</a>
+			<input type="hidden" name="id_banco" id="id_banco">
+		</div>
 		
 
 		<div class="col s12">

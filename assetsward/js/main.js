@@ -1386,7 +1386,7 @@ function allAutoCompletes(){
 	autoCompleteId('#desc_posicao_cliente_recurso','/sistema/processos/pesquisar-todos-posicao-cliente-autocomplete/','#id_posicao_cliente_recurso');
 	autoCompleteId('#desc_tribunal_recurso','/sistema/processos/pesquisar-todos-tribunal-recurso-autocomplete/','#id_tribunal_recurso');
 	autoCompleteId('#desc_turma_camara_recurso','/sistema/processos/pesquisar-todos-turma-camara-recurso-autocomplete/','#id_turma_camara_recurso');
-	
+	autoCompleteId('#desc_banco','/sistema/processos/pesquisar-todos-bancos-autocomplete/','#id_banco');
 
 }
 

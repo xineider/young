@@ -719,6 +719,26 @@ router.get('/pesquisar-todos-fase-autocomplete/:pesquisa', function(req, res, ne
 });
 
 
+router.get('/selecionar-todos-banco', function(req, res, next) {
+	console.log('CAI AQUI NO SELECIONAR TODOS TIPO CAUSA');
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	model.SelecioneTodosDescricaoGenerica(20).then(data_dados =>{
+		data.dados = data_dados;
+		data.adicionar_link = '/processos/adicionar-banco';
+		data.nome_relatorio = 'Banco';
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+	});
+});
+
+
+router.get('/pesquisar-todos-bancos-autocomplete/:pesquisa', function(req, res, next) {
+	pesquisa = req.params.pesquisa;
+	model.PesquisarDescricaoGenericaAutocomplete(pesquisa,20).then(data =>{
+		res.json(data);
+	});
+});
+
+
 router.get('/andamento_financeiro_cadastro_dados_para_calculo/:idProcesso',function(req, res, next){
 	var idProcesso = req.params.idProcesso;
 	console.log('999999 cai no andamento_financeiro_dados_para_calculo 9999999');
@@ -825,7 +845,9 @@ router.post('/cadastrar_parcela', function(req, res, next) {
 			data_pago_reclamante:POST.data_pago_reclamante,
 			acessor_juridico:acessor_juridico,imposto_renda:imposto_renda,
 			inss:inss,outros_descontos:outros_descontos,
-			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante
+			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante,
+			despesa_bancaria:POST.despesa_bancaria_parcela,numero_nota_fiscal:POST.numero_nota_fiscal_parcela,
+			id_banco:POST.id_banco
 		};
 
 
@@ -1099,7 +1121,9 @@ router.post('/editar_parcela/', function(req, res, next) {
 			data_pago_reclamante:POST.data_pago_reclamante,
 			acessor_juridico:acessor_juridico,imposto_renda:imposto_renda,
 			inss:inss,outros_descontos:outros_descontos,
-			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante
+			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante,
+			despesa_bancaria:POST.despesa_bancaria_parcela,numero_nota_fiscal:POST.numero_nota_fiscal_parcela,
+			id_banco:POST.id_banco
 		};
 
 		console.log('================== DATA_INSERT =============');
@@ -1250,6 +1274,10 @@ router.post('/editar-descricao-generico/', function(req, res, next) {
 					case 19:
 					data.adicionar_link = '/processos/adicionar-comarca';
 					data.nome_relatorio = 'Comarca';
+					break;
+					case 20:
+					data.adicionar_link = '/processos/adicionar-banco';
+					data.nome_relatorio = 'Banco';
 					break;
 				}
 
@@ -1618,6 +1646,12 @@ router.get('/adicionar-fase',function(req, res, next) {
 	data.tipo_generico = 3;
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar_descricao_generico', data: data, usuario: req.session.usuario});
 });
+
+router.get('/adicionar-banco',function(req, res, next) {
+	data.tipo_generico = 20;
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar_descricao_generico', data: data, usuario: req.session.usuario});
+});
+
 
 router.get('/adicionar-parcela',function(req, res, next) {
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_parcela_financeiro', data: data, usuario: req.session.usuario});
