@@ -6,54 +6,56 @@
 	</div>
 	<div class="row">
 
+		<input type="hidden" name="id_parcela" value ="<%=data.parcela[0].id%>">
+
 		<div class="input-field input-group-control col s6 m3">
 			<label for="valor_parcela">Valor da Parcela</label>
-			<input name="valor_parcela">
+			<input name="valor_parcela" value="<%=data.parcela[0].valor%>">
 		</div>
 
 		<div class="input-field input-group-control col s12 m3">
 			<label for="data_vencimento_parcela">Vencimento</label>
-			<input id="data_vencimento_parcela" type="text" class="datepicker data_sem_hora" name="data_vencimento_parcela">
+			<input id="data_vencimento_parcela" type="text" class="datepicker data_sem_hora" name="data_vencimento_parcela" value="<%=data.parcela[0].data_vencimento%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="data_recebimento_reclamada">Rec. Rda.</label>
-			<input id="data_recebimento_reclamada" type="text" class="datepicker data_sem_hora" name="data_recebimento_reclamada">
+			<input id="data_recebimento_reclamada" type="text" class="datepicker data_sem_hora" name="data_recebimento_reclamada" value="<%=data.parcela[0].data_recebimento_reclamada%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="data_pago_reclamante">Pago Rte.</label>
-			<input id="data_pago_reclamante" type="text" class="datepicker data_sem_hora" name="data_pago_reclamante">
+			<input id="data_pago_reclamante" type="text" class="datepicker data_sem_hora" name="data_pago_reclamante" value="<%=data.parcela[0].data_pago_reclamante%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="acessor_juridico">A. J.</label>
-			<input value="0" name="acessor_juridico">
+			<input value="0" name="acessor_juridico" value="<%=data.parcela[0].acessor_juridico%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="imposto_renda_parcela">Imposto de Renda</label>
-			<input value="0" name="imposto_renda_parcela">
+			<input value="0" name="imposto_renda_parcela" value="<%=data.parcela[0].imposto_renda%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="inss_parcela">INSS</label>
-			<input value="0" name="inss_parcela">
+			<input value="0" name="inss_parcela" value="<%=data.parcela[0].inss%>">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
 			<label for="outros_descontos_parcela">Outros Descontos</label>
-			<input value="0" name="outros_descontos_parcela">
+			<input value="0" name="outros_descontos_parcela" value="<%=data.parcela[0].outros_descontos%>">
 		</div>
 
 		<div class="input-field input-group-control col s12">
 			<label for="observacoes_parcela">Observações da Parcela</label>
-			<textarea type="text" nmae="observacoes_parcela"></textarea>
+			<textarea type="text" nmae="observacoes_parcela"><%= data.parcela[0].observacoes %></textarea>
 		</div>
+		
 
 		<div class="col s12">
-			<button data-href="/sistema/processos/cadastrar_parcela" class="btn bordo ajax-submit-container-reload" data-container="#container_tabela_parcelas_reload" data-mensagem-sucesso="Parcela Cadastrada!">Salvar Parcela
-				
+			<button data-href="/sistema/processos/editar_parcela" class="btn bordo ajax-submit-container-reload" data-container="#container_tabela_parcelas_reload" data-mensagem-sucesso="Parcela Alterada!">Atualizar Parcela
 			</button>
 		</div>
 		

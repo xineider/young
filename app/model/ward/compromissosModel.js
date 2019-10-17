@@ -266,8 +266,10 @@ class CompromissosModel {
 
 			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial_sem_horas,\
 				DATE_FORMAT(a.data_inicial, '%Y%m%d %H:%i') as data_inicial_table_filtro,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final_sem_horas,\
 				DATE_FORMAT(a.data_final, '%Y%m%d %H:%i') as data_final_table_filtro,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial_relatorio,\
 				(CASE WEEKDAY(a.data_inicial) \
@@ -322,8 +324,10 @@ class CompromissosModel {
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y %H:%i') as data_inicial,\
+				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial_sem_horas,\
 				DATE_FORMAT(a.data_inicial, '%Y%m%d %H:%i') as data_inicial_table_filtro,\
 				DATE_FORMAT(a.data_final,'%d/%m/%Y %H:%i') as data_final,\
+				DATE_FORMAT(a.data_final,'%d/%m/%Y') as data_final_sem_horas,\
 				DATE_FORMAT(a.data_final, '%Y%m%d %H:%i') as data_final_table_filtro,\
 				DATE_FORMAT(a.data_inicial,'%d/%m/%Y') as data_inicial_relatorio,\
 				(CASE WEEKDAY(a.data_inicial) \

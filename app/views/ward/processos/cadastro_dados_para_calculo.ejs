@@ -6,9 +6,11 @@
 	</div>
 	<div class="row">
 
+		<h5 class="center">Dados Para o Cálculo</h5>
+
 		<div class="input-field input-group-control col s12 m4">
 			<label for="data_sentenca_acordo">Data da sentença ou do acordo</label>
-			<input id="data_sentenca_acordo" type="text" class="datepicker data_sem_hora" name="data_sentenca_acordo">
+			<input id="data_sentenca_acordo" type="text" class="datepicker data_sem_hora" name="data_sentenca_acordo" required="true">
 		</div>
 
 		<div class="input-field input-group-control col s6 m3">
@@ -27,8 +29,7 @@
 		</div>
 
 		<div class="col s12">
-			<button data-href="/sistema/processos/cadastrar_dados_para_calculo_processo" class="btn bordo ajax-submit-no-back">Salvar
-				<i class="fa fa-floppy-o" aria-hidden="true"></i>
+			<button data-href="/sistema/processos/cadastrar_dados_para_calculo_processo" class="btn bordo ajax-submit-container-reload" data-container=".container_andamento_financeiro" data-mensagem-sucesso="Dados para Cálculo Cadastrado!">Salvar Dados para Cálculo
 			</button>
 		</div>
 		

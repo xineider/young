@@ -314,8 +314,11 @@ class ProcessosModel {
 	SelecionarParcelasDoProcesso(idProcesso) {
 		return new Promise(function(resolve, reject) {
 			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
+				DATE_FORMAT(a.data_vencimento, '%Y%m%d') as data_vencimento_filtro,\
 				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
-				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante\
+				DATE_FORMAT(a.data_recebimento_reclamada, '%Y%m%d') as data_recebimento_reclamada_filtro,\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante,\
+				DATE_FORMAT(a.data_pago_reclamante, '%Y%m%d') as data_pago_reclamante_filtro\
 				FROM parcela_processo as a WHERE a.deletado = ? AND a.id_processo = ?", [0,idProcesso]).then(data => {
 					resolve(data);
 				});
@@ -458,6 +461,22 @@ class ProcessosModel {
 
 		return new Promise(function(resolve, reject) {
 			helper.Update('apenso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	AtualizarDadosParaCalculo(POST) {
+		POST = helper.PrepareDates(POST, ['data_sentenca_acordo']);
+
+
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Update('calculo_processo_financeiro', POST).then(data => {
+				console.log(data);
 				resolve(data);
 			});
 		});
@@ -616,7 +635,6 @@ class ProcessosModel {
 
 	SelecionarDadosParaCalculoPorId(id) {
 		return new Promise(function(resolve, reject) {
-			// Adicione a query com scape(?) e os respectivos valores em um array simples
 			helper.Query("SELECT a.*,\
 				DATE_FORMAT(a.data_sentenca_acordo, '%d/%m/%Y') as data_sentenca_acordo\
 				FROM calculo_processo_financeiro as a WHERE deletado = ? AND id = ?", [0,id]).then(data => {
@@ -1280,6 +1298,18 @@ class ProcessosModel {
 	}
 
 
+	SelecionarParcelaPorId(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
+				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante\
+				FROM parcela_processo as a WHERE a.deletado = ? AND a.id = ?", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
 
 
 
@@ -1334,6 +1364,41 @@ class ProcessosModel {
 		});
 	}
 
+
+	CadastrarParcela(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR ANDAMENTOS DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+			
+
+			if(POST.data_vencimento == "" || POST.data_vencimento == "undefined" || POST.data_vencimento == undefined){
+				delete POST.data_vencimento;
+			}
+
+			if(POST.data_recebimento_reclamada == "" || POST.data_recebimento_reclamada == "undefined" || POST.data_recebimento_reclamada == undefined){
+				delete POST.data_recebimento_reclamada;
+			}
+
+			if(POST.data_pago_reclamante == "" || POST.data_pago_reclamante == "undefined" || POST.data_pago_reclamante == undefined){
+				delete POST.data_pago_reclamante;
+			}
+
+			POST = helper.PrepareDates(POST, ['data_vencimento']);
+			POST = helper.PrepareDates(POST, ['data_recebimento_reclamada']);
+			POST = helper.PrepareDates(POST, ['data_pago_reclamante']);
+
+
+
+			console.log('depois');
+			console.log(POST);
+			console.log('aadoapsd');
+
+			helper.Insert('parcela_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
 
 
 
@@ -1517,6 +1582,36 @@ class ProcessosModel {
 			console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ');
 
 			helper.Update('captacao_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
+	AtualizarParcela(data) {
+		return new Promise(function(resolve, reject) {
+
+			if(data.data_vencimento == "" || data.data_vencimento == "undefined" || data.data_vencimento == undefined){
+				delete data.data_vencimento;
+			}
+
+			if(data.data_recebimento_reclamada == "" || data.data_recebimento_reclamada == "undefined" || data.data_recebimento_reclamada == undefined){
+				delete data.data_recebimento_reclamada;
+			}
+
+			if(data.data_pago_reclamante == "" || data.data_pago_reclamante == "undefined" || data.data_pago_reclamante == undefined){
+				delete data.data_pago_reclamante;
+			}
+
+			data = helper.PrepareDates(data, ['data_vencimento']);
+			data = helper.PrepareDates(data, ['data_recebimento_reclamada']);
+			data = helper.PrepareDates(data, ['data_pago_reclamante']);
+
+			console.log('WWWWWWWWWWWWW MODEL ATUALIZAR PARCELA WWWWWWWWWWWWWWW');
+			console.log(data);
+			console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+
+			helper.Update('parcela_processo', data).then(data => {
 				resolve(data);
 			});
 		});

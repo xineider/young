@@ -28,7 +28,7 @@ $(document).on('ready', function () {
 
 		validarDataTable($('.tabela_filtrada'))
 		validarDataTableNoSort($('#tabela_andamentos'));
-		validarDataTable($('#tabela_parcelas'));
+		validarDataTableNoSort($('#tabela_parcelas'));
 		validarDataTable($('#tabela_andamentos_more_details'));
 		validarDataTable($('#tabela_todos_clientes'));
 		validarDataTable($('#tabela_interna_compromisso'));
@@ -429,7 +429,7 @@ $(document).on('ready', function () {
 		/*Removido a classe selecionado independente de quem seja*/
 		console.log('estou clicando na row!');
 		console.log($('.tabela_loc_processos').find('.row_processo_interno.selecionado'));
-		$('.tabela_loc_processos').find('.row_processo_interno.selecionado').removeClass('selecionado');
+		$('.row_processo_interno.selecionado').removeClass('selecionado');
 		var id = $(this).find('.id_processo_interno').val();
 		const numero_processo = $(this).find('.numero_processo').text();
 		console.log(id);
@@ -500,9 +500,16 @@ $(document).on('ready', function () {
 		var metodo = $(this).data('method');
 		var method = (metodo != undefined && metodo != '') ? metodo : 'POST';
 		console.log('no-back');
+		var sucessMessage = $(this).data('mensagem-sucesso');
+		console.log('sucess-color');
+		console.log($(this).data('sucess-color'));
+		var sucessClass = 'green rounded';
+		if($(this).data('sucess-color') != null){
+			sucessClass = $(this).data('sucess-color');
+		}
 		if (VerificarForm(form) == true) {
 			console.log('está correto');
-			SubmitAjaxNoBack(post, link, method);
+			SubmitAjaxNoBack(post, link, method,sucessMessage,sucessClass);
 		}
 	});
 
@@ -534,9 +541,16 @@ $(document).on('ready', function () {
 		var container = $(this).data('container');
 		console.log('container');
 		console.log(container);
+		var sucessMessage = $(this).data('mensagem-sucesso');
+		console.log('sucess-color');
+		console.log($(this).data('sucess-color'));
+		var sucessClass = 'green rounded';
+		if($(this).data('sucess-color') != null){
+			sucessClass = $(this).data('sucess-color');
+		}
 		if (VerificarForm(form) == true) {
 			console.log('está correto');
-			SubmitAjaxContainerReload(post, link, container);
+			SubmitAjaxContainerReload(post, link, container,sucessMessage,sucessClass);
 		}
 	});
 
@@ -570,11 +584,13 @@ $(document).on('ready', function () {
 		var idProcesso = $(this).data('id');
 		var idCliente = $(this).data('id-cliente');
 		var container = $(this).data('container');
+		var sucessMessage = $(this).data('mensagem-sucesso');
+		var sucessClass = 'green rounded';
 		var post = {id_processo:idProcesso,id_cliente:idCliente};
 		console.log(post);
 		console.log('estou no cadastro sem form');
 		
-		SubmitAjaxContainerReload(post,link,container)
+		SubmitAjaxContainerReload(post,link,container,sucessMessage,sucessClass);
 	});
 
 
@@ -704,8 +720,14 @@ $(document).on('change','.load_especifico_to_container_andamento_financeiro',fun
 	var id_load = $(this).data('idload');
 	var id_container = $(containerFinal).data('idload');
 
+	console.log('LENGTH ------');
+	console.log($('.container_botao_parcelas_existente').length);
+	console.log('-------------');
 
-	if($(this).val() == 2){
+	//se o container não existir quer dizer que os dados para o cálculo não foi
+	//cadastrado
+	if($('.container_botao_parcelas_existente').length == 0 && $(this).val() == 2){
+
 		if(id_container == id_load){
 			$(containerFinal).empty();
 			$(containerFinal).removeData('idload');
@@ -717,6 +739,7 @@ $(document).on('change','.load_especifico_to_container_andamento_financeiro',fun
 			loadEspecificoPagina(link,$(containerFinal));
 		}
 	}
+
 });
 
 
@@ -748,7 +771,7 @@ $(document).on('change','.load_especifico_to_container_andamento_financeiro',fun
 			<textarea name='andamento_descricao'></textarea>\
 			</div>\
 			<div class='col s12 m4'>\
-			<button data-href='/sistema/processos/andamentos_cadastrar' class='btn waves-effect waves-light bordo ajax-submit-no-back'>Salvar</button>\
+			<button data-href='/sistema/processos/andamentos_cadastrar' class='btn waves-effect waves-light bordo ajax-submit-no-back' data-mensagem-sucesso='Andamento Cadastrado!''>Salvar</button>\
 			</div>\
 			\
 			</div>\
@@ -1635,7 +1658,7 @@ function SubmitAjaxCadastrarUsuario(post, link, back, method) {
 });
 }
 
-function SubmitAjaxNoBack(post, link, method) {
+function SubmitAjaxNoBack(post, link, method,sucessMessage,sucessClass) {
 	$.ajax({
 		method: 'POST',
 		async: true,
@@ -1648,9 +1671,13 @@ function SubmitAjaxNoBack(post, link, method) {
 			adicionarLoader();
 		},
 		success: function(data) {
+			M.toast({html:'<div class="center-align" style="width:100%;">'+sucessMessage+'</div>',
+				displayLength:5000, classes: sucessClass});
+
 			if(data.result == 'redirect'){
 				window.location.replace(data.url);
 			}
+			
 		},
     error: function(xhr) { // if error occured
     	removerLoader();
@@ -1710,7 +1737,7 @@ function SubmitAjaxReloadMountAnchorId(post, link,modal,ancoras) {
 
 
 
-function SubmitAjaxContainerReload(post, link, container) {
+function SubmitAjaxContainerReload(post, link, container,sucessMessage,sucessClass) {
 	$.ajax({
 		method: 'POST',
 		async: true,
@@ -1728,6 +1755,8 @@ function SubmitAjaxContainerReload(post, link, container) {
 			console.log('XxXxXxXxXxXxXxXxXxXxXxXx Data XxXxXxXxXxXxXxXxXxXxXxXx');
 			console.log(data);
 			console.log('XxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx');
+			M.toast({html:'<div class="center-align" style="width:100%;">'+sucessMessage+'</div>',
+				displayLength:5000, classes: sucessClass});
 			$(container).html(data);
 		},
     error: function(xhr) { // if error occured
@@ -2078,6 +2107,8 @@ function VerificarForm(form) {
 
 	form.find('input:enabled:not([type="hidden"])[required="true"]').each(function(){
 		if(VerificaItem($(this)) == true) {
+			console.log('$(this)');
+			console.log($(this));
 			qtdErros++;
 		};
 		if($('#alterar_senha').val() != $('#confirmar_alterar_senha').val())
