@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 11-Out-2019 às 17:28
+-- Generation Time: 18-Out-2019 às 17:04
 -- Versão do servidor: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `andamentos_processo` (
   PRIMARY KEY (`id`),
   KEY `id_processo` (`id_processo`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `andamentos_processo`
@@ -120,7 +120,10 @@ INSERT INTO `andamentos_processo` (`id`, `id_processo`, `id_recurso`, `id_apenso
 (4, 1, 0, 0, 1, 'distribuído por dependência ao processo nº 0021245-89.2018.5.04.0005.', '2019-02-13', 0, 0, '2019-02-13 19:04:43'),
 (6, 1, 0, 0, 1, 'Aguarda data da audiência.', '2019-02-13', 0, 0, '2019-02-13 19:14:01'),
 (11, 4, 0, 0, 1, 'teste andamento', '2019-02-14', 0, 0, '2019-02-14 23:50:04'),
-(13, 4, 0, 0, 1, 'teste financeiro', '2019-02-14', 2, 0, '2019-02-15 01:38:37');
+(13, 4, 0, 0, 1, 'teste financeiro', '2019-02-14', 2, 0, '2019-02-15 01:38:37'),
+(14, 24, 0, 0, 1, 'Pagamento da 1° PARCELA', '2019-10-16', 2, 0, '2019-10-16 22:50:02'),
+(15, 24, 0, 0, 1, 'teste', '2019-10-16', 0, 0, '2019-10-16 23:04:37'),
+(16, 24, 0, 0, 1, '878', '2019-10-16', 0, 0, '2019-10-16 23:32:30');
 
 -- --------------------------------------------------------
 
@@ -225,14 +228,25 @@ CREATE TABLE IF NOT EXISTS `calculo_processo_financeiro` (
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id_processo` (`id_processo`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `calculo_processo_financeiro`
 --
 
 INSERT INTO `calculo_processo_financeiro` (`id`, `id_processo`, `data_sentenca_acordo`, `porc_honorario_escritorio`, `porc_honorario_perito`, `porc_imposto_renda`, `deletado`, `data_cadastro`) VALUES
-(1, 24, '2019-10-01', 7, 7, 7, 0, '2019-10-08 22:13:30');
+(1, 24, '2019-01-15', 20, 0, 0, 0, '2019-10-08 22:13:30'),
+(2, 23, '2019-10-15', 20, 0, 0, 1, '2019-10-15 22:10:19'),
+(3, 23, '2019-10-21', 20, 0, 0, 1, '2019-10-15 22:12:12'),
+(4, 23, '2019-10-21', 20, 0, 0, 1, '2019-10-15 22:12:46'),
+(5, 23, '2019-10-14', 20, 0, 0, 1, '2019-10-15 22:21:24'),
+(6, 23, '2019-10-14', 20, 0, 0, 1, '2019-10-15 22:21:43'),
+(7, 23, '2019-10-20', 20, 0, 0, 1, '2019-10-15 22:34:44'),
+(8, 23, '2019-10-14', 20, 0, 0, 1, '2019-10-15 22:40:22'),
+(9, 23, '2019-10-15', 20, 0, 0, 1, '2019-10-15 22:43:55'),
+(10, 23, '2019-10-07', 20, 0, 0, 0, '2019-10-15 22:45:36'),
+(11, 22, '2019-10-21', 20, 0, 0, 0, '2019-10-16 23:45:44'),
+(12, 25, '2019-10-07', 20, 0, 0, 0, '2019-10-17 17:19:37');
 
 -- --------------------------------------------------------
 
@@ -599,9 +613,9 @@ INSERT INTO `compromissos` (`id`, `id_usuario`, `id_processo`, `id_recurso`, `id
 (25, 1, 21, 0, 0, 10, 10, 2, 0, 'Teste', '2019-09-24 00:00:00', '2019-09-24 00:00:00', '', '', 1, '2019-09-05 21:57:31'),
 (26, 1, 13, 0, 0, 9, 9, 1, 0, '', '2019-09-03 12:00:00', '2019-09-03 00:00:00', '', '', 0, '2019-09-06 17:13:56'),
 (27, 1, 24, 0, 0, 18, 18, 1, 0, '', '2019-09-03 00:00:00', '2019-09-03 00:00:00', '', '', 0, '2019-09-06 17:26:39'),
-(28, 1, 23, 0, 0, 40, 40, 1, 0, '', '2019-09-02 00:00:00', '2019-09-02 00:00:00', '', '', 0, '2019-09-06 17:27:16'),
-(29, 1, 13, 0, 0, 20, 20, 2, 0, '', '2019-09-09 18:59:00', '2019-09-09 19:11:00', '', '', 0, '2019-09-12 21:34:26'),
-(30, 1, 22, 0, 0, 9, 9, 2, 0, '', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 0, '2019-09-12 21:34:43'),
+(28, 1, 23, 0, 0, 40, 40, 1, 0, 'atum', '2019-09-12 00:00:00', '2019-09-02 00:00:00', '', '', 0, '2019-09-06 17:27:16'),
+(29, 1, 13, 0, 0, 20, 20, 2, 0, '', '2019-09-09 18:59:00', '2019-09-09 19:11:00', '', '', 1, '2019-09-12 21:34:26'),
+(30, 1, 22, 0, 0, 9, 9, 2, 0, '', '2019-09-05 00:00:00', '2019-09-05 00:00:00', '', '', 1, '2019-09-12 21:34:43'),
 (31, 1, 24, 0, 0, 10, 10, 0, 0, 'oie', '2019-10-15 18:45:00', '2019-10-16 23:00:00', '', '', 0, '2019-10-09 21:45:23');
 
 -- --------------------------------------------------------
@@ -959,10 +973,10 @@ CREATE TABLE IF NOT EXISTS `descricao_generico` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(150) NOT NULL,
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
-  `tipo` int(11) NOT NULL COMMENT '0 - assunto_processo 1 - categoria_processo 2 - endereco_foro 3 - fase_processo 4 - foro 5 - origem_captacao_processo 6 - outros_envolvidos_tipo_processo 7 - posicao_apenso 8 - posicao_processo 9 - posicao_recurso 10 - relator 11 - situacao_apenso 12 - tipo_acao_rito_processo 13 - tipo_causa 14 - tipo_causa_apenso 15 - tipo_causa_recurso 16 - tribunal 17 - turma_camara 18 - vara_processo 19 - comarca',
+  `tipo` int(11) NOT NULL COMMENT '0 - assunto_processo 1 - categoria_processo 2 - endereco_foro 3 - fase_processo 4 - foro 5 - origem_captacao_processo 6 - outros_envolvidos_tipo_processo 7 - posicao_apenso 8 - posicao_processo 9 - posicao_recurso 10 - relator 11 - situacao_apenso 12 - tipo_acao_rito_processo 13 - tipo_causa 14 - tipo_causa_apenso 15 - tipo_causa_recurso 16 - tribunal 17 - turma_camara 18 - vara_processo 19 - comarca 20 - banco',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `descricao_generico`
@@ -1078,7 +1092,10 @@ INSERT INTO `descricao_generico` (`id`, `descricao`, `deletado`, `tipo`, `data_c
 (213, 'itaquí', 0, 19, '2019-09-06 17:15:56'),
 (214, '005° vara do trabalho', 0, 18, '2019-09-06 17:16:22'),
 (215, '006° vara do trabalho', 0, 18, '2019-09-06 17:16:30'),
-(216, '007° vara do trabalho', 0, 18, '2019-09-06 17:16:39');
+(216, '007° vara do trabalho', 0, 18, '2019-09-06 17:16:39'),
+(217, 'Sapucaia', 0, 19, '2019-10-16 23:20:04'),
+(218, 'Banrisul', 0, 20, '2019-10-17 18:26:43'),
+(219, 'Bradesco', 0, 20, '2019-10-17 20:00:58');
 
 -- --------------------------------------------------------
 
@@ -1099,7 +1116,7 @@ CREATE TABLE IF NOT EXISTS `documentos` (
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `documentos`
@@ -1158,7 +1175,8 @@ INSERT INTO `documentos` (`id`, `id_usuario`, `id_doc_pai`, `arquivo`, `tipo`, `
 (62, 6, 1, '0020181-71.2019.5.04.0017', 1, 2, NULL, NULL, 0, '2019-03-29 20:27:43'),
 (63, 1, 1, 'NA12953-21.2019.8.62.0000', 1, 2, NULL, NULL, 0, '2019-09-05 20:31:56'),
 (64, 1, 1, 'NA69046-95.2019.2.15.0000', 1, 2, NULL, NULL, 0, '2019-09-06 17:23:02'),
-(65, 1, 1, 'NA40256-95.2019.3.64.0000', 1, 2, NULL, NULL, 0, '2019-09-06 17:23:54');
+(65, 1, 1, 'NA40256-95.2019.3.64.0000', 1, 2, NULL, NULL, 0, '2019-09-06 17:23:54'),
+(66, 1, 1, 'NA76261-28.2019.7.32.0000', 1, 2, NULL, NULL, 0, '2019-10-16 23:59:17');
 
 -- --------------------------------------------------------
 
@@ -1414,7 +1432,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=458 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=461 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `notificacoes`
@@ -1492,7 +1510,10 @@ INSERT INTO `notificacoes` (`id`, `id_usuario_criador`, `id_usuario`, `texto`, `
 (454, 1, 40, 'Adicionado Compromisso \"\"', '/compromissos/controle_distribuicao', 0, 0, '2019-09-06 17:27:16'),
 (455, 1, 20, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:26'),
 (456, 1, 9, 'Adicionado Compromisso \"\"', '/compromissos/pauta_julgamento', 0, 0, '2019-09-12 21:34:43'),
-(457, 1, 10, 'Adicionado Compromisso \"oie\"', '/processos/abrir/24', 0, 0, '2019-10-09 21:45:23');
+(457, 1, 10, 'Adicionado Compromisso \"oie\"', '/processos/abrir/24', 0, 0, '2019-10-09 21:45:23'),
+(458, 1, 9, 'Criada a Tarefa \"Cacau\"', '/tarefas/tarefas', 0, 0, '2019-10-15 21:10:38'),
+(459, 1, 3, 'Criada a Tarefa \"Cacau\"', '/tarefas/tarefas', 0, 0, '2019-10-15 21:10:38'),
+(460, 3, 9, 'Concluída Tarefa \"Cacau\"', '/tarefas/tarefas', 0, 0, '2019-10-15 21:11:08');
 
 -- --------------------------------------------------------
 
@@ -1561,7 +1582,7 @@ CREATE TABLE IF NOT EXISTS `outros_envolvidos_cliente_processo` (
   `deletado` tinyint(1) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `outros_envolvidos_cliente_processo`
@@ -1569,7 +1590,9 @@ CREATE TABLE IF NOT EXISTS `outros_envolvidos_cliente_processo` (
 
 INSERT INTO `outros_envolvidos_cliente_processo` (`id`, `id_processo`, `id_cliente`, `id_outros_tipo`, `deletado`, `data_cadastro`) VALUES
 (1, 21, 16, 0, 0, '2019-08-16 15:01:31'),
-(2, 24, 16, 0, 0, '2019-10-07 22:07:31');
+(2, 24, 16, 0, 0, '2019-10-07 22:07:31'),
+(3, 25, 16, 2, 0, '2019-10-16 23:59:33'),
+(4, 25, 16, 0, 0, '2019-10-17 00:00:48');
 
 -- --------------------------------------------------------
 
@@ -1607,6 +1630,7 @@ DROP TABLE IF EXISTS `parcela_processo`;
 CREATE TABLE IF NOT EXISTS `parcela_processo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_processo` int(11) NOT NULL,
+  `id_banco` int(11) DEFAULT NULL,
   `valor` double NOT NULL,
   `data_vencimento` date DEFAULT NULL,
   `data_recebimento_reclamada` date DEFAULT NULL,
@@ -1615,18 +1639,37 @@ CREATE TABLE IF NOT EXISTS `parcela_processo` (
   `imposto_renda` double DEFAULT NULL,
   `INSS` double DEFAULT NULL,
   `outros_descontos` double DEFAULT NULL,
+  `observacoes` text,
+  `valor_pagar_reclamante` double DEFAULT NULL,
+  `despesa_bancaria` double DEFAULT NULL,
+  `numero_nota_fiscal` text,
   `deletado` tinyint(4) NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `id_processo` (`id_processo`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  KEY `id_processo` (`id_processo`),
+  KEY `id_banco` (`id_banco`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `parcela_processo`
 --
 
-INSERT INTO `parcela_processo` (`id`, `id_processo`, `valor`, `data_vencimento`, `data_recebimento_reclamada`, `data_pago_reclamante`, `acessor_juridico`, `imposto_renda`, `INSS`, `outros_descontos`, `deletado`, `data_cadastro`) VALUES
-(1, 24, 500, '2019-10-10', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2019-10-10 23:08:25');
+INSERT INTO `parcela_processo` (`id`, `id_processo`, `id_banco`, `valor`, `data_vencimento`, `data_recebimento_reclamada`, `data_pago_reclamante`, `acessor_juridico`, `imposto_renda`, `INSS`, `outros_descontos`, `observacoes`, `valor_pagar_reclamante`, `despesa_bancaria`, `numero_nota_fiscal`, `deletado`, `data_cadastro`) VALUES
+(1, 24, NULL, 500, '2019-10-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, '2019-10-10 23:08:25'),
+(2, 24, NULL, 600, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 480, NULL, NULL, 1, '2019-10-15 00:31:30'),
+(3, 24, NULL, 600, '2019-11-24', NULL, NULL, 0, 0, 0, 0, NULL, 480, NULL, NULL, 1, '2019-10-15 18:30:22'),
+(4, 24, NULL, 750, '1919-10-24', '1919-10-17', '1919-10-19', 0, 0, 0, 0, NULL, 600, NULL, NULL, 1, '2019-10-15 18:52:08'),
+(5, 24, NULL, 480, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 384, NULL, NULL, 0, '2019-10-15 23:38:09'),
+(6, 24, NULL, 800, '2019-10-24', NULL, NULL, 0, 0, 0, 0, NULL, 640, NULL, NULL, 0, '2019-10-15 23:48:48'),
+(7, 24, NULL, 500, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 400, NULL, NULL, 0, '2019-10-15 23:58:39'),
+(8, 24, NULL, 150, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 120, NULL, NULL, 0, '2019-10-16 00:00:19'),
+(9, 24, NULL, 800, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 640, NULL, NULL, 0, '2019-10-16 22:50:49'),
+(10, 24, NULL, 800, '2019-10-15', NULL, NULL, 0, 0, 0, 0, NULL, 640, NULL, NULL, 0, '2019-10-16 22:50:57'),
+(11, 24, NULL, 800, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 640, NULL, NULL, 0, '2019-10-16 22:58:38'),
+(12, 24, NULL, 750, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 600, NULL, NULL, 0, '2019-10-16 23:00:24'),
+(13, 25, NULL, 0, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, NULL, NULL, 0, '2019-10-17 18:27:16'),
+(14, 25, 218, 500, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 400, 0, 'qwe', 0, '2019-10-17 19:23:04'),
+(15, 25, NULL, 800, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 640, 0, '', 0, '2019-10-17 19:33:29');
 
 -- --------------------------------------------------------
 
@@ -1808,7 +1851,7 @@ CREATE TABLE IF NOT EXISTS `processos` (
   KEY `id_categoria` (`id_categoria`),
   KEY `id_fase` (`id_fase`),
   KEY `id_posicao_cliente` (`id_posicao_cliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `processos`
@@ -1828,7 +1871,8 @@ INSERT INTO `processos` (`id`, `id_usuario`, `id_cliente`, `id_posicao_cliente`,
 (21, 6, 20, 1, 1, 36, 40, 193, 192, 38, 206, 195, 196, '0020181-71.2019.5.04.0017', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-03-29 20:27:43'),
 (22, 1, 12, 1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'NA12953-21.2019.8.62.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-05 20:31:56'),
 (23, 1, 19, 1, 12, NULL, NULL, NULL, 207, NULL, 216, NULL, NULL, 'NANANA9-52.0192.1.50.000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-06 17:23:02'),
-(24, 1, 15, 1, 2, NULL, NULL, NULL, 208, NULL, 204, NULL, NULL, 'NA40256-95.2019.3.64.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-06 17:23:54');
+(24, 1, 15, 1, 2, NULL, NULL, NULL, 208, NULL, 204, NULL, NULL, 'NA40256-95.2019.3.64.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-09-06 17:23:54'),
+(25, 1, 20, 2, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'NA76261-28.2019.7.32.0000', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '2019-10-16 23:59:17');
 
 -- --------------------------------------------------------
 
@@ -2002,7 +2046,7 @@ CREATE TABLE IF NOT EXISTS `tarefas` (
   PRIMARY KEY (`id`),
   KEY `id_gerente` (`id_responsavel`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tarefas`
@@ -2012,7 +2056,8 @@ INSERT INTO `tarefas` (`id`, `id_responsavel`, `id_usuario`, `nome`, `descricao`
 (1, 9, 9, 'teste', 'Teste de tarefa mvizio', '2019-02-14', '00:00:01', '00:00:00', '0', '2019-02-14 02:00:00', '2019-02-14 02:00:00', 1, '2019-02-13 14:18:51'),
 (2, 9, 2, 'teste', 'teste', '2019-02-07', '12:00:00', '00:00:00', '0', '2019-02-08 02:00:00', '2019-02-15 02:00:00', 1, '2019-02-15 01:40:14'),
 (3, 6, 6, 'qqqqqq', '1qweq', '2019-02-05', '11:11:00', '00:00:00', '0', '2019-02-15 02:00:00', '2019-02-16 02:00:00', 1, '2019-02-15 01:41:05'),
-(4, 9, 9, 'LIGAR PARA CLIENTE', 'X', '2019-03-06', '00:00:01', '00:00:00', '2', '2019-03-06 03:00:00', '2019-03-06 03:00:00', 0, '2019-02-28 18:09:29');
+(4, 9, 9, 'LIGAR PARA CLIENTE', 'X', '2019-03-06', '00:00:01', '00:00:00', '2', '2019-03-06 03:00:00', '2019-03-06 03:00:00', 0, '2019-02-28 18:09:29'),
+(5, 9, 3, 'Cacau', 'qeqwe', '2019-10-14', '74:41:00', '00:00:00', '3', '2019-10-15 03:00:00', '2019-10-24 03:00:00', 0, '2019-10-15 21:10:38');
 
 -- --------------------------------------------------------
 
@@ -2072,7 +2117,7 @@ CREATE TABLE IF NOT EXISTS `tarefas_topicos` (
   `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id_tarefa` (`id_tarefa`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tarefas_topicos`
@@ -2083,7 +2128,8 @@ INSERT INTO `tarefas_topicos` (`id`, `id_tarefa`, `texto`, `status`, `deletado`,
 (2, 2, '1231231', 0, 0, '2019-02-15 01:40:14'),
 (3, 3, 'qqqqqqqq', 0, 0, '2019-02-15 01:41:05'),
 (4, 3, '222222222', 0, 0, '2019-02-15 01:41:05'),
-(5, 4, '', 0, 0, '2019-02-28 18:09:29');
+(5, 4, '', 0, 0, '2019-02-28 18:09:29'),
+(6, 5, 'teste', 1, 0, '2019-10-15 21:10:38');
 
 -- --------------------------------------------------------
 
@@ -2278,9 +2324,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `id_setor`, `login`, `senha`, `imagem`, `nome`, `email`, `telefone`, `nivel`, `cpf`, `hash_login`, `cargo`, `oab`, `deletado`, `data_cadastro`) VALUES
-(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, '10276c33603b8791c4ef4ecb2a49690c', '0', NULL, 0, '2017-11-30 18:49:14'),
+(1, 0, 'admin', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Administrador', 'contato@young.adv.br', '(42) 34234-234', 1, NULL, 'ff9f919b382972816815b28f593694dc', '0', NULL, 0, '2017-11-30 18:49:14'),
 (2, 3, 'pablo', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Pablo', 'pablo@young.adv.br', '(12) 41241-2412', 3, '', 'd3d4b649ea9ac587edd74d887102397b', '1', '', 0, '2017-11-30 18:54:31'),
-(3, 3, 'taina', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Tainã', 'cleberson@cleber.com.br', '66 666 6666 99', 3, NULL, '18db9f39bfecde512023f4f1f73588b3', '1', NULL, 0, '2017-11-30 19:52:24'),
+(3, 3, 'taina', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Tainã', 'cleberson@cleber.com.br', '66 666 6666 99', 3, NULL, 'b956efc18c7f722aaa03c418d9ebeaef', '1', NULL, 0, '2017-11-30 19:52:24'),
 (4, 2, 'elisandra', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Elisandra', 'teste@teste.com', '342423423', 3, NULL, '756aeb49fc6c6a20d1d447396c0ca6dd', '1', NULL, 0, '2017-12-06 16:39:39'),
 (5, 1, 'arthur', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Arthur Orlando Dias Filho', 'geren@geren.com', '12312341', 3, NULL, '', NULL, '040806', 0, '2017-12-06 17:57:00'),
 (6, 3, 'mariele', '745536f0652656dae49565e5fa26152b', '/assets/imgs/user-padrao.jpg', 'Mariele', 'marquito@maquito.com', '1251251234124', 2, NULL, 'b7af02ab35ee458e7e25724d68f96fb1', '1', NULL, 0, '2018-01-17 11:38:04'),
