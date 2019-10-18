@@ -3,12 +3,12 @@ var crypto = require('crypto');
 
 // FAZER LEITURA DAS CONFIGURAÇÕES
 
-// var config = {
-// 					    "host"     : "mysql669.umbler.com",
-// 					    "user"     : "admin-young-adv",
-// 					    "password" : "6O(ayS4?{q{Ci",
-// 					    "database" : "young-adv"
-// 				  	};
+var config = {
+					    "host"     : "mysql669.umbler.com",
+					    "user"     : "admin-young-adv",
+					    "password" : "6O(ayS4?{q{Ci",
+					    "database" : "young-adv"
+				  	};
 
 
 // var config = {
@@ -17,12 +17,12 @@ var crypto = require('crypto');
 // 						    "password" : "372884c6",
 // 						    "database" : "heroku_941b27a7b2edaff"
 // 					  	};
-var config = {
-						    "host"     : "localhost",
-						    "user"     : "root",
-						    "password" : "root",
-						    "database" : "sistema_juridico"
-					  	};
+// var config = {
+// 						    "host"     : "localhost",
+// 						    "user"     : "root",
+// 						    "password" : "root",
+// 						    "database" : "sistema_juridico"
+// 					  	};
 
 // // CONEXÃO MYSQL
 var mysql      = require('mysql');
