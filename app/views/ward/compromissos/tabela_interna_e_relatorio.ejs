@@ -82,7 +82,20 @@
 
 
 
+      <%if (typeof data.compromisso != 'undefined' && data.compromisso.length > 0) {%>
 
+
+      <%if(data.compromisso[0].tipo_compromisso == 1){%>
+      <div class="row white hide">
+        <%- include('relatorio_generatorControleDistribuicao');%>     
+      </div>
+
+      <%}else{%>
       <div class="row white hide">
         <%- include('relatorio_generator');%>     
       </div>
+
+      <%}%>
+
+
+      <%}%>

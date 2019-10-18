@@ -152,6 +152,18 @@ class ProcessosModel {
 			});
 	}
 
+	SelecioneCalculosFinanceirosDoProcesso(id){
+		return new Promise(function(resolve, reject) {
+			helper.Query('SELECT a.*,DATE_FORMAT(a.data_sentenca_acordo,"%d/%m/%y") as data_sentenca_acordo,DATE_FORMAT(a.data_cadastro, "%d/%m/%Y %H:%i") as data_cadastro\
+				FROM calculo_processo_financeiro as a WHERE a.deletado = ? AND a.id_processo = ? LIMIT 1', [0,id]).then(data => {					
+					console.log('RRRRRRRRRRRRRRR SELECIONE TODOS ANDAMENTOS DO RECURSO RRRRRRRRRRRRRRRRRR');
+					console.log(data);
+					console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR');
+					resolve(data);
+				});
+			});
+	}
+
 
 
 
@@ -299,10 +311,20 @@ class ProcessosModel {
 	}
 
 
-
-
-
-
+	SelecionarParcelasDoProcesso(idProcesso) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
+				DATE_FORMAT(a.data_vencimento, '%Y%m%d') as data_vencimento_filtro,\
+				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
+				DATE_FORMAT(a.data_recebimento_reclamada, '%Y%m%d') as data_recebimento_reclamada_filtro,\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante,\
+				DATE_FORMAT(a.data_pago_reclamante, '%Y%m%d') as data_pago_reclamante_filtro,\
+				(SELECT b.descricao FROM descricao_generico as b WHERE b.id=a.id_banco) as banco_nome\
+				FROM parcela_processo as a WHERE a.deletado = ? AND a.id_processo = ?", [0,idProcesso]).then(data => {
+					resolve(data);
+				});
+			});
+	}
 
 
 
@@ -353,6 +375,29 @@ class ProcessosModel {
 					console.log(data);
 					resolve(data);
 				// });
+			});
+		});
+	}
+
+	CadastrarDadosParaCalculoFinanceiroProcesso(POST) {
+		return new Promise(function(resolve, reject) {
+			POST = helper.PrepareDates(POST, ['data_sentenca_acordo']);
+			console.log('ÒÒÒÒ insert do cadastrar dados para calculo financeiro ÒÒÒ');
+			console.log(POST);
+			console.log('ÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒ');
+			helper.Insert('calculo_processo_financeiro', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+
+
+	CadastrarCliente(POST) {
+		return new Promise(function(resolve, reject) {
+			POST = helper.PrepareDates(POST, ['nascimento']);
+			helper.Insert('clientes', POST).then(data => {
+				resolve(data);
 			});
 		});
 	}
@@ -417,6 +462,22 @@ class ProcessosModel {
 
 		return new Promise(function(resolve, reject) {
 			helper.Update('apenso', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	AtualizarDadosParaCalculo(POST) {
+		POST = helper.PrepareDates(POST, ['data_sentenca_acordo']);
+
+
+		console.log('************** POST FINAL ********************');
+		console.log(POST);
+		console.log('**********************************************');
+
+		return new Promise(function(resolve, reject) {
+			helper.Update('calculo_processo_financeiro', POST).then(data => {
+				console.log(data);
 				resolve(data);
 			});
 		});
@@ -571,6 +632,16 @@ class ProcessosModel {
 				resolve(data);
 			});
 		});
+	}
+
+	SelecionarDadosParaCalculoPorId(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,\
+				DATE_FORMAT(a.data_sentenca_acordo, '%d/%m/%Y') as data_sentenca_acordo\
+				FROM calculo_processo_financeiro as a WHERE deletado = ? AND id = ?", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
 	}
 
 
@@ -1036,15 +1107,15 @@ class ProcessosModel {
 				c.cpf_cnpj \
 				FROM processos as a \
 				LEFT JOIN clientes as c ON a.id_cliente = c.id\
-                LEFT JOIN adversos as adve ON a.id_adverso = adve.id\
-                LEFT JOIN descricao_generico as tc ON a.id_tipo_causa = tc.id\
-                LEFT JOIN descricao_generico as assu ON a.id_assunto = assu.id\
-                LEFT JOIN descricao_generico as com ON a.id_comarca = com.id\
-                LEFT JOIN descricao_generico as tar ON a.id_tipo_acao_rito = tar.id\
-                LEFT JOIN descricao_generico as var ON a.id_vara = var.id\
-                LEFT JOIN descricao_generico as cat ON a.id_categoria = cat.id\
-                LEFT JOIN descricao_generico as fas ON a.id_fase = fas.id\
-                LEFT JOIN usuarios as u ON a.id_advogado = u.id\
+				LEFT JOIN adversos as adve ON a.id_adverso = adve.id\
+				LEFT JOIN descricao_generico as tc ON a.id_tipo_causa = tc.id\
+				LEFT JOIN descricao_generico as assu ON a.id_assunto = assu.id\
+				LEFT JOIN descricao_generico as com ON a.id_comarca = com.id\
+				LEFT JOIN descricao_generico as tar ON a.id_tipo_acao_rito = tar.id\
+				LEFT JOIN descricao_generico as var ON a.id_vara = var.id\
+				LEFT JOIN descricao_generico as cat ON a.id_categoria = cat.id\
+				LEFT JOIN descricao_generico as fas ON a.id_fase = fas.id\
+				LEFT JOIN usuarios as u ON a.id_advogado = u.id\
 				WHERE a.deletado != ? "+ where,array).then(dataProcessoPorNumero => {
 					console.log('♦♦♦♦♦♦♦♦♦♦♦♦ dataProcessoPorNumero ♦♦♦♦♦♦');
 					console.log(dataProcessoPorNumero);
@@ -1228,6 +1299,19 @@ class ProcessosModel {
 	}
 
 
+	SelecionarParcelaPorId(id) {
+		return new Promise(function(resolve, reject) {
+			helper.Query("SELECT a.*,DATE_FORMAT(a.data_vencimento,'%d/%m/%y') as data_vencimento,\
+				DATE_FORMAT(a.data_recebimento_reclamada,'%d/%m/%y') as data_recebimento_reclamada,\
+				DATE_FORMAT(a.data_pago_reclamante,'%d/%m/%y') as data_pago_reclamante,\
+				(SELECT b.descricao FROM descricao_generico as b WHERE b.id=a.id_banco) as banco_nome\
+				FROM parcela_processo as a WHERE a.deletado = ? AND a.id = ?", [0,id]).then(data => {
+					resolve(data);
+				});
+			});
+	}
+
+
 
 
 
@@ -1282,6 +1366,45 @@ class ProcessosModel {
 		});
 	}
 
+
+	CadastrarParcela(POST){
+		return new Promise(function(resolve, reject) {
+			console.log('88888888888888888 CADASTRAR ANDAMENTOS DO PROCESSO MODEL 8888888888888888888888');
+			console.log(POST);
+			console.log('8888888888888888888888888888888888888888888888888888888888888888888888888888888');
+			
+
+			if(POST.data_vencimento == "" || POST.data_vencimento == "undefined" || POST.data_vencimento == undefined){
+				delete POST.data_vencimento;
+			}
+
+			if(POST.data_recebimento_reclamada == "" || POST.data_recebimento_reclamada == "undefined" || POST.data_recebimento_reclamada == undefined){
+				delete POST.data_recebimento_reclamada;
+			}
+
+			if(POST.data_pago_reclamante == "" || POST.data_pago_reclamante == "undefined" || POST.data_pago_reclamante == undefined){
+				delete POST.data_pago_reclamante;
+			}
+
+			if(POST.id_banco == "" || POST.id_banco == "undefined" || POST.id_banco == undefined){
+				delete POST.id_banco;
+			}
+
+			POST = helper.PrepareDates(POST, ['data_vencimento']);
+			POST = helper.PrepareDates(POST, ['data_recebimento_reclamada']);
+			POST = helper.PrepareDates(POST, ['data_pago_reclamante']);
+
+
+
+			console.log('depois');
+			console.log(POST);
+			console.log('aadoapsd');
+
+			helper.Insert('parcela_processo', POST).then(data => {
+				resolve(data);
+			});
+		});
+	}
 
 
 
@@ -1471,6 +1594,40 @@ class ProcessosModel {
 
 	}
 
+	AtualizarParcela(data) {
+		return new Promise(function(resolve, reject) {
+
+			if(data.data_vencimento == "" || data.data_vencimento == "undefined" || data.data_vencimento == undefined){
+				delete data.data_vencimento;
+			}
+
+			if(data.data_recebimento_reclamada == "" || data.data_recebimento_reclamada == "undefined" || data.data_recebimento_reclamada == undefined){
+				delete data.data_recebimento_reclamada;
+			}
+
+			if(data.data_pago_reclamante == "" || data.data_pago_reclamante == "undefined" || data.data_pago_reclamante == undefined){
+				delete data.data_pago_reclamante;
+			}
+
+			if(data.id_banco == "" || data.id_banco == "undefined" || data.id_banco == undefined){
+				delete data.id_banco;
+			}
+
+			data = helper.PrepareDates(data, ['data_vencimento']);
+			data = helper.PrepareDates(data, ['data_recebimento_reclamada']);
+			data = helper.PrepareDates(data, ['data_pago_reclamante']);
+
+			console.log('WWWWWWWWWWWWW MODEL ATUALIZAR PARCELA WWWWWWWWWWWWWWW');
+			console.log(data);
+			console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+
+			helper.Update('parcela_processo', data).then(data => {
+				resolve(data);
+			});
+		});
+
+	}
+
 
 
 
@@ -1528,6 +1685,14 @@ class ProcessosModel {
 	DesativarCompromisso(data){
 		return new Promise(function(resolve, reject) {
 			helper.Desativar('compromissos', data).then(data => {
+				resolve(data);
+			});
+		});
+	}
+
+	DesativarParcela(data) {
+		return new Promise(function(resolve, reject) {
+			helper.Desativar('parcela_processo', data).then(data => {
 				resolve(data);
 			});
 		});

@@ -23,28 +23,31 @@ router.get('/', function(req, res, next) {
 						if(id_ultimo_processo == ''){
 							res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
 						}else{
-						//id_ultimo_processo[0].id - retorna o último processo que não está deletado
-						model.SelecioneMaisDetalhesDoProcesso(id_ultimo_processo[0].id).then(data_mais_processos =>{
-							data.detalhes_processo = data_mais_processos;
-							model.SelecionarEnvolvidosCliente(id_ultimo_processo[0].id).then(data_envolvidos_processo =>{
-								data.envolvidos_cliente = data_envolvidos_processo;
-								model.SelecionarEnvolvidosAdverso(id_ultimo_processo[0].id).then(data_envolvidos_adverso =>{
-									data.envolvidos_adverso = data_envolvidos_adverso;
-									model.SelecioneAndamentosDoProcesso(id_ultimo_processo[0].id).then(data_andamento_processo =>{
-										data.andamentos = data_andamento_processo;
-										model.SelecionarTempo().then(data_tempo=>{
-											data.tempo = data_tempo;
-											model.SelecioneCompromissosDoProcesso(id_ultimo_processo[0].id).then(data_compromisso_processo =>{
-												data.compromissos = data_compromisso_processo;
-												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
+							//id_ultimo_processo[0].id - retorna o último processo que não está deletado
+							model.SelecioneMaisDetalhesDoProcesso(id_ultimo_processo[0].id).then(data_mais_processos =>{
+								data.detalhes_processo = data_mais_processos;
+								model.SelecionarEnvolvidosCliente(id_ultimo_processo[0].id).then(data_envolvidos_processo =>{
+									data.envolvidos_cliente = data_envolvidos_processo;
+									model.SelecionarEnvolvidosAdverso(id_ultimo_processo[0].id).then(data_envolvidos_adverso =>{
+										data.envolvidos_adverso = data_envolvidos_adverso;
+										model.SelecioneAndamentosDoProcesso(id_ultimo_processo[0].id).then(data_andamento_processo =>{
+											data.andamentos = data_andamento_processo;
+											model.SelecionarTempo().then(data_tempo=>{
+												data.tempo = data_tempo;
+												model.SelecioneCompromissosDoProcesso(id_ultimo_processo[0].id).then(data_compromisso_processo =>{
+													data.compromissos = data_compromisso_processo;
+													model.SelecioneCalculosFinanceirosDoProcesso(id_ultimo_processo[0].id).then(data_calculos_financeiros =>{
+														data.calculos_financeiro = data_calculos_financeiros;
+														res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/index', data: data, usuario: req.session.usuario});
+													});
+												});
 											});
 										});
 									});
 								});
 							});
-						});
-					}
-				});
+						}
+					});
 				});
 			});
 		});
@@ -73,11 +76,14 @@ router.get('/andamentos/:id', function(req, res, next) {
 		data.andamentos = data_andamento_processo;
 		model.SelecionarTempo().then(data_tempo=>{
 			data.tempo = data_tempo;
-			data.id_processo = req.params.id;
-			console.log('aaaaaaaaaaaaaaaaaa andamentos aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-			console.log(data);
-			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/andamentos', data: data, usuario: req.session.usuario});
+			model.SelecioneCalculosFinanceirosDoProcesso(req.params.id).then(data_calculos_financeiros =>{
+				data.calculos_financeiro = data_calculos_financeiros;
+				data.id_processo = req.params.id;
+				console.log('aaaaaaaaaaaaaaaaaa andamentos aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+				console.log(data);
+				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/andamentos', data: data, usuario: req.session.usuario});
+			});
 		});
 	});
 });
@@ -137,10 +143,13 @@ router.get('/abrir/:id', function(req, res, next) {
 											data.andamentos_apensos = data_andamentos_apenso;
 											model.SelecioneTodosAndamentosDoRecursoDoProcesso(id).then(data_andamentos_recurso =>{
 												data.andamentos_recursos = data_andamentos_recurso;
-												console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
-												console.log(data.compromissos);
-												console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
-												res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
+												model.SelecioneCalculosFinanceirosDoProcesso(id).then(data_calculos_financeiros =>{
+													data.calculos_financeiro = data_calculos_financeiros;
+													console.log(':::::::::::::::::::::: Inicio Abrir um processo :::::::::::::::::::::');
+													console.log(data);
+													console.log(':::::::::::::::::::::: Fim Abrir um processo ::::::::::::::::::::::::');
+													res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/processos_abrir', data: data, usuario: req.session.usuario});
+												});
 											});
 										});
 									});
@@ -189,6 +198,34 @@ router.get('/editar-descricao-generico/:id',function(req, res, next) {
 	});
 });
 
+
+router.get('/editar-dados-para-calculo/:id',function(req, res, next) {
+	var id = req.params.id;
+	model.SelecionarDadosParaCalculoPorId(id).then(data_dados_para_calculo=>{
+		data.calculos_financeiro = data_dados_para_calculo;
+		console.log('EEEEEEEEEEEEEEE EDITAR DESCRICAO GENERICO EEEEEEEEEEEEEEEEEEEEEEE');
+		console.log(data);
+		console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/editar_dados_para_calculo', data: data, usuario: req.session.usuario});
+	});
+});
+
+
+router.get('/editar-parcela/:id',function(req, res, next){
+	var id = req.params.id;
+
+	console.log('•••••••••••••••••• ID DA PARCELA ••••••••••••••••••••');
+	console.log(id);
+	console.log('•••••••••••••••••••••••••••••••••••••••••••••••••••••');
+
+	model.SelecionarParcelaPorId(id).then(data_parcela =>{
+		data.parcela = data_parcela;
+		console.log('EEEEEEEEEEEEEEEEEEEE EDITAR PARCELA EEEEEEEEEEEEEEEEEEEEEEE');
+		console.log(data);
+		console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/editar_parcela_financeiro', data: data, usuario: req.session.usuario});
+	});
+});
 
 
 
@@ -682,6 +719,34 @@ router.get('/pesquisar-todos-fase-autocomplete/:pesquisa', function(req, res, ne
 });
 
 
+router.get('/selecionar-todos-banco', function(req, res, next) {
+	console.log('CAI AQUI NO SELECIONAR TODOS TIPO CAUSA');
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	model.SelecioneTodosDescricaoGenerica(20).then(data_dados =>{
+		data.dados = data_dados;
+		data.adicionar_link = '/processos/adicionar-banco';
+		data.nome_relatorio = 'Banco';
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral', data: data, usuario: req.session.usuario});
+	});
+});
+
+
+router.get('/pesquisar-todos-bancos-autocomplete/:pesquisa', function(req, res, next) {
+	pesquisa = req.params.pesquisa;
+	model.PesquisarDescricaoGenericaAutocomplete(pesquisa,20).then(data =>{
+		res.json(data);
+	});
+});
+
+
+router.get('/andamento_financeiro_cadastro_dados_para_calculo/:idProcesso',function(req, res, next){
+	var idProcesso = req.params.idProcesso;
+	console.log('999999 cai no andamento_financeiro_dados_para_calculo 9999999');
+	console.log('9999999999999999999999999999999999999999999999999999999999999');
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_dados_para_calculo', data: data, usuario: req.session.usuario});
+});
+
+
 
 
 
@@ -720,36 +785,87 @@ router.post('/cadastrar_compromisso', function(req, res, next) {
 			});
 	});
 
-router.post('/editar_compromisso', function(req, res, next) {
+
+router.post('/cadastrar_parcela', function(req, res, next) {
 	// Recebendo o valor do post
 	POST = req.body;
-	console.log('---------------------- CADASTRAR_COMPROMISSO -------------------');
+	console.log('---------------------- CADASTRAR PARCELA -------------------');
 	console.log(POST);
 	console.log('----------------------------------------------------------------');
 
+	model.SelecionarDadosParaCalculoPorId(POST.id_dados_para_calculo).then(data_dados_para_calculo => {
+		console.log('♠♠♠♠♠♠♠♠♠♠ dados para calculo ♠♠♠♠♠♠♠♠♠♠♠');
+		console.log(data_dados_para_calculo);
+		console.log('♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠');
 
-	data_insert = {id:POST.id_compromisso,id_usuario: req.session.usuario.id,
-		id_processo:POST.id,id_advogado_setor: POST.id_advogado_setor,
-		id_advogado_compromisso:POST.id_advogado_compromisso,tipo_compromisso:POST.tipo_compromisso, tipo:POST.tipo,
-		nome:POST.nome_compromisso,data_inicial:POST.data_inicial_compromisso,
-		hora_inicial: POST.hora_inicial_compromisso, data_final:POST.data_final_compromisso,
-		hora_final: POST.hora_final_compromisso,local: POST.local_compromisso, 
-		complemento:POST.complemento_compromisso};
+
+		var vhe = data_dados_para_calculo[0].porc_honorario_escritorio;
+		var vhp = data_dados_para_calculo[0].porc_honorario_perito;
+		var vir = data_dados_para_calculo[0].porc_imposto_renda;
+
+		var valorParcelaOriginal = POST.valor_parcela;
+
+		if(valorParcelaOriginal == '' || valorParcelaOriginal == undefined){
+			valorParcelaOriginal = 0;
+		}
+
+		var vheParcela = valorParcelaOriginal * (vhe/100);
+		var vhpParcela = valorParcelaOriginal * (vhp/100);
+		var virParcela = valorParcelaOriginal * (vir/100);
+
+		var acessor_juridico = POST.acessor_juridico;
+		if(acessor_juridico == '' || acessor_juridico == undefined){
+			acessor_juridico = 0;
+		}
+
+		var imposto_renda = POST.imposto_renda_parcela;
+		if(imposto_renda == '' || imposto_renda == undefined){
+			imposto_renda = 0;
+		}
+
+		var inss = POST.inss_parcela;
+		if(inss == '' || inss == undefined){
+			inss = 0;
+		}
+
+		var outros_descontos = POST.outros_descontos_parcela;
+		if(outros_descontos == '' || outros_descontos == undefined){
+			outros_descontos = 0;
+		}
+
+
+		var valor_pagar_reclamante = valorParcelaOriginal - vheParcela - vhpParcela - virParcela - acessor_juridico - imposto_renda - inss - outros_descontos;
+		if(valor_pagar_reclamante<0){
+			valor_pagar_reclamante = 0;
+		}
+
+		data_insert = {id_processo:POST.id,
+			valor:valorParcelaOriginal,data_vencimento:POST.data_vencimento_parcela,
+			data_recebimento_reclamada:POST.data_recebimento_reclamada,
+			data_pago_reclamante:POST.data_pago_reclamante,
+			acessor_juridico:acessor_juridico,imposto_renda:imposto_renda,
+			inss:inss,outros_descontos:outros_descontos,
+			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante,
+			despesa_bancaria:POST.despesa_bancaria_parcela,numero_nota_fiscal:POST.numero_nota_fiscal_parcela,
+			id_banco:POST.id_banco
+		};
+
 
 		console.log('================== DATA_INSERT =============');
 		console.log(data_insert);
 		console.log('============================================');
 
-		model.AtualizarCompromisso(data_insert).then(data_cad_comp => {
-			model.SelecioneCompromissosDoProcesso(POST.id).then(data_compromisso_processo =>{
-				data.compromissos = data_compromisso_processo;
-				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+
+		model.CadastrarParcela(data_insert).then(data_cad_par => {			
+			model.SelecionarParcelasDoProcesso(POST.id).then(data_parcelas =>{
+				data.parcelas = data_parcelas;
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_parcelas_only', data: data, usuario: req.session.usuario});
 			});
 		});
-
-
-
 	});
+});
+
+
 
 router.post('/cadastrar_compromisso_apenso', function(req, res, next) {
 	// Recebendo o valor do post
@@ -867,6 +983,8 @@ router.post('/editar-apenso/', function(req, res, next) {
 		});
 	});
 
+
+
 router.post('/editar-recurso/', function(req, res, next) {
 	POST = req.body;
 	console.log('RRRRRRRRRRRRRRRR EDITAR RECURSO RRRRRRRRRRRRRRRRRRRRRRRR');
@@ -875,16 +993,154 @@ router.post('/editar-recurso/', function(req, res, next) {
 
 	data_insert= {id: POST.id_recurso, id_usuario: req.session.usuario.id, id_processo:POST.id, id_advogado: POST.id_advogado_recurso,
 		id_apenso: POST.id_apenso_recurso , id_relator: POST.id_relator_recurso ,id_tipo_recurso: POST.id_tipo_recurso, id_posicao_cliente: POST.id_posicao_cliente_recurso ,id_tribunal: POST.id_tribunal_recurso ,
-		id_turma_camara: POST.id_turma_camara_recurso ,numero: POST.numero_recurso , interposicao: POST.interposicao_recurso, ajuizado: POST.ajuizado_recurso}
+		id_turma_camara: POST.id_turma_camara_recurso ,numero: POST.numero_recurso , interposicao: POST.interposicao_recurso, ajuizado: POST.ajuizado_recurso
+	};
+
+	console.log('================== DATA_INSERT =============');
+	console.log(data_insert);
+	console.log('============================================');
+
+	model.AtualizarRecurso(data_insert).then(data => {
+		res.json(data);
+	});
+});
+
+router.post('/editar_compromisso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	console.log('---------------------- CADASTRAR_COMPROMISSO -------------------');
+	console.log(POST);
+	console.log('----------------------------------------------------------------');
+
+
+	data_insert = {id:POST.id_compromisso,id_usuario: req.session.usuario.id,
+		id_processo:POST.id,id_advogado_setor: POST.id_advogado_setor,
+		id_advogado_compromisso:POST.id_advogado_compromisso,tipo_compromisso:POST.tipo_compromisso, tipo:POST.tipo,
+		nome:POST.nome_compromisso,data_inicial:POST.data_inicial_compromisso,
+		hora_inicial: POST.hora_inicial_compromisso, data_final:POST.data_final_compromisso,
+		hora_final: POST.hora_final_compromisso,local: POST.local_compromisso, 
+		complemento:POST.complemento_compromisso
+	};
+
+	console.log('================== DATA_INSERT =============');
+	console.log(data_insert);
+	console.log('============================================');
+
+	model.AtualizarCompromisso(data_insert).then(data_cad_comp => {
+		model.SelecioneCompromissosDoProcesso(POST.id).then(data_compromisso_processo =>{
+			data.compromissos = data_compromisso_processo;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+		});
+	});
+});
+
+router.post('/editar-dados-para-calculo/', function(req, res, next) {
+
+	POST = req.body;
+	console.log('---------------------- EDITAR DADOS PARA CALCULO ------------------------');
+	console.log(POST);
+	console.log('-------------------------------------------------------------------------');
+
+	//vhe=valor_honorario_escritorio,vhp = valor_honorario_perito, vir = valor_imposto_renda
+	var vhe = POST.porc_honorario_escritorio;
+	var vhp = POST.porc_honorario_perito;
+	var vir = POST.porc_imposto_renda;
+
+	data_insert = {id:POST.id_dados_calculo,id_processo:POST.id, data_sentenca_acordo: POST.data_sentenca_acordo, 
+		porc_honorario_escritorio:vhe,
+		porc_honorario_perito:vhp,
+		porc_imposto_renda:vir
+	};
+
+
+	console.log('================== DATA_INSERT =============');
+	console.log(data_insert);
+	console.log('============================================');
+
+	model.AtualizarDadosParaCalculo(data_insert).then(data => {
+		res.json(data);
+	});
+});
+
+router.post('/editar_parcela/', function(req, res, next) {
+
+	POST = req.body;
+	console.log('---------------------- EDITAR PARCELA ------------------------');
+	console.log(POST);
+	console.log('--------------------------------------------------------------');
+
+	model.SelecionarDadosParaCalculoPorId(POST.id_dados_para_calculo).then(data_dados_para_calculo => {
+		console.log('♠♠♠♠♠♠♠♠♠♠ dados para calculo ♠♠♠♠♠♠♠♠♠♠♠');
+		console.log(data_dados_para_calculo);
+		console.log('♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠');
+
+
+		var vhe = data_dados_para_calculo[0].porc_honorario_escritorio;
+		var vhp = data_dados_para_calculo[0].porc_honorario_perito;
+		var vir = data_dados_para_calculo[0].porc_imposto_renda;
+
+		var valorParcelaOriginal = POST.valor_parcela;
+
+		if(valorParcelaOriginal == '' || valorParcelaOriginal == undefined){
+			valorParcelaOriginal = 0;
+		}
+
+		var vheParcela = valorParcelaOriginal * (vhe/100);
+		var vhpParcela = valorParcelaOriginal * (vhp/100);
+		var virParcela = valorParcelaOriginal * (vir/100);
+
+		var acessor_juridico = POST.acessor_juridico;
+		if(acessor_juridico == '' || acessor_juridico == undefined){
+			acessor_juridico = 0;
+		}
+
+		var imposto_renda = POST.imposto_renda_parcela;
+		if(imposto_renda == '' || imposto_renda == undefined){
+			imposto_renda = 0;
+		}
+
+		var inss = POST.inss_parcela;
+		if(inss == '' || inss == undefined){
+			inss = 0;
+		}
+
+		var outros_descontos = POST.outros_descontos_parcela;
+		if(outros_descontos == '' || outros_descontos == undefined){
+			outros_descontos = 0;
+		}
+
+
+		var valor_pagar_reclamante = valorParcelaOriginal - vheParcela - vhpParcela - virParcela - acessor_juridico - imposto_renda - inss - outros_descontos;
+		if(valor_pagar_reclamante<0){
+			valor_pagar_reclamante = 0;
+		}
+
+		data_insert = {id:POST.id_parcela,
+			valor:valorParcelaOriginal,data_vencimento:POST.data_vencimento_parcela,
+			data_recebimento_reclamada:POST.data_recebimento_reclamada,
+			data_pago_reclamante:POST.data_pago_reclamante,
+			acessor_juridico:acessor_juridico,imposto_renda:imposto_renda,
+			inss:inss,outros_descontos:outros_descontos,
+			observacoes:POST.observacoes_parcela,valor_pagar_reclamante:valor_pagar_reclamante,
+			despesa_bancaria:POST.despesa_bancaria_parcela,numero_nota_fiscal:POST.numero_nota_fiscal_parcela,
+			id_banco:POST.id_banco
+		};
 
 		console.log('================== DATA_INSERT =============');
 		console.log(data_insert);
 		console.log('============================================');
 
-		model.AtualizarRecurso(data_insert).then(data => {
-			res.json(data);
+		model.AtualizarParcela(data_insert).then(data_atu_parc => {
+			model.SelecionarParcelasDoProcesso(POST.id).then(data_parcelas =>{
+				data.parcelas = data_parcelas;
+				console.log('ºººººººººººººººººº data Atualizada parcelas ºººººººººº');
+				console.log(data.parcelas);
+				console.log('ºººººººººººººººººººººººººººººººººººººººººººººººººººººº');
+				res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_parcelas_only', data: data, usuario: req.session.usuario});
+			});
 		});
 	});
+});
 
 
 router.post('/cadastrar_apenso_simples', function(req, res, next) {
@@ -1018,6 +1274,10 @@ router.post('/editar-descricao-generico/', function(req, res, next) {
 					case 19:
 					data.adicionar_link = '/processos/adicionar-comarca';
 					data.nome_relatorio = 'Comarca';
+					break;
+					case 20:
+					data.adicionar_link = '/processos/adicionar-banco';
+					data.nome_relatorio = 'Banco';
 					break;
 				}
 
@@ -1164,6 +1424,23 @@ router.get('/selecionar-todos-adversos-outros/:id/:idProcesso', function(req, re
 		console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
 		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar', data: data, usuario: req.session.usuario});
 	});
+});
+
+router.get('/parcelas/:id',function(req, res, next){
+	var idProcesso = req.params.id;
+	console.log('×××××××××××××× id processo ××××××××××××××');
+	console.log(idProcesso);
+	console.log('×××××××××××××××××××××××××××××××××××××××××');
+	
+	model.SelecionarParcelasDoProcesso(idProcesso).then(data_parcelas =>{
+		data.id_processo = idProcesso;
+		data.parcelas = data_parcelas;
+		console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ Parcelas do Processo ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+		console.log(data);	
+		console.log('↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓');
+		res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/area_parcelas_processo', data: data, usuario: req.session.usuario});
+	});
+
 });
 
 
@@ -1370,7 +1647,15 @@ router.get('/adicionar-fase',function(req, res, next) {
 	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar_descricao_generico', data: data, usuario: req.session.usuario});
 });
 
+router.get('/adicionar-banco',function(req, res, next) {
+	data.tipo_generico = 20;
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/modal_crud_geral_adicionar_descricao_generico', data: data, usuario: req.session.usuario});
+});
 
+
+router.get('/adicionar-parcela',function(req, res, next) {
+	res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/cadastro_parcela_financeiro', data: data, usuario: req.session.usuario});
+});
 
 
 
@@ -1841,47 +2126,86 @@ router.post('/cadastrar-envolvido-adverso',function(req, res, next){
 });
 
 
-router.post('/atualizar_envolvido_cliente/:iterador', function(req, res, next) {
-		// Recebendo o valor do post
-		var i = req.params.iterador;
-		// var idProcesso = req.params.idProcesso;
-		console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ITERADOR IIIIIIIIIIIIIIIIIIII');
-		console.log(i);
-		console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
-		POST = req.body;
+router.post('/cadastrar_dados_para_calculo_processo/', function(req, res, next) {
 
-		console.log('GGGGGGGGGGGGGGGGGGGGGGGGG ID CLIENTE OUTROS GGGGGGGGGGGGGGG');
-		console.log(POST.id_outros[i]);
+	
+	POST = req.body;
 
-		console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+	console.log('ååååååå POST ååååååååååååååååååååååååååååååå');
+	console.log(POST);
+	console.log('åååååååååååååååååååååååååååååååååååååååååååå');
 
-		console.log('SEM ITTTTTTTTTTTTTTTTTTTTTTTTTTT');
-		console.log(POST.id_outros);
-		console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+	//vhe=valor_honorario_escritorio,vhp = valor_honorario_perito, vir = valor_imposto_renda
+	var vhe = POST.porc_honorario_escritorio;
+	var vhp = POST.porc_honorario_perito;
+	var vir = POST.porc_imposto_renda;
 
-		
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAA ENVOLVIDO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-		console.log(POST);
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-		console.log('TIPO PPPPPPPPPPPPPPPPPPPPP');
-		console.log(POST.id_outros_tipo[i]);
-		console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP');
+	data_insert = {id_processo:POST.id, data_sentenca_acordo: POST.data_sentenca_acordo, 
+		porc_honorario_escritorio:vhe,
+		porc_honorario_perito:vhp,
+		porc_imposto_renda:vir};
 
-		if(Array.isArray(POST.id_outros)){
-			data_insert = {id:POST.id_outros[i], id_outros_tipo:POST.id_outros_tipo[i]};
-		}else{
-			data_insert = {id:POST.id_outros, id_outros_tipo:POST.id_outros_tipo};
-		}
-
-
-		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DATA INSERT DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+		console.log('╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚ data insert ╚╚╚╚╚╚╚╚╚╚╚╚');
 		console.log(data_insert);
-		console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+		console.log('╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚╚');
 
-		model.AtualizarOutroEnvolvidoCliente(data_insert).then(data =>{
-			res.json(data);
+		model.CadastrarDadosParaCalculoFinanceiroProcesso(data_insert).then(id_dados_calculo =>{
+			model.SelecionarDadosParaCalculoPorId(id_dados_calculo).then(data_dados_para_calculo=>{
+				data.calculos_financeiro = data_dados_para_calculo;				
+				model.SelecionarParcelasDoProcesso(POST.id).then(data_parcelas =>{
+					data.id_processo = POST.id;
+					data.parcelas = data_parcelas;
+					console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ Parcelas do Processo ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
+					console.log(data);	
+					console.log('↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓');
+					res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/area_parcelas_processo', data: data, usuario: req.session.usuario});
+				});
+			});
 		});
+
 	});
+
+router.post('/atualizar_envolvido_cliente/:iterador', function(req, res, next) {
+	// Recebendo o valor do post
+	var i = req.params.iterador;
+	// var idProcesso = req.params.idProcesso;
+	console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ITERADOR IIIIIIIIIIIIIIIIIIII');
+	console.log(i);
+	console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
+	POST = req.body;
+
+	console.log('GGGGGGGGGGGGGGGGGGGGGGGGG ID CLIENTE OUTROS GGGGGGGGGGGGGGG');
+	console.log(POST.id_outros[i]);
+
+	console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+
+	console.log('SEM ITTTTTTTTTTTTTTTTTTTTTTTTTTT');
+	console.log(POST.id_outros);
+	console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT');
+
+
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAA ENVOLVIDO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	console.log(POST);
+	console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+	console.log('TIPO PPPPPPPPPPPPPPPPPPPPP');
+	console.log(POST.id_outros_tipo[i]);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+	if(Array.isArray(POST.id_outros)){
+		data_insert = {id:POST.id_outros[i], id_outros_tipo:POST.id_outros_tipo[i]};
+	}else{
+		data_insert = {id:POST.id_outros, id_outros_tipo:POST.id_outros_tipo};
+	}
+
+
+	console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDD DATA INSERT DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+	console.log(data_insert);
+	console.log('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+
+	model.AtualizarOutroEnvolvidoCliente(data_insert).then(data =>{
+		res.json(data);
+	});
+});
 
 
 
@@ -2072,6 +2396,26 @@ router.post('/desativar-compromisso/:idProcesso', function(req, res, next) {
 		model.SelecioneCompromissosDoProcesso(idProcesso).then(data_compromisso_processo =>{
 			data.compromissos = data_compromisso_processo;
 			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_compromissos_only', data: data, usuario: req.session.usuario});
+		});
+	});
+});
+
+
+router.post('/desativar-parcela/:idProcesso', function(req, res, next) {
+	// Recebendo o valor do post
+	POST = req.body;
+	var idProcesso = req.params.idProcesso;
+
+
+	console.log('PPPPPPPPPPPPPP POST DESATIVAR PARCELA PPPPPPPPPPPPP');
+	console.log(POST);
+	console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP');
+
+
+	model.DesativarParcela(POST).then(datadeletado=> {
+		model.SelecionarParcelasDoProcesso(idProcesso).then(data_parcelas_processo =>{
+			data.parcelas = data_parcelas_processo;
+			res.render(req.isAjaxRequest() == true ? 'api' : 'montadorSistema', {html: 'ward/processos/tabela_parcelas_only', data: data, usuario: req.session.usuario});
 		});
 	});
 });
