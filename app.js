@@ -18,25 +18,7 @@ var categoria = require ('./app/controller/categoria');
 var post = require('./app/controller/post');
 var admin = require('./app/controller/admin');
 
-/*Sistema*/
-var loginSis = require('./app/controller/ward/login');
-var indexSis = require('./app/controller/ward/index');
-var contatosSis = require('./app/controller/ward/contatos');
-var clientesSis = require('./app/controller/ward/clientes');
-var adversosSis = require('./app/controller/ward/adversos');
-var configuracoesSis = require('./app/controller/ward/configuracoes');
-var tarefasSis = require('./app/controller/ward/tarefas');
-var processosSis = require('./app/controller/ward/processos');
-var estatisticasSis = require('./app/controller/ward/estatisticas');
-var compromissosSis = require('./app/controller/ward/compromissos');
-var chatsSis = require('./app/controller/ward/chats');
-var notificacoesSis = require('./app/controller/ward/notificacoes');
-var documentosSis = require('./app/controller/ward/documentos');
-var usuariosSis = require('./app/controller/ward/usuarios');
-var setoresSis = require('./app/controller/ward/setores');
-var relatoriosSis = require('./app/controller/ward/relatorios');
-var apiSis = require('./app/controller/ward/api');
-var ferramentasSis = require('./app/controller/ward/ferramentas');
+var loginSis = require('./app/controller/loginSis');
 
 var app = express();
 var control = new Control;
@@ -123,7 +105,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/assets", express.static(__dirname + '/assets'));
-app.use("/assetsward", express.static(__dirname + '/assetsward'));
 // app.use(express.static(path.join(__dirname, '/assets')));
 // console.log(path.join(__dirname, 'assets'));
 app.use(fileUpload());
@@ -138,31 +119,9 @@ app.use('/categoria', categoria);
 app.use('/post', post);
 app.use('/admin', admin);
 
-
-
-
-/*Sistema*/
 app.use('/ward', loginSis);
-app.use('/sistema', indexSis);
 
 
-app.use('/sistema/contatos', contatosSis);
-app.use('/sistema/clientes', clientesSis);
-app.use('/sistema/adversos', adversosSis);
-app.use('/sistema/configuracoes', configuracoesSis);
-
-app.use('/sistema/tarefas', tarefasSis);
-app.use('/sistema/processos', processosSis);
-app.use('/sistema/estatisticas', estatisticasSis);
-app.use('/sistema/compromissos', compromissosSis);
-app.use('/sistema/chats', chatsSis);
-app.use('/sistema/notificacoes', notificacoesSis);
-app.use('/sistema/documentos', documentosSis);
-app.use('/sistema/usuarios', usuariosSis);
-app.use('/sistema/setores', setoresSis);
-app.use('/sistema/relatorios', relatoriosSis);
-app.use('/sistema/api', apiSis);
-app.use('/sistema/ferramentas', ferramentasSis);
 
 
 // app.use(function (req, res, next) {
@@ -199,7 +158,7 @@ app.use(function(err, req, res, next) {
 	if (typeof req.session.id_usuario != 'undefined' && req.session.id_usuario != 0) {
   	res.render('error', { erro: 'Página não existente.', tipo_erro: '404' });
   } else {
-  	res.render('ward/login/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
+  	res.render('login/index', { erro: 'Página não existente, faça o login para acessar o sistema.', tipo_erro: '404' });
   }
 });
 // app.listen(3000);

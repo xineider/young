@@ -10,7 +10,7 @@ var app = express();
 //var Boleto = require('node-boleto').Boleto;
 app.use(require('express-is-ajax-request'));
 
-/* GET pagina inicial. */
+/* GET pagina inicial.*/
 
 
 router.get('/', function (req, res, next) {
