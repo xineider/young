@@ -6,7 +6,7 @@ var crypto = require('crypto');
 // var config = {
 // 					    "host"     : "mysql669.umbler.com",
 // 					    "user"     : "admin-young-adv",
-// 					    "password" : "6O(ayS4?{q{Ci",
+// 					    "password" : "marketingyoung",
 // 					    "database" : "young-adv"
 // 				  	};
 
