@@ -11,18 +11,18 @@ var crypto = require('crypto');
 // 				  	};
 
 
-// var config = {
-// 						    "host"     : "us-cdbr-iron-east-05.cleardb.net",
-// 						    "user"     : "b95fc3530ebace",
-// 						    "password" : "372884c6",
-// 						    "database" : "heroku_941b27a7b2edaff"
-// 					  	};
 var config = {
-						    "host"     : "localhost",
-						    "user"     : "root",
-						    "password" : "root",
-						    "database" : "young"
+						    "host"     : "ble5mmo2o5v9oouq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+						    "user"     : "yjwx6jai0azejl66",
+						    "password" : "sho1qybc1w3h153h",
+						    "database" : "lyr8dswx64qksiob"
 					  	};
+// var config = {
+// 						    "host"     : "localhost",
+// 						    "user"     : "root",
+// 						    "password" : "root",
+// 						    "database" : "young"
+// 					  	};
 
 // // CONEXÃO MYSQL
 var mysql      = require('mysql');
